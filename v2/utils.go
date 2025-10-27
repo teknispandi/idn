@@ -35,7 +35,7 @@ func (u *IdnUtils) ToASCII(label string) (string, error) {
 // IsValidDomainLabel memeriksa apakah label adalah domain label yang valid
 // sesuai dengan spesifikasi DNS dan IDN
 func (u *IdnUtils) IsValidDomainLabel(label string) bool {
-	if len(label) == 0 || len(label) > 63 {
+	if len(label) == 0 || len(label) > 63 { // Panjang label domain maksimal 63 karakter
 		return false
 	}
 
@@ -101,7 +101,7 @@ func (u *IdnUtils) ValidateDomainName(domain string) error {
 
 	labels := u.SplitDomainName(domain)
 
-	// Domain name maksimal 253 karakter
+	// Domain name maksimal 253 karakter (termasuk dots, subdomain, domain, TLD)
 	if len(domain) > 253 {
 		return fmt.Errorf("domain name too long: %d characters (max 253)", len(domain))
 	}

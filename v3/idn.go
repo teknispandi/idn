@@ -88,19 +88,38 @@ func NewIdnTable(language string, data []string, validator LanguageValidator) (*
 		table.validCodepoints[codepoint] = true
 	}
 
+	// Set default URLs jika tidak ditemukan dalam file
 	if table.url == nil {
-		return nil, fmt.Errorf("table %s missing '# URL: http://foo.example/page' line", language)
+		defaultURL := fmt.Sprintf("https://www.iana.org/domains/idn-tables/%s", language)
+		table.url, _ = url.Parse(defaultURL)
 	}
 	if table.policy == nil {
-		return nil, fmt.Errorf("table %s missing '# Policy: http://foo.example/page' line", language)
+		defaultPolicy := fmt.Sprintf("https://www.iana.org/domains/idn-tables/%s-policy", language)
+		table.policy, _ = url.Parse(defaultPolicy)
 	}
 
 	return table, nil
 }
 
-// readCodepoint membaca codepoint dari satu baris. Format yang diharapkan adalah: U+XXXX
-// dimana XXXX adalah nilai hex dari codepoint
+// readCodepoint membaca codepoint dari satu baris. Mendukung berbagai format:
+// - U+XXXX (format standar)
+// - U+XXXX(0);U+XXXX(0); (format Chinese)
+// - U+XXXX # COMMENT (dengan komentar)
 func readCodepoint(line string, pattern *regexp.Regexp) (int, error) {
+	// Handle format Chinese dengan semicolon
+	if strings.Contains(line, ";") {
+		parts := strings.Split(line, ";")
+		if len(parts) > 0 {
+			line = strings.TrimSpace(parts[0])
+		}
+	}
+
+	// Remove parentheses jika ada (format Chinese)
+	if strings.Contains(line, "(") {
+		idx := strings.Index(line, "(")
+		line = line[:idx]
+	}
+
 	matches := pattern.FindStringSubmatch(line)
 	if len(matches) < 2 {
 		return 0, fmt.Errorf("can't parse line: %s", line)

@@ -193,6 +193,7 @@ func (u *IdnUtils) IsConfusable(s string) bool {
 		0x00EF: true, // LATIN SMALL LETTER I WITH DIAERESIS (confusable with i)
 		0x043E: true, // CYRILLIC SMALL LETTER O (confusable with o)
 		0x0430: true, // CYRILLIC SMALL LETTER A (confusable with a)
+		0x0440: true, // CYRILLIC SMALL LETTER ER (confusable with p)
 		// Tambah karakter confusable lainnya sesuai kebutuhan
 	}
 

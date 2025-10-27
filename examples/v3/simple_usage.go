@@ -84,5 +84,57 @@ func SimpleUsage() {
 		fmt.Printf("Available languages: %v\n", languages)
 	}
 
+	// 6. IDN Utils Demo
+	fmt.Println("\n--- IDN Utils Examples ---")
+	utils := &v3.IdnUtils{}
+
+	// Punycode conversion
+	fmt.Println("\nPunycode Conversion:")
+	unicodeDomains := []string{"例子.com", "مثال.com", "пример.com"}
+	for _, domain := range unicodeDomains {
+		ascii, err := utils.ToASCII(domain)
+		if err != nil {
+			fmt.Printf("❌ %s: conversion failed - %v\n", domain, err)
+		} else {
+			fmt.Printf("✅ %s -> %s\n", domain, ascii)
+		}
+	}
+
+	// Domain validation
+	fmt.Println("\nDomain Validation:")
+	testDomains := []string{"example.com", "例子.com", "-invalid.com", "test_underscore.com"}
+	for _, domain := range testDomains {
+		err := utils.ValidateDomainName(domain)
+		if err != nil {
+			fmt.Printf("❌ %s: %v\n", domain, err)
+		} else {
+			fmt.Printf("✅ %s: Valid\n", domain)
+		}
+	}
+
+	// Unicode analysis
+	fmt.Println("\nUnicode Analysis:")
+	testStrings := []string{"example", "例子", "test例", "مثال"}
+	for _, str := range testStrings {
+		codepoints := utils.CountCodepoints(str)
+		mixed := utils.HasMixedScripts(str)
+		blocks := utils.GetUnicodeBlocks(str)
+
+		var blockNames []string
+		for block := range blocks {
+			if blocks[block] {
+				blockNames = append(blockNames, block)
+			}
+		}
+
+		fmt.Printf("'%s': %d codepoints, mixed: %v, blocks: %v\n",
+			str, codepoints, mixed, blockNames)
+	}
+
+	// Global utils
+	fmt.Println("\nGlobal Utils:")
+	normalized := v3.DefaultIdnUtils.NormalizeDomainLabel("EXAMPLE")
+	fmt.Printf("Normalize 'EXAMPLE' -> '%s'\n", normalized)
+
 	fmt.Println("\n=== Simple example completed ===")
 }

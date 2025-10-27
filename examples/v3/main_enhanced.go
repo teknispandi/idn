@@ -80,6 +80,7 @@ func ExampleEnhanced() {
 	}
 
 	for _, tc := range testCases {
+		//validasi label IDN Domain
 		isValid, validLanguages, err := manager.ValidateLabel(tc.tld, tc.label)
 		if err != nil {
 			fmt.Printf("❌ Error validating '%s' for TLD '%s': %v\n", tc.label, tc.tld, err)

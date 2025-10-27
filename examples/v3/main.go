@@ -1,8 +1,10 @@
 package main
 
 func main() {
-	// SimpleUsage()
-	ExampleEnhanced()
+	// ExampleEnhanced()
 	// ExampleIdn()
 	// PerformanceDemo()
+	// SimpleUsage()
+	ExampleBasicUtils()
+	// UtilsExample()
 }

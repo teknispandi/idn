@@ -18,7 +18,7 @@ func (t *ExampleTld) GetIdnTables() []v3.IdnTableType {
 }
 
 func ExampleIdn() {
-	fmt.Println("=== Contoh Penggunaan IDN Package ===")
+	fmt.Println("=== Contoh Penggunaan IDN Package Without Cache ===")
 
 	// 1. Inisialisasi validator
 	validator := v3.NewIdnLabelValidator()

@@ -19,7 +19,7 @@ func ExampleEnhanced() {
 	// 2. Register TLD dengan multiple languages
 	fmt.Println("\n--- Registering TLDs ---")
 
-	// TLD untuk bahasa Arab dan Hebrew
+	// TLD untuk bahasa Arab dan Hebrew (1. TLD Arab)
 	err := manager.RegisterTld("arab", []string{"arabic", "hebrew"})
 	if err != nil {
 		log.Printf("Error registering arab TLD: %v", err)
@@ -27,7 +27,7 @@ func ExampleEnhanced() {
 		fmt.Println("✓ Registered TLD 'arab' with Arabic and Hebrew support")
 	}
 
-	// TLD untuk bahasa Asia
+	// TLD untuk bahasa Asia (2. TLD Asia)
 	err = manager.RegisterTld("asia", []string{"chinese", "japanese", "korean"})
 	if err != nil {
 		log.Printf("Error registering asia TLD: %v", err)
@@ -35,7 +35,7 @@ func ExampleEnhanced() {
 		fmt.Println("✓ Registered TLD 'asia' with Chinese, Japanese, and Korean support")
 	}
 
-	// TLD untuk bahasa India
+	// TLD untuk bahasa India (3. TLD India)
 	err = manager.RegisterTld("india", []string{"devanagari", "bengali", "tamil"})
 	if err != nil {
 		log.Printf("Error registering india TLD: %v", err)
@@ -55,6 +55,7 @@ func ExampleEnhanced() {
 
 	// 4. Preload beberapa bahasa untuk performa yang lebih baik
 	fmt.Println("\n--- Preloading Languages ---")
+	// TLD dengan preload bahasa Latin, Cyrillic, dan Greek (4. TLD Global)
 	err = manager.RegisterTldWithPreload("global", []string{"latin", "cyrillic", "greek"})
 	if err != nil {
 		log.Printf("Error preloading global TLD: %v", err)

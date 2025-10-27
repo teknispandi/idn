@@ -3,7 +3,7 @@
 //
 // Copyright 2017 The Nomulus Authors. All Rights Reserved.
 // Licensed under the Apache License, Version 2.0
-package v2
+package v3
 
 import (
 	"bufio"

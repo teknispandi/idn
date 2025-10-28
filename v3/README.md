@@ -1,8 +1,8 @@
-# IDN (Internationalized Domain Names) V3 Enhanced
+# IDN (Internationalized Domain Names) V3
 
 ## Overview
 
-IDN V3 Enhanced menyediakan sistem yang diperbaharui untuk mengelola dan memvalidasi Internationalized Domain Names (IDN) dengan dukungan:
+IDN V3 menyediakan sistem yang diperbaharui untuk mengelola dan memvalidasi Internationalized Domain Names (IDN) dengan dukungan:
 
 - **Memory Cache**: Sistem cache di memory untuk menghindari pembacaan file berulang
 - **Multiple IDN Support**: Mendukung lebih dari 1 IDN table per TLD

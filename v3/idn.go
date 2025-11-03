@@ -1,7 +1,7 @@
 // Package idn provides IDN (Internationalized Domain Names) validation functionality.
 // This package validates whether a given IDN label can be provisioned for a particular TLD.
 //
-// Copyright 2017 The Nomulus Authors. All Rights Reserved.
+// Copyright 2025 The Akhmadrofai@gmail.com Authors. All Rights Reserved.
 // Licensed under the Apache License, Version 2.0
 package v3
 

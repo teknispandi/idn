@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"unicode/utf8"
 
 	v3 "github.com/al0fayz/idn/v3"
 )
@@ -16,7 +17,7 @@ func ExampleBali() {
 	}{
 		{
 			name:     "✅ Valid length Balinese label",
-			label:    "ᬩᭂᬘᬶ", // 2 characters
+			label:    "ᬩᭂᬘᬶ", // 4 characters
 			expected: true,
 		},
 		{name: "✅ Valid Bali 1", label: "ᬩᬓᬵ", expected: true},
@@ -43,6 +44,7 @@ func ExampleBali() {
 	}
 	for _, tt := range tests {
 		got := validator.IsValidLabelForLanguage(tt.label)
-		log.Printf("- %s: expected %v, got %v", tt.name, tt.expected, got)
+		runeCount := utf8.RuneCountInString(tt.label)
+		log.Printf("- %s with char count %d: expected %v, got %v", tt.name, runeCount, tt.expected, got)
 	}
 }

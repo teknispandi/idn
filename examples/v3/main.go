@@ -1,10 +1,11 @@
 package main
 
 func main() {
-	ExampleEnhanced()
+	// ExampleEnhanced()
 	// ExampleIdn()
 	// PerformanceDemo()
 	// SimpleUsage()
 	// ExampleBasicUtils()
 	// UtilsExample()
+	ExampleBali()
 }

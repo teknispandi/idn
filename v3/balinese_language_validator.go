@@ -17,7 +17,7 @@ var balineseRepertoire = map[rune]bool{
 	0x1B13: true, 0x1B14: true, 0x1B15: true, 0x1B16: true,
 	0x1B17: true, 0x1B18: true, 0x1B19: true, 0x1B1A: true,
 	0x1B1B: true, 0x1B1C: true, 0x1B1D: true, 0x1B1E: true,
-	0x1B20: true, 0x1B21: true, 0x1B22: true, 0x1B23: true,
+	0x1B1F: true, 0x1B20: true, 0x1B21: true, 0x1B22: true, 0x1B23: true,
 	0x1B24: true, 0x1B25: true, 0x1B26: true, 0x1B27: true,
 	0x1B28: true, 0x1B29: true, 0x1B2A: true, 0x1B2B: true,
 	0x1B2C: true, 0x1B2D: true, 0x1B2E: true, 0x1B2F: true,
@@ -58,14 +58,10 @@ func (b *BalineseLanguageValidator) IsValidLabelForLanguage(label string) bool {
 			return false
 		}
 
-		// get previous runes safely
+		// get previous rune safely
 		prev := rune(0)
-		prev2 := rune(0)
 		if i > 0 {
 			prev = runes[i-1]
-		}
-		if i > 1 {
-			prev2 = runes[i-2]
 		}
 
 		// 3. Dependent vowel rules
@@ -94,18 +90,25 @@ func (b *BalineseLanguageValidator) IsValidLabelForLanguage(label string) bool {
 				return false
 			}
 
-			// Special rule for 1B44 (virama)
+			// Special rules for 1B44 (adeg-adeg / virama)
 			if r == 0x1B44 {
-				// cannot follow sign
-				if isBalineseSign(prev) {
+				// It suppresses the inherent vowel of the consonant it attaches
+				// to, so it is only meaningful directly after a consonant. This
+				// subsumes the older "not after a sign" and "not after a
+				// dependent vowel" checks.
+				//
+				// Note it must NOT also reject a virama whose two preceding
+				// runes are both consonants: Balinese is an abugida, so a bare
+				// consonant carries an inherent /a/ and CC is simply two
+				// syllables. Rejecting that made every word with a cluster past
+				// the first syllable unregisterable — ᬩᬲ᭄ᬓᬭ (baskara),
+				// ᬫᬦ᭄ᬢᬭᬶ (mantri) — while leaving ᬲ᭄ᬓᬭ (skara) valid.
+				if !isBalineseConsonant(prev) {
 					return false
 				}
-				// cannot follow dependent vowel
-				if isBalineseDependentVowel(prev) {
-					return false
-				}
-				// cannot follow two consecutive consonants
-				if isBalineseConsonant(prev) && isBalineseConsonant(prev2) {
+				// A label may not end on a virama: there is no following
+				// consonant for the gantungan to attach to.
+				if i == len(runes)-1 {
 					return false
 				}
 			}

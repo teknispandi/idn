@@ -1,10 +1,17 @@
 package v3
 
 // --- Balinese Validator (und-Bali) ---
+//
+// Mengikuti ICANN Second Level Reference LGR for the Balinese Script
+// (2026-08-13; secara normatif sama dengan 2024-10-25),
+// lgrs/second-level-reference/und-Bali.xml. Rule XML-nya yang
+// normatif, bukan prosa di deskripsinya — membaca prosanya secara harfiah
+// adalah asal bug "dua konsonan sebelum virama" dan "virama di akhir label".
 
 type BalineseLanguageValidator struct{}
 
-// Repertoire map untuk Balinese berdasarkan LGR
+// Repertoire map untuk Balinese berdasarkan LGR: 65 code point Bali + hyphen.
+// U+1B1F DA MURDA ALPAPRANA sengaja tidak ada — LGR mengecualikannya.
 var balineseRepertoire = map[rune]bool{
 	0x002D: true, // hyphen
 	// Independent vowels 1B05–1B12
@@ -13,11 +20,11 @@ var balineseRepertoire = map[rune]bool{
 	0x1B0D: true, 0x1B0E: true, 0x1B0F: true, 0x1B10: true,
 	0x1B11: true, 0x1B12: true,
 
-	// Consonants 1B13–1B33
+	// Consonants 1B13–1B33, kecuali 1B1F
 	0x1B13: true, 0x1B14: true, 0x1B15: true, 0x1B16: true,
 	0x1B17: true, 0x1B18: true, 0x1B19: true, 0x1B1A: true,
 	0x1B1B: true, 0x1B1C: true, 0x1B1D: true, 0x1B1E: true,
-	0x1B1F: true, 0x1B20: true, 0x1B21: true, 0x1B22: true, 0x1B23: true,
+	0x1B20: true, 0x1B21: true, 0x1B22: true, 0x1B23: true,
 	0x1B24: true, 0x1B25: true, 0x1B26: true, 0x1B27: true,
 	0x1B28: true, 0x1B29: true, 0x1B2A: true, 0x1B2B: true,
 	0x1B2C: true, 0x1B2D: true, 0x1B2E: true, 0x1B2F: true,
@@ -34,7 +41,7 @@ var balineseRepertoire = map[rune]bool{
 }
 
 func isBalineseConsonant(r rune) bool {
-	return r >= 0x1B13 && r <= 0x1B33
+	return r >= 0x1B13 && r <= 0x1B33 && r != 0x1B1F
 }
 
 func isBalineseIndependentVowel(r rune) bool {
@@ -45,72 +52,75 @@ func isBalineseDependentVowel(r rune) bool {
 	return r >= 0x1B35 && r <= 0x1B43
 }
 
+// isBalineseSign is the LGR class "s" (tag "sign"), which includes 1B44 itself.
 func isBalineseSign(r rune) bool {
 	return r == 0x1B02 || r == 0x1B03 || r == 0x1B04 || r == 0x1B44
 }
 
 func (b *BalineseLanguageValidator) IsValidLabelForLanguage(label string) bool {
 	runes := []rune(label)
+	n := len(runes)
+	if n == 0 {
+		return false
+	}
+
+	// at returns the rune at i, or -1 outside the label.
+	at := func(i int) rune {
+		if i < 0 || i >= n {
+			return -1
+		}
+		return runes[i]
+	}
 
 	for i, r := range runes {
-		// 2. Must be in repertoire
+		// 1. Must be in repertoire
 		if !balineseRepertoire[r] {
 			return false
 		}
 
-		// get previous rune safely
-		prev := rune(0)
-		if i > 0 {
-			prev = runes[i-1]
-		}
+		prev := at(i - 1)
 
-		// 3. Dependent vowel rules
-		if isBalineseDependentVowel(r) {
-			if r == 0x1B35 {
-				// must follow consonant
-				if !isBalineseConsonant(prev) {
-					return false
-				}
-			} else {
-				// must follow consonant or independent vowel
-				if !(isBalineseConsonant(prev) || isBalineseIndependentVowel(prev)) {
-					return false
-				}
-			}
-		}
-
-		// 4. Sign rules
-		if isBalineseSign(r) {
-			// sign cannot be first
-			if i == 0 {
-				return false
-			}
-			// must follow consonant, iv, or dv
-			if !(isBalineseConsonant(prev) || isBalineseIndependentVowel(prev) || isBalineseDependentVowel(prev)) {
+		switch {
+		case r == 0x002D:
+			// hyphen-minus-disallowed (RFC 5891 §4.2.3.1): not first, not
+			// last, no "--" at positions 3–4. Counted in runes here because
+			// x/net/idna checks it in bytes and so never fires for Balinese.
+			if i == 0 || i == n-1 || (i == 3 && prev == 0x002D) {
 				return false
 			}
 
-			// Special rules for 1B44 (adeg-adeg / virama)
-			if r == 0x1B44 {
-				// It suppresses the inherent vowel of the consonant it attaches
-				// to, so it is only meaningful directly after a consonant. This
-				// subsumes the older "not after a sign" and "not after a
-				// dependent vowel" checks.
-				//
-				// Note it must NOT also reject a virama whose two preceding
-				// runes are both consonants: Balinese is an abugida, so a bare
-				// consonant carries an inherent /a/ and CC is simply two
-				// syllables. Rejecting that made every word with a cluster past
-				// the first syllable unregisterable — ᬩᬲ᭄ᬓᬭ (baskara),
-				// ᬫᬦ᭄ᬢᬭᬶ (mantri) — while leaving ᬲ᭄ᬓᬭ (skara) valid.
-				if !isBalineseConsonant(prev) {
-					return false
-				}
-				// A label may not end on a virama: there is no following
-				// consonant for the gantungan to attach to.
-				if i == len(runes)-1 {
-					return false
-				}
+		case r == 0x1B35:
+			// follows-c
+			if !isBalineseConsonant(prev) {
+				return false
+			}
+
+		case isBalineseDependentVowel(r):
+			// follows-c-or-iv
+			if !isBalineseConsonant(prev) && !isBalineseIndependentVowel(prev) {
+				return false
+			}
+
+		case r == 0x1B44:
+			// disallow-for-1B44: not first, not after a hyphen, a sign
+			// (itself included) or a dependent vowel.
+			if i == 0 || prev == 0x002D || isBalineseSign(prev) || isBalineseDependentVowel(prev) {
+				return false
+			}
+			// ...and not as the second virama of C ᭄ C ᭄ C, which would stack
+			// two gantungan under one base.
+			//
+			// There is deliberately no end-of-label rule: a final adeg-adeg
+			// is how Balinese writes a word-final consonant — ᬲᭂᬧᬢ᭄, ᬢᬩᬦᬦ᭄.
+			if isBalineseConsonant(at(i-3)) && at(i-2) == 0x1B44 &&
+				isBalineseConsonant(prev) && isBalineseConsonant(at(i+1)) {
+				return false
+			}
+
+		case isBalineseSign(r):
+			// follows-c-or-iv-or-dv (1B02–1B04)
+			if !isBalineseConsonant(prev) && !isBalineseIndependentVowel(prev) && !isBalineseDependentVowel(prev) {
+				return false
 			}
 		}
 	}

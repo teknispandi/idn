@@ -1,5 +1,7 @@
 package v3
 
+import "golang.org/x/net/idna"
+
 // LabelResult adalah hasil validasi satu label yang lolos.
 type LabelResult struct {
 	Input  string // label apa adanya dari pemanggil
@@ -10,7 +12,13 @@ type LabelResult struct {
 	// Table adalah tabel IDN yang menerima label; registry mencatatnya untuk
 	// deposit RDE (idnTableId). Nil untuk label LDH yang diizinkan tanpa
 	// tabel (TldIdnConfig.AllowASCII).
-	Table *IdnTable
+	Table LabelTable
+
+	// VariantKey adalah index label (RFC 7940 §8.5) dalam bentuk ASCII.
+	// Simpan bersama nama dan jadikan unik per zona: dua nama dengan kunci
+	// sama adalah varian satu sama lain (atau nama yang sama). Untuk tabel
+	// tanpa varian, VariantKey sama dengan ALabel.
+	VariantKey string
 }
 
 // TableName mengembalikan nama tabel IDN yang menerima label, atau "" jika tidak ada
@@ -19,6 +27,40 @@ func (r *LabelResult) TableName() string {
 		return ""
 	}
 	return r.Table.GetName()
+}
+
+// VariantLabels mengembalikan label varian beserta disposisinya menurut
+// tabel yang menerima label (lihat VariantTable.VariantLabels). Varian yang
+// tidak lolos IDNA2008 dibuang. Nil jika tabel tidak mendefinisikan varian.
+func (r *LabelResult) VariantLabels(limit int) ([]VariantLabel, bool) {
+	vt, ok := r.Table.(VariantTable)
+	if !ok {
+		return nil, false
+	}
+	variants, truncated := vt.VariantLabels(r.ULabel, limit)
+	out := variants[:0]
+	for _, v := range variants {
+		p, err := prepareLabel(v.ULabel)
+		if err != nil {
+			continue
+		}
+		v.ALabel = p.alabel
+		out = append(out, v)
+	}
+	return out, truncated
+}
+
+// variantKey menghitung LabelResult.VariantKey.
+func variantKey(p preparedLabel, table LabelTable) string {
+	vt, ok := table.(VariantTable)
+	if !ok {
+		return p.alabel
+	}
+	key, err := idna.Punycode.ToASCII(vt.VariantIndex(p.ulabel))
+	if err != nil {
+		return p.alabel
+	}
+	return key
 }
 
 // DomainResult adalah hasil validasi nama domain yang dapat didaftarkan.
@@ -40,27 +82,36 @@ type DomainResult struct {
 // Jika tidak ada yang menerima, kesalahan dari tabel yang "paling dekat"
 // dikembalikan — tabel yang menolak paling belakang dalam label — karena
 // itulah alasan yang paling berguna bagi pengguna.
-func matchTables(p preparedLabel, tables []*IdnTable, allowASCII bool, only string) (*LabelResult, error) {
-	res := &LabelResult{Input: p.input, ULabel: p.ulabel, ALabel: p.alabel, IsIDN: p.isIDN}
+func matchTables(p preparedLabel, tables []LabelTable, allowASCII bool, only string) (*LabelResult, error) {
+	res := &LabelResult{Input: p.input, ULabel: p.ulabel, ALabel: p.alabel, IsIDN: p.isIDN, VariantKey: p.alabel}
 	if !p.isIDN && allowASCII && only == "" {
+		// Label LDH tidak dicatat dengan tabel, tetapi kuncinya tetap dari
+		// tabel yang menerimanya: varian bisa melintasi ASCII (ß ↔ ss).
+		for _, table := range tables {
+			if table.CheckLabel(p.ulabel) == nil {
+				res.VariantKey = variantKey(p, table)
+				break
+			}
+		}
 		return res, nil
 	}
 
 	var best *ValidationError
 	tried := false
 	for _, table := range tables {
-		if only != "" && table.name != only {
+		if only != "" && table.GetName() != only {
 			continue
 		}
 		tried = true
 		err := table.CheckLabel(p.ulabel)
 		if err == nil {
 			res.Table = table
+			res.VariantKey = variantKey(p, table)
 			return res, nil
 		}
 		ve, ok := err.(*ValidationError)
 		if !ok {
-			ve = &ValidationError{Kind: ErrLanguageRule, Label: p.ulabel, Pos: -1, Table: table.name, Err: err}
+			ve = &ValidationError{Kind: ErrLanguageRule, Label: p.ulabel, Pos: -1, Table: table.GetName(), Err: err}
 		}
 		if best == nil || closeness(ve) > closeness(best) {
 			best = ve

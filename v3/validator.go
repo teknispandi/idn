@@ -57,7 +57,7 @@ func (v *IdnLabelValidator) CheckLabelForTld(label string, tld TldInterface) (*L
 		return nil, err
 	}
 
-	var tables []*IdnTable
+	var tables []LabelTable
 	for _, tableType := range v.getIdnTablesForTld(tld) {
 		if table := v.registry.GetTable(tableType); table != nil {
 			tables = append(tables, table)

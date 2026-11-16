@@ -180,8 +180,9 @@ var (
 )
 
 // isIDNA2008Allowed mendekati properti turunan RFC 5892 §3: PVALID,
-// CONTEXTO, atau CONTEXTJ. Kategori Unstable / IgnorableProperties /
-// Unassigned yang tidak tertangkap di sini ditolak oleh registrationProfile.
+// CONTEXTO, atau CONTEXTJ. IgnorableProperties dan Unassigned yang tidak
+// tertangkap di sini ditolak oleh registrationProfile. Diuji terhadap
+// x/text/secure/precis di TestIDNA2008MatchesPrecis.
 func isIDNA2008Allowed(r rune) bool {
 	switch {
 	case r < 0x80:
@@ -194,9 +195,22 @@ func isIDNA2008Allowed(r rune) bool {
 		return false // OldHangulJamo (§2.9)
 	case r >= 0x20D0 && r <= 0x20FF, r >= 0x1D100 && r <= 0x1D24F:
 		return false // IgnorableBlocks (§2.4)
+	case !isStable(r):
+		return false // Unstable (§2.2), mis. huruf besar Latin
 	}
-	// LetterDigits (§2.1) tanpa Lu: huruf besar selalu Unstable (§2.2).
-	return unicode.In(r, unicode.Ll, unicode.Lo, unicode.Lm, unicode.Mn, unicode.Mc, unicode.Nd)
+	// LetterDigits (§2.1). Lu ikut: huruf besar yang stabil (Cherokee
+	// U+13A0–13F5, karena case folding Cherokee menuju huruf besar) PVALID.
+	return unicode.In(r, unicode.Ll, unicode.Lu, unicode.Lo, unicode.Lm, unicode.Mn, unicode.Mc, unicode.Nd)
+}
+
+// isStable: NFKC_Casefold(r) == r (RFC 5892 §2.2), lewat pemetaan UTS46
+// yang diturunkan dari NFKC_Casefold: code point yang dipetakan atau
+// dibuang tidak stabil. (x/text/cases.Fold tidak bisa dipakai: untuk
+// Cherokee hasilnya bolak-balik U+13A0 ↔ U+AB70.)
+func isStable(r rune) bool {
+	s := string(r)
+	mapped, _ := mapProfile.ToUnicode(s)
+	return mapped == s
 }
 
 // isContextO melaporkan code point berkategori CONTEXTO (RFC 5892 F.1).

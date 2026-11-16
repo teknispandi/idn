@@ -6,8 +6,10 @@ import (
 	"strings"
 	"sync"
 	"testing"
+	"unicode"
 
 	idn "github.com/al0fayz/idn"
+	"golang.org/x/text/secure/precis"
 )
 
 // Sampel label Bali (lihat juga balinese_language_validator_test.go).
@@ -49,6 +51,8 @@ func TestPrepareLabel(t *testing.T) {
 		{"Café", "café", "xn--caf-dma", nil},               // hanya ASCII yang diturunkan
 		{"CAFÉ", "", "", ErrDisallowedCodepoint},           // É huruf besar: normalisasi dulu
 		{"☃", "", "", ErrDisallowedCodepoint},              // NV8: x/net/idna meloloskannya
+		{"Ꭰ", "Ꭰ", "", nil},                                // huruf besar Cherokee stabil → PVALID
+		{"ꭰ", "", "", ErrDisallowedCodepoint},              // huruf kecil Cherokee dilipat → Unstable
 		{"éé--a", "", "", ErrHyphen34},                     // posisi 3–4 dihitung per code point
 		{hiragana60, "", "", ErrLabelTooLong},              // panjang diukur di A-label
 		{"café", "", "", ErrNotNFC},                       // tidak NFC
@@ -441,4 +445,44 @@ func TestValidationError_Message(t *testing.T) {
 	if err == nil || err.Error() != want {
 		t.Errorf("error message:\n got: %v\nwant: %s", err, want)
 	}
+}
+
+// Aproksimasi PVALID (isIDNA2008Allowed + registrationProfile) dibandingkan
+// dengan PRECIS IdentifierClass (RFC 8264, x/text), yang diturunkan dari
+// kategori RFC 5892 yang sama. Selisih yang diketahui dan disengaja:
+//   - IgnorableBlocks (RFC 5892 §2.4) ditolak di sini, diterima PRECIS;
+//   - sejumlah huruf pengubah Lm (mis. U+02B9, U+A717) PVALID di IDNA2008
+//     tetapi ditolak PRECIS — tidak ada di tabel IDN mana pun.
+func TestIDNA2008MatchesPrecis(t *testing.T) {
+	ignorableBlock := func(r rune) bool {
+		return (r >= 0x20D0 && r <= 0x20FF) || (r >= 0x1D100 && r <= 0x1D24F)
+	}
+	overRejected, lenient := 0, 0
+	for r := rune(0x80); r <= unicode.MaxRune; r++ {
+		if (r >= 0xD800 && r <= 0xDFFF) || isContextO(r) || r == 0x200C || r == 0x200D {
+			continue
+		}
+		s := string(r)
+		if unicode.In(r, unicode.Mn, unicode.Mc, unicode.Me) {
+			s = "a" + s // tanda kombinasi tidak boleh di awal label
+		}
+		_, precisErr := precis.UsernameCasePreserved.String(s)
+		_, idnaErr := registrationProfile.ToASCII(s)
+		pipeline := isIDNA2008Allowed(r) && idnaErr == nil
+		oracle := precisErr == nil && idnaErr == nil
+
+		if oracle && !pipeline && !ignorableBlock(r) {
+			overRejected++
+			if overRejected <= 10 {
+				t.Errorf("%U rejected here but valid in PRECIS and UTS46", r)
+			}
+		}
+		if pipeline && !oracle {
+			lenient++
+			if !unicode.Is(unicode.Lm, r) {
+				t.Errorf("%U accepted here but rejected by PRECIS (not a modifier letter)", r)
+			}
+		}
+	}
+	t.Logf("modifier letters accepted here but not by PRECIS: %d", lenient)
 }

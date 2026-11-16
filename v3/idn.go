@@ -40,6 +40,12 @@ type IdnTable struct {
 
 	// languageValidator memvalidasi aturan bahasa yang terkait dengan tabel IDN ini
 	languageValidator LanguageValidator
+
+	// Varian dari kolom 2 dan 3 format RFC 3743 (lihat variants.go); kosong
+	// untuk tabel tanpa varian.
+	preferred    map[rune][]rune
+	variantIndex map[rune]rune   // code point → anggota terkecil himpunannya
+	variantSets  map[rune][]rune // anggota terkecil → semua anggota, terurut
 }
 
 // NewIdnTable membuat instance baru IdnTable dari data file teks
@@ -67,6 +73,8 @@ func NewIdnTable(language string, data []string, validator LanguageValidator) (*
 		"# Version:":        &table.version,
 		"# Effective Date:": &table.effectiveDate,
 	}
+
+	variantEdges := make(map[rune][]rune)
 
 	for _, line := range data {
 		line = strings.TrimSpace(line)
@@ -108,10 +116,25 @@ func NewIdnTable(language string, data []string, validator LanguageValidator) (*
 		}
 
 		table.validCodepoints[codepoint] = true
+
+		if strings.Contains(line, ";") {
+			preferred, variants := parseVariantColumns(line)
+			if len(preferred) > 0 {
+				if table.preferred == nil {
+					table.preferred = make(map[rune][]rune)
+				}
+				table.preferred[rune(codepoint)] = preferred
+			}
+			variantEdges[rune(codepoint)] = append(variantEdges[rune(codepoint)], variants...)
+		}
 	}
 
 	if len(table.validCodepoints) == 0 {
 		return nil, fmt.Errorf("IDN table %s has no code points", language)
+	}
+
+	if len(variantEdges) > 0 {
+		table.buildVariantSets(variantEdges)
 	}
 
 	if table.languageValidator == nil {

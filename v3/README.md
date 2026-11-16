@@ -135,9 +135,47 @@ res, err := manager.CheckDomain("xn--caf-dma.id") // input EPP, U-label juga bol
 if err != nil {
     return err // *v3.ValidationError
 }
-store(res.ASCIIName)   // "xn--caf-dma.id" — bentuk yang disimpan
-rde(res.TableName())   // "latin" — idnTableId untuk deposit RDE ("" untuk nama ASCII)
-rde(res.Table.GetURL()) // dari header "# URL:" tabel; nil jika header tidak ada
+store(res.ASCIIName, res.VariantKey) // UNIQUE(zone, variant_key) mendeteksi bentrok varian
+rde(res.TableName())                 // "latin" — idnTableId untuk deposit RDE ("" untuk nama ASCII)
+```
+
+**Varian.** `VariantKey` adalah *index label* (RFC 7940 §8.5): setiap code
+point diganti anggota terkecil himpunan variannya. Dua nama saling varian jika
+dan hanya jika kuncinya sama, jadi satu indeks unik `(zone, variant_key)`
+sudah cukup — tanpa membangkitkan semua varian. `res.VariantLabels(limit)`
+mengembalikan varian beserta disposisinya (`blocked`, `allocatable`, …) untuk
+ditawarkan ke pendaftar yang sama. Sumber varian:
+
+- tabel `.txt` format RFC 3743 (`Chinese-IDN.txt`, `Traditional-Chinese-IDN.txt`):
+  varian *preferred* (kolom 2) → `allocatable`, lainnya → `blocked`;
+- LGR XML (package [v4](../v4)) — disposisi menurut aksi LGR.
+
+Tabel-tabel dalam satu zona harus koheren variannya (IDN Implementation
+Guidelines); index dihitung oleh tabel yang menerima label.
+
+**RDE.** Header `# URL:`/`# Policy:` tabel Google di `idn/` menunjuk ke
+registrasi Google, bukan milik registry Anda. Isi `TableRefs` dan periksa saat
+registry mulai:
+
+```go
+manager.RegisterTldConfig(v3.TldIdnConfig{
+    TldName: "id", Languages: []string{"latin", "und-bali"}, Enabled: true, AllowASCII: true,
+    TableRefs: map[string]v3.TableRef{
+        "latin":    {URL: "https://www.iana.org/domains/idn-tables/tables/…", Policy: "https://…"},
+        "und-bali": {URL: "https://www.iana.org/domains/idn-tables/tables/…", Policy: "https://…"},
+    },
+})
+if err := manager.CheckRdeTableRefs(); err != nil { log.Fatal(err) }
+refs, _ := manager.RdeTableRefs("id") // untuk <rdeIDN:idnTableRef>
+```
+
+**LGR XML.** Tabel dari LGR RFC 7940 dipasang dengan `RegisterTable` lalu
+dipakai di `Languages` seperti tabel `.txt`:
+
+```go
+bali, _ := v4.LoadFile("lgrs/second-level-reference/und-Bali.xml") // nama "und-bali"
+manager.RegisterTable(bali) // menggantikan idn/und-Bali.txt, lengkap dengan varian
+manager.RegisterTld("id", []string{"latin", "und-bali"})
 ```
 
 Jika registrar menyebut tabel IDN secara eksplisit (ekstensi EPP IDN), pakai
@@ -179,11 +217,11 @@ belakang dalam label (alasan yang paling relevan bagi pengguna).
 
 - Huruf ASCII A–Z diturunkan otomatis; huruf besar non-ASCII (mis. `É`)
   ditolak — normalisasi input pengguna dengan `NormalizeDomainName`.
-- `RegisterTld` mengizinkan label LDH murni tanpa tabel (`AllowASCII: true`).
-- URL/Policy tabel hanya dari header file; tambahkan `# URL:` dan `# Policy:`
-  ke tabel yang belum memilikinya sebelum dipakai untuk RDE.
-- Varian (mis. kolom varian di tabel Chinese) belum diterapkan: nama varian
-  belum diblokir.
+- `RegisterTld` mengizinkan label LDH murni tanpa tabel (`AllowASCII: true`);
+  kunci variannya tetap dihitung dari tabel TLD (varian bisa melintasi ASCII,
+  mis. `ß` ↔ `ss`).
+- `RdeTableRefs` tidak pernah mengarang URL: tabel tanpa referensi membuatnya
+  mengembalikan error.
 
 ## File Structure
 

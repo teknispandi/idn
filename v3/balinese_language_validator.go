@@ -58,10 +58,21 @@ func isBalineseSign(r rune) bool {
 }
 
 func (b *BalineseLanguageValidator) IsValidLabelForLanguage(label string) bool {
+	return b.CheckLabelForLanguage(label) == nil
+}
+
+// CheckLabelForLanguage seperti IsValidLabelForLanguage, tetapi menyebut
+// rule LGR yang dilanggar beserta posisi code point-nya.
+func (b *BalineseLanguageValidator) CheckLabelForLanguage(label string) error {
 	runes := []rune(label)
 	n := len(runes)
 	if n == 0 {
-		return false
+		return newLabelError(ErrEmptyLabel, label)
+	}
+	fail := func(i int, rule string) error {
+		e := newRuneError(ErrLanguageRule, label, i, runes[i])
+		e.Rule = rule
+		return e
 	}
 
 	// at returns the rune at i, or -1 outside the label.
@@ -75,7 +86,9 @@ func (b *BalineseLanguageValidator) IsValidLabelForLanguage(label string) bool {
 	for i, r := range runes {
 		// 1. Must be in repertoire
 		if !balineseRepertoire[r] {
-			return false
+			e := newRuneError(ErrCodepointNotInTable, label, i, r)
+			e.Rule = "repertoire"
+			return e
 		}
 
 		prev := at(i - 1)
@@ -86,26 +99,26 @@ func (b *BalineseLanguageValidator) IsValidLabelForLanguage(label string) bool {
 			// last, no "--" at positions 3–4. Counted in runes here because
 			// x/net/idna checks it in bytes and so never fires for Balinese.
 			if i == 0 || i == n-1 || (i == 3 && prev == 0x002D) {
-				return false
+				return fail(i, "hyphen-minus-disallowed")
 			}
 
 		case r == 0x1B35:
 			// follows-c
 			if !isBalineseConsonant(prev) {
-				return false
+				return fail(i, "follows-c")
 			}
 
 		case isBalineseDependentVowel(r):
 			// follows-c-or-iv
 			if !isBalineseConsonant(prev) && !isBalineseIndependentVowel(prev) {
-				return false
+				return fail(i, "follows-c-or-iv")
 			}
 
 		case r == 0x1B44:
 			// disallow-for-1B44: not first, not after a hyphen, a sign
 			// (itself included) or a dependent vowel.
 			if i == 0 || prev == 0x002D || isBalineseSign(prev) || isBalineseDependentVowel(prev) {
-				return false
+				return fail(i, "disallow-for-1B44")
 			}
 			// ...and not as the second virama of C ᭄ C ᭄ C, which would stack
 			// two gantungan under one base.
@@ -114,16 +127,16 @@ func (b *BalineseLanguageValidator) IsValidLabelForLanguage(label string) bool {
 			// is how Balinese writes a word-final consonant — ᬲᭂᬧᬢ᭄, ᬢᬩᬦᬦ᭄.
 			if isBalineseConsonant(at(i-3)) && at(i-2) == 0x1B44 &&
 				isBalineseConsonant(prev) && isBalineseConsonant(at(i+1)) {
-				return false
+				return fail(i, "disallow-for-1B44")
 			}
 
 		case isBalineseSign(r):
 			// follows-c-or-iv-or-dv (1B02–1B04)
 			if !isBalineseConsonant(prev) && !isBalineseIndependentVowel(prev) && !isBalineseDependentVowel(prev) {
-				return false
+				return fail(i, "follows-c-or-iv-or-dv")
 			}
 		}
 	}
 
-	return true
+	return nil
 }

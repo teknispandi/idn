@@ -38,7 +38,7 @@ func ExampleBali() {
 		{name: "❌ Invalid: dv at start", label: "ᬸᬩᬓ", expected: false},
 		{name: "❌ Invalid: virama before dv", label: "ᬳ᭄ᬵ", expected: false},
 		{name: "❌ Invalid: double virama", label: "ᬓᬓ᭄᭄ᬱ", expected: false},
-		{name: "❌ Invalid: 3 consonants before virama", label: "ᬓᬓᬓ᭄ᬳ", expected: false},
+		{name: "✅ Valid: konsonan berurutan sebelum virama (rule XML LGR)", label: "ᬓᬓᬓ᭄ᬳ", expected: true},
 		{name: "❌ Invalid: hyphen end", label: "ᬩᭂᬘᬶ-", expected: false},
 		{name: "❌ Invalid: dv at start 2", label: "ᭂᬩᬓᬵ", expected: false},
 	}

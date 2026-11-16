@@ -4,81 +4,81 @@ import (
 	"fmt"
 	"strings"
 	"unicode"
-
-	"golang.org/x/net/idna"
 )
 
 // IdnUtils menyediakan utility functions untuk operasi IDN
 type IdnUtils struct{}
 
-// ToUnicode mengkonversi label IDN yang dikodekan ASCII (Punycode) ke representasi Unicode
-// Fungsi ini setara dengan Idn.toUnicode() di Java
+// ToUnicode mengkonversi nama domain (atau label) yang dikodekan ASCII (Punycode) ke representasi Unicode
+// Fungsi ini setara dengan Idn.toUnicode() di Java. Setiap label divalidasi
+// menurut IDNA2008; A-label yang tidak kanonik atau tidak valid ditolak.
 func (u *IdnUtils) ToUnicode(label string) (string, error) {
-	// Menggunakan golang.org/x/net/idna untuk konversi Punycode
-	result, err := idna.ToUnicode(label)
+	result, err := convertDomain(label, func(p preparedLabel) string { return p.ulabel })
 	if err != nil {
 		return "", fmt.Errorf("failed to convert to Unicode: %w", err)
 	}
 	return result, nil
 }
 
-// ToASCII mengkonversi label Unicode ke representasi ASCII (Punycode)
-// Fungsi ini setara dengan Idn.toASCII() di Java
+// ToASCII mengkonversi nama domain (atau label) Unicode ke representasi ASCII (Punycode)
+// Fungsi ini setara dengan Idn.toASCII() di Java. Setiap label divalidasi
+// menurut IDNA2008 tanpa pemetaan: huruf besar non-ASCII ditolak (gunakan
+// NormalizeDomainName dulu untuk input pengguna).
 func (u *IdnUtils) ToASCII(label string) (string, error) {
-	result, err := idna.ToASCII(label)
+	result, err := convertDomain(label, func(p preparedLabel) string { return p.alabel })
 	if err != nil {
 		return "", fmt.Errorf("failed to convert to ASCII: %w", err)
 	}
 	return result, nil
 }
 
+// convertDomain memvalidasi semua label dan menyusunnya kembali dengan
+// bentuk yang dipilih pick. Titik di akhir (FQDN) dipertahankan.
+func convertDomain(name string, pick func(preparedLabel) string) (string, error) {
+	labels, err := prepareDomain(name)
+	if err != nil {
+		return "", err
+	}
+	parts := make([]string, len(labels))
+	for i, p := range labels {
+		parts[i] = pick(p)
+	}
+	result := strings.Join(parts, ".")
+	if strings.HasSuffix(name, ".") {
+		result += "."
+	}
+	return result, nil
+}
+
 // IsValidDomainLabel memeriksa apakah label adalah domain label yang valid
-// sesuai dengan spesifikasi DNS dan IDN
+// sesuai dengan spesifikasi DNS dan IDNA2008: panjang A-label maksimal 63
+// oktet, aturan tanda hubung, A-label kanonik, dan code point PVALID.
+// Tabel IDN TLD tidak diperiksa di sini; gunakan IdnManager.CheckLabel.
 func (u *IdnUtils) IsValidDomainLabel(label string) bool {
-	if len(label) == 0 || len(label) > 63 { // Panjang label domain maksimal 63 karakter
-		return false
-	}
-
-	// Label tidak boleh dimulai atau diakhiri dengan hyphen
-	if strings.HasPrefix(label, "-") || strings.HasSuffix(label, "-") {
-		return false
-	}
-
-	// Semua karakter harus valid
-	for _, r := range label {
-		if !isValidDomainCharacter(r) {
-			return false
-		}
-	}
-
-	return true
+	_, err := prepareLabel(label)
+	return err == nil
 }
 
-// isValidDomainCharacter memeriksa apakah karakter valid untuk domain label
-func isValidDomainCharacter(r rune) bool {
-	// ASCII letters, digits, dan hyphen
-	if (r >= 'a' && r <= 'z') || (r >= 'A' && r <= 'Z') ||
-		(r >= '0' && r <= '9') || r == '-' {
-		return true
-	}
-
-	// Non-ASCII characters (untuk IDN)
-	if r >= 0x80 {
-		return true
-	}
-
-	return false
-}
-
-// NormalizeDomainLabel menormalkan label domain untuk perbandingan konsisten
+// NormalizeDomainLabel menormalkan label domain untuk perbandingan konsisten:
+// pemetaan UTS46 (huruf kecil, lebar penuh → normal, NFC).
 func (u *IdnUtils) NormalizeDomainLabel(label string) string {
-	// Konversi ke lowercase (ASCII case folding)
-	result := strings.ToLower(label)
-
-	// Untuk karakter non-ASCII, kita bisa menambahkan normalisasi Unicode
-	// jika diperlukan (NFC, NFD, dll.)
-
+	result, _ := mapProfile.ToUnicode(label)
 	return result
+}
+
+// NormalizeDomainName menyiapkan input pengguna di sisi registrar sebelum
+// divalidasi: spasi di tepi dibuang, pemetaan UTS46 (huruf kecil, karakter
+// lebar penuh, NFC, titik ideografik "。" menjadi "."), A-label didekode,
+// dan titik di akhir dibuang. Hasilnya berbentuk Unicode untuk ditampilkan
+// ke pengguna; validasi tetap oleh IdnManager.CheckDomain, yang memberi
+// alasan penolakan yang tepat.
+func (u *IdnUtils) NormalizeDomainName(name string) (string, error) {
+	result, _ := mapProfile.ToUnicode(strings.TrimSpace(name))
+	result = strings.TrimSuffix(result, ".")
+	if result == "" {
+		return "", newLabelError(ErrEmptyLabel, name)
+	}
+	return result, nil
 }
 
 // SplitDomainName memisahkan nama domain menjadi label-label individual
@@ -93,32 +93,13 @@ func (u *IdnUtils) SplitDomainName(domain string) []string {
 	return strings.Split(domain, ".")
 }
 
-// ValidateDomainName memvalidasi seluruh nama domain
+// ValidateDomainName memvalidasi seluruh nama domain menurut IDNA2008:
+// setiap label (lihat IsValidDomainLabel), panjang total maksimal 253 oktet
+// dalam bentuk A-label, dan aturan bidi RFC 5893 untuk nama yang memuat
+// label RTL. Error berupa *ValidationError.
 func (u *IdnUtils) ValidateDomainName(domain string) error {
-	if domain == "" {
-		return fmt.Errorf("domain name cannot be empty")
-	}
-
-	labels := u.SplitDomainName(domain)
-
-	// Domain name maksimal 253 karakter (termasuk dots, subdomain, domain, TLD)
-	if len(domain) > 253 {
-		return fmt.Errorf("domain name too long: %d characters (max 253)", len(domain))
-	}
-
-	// Minimal harus ada satu label
-	if len(labels) == 0 {
-		return fmt.Errorf("domain name must have at least one label")
-	}
-
-	// Validasi setiap label
-	for i, label := range labels {
-		if !u.IsValidDomainLabel(label) {
-			return fmt.Errorf("invalid label at position %d: %s", i, label)
-		}
-	}
-
-	return nil
+	_, err := prepareDomain(domain)
+	return err
 }
 
 // GetUnicodeBlocks mengembalikan daftar Unicode blocks yang terdapat dalam string
@@ -169,25 +150,52 @@ func (u *IdnUtils) CountCodepoints(s string) int {
 	return len([]rune(s))
 }
 
-// HasMixedScripts memeriksa apakah string mengandung campuran script yang berbeda
+// HasMixedScripts memeriksa apakah string mengandung campuran script yang berbeda.
+// Script Common (digit, tanda hubung) dan Inherited (tanda diakritik) tidak
+// dihitung, dan kombinasi yang lazim dalam satu bahasa tidak dianggap campuran:
+// Han+Hiragana+Katakana (Jepang), Han+Hangul (Korea), Han+Bopomofo.
 func (u *IdnUtils) HasMixedScripts(s string) bool {
-	blocks := u.GetUnicodeBlocks(s)
+	scripts := make(map[string]bool)
+	for _, r := range s {
+		if name := scriptOf(r); name != "" && name != "Common" && name != "Inherited" {
+			scripts[name] = true
+		}
+	}
 
-	// Jika hanya ada satu block atau tidak ada block, tidak mixed
-	if len(blocks) <= 1 {
+	// Jika hanya ada satu script atau tidak ada script, tidak mixed
+	if len(scripts) <= 1 {
 		return false
 	}
 
-	// Latin + digits selalu diizinkan
-	if len(blocks) == 2 && blocks["Latin"] && blocks["Other"] {
-		return false
+	for _, allowed := range [][]string{{"Han", "Hiragana", "Katakana"}, {"Han", "Hangul"}, {"Han", "Bopomofo"}} {
+		covered := 0
+		for _, name := range allowed {
+			if scripts[name] {
+				covered++
+			}
+		}
+		if covered == len(scripts) {
+			return false
+		}
 	}
 
 	return true
 }
 
+// scriptOf mengembalikan nama script Unicode untuk rune, atau "" jika tidak dikenal
+func scriptOf(r rune) string {
+	for name, table := range unicode.Scripts {
+		if unicode.Is(table, r) {
+			return name
+		}
+	}
+	return ""
+}
+
 // IsConfusable memeriksa apakah string berpotensi membingungkan
-// (implementasi sederhana - dalam produksi perlu database confusables Unicode)
+// (implementasi sederhana - dalam produksi perlu database confusables Unicode).
+// Hanya heuristik untuk tampilan; bukan pengganti kebijakan varian/tabel IDN
+// dan tidak dipakai dalam validasi registry.
 func (u *IdnUtils) IsConfusable(s string) bool {
 	confusableChars := map[rune]bool{
 		0x00EF: true, // LATIN SMALL LETTER I WITH DIAERESIS (confusable with i)

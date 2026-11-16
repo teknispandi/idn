@@ -215,7 +215,7 @@ func TestIdnTable(t *testing.T) {
 			{"ab", true},   // valid codepoints
 			{"a-b", true},  // with hyphen
 			{"abc", false}, // 'c' not in table
-			{"", true},     // empty string (no invalid codepoints)
+			{"", false},    // label kosong tidak pernah valid
 		}
 
 		for _, tc := range testCases {

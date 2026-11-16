@@ -3,29 +3,44 @@ package v3
 import (
 	"bufio"
 	"fmt"
+	"io/fs"
 	"os"
-	"path/filepath"
+	"path"
+	"sort"
 	"strings"
 	"sync"
 )
 
 // IdnLoader mengelola loading dan caching IDN tables dari folder /idn
 type IdnLoader struct {
-	idnPath string
-	cache   map[string]*IdnTable
-	mutex   sync.RWMutex
+	fsys  fs.FS
+	cache map[string]*IdnTable
+	mutex sync.RWMutex
 }
 
-// NewIdnLoader membuat instance baru IdnLoader
+// NewIdnLoader membuat instance baru IdnLoader yang membaca tabel dari folder idnPath
 func NewIdnLoader(idnPath string) *IdnLoader {
+	return NewIdnLoaderFS(os.DirFS(idnPath))
+}
+
+// NewIdnLoaderFS membuat IdnLoader yang membaca tabel dari fs.FS, misalnya
+// tabel yang disematkan di binary (idn.Tables() dari package root modul ini).
+func NewIdnLoaderFS(fsys fs.FS) *IdnLoader {
 	return &IdnLoader{
-		idnPath: idnPath,
-		cache:   make(map[string]*IdnTable),
+		fsys:  fsys,
+		cache: make(map[string]*IdnTable),
 	}
 }
 
-// LoadTable memuat IDN table dari file dan cache di memory
+// LoadTable memuat IDN table dari file dan cache di memory.
+//
+// Nama bahasa tidak peka huruf besar/kecil dan dicocokkan dengan nama file
+// tanpa akhiran "-IDN.txt" atau ".txt": "latin" → Latin-IDN.txt,
+// "traditional-chinese" → Traditional-Chinese-IDN.txt, "und-bali" → und-Bali.txt.
+// Nama tabel yang dihasilkan adalah bentuk huruf kecilnya.
 func (loader *IdnLoader) LoadTable(language string) (*IdnTable, error) {
+	language = normalizeLanguageName(language)
+
 	loader.mutex.RLock()
 	if table, exists := loader.cache[language]; exists {
 		loader.mutex.RUnlock()
@@ -90,20 +105,18 @@ func (loader *IdnLoader) GetCachedTable(language string) (*IdnTable, bool) {
 	return table, exists
 }
 
-// ListAvailableLanguages mengembalikan daftar bahasa yang tersedia
+// ListAvailableLanguages mengembalikan daftar bahasa yang tersedia, terurut
 func (loader *IdnLoader) ListAvailableLanguages() ([]string, error) {
-	files, err := filepath.Glob(filepath.Join(loader.idnPath, "*-IDN.txt"))
+	files, err := loader.tableFiles()
 	if err != nil {
 		return nil, err
 	}
 
-	var languages []string
-	for _, file := range files {
-		basename := filepath.Base(file)
-		// Hapus suffix "-IDN.txt" untuk mendapatkan nama bahasa
-		language := strings.TrimSuffix(basename, "-IDN.txt")
-		languages = append(languages, strings.ToLower(language))
+	languages := make([]string, 0, len(files))
+	for language := range files {
+		languages = append(languages, language)
 	}
+	sort.Strings(languages)
 
 	return languages, nil
 }
@@ -138,28 +151,56 @@ func (loader *IdnLoader) GetCacheStats() map[string]interface{} {
 	}
 }
 
-// findIdnFile mencari file IDN yang sesuai dengan nama bahasa
-func (loader *IdnLoader) findIdnFile(language string) (string, error) {
-	// Kemungkinan format nama file
-	patterns := []string{
-		fmt.Sprintf("%s-IDN.txt", strings.Title(language)),
-		fmt.Sprintf("%s-IDN.txt", strings.ToUpper(language)),
-		fmt.Sprintf("%s-IDN.txt", language),
+// tableFiles memetakan nama bahasa (huruf kecil) ke nama file tabel di
+// root fsys. "-IDN.txt" diutamakan bila ada dua file untuk bahasa yang sama.
+func (loader *IdnLoader) tableFiles() (map[string]string, error) {
+	entries, err := fs.ReadDir(loader.fsys, ".")
+	if err != nil {
+		return nil, err
 	}
 
-	for _, pattern := range patterns {
-		filename := filepath.Join(loader.idnPath, pattern)
-		if _, err := os.Stat(filename); err == nil {
-			return filename, nil
+	files := make(map[string]string)
+	for _, entry := range entries {
+		name := entry.Name()
+		if entry.IsDir() || path.Ext(name) != ".txt" {
+			continue
 		}
+		stem := strings.TrimSuffix(name, ".txt")
+		hasSuffix := strings.HasSuffix(strings.ToLower(stem), "-idn")
+		if hasSuffix {
+			stem = stem[:len(stem)-len("-idn")]
+		}
+		language := normalizeLanguageName(stem)
+		if _, exists := files[language]; !exists || hasSuffix {
+			files[language] = name
+		}
+	}
+	return files, nil
+}
+
+// findIdnFile mencari file IDN yang sesuai dengan nama bahasa
+func (loader *IdnLoader) findIdnFile(language string) (string, error) {
+	files, err := loader.tableFiles()
+	if err != nil {
+		return "", err
+	}
+	if filename, ok := files[language]; ok {
+		return filename, nil
 	}
 
 	return "", fmt.Errorf("IDN file not found for language: %s", language)
 }
 
+// normalizeLanguageName menyeragamkan nama bahasa: huruf kecil, spasi dan
+// garis bawah menjadi tanda hubung ("Traditional Chinese" → "traditional-chinese").
+func normalizeLanguageName(language string) string {
+	language = strings.ToLower(strings.TrimSpace(language))
+	return strings.NewReplacer(" ", "-", "_", "-").Replace(language)
+}
+
 // loadFromFile memuat data dari file IDN
 func (loader *IdnLoader) loadFromFile(filename string) ([]string, error) {
-	file, err := os.Open(filename)
+	file, err := loader.fsys.Open(filename)
 	if err != nil {
 		return nil, err
 	}

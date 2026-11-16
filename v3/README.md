@@ -98,6 +98,93 @@ err = manager.DisableTld("global")
 err = manager.EnableTld("global")
 ```
 
+## Penggunaan untuk Registry & Registrar
+
+Satu jalur validasi dipakai kedua sisi, sehingga registrar bisa menolak nama
+**sebelum** dikirim lewat EPP dengan alasan yang sama persis dengan registry.
+
+Urutan pemeriksaan `IdnManager.CheckDomain`:
+
+1. **Struktur** — label tidak kosong, maks. 63 oktet (diukur dalam bentuk
+   A-label), total maks. 253 oktet, aturan tanda hubung RFC 5891 §4.2.3.1
+   (posisi 3–4 dihitung per *code point*).
+2. **A-label** — `xn--…` didekode lalu divalidasi sebagai U-label, dan harus
+   kanonik (encode ulang = input).
+3. **IDNA2008** — NFC, tidak diawali tanda kombinasi, code point PVALID
+   (RFC 5892), CONTEXTO/CONTEXTJ, aturan bidi (RFC 5893).
+4. **Zona** — akhiran terpanjang yang terdaftar (`co.id` sebelum `id`); nama
+   harus tepat satu label di bawah zona.
+5. **Tabel IDN TLD** — tabel pertama (sesuai urutan konfigurasi) yang
+   menerima label, termasuk aturan bahasanya (Bali, Arab, `ja`).
+
+### Registry
+
+```go
+import (
+    idn "github.com/al0fayz/idn"
+    v3 "github.com/al0fayz/idn/v3"
+)
+
+manager := v3.NewIdnManagerFS(idn.Tables()) // atau v3.NewIdnManager("/etc/registry/idn")
+manager.RegisterTld("id", []string{"latin", "und-bali"})
+manager.RegisterTld("co.id", []string{"latin"})
+// Zona khusus IDN: label ASCII murni tidak diizinkan tanpa tabel.
+manager.RegisterTldConfig(v3.TldIdnConfig{TldName: "рф", Languages: []string{"cyrillic"}, Enabled: true})
+
+res, err := manager.CheckDomain("xn--caf-dma.id") // input EPP, U-label juga boleh
+if err != nil {
+    return err // *v3.ValidationError
+}
+store(res.ASCIIName)   // "xn--caf-dma.id" — bentuk yang disimpan
+rde(res.TableName())   // "latin" — idnTableId untuk deposit RDE ("" untuk nama ASCII)
+rde(res.Table.GetURL()) // dari header "# URL:" tabel; nil jika header tidak ada
+```
+
+Jika registrar menyebut tabel IDN secara eksplisit (ekstensi EPP IDN), pakai
+`manager.CheckDomainForTable(name, "und-bali")`.
+
+### Registrar
+
+```go
+name, _ := v3.DefaultIdnUtils.NormalizeDomainName(userInput) // "Café。ID " → "café.id"
+res, err := manager.CheckDomain(name)
+if err != nil {
+    var ve *v3.ValidationError
+    if errors.As(err, &ve) {
+        // ve.Kind, ve.Rune, ve.Pos, ve.Table, ve.Rule → pesan untuk pengguna
+    }
+    return err
+}
+showToUser(res.UnicodeName) // "café.id"
+sendEPP(res.ASCIIName)      // "xn--caf-dma.id"
+```
+
+### Jenis kesalahan
+
+Semua penolakan berupa `*ValidationError`; bedakan dengan `errors.Is`:
+
+| Error | Arti |
+|---|---|
+| `ErrEmptyLabel`, `ErrLabelTooLong`, `ErrDomainTooLong` | panjang label/nama |
+| `ErrLeadingHyphen`, `ErrTrailingHyphen`, `ErrHyphen34`, `ErrInvalidLDH` | aturan LDH / tanda hubung |
+| `ErrInvalidALabel` | punycode rusak, tidak kanonik, atau dekode ke ASCII saja |
+| `ErrNotNFC`, `ErrLeadingCombiningMark`, `ErrDisallowedCodepoint`, `ErrContextRule`, `ErrBidiRule` | IDNA2008 |
+| `ErrCodepointNotInTable`, `ErrLanguageRule`, `ErrNoIdnTable` | kebijakan tabel IDN TLD |
+| `ErrUnknownTld`, `ErrTldDisabled`, `ErrNotRegistrable` | zona tidak terdaftar / nonaktif / bukan nama yang bisa didaftarkan |
+
+Jika beberapa tabel menolak, yang dilaporkan adalah tabel yang menolak paling
+belakang dalam label (alasan yang paling relevan bagi pengguna).
+
+### Catatan kebijakan
+
+- Huruf ASCII A–Z diturunkan otomatis; huruf besar non-ASCII (mis. `É`)
+  ditolak — normalisasi input pengguna dengan `NormalizeDomainName`.
+- `RegisterTld` mengizinkan label LDH murni tanpa tabel (`AllowASCII: true`).
+- URL/Policy tabel hanya dari header file; tambahkan `# URL:` dan `# Policy:`
+  ke tabel yang belum memilikinya sebelum dipakai untuk RDE.
+- Varian (mis. kolom varian di tabel Chinese) belum diterapkan: nama varian
+  belum diblokir.
+
 ## File Structure
 
 ```
@@ -171,12 +258,6 @@ Lihat folder `/examples/v3/` untuk contoh lengkap:
 - `performance_demo.go` - Performance testing dan benchmarks
 
 ## Configuration
-
-### Environment Variables
-```bash
-export IDN_PATH="/path/to/idn/tables"
-export IDN_CACHE_SIZE="100"  # Optional: max cached languages
-```
 
 ### Programmatic Configuration
 ```go
@@ -346,6 +427,7 @@ Based on `/idn` folder content:
 - Hebrew, Japanese, Kannada, Khmer, Korean
 - Latin, Malayalam, Myanmar, Oriya, Sinhala
 - Tamil, Telugu, Thai, Tibetan, Traditional-Chinese
+- und-Bali (Balinese, dari LGR second-level ICANN)
 
 
 ## Contributing

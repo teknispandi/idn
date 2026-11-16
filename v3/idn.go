@@ -29,6 +29,12 @@ type IdnTable struct {
 	// policy adalah URL publik kebijakan untuk tabel IDN ini, yang diperlukan oleh RDE
 	policy *url.URL
 
+	// script, version dan effectiveDate diambil dari header "# Script:",
+	// "# Version:" dan "# Effective Date:" (kosong jika tidak ada)
+	script        string
+	version       string
+	effectiveDate string
+
 	// validCodepoints berisi set range dari codepoint yang valid dalam tabel ini
 	validCodepoints map[int]bool
 
@@ -38,9 +44,14 @@ type IdnTable struct {
 
 // NewIdnTable membuat instance baru IdnTable dari data file teks
 // Parameter:
-// - language: nama bahasa/tabel
-// - data: slice string yang berisi baris-baris dari file tabel IDN
-// - validator: validator bahasa opsional untuk validasi khusus bahasa
+//   - language: nama bahasa/tabel
+//   - data: slice string yang berisi baris-baris dari file tabel IDN
+//   - validator: validator bahasa opsional untuk validasi khusus bahasa. Jika
+//     nil, validator dipilih dari header "# Script:" (lihat scriptValidators).
+//
+// URL dan Policy hanya diisi dari header "# URL:" / "# Policy:". Jika tidak
+// ada, GetURL/GetPolicy mengembalikan nil — tambahkan header itu ke file
+// tabel sebelum dipakai untuk deposit RDE, jangan mengarang URL.
 func NewIdnTable(language string, data []string, validator LanguageValidator) (*IdnTable, error) {
 	table := &IdnTable{
 		name:              language,
@@ -51,9 +62,20 @@ func NewIdnTable(language string, data []string, validator LanguageValidator) (*
 	linePattern := regexp.MustCompile(`^U\+([0-9a-fA-F]{4,6})`)
 	const urlLinePrefix = "# URL: "
 	const policyLinePrefix = "# Policy: "
+	headers := map[string]*string{
+		"# Script:":         &table.script,
+		"# Version:":        &table.version,
+		"# Effective Date:": &table.effectiveDate,
+	}
 
 	for _, line := range data {
 		line = strings.TrimSpace(line)
+
+		for prefix, field := range headers {
+			if *field == "" && strings.HasPrefix(line, prefix) {
+				*field = strings.TrimSpace(strings.TrimPrefix(line, prefix))
+			}
+		}
 
 		// Tangani baris komentar khusus untuk URL dan Policy
 		if strings.HasPrefix(line, urlLinePrefix) {
@@ -88,14 +110,12 @@ func NewIdnTable(language string, data []string, validator LanguageValidator) (*
 		table.validCodepoints[codepoint] = true
 	}
 
-	// Set default URLs jika tidak ditemukan dalam file
-	if table.url == nil {
-		defaultURL := fmt.Sprintf("https://www.iana.org/domains/idn-tables/%s", language)
-		table.url, _ = url.Parse(defaultURL)
+	if len(table.validCodepoints) == 0 {
+		return nil, fmt.Errorf("IDN table %s has no code points", language)
 	}
-	if table.policy == nil {
-		defaultPolicy := fmt.Sprintf("https://www.iana.org/domains/idn-tables/%s-policy", language)
-		table.policy, _ = url.Parse(defaultPolicy)
+
+	if table.languageValidator == nil {
+		table.languageValidator = validatorForScript(table.script)
 	}
 
 	return table, nil
@@ -139,32 +159,66 @@ func (t *IdnTable) GetName() string {
 	return t.name
 }
 
-// GetURL mengembalikan URL publik tabel IDN
+// GetURL mengembalikan URL publik tabel IDN, atau nil jika file tabel tidak
+// memiliki header "# URL:"
 func (t *IdnTable) GetURL() *url.URL {
 	return t.url
 }
 
-// GetPolicy mengembalikan URL kebijakan tabel IDN
+// GetPolicy mengembalikan URL kebijakan tabel IDN, atau nil jika file tabel
+// tidak memiliki header "# Policy:"
 func (t *IdnTable) GetPolicy() *url.URL {
 	return t.policy
 }
 
+// GetScript mengembalikan tag script dari header tabel (mis. "Latn", "und-Bali")
+func (t *IdnTable) GetScript() string {
+	return t.script
+}
+
+// GetVersion mengembalikan versi tabel dari header
+func (t *IdnTable) GetVersion() string {
+	return t.version
+}
+
+// GetEffectiveDate mengembalikan tanggal berlaku tabel dari header
+func (t *IdnTable) GetEffectiveDate() string {
+	return t.effectiveDate
+}
+
 // IsValidLabel mengembalikan true jika label yang diberikan valid untuk tabel IDN ini.
-// Label dianggap valid jika semua codepoint-nya ada dalam tabel IDN.
+// Label dianggap valid jika tidak kosong, semua codepoint-nya ada dalam tabel IDN,
+// dan lolos validator bahasa tabel (jika ada).
+//
+// Ini hanya pemeriksaan tabel: label harus sudah berupa U-label. Untuk
+// validasi lengkap (A-label, IDNA2008, tanda hubung, panjang) gunakan
+// IdnManager.CheckLabel / CheckDomain atau IdnLabelValidator.
 func (t *IdnTable) IsValidLabel(label string) bool {
+	return t.CheckLabel(label) == nil
+}
+
+// CheckLabel seperti IsValidLabel, tetapi mengembalikan *ValidationError
+// yang menyebut code point atau aturan bahasa yang membuat label ditolak.
+func (t *IdnTable) CheckLabel(label string) error {
+	if label == "" {
+		return newLabelError(ErrEmptyLabel, label)
+	}
+
 	// Iterasi melalui setiap codepoint dalam label
-	for _, r := range label {
+	for i, r := range []rune(label) {
 		if !t.validCodepoints[int(r)] {
-			return false
+			e := newRuneError(ErrCodepointNotInTable, label, i, r)
+			e.Table = t.name
+			return e
 		}
 	}
 
 	// Jika ada validator bahasa, gunakan untuk validasi tambahan
 	if t.languageValidator != nil {
-		return t.languageValidator.IsValidLabelForLanguage(label)
+		return checkLanguageRules(t.languageValidator, t.name, label)
 	}
 
-	return true
+	return nil
 }
 
 // loadTableFromFile memuat tabel IDN dari file yang disematkan

@@ -40,22 +40,30 @@ var defaultIdnTables = []IdnTableType{ExtendedLatin, Japanese}
 // - string: nama tabel IDN yang valid (jika ditemukan)
 // - bool: true jika label valid, false jika tidak
 func (v *IdnLabelValidator) FindValidIdnTableForTld(label string, tld TldInterface) (string, bool) {
-	// Konversi label ke Unicode jika diperlukan
-	// Dalam implementasi ini, kita asumsikan label sudah dalam format Unicode
-	unicodeString := label
+	res, err := v.CheckLabelForTld(label, tld)
+	if err != nil {
+		return "", false
+	}
+	return res.TableName(), true
+}
 
-	// Dapatkan tabel IDN untuk TLD
-	idnTables := v.getIdnTablesForTld(tld)
-
-	// Cek setiap tabel IDN
-	for _, tableType := range idnTables {
-		table := v.registry.GetTable(tableType)
-		if table != nil && table.IsValidLabel(unicodeString) {
-			return table.GetName(), true
-		}
+// CheckLabelForTld memvalidasi label secara lengkap untuk TLD: struktur
+// label, IDNA2008 (A-label didekode dulu, seperti Idn.toUnicode di Nomulus),
+// lalu tabel IDN TLD. Seperti Nomulus, label ASCII pun harus diterima salah
+// satu tabel. Jika ditolak, error berupa *ValidationError.
+func (v *IdnLabelValidator) CheckLabelForTld(label string, tld TldInterface) (*LabelResult, error) {
+	p, err := prepareLabel(label)
+	if err != nil {
+		return nil, err
 	}
 
-	return "", false
+	var tables []*IdnTable
+	for _, tableType := range v.getIdnTablesForTld(tld) {
+		if table := v.registry.GetTable(tableType); table != nil {
+			tables = append(tables, table)
+		}
+	}
+	return matchTables(p, tables, false, "")
 }
 
 // getIdnTablesForTld mengembalikan tabel IDN yang didukung oleh TLD.
@@ -83,13 +91,17 @@ func (v *IdnLabelValidator) GetIdnTablesForTld(tld TldInterface) []string {
 	return tableNames
 }
 
-// ValidateLabel memvalidasi label terhadap tabel IDN tertentu
+// ValidateLabel memvalidasi label (U-label atau A-label) terhadap tabel IDN tertentu
 func (v *IdnLabelValidator) ValidateLabel(label string, tableType IdnTableType) bool {
 	table := v.registry.GetTable(tableType)
 	if table == nil {
 		return false
 	}
-	return table.IsValidLabel(label)
+	p, err := prepareLabel(label)
+	if err != nil {
+		return false
+	}
+	return table.IsValidLabel(p.ulabel)
 }
 
 // GetTableInfo mengembalikan informasi tentang tabel IDN tertentu
@@ -118,5 +130,12 @@ type TableInfo struct {
 // String mengembalikan representasi string dari informasi tabel
 func (ti *TableInfo) String() string {
 	return fmt.Sprintf("Table: %s, Type: %s, URL: %s, Policy: %s",
-		ti.Name, ti.Type.String(), ti.URL.String(), ti.Policy.String())
+		ti.Name, ti.Type.String(), urlString(ti.URL), urlString(ti.Policy))
+}
+
+func urlString(u *url.URL) string {
+	if u == nil {
+		return "-"
+	}
+	return u.String()
 }

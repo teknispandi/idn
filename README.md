@@ -23,4 +23,5 @@ LGR Server comes bundled with three sets of LGRs:
 
 # Use Case
 - use v3 for idn validation using format .txt
-- use v4 for idn validation using format .xml (LGR)
+    - registry & registrar: `v3.NewIdnManagerFS(idn.Tables())` + `CheckDomain` — lihat [v3/README.md](v3/README.md#penggunaan-untuk-registry--registrar)
+- use v4 for idn validation using format .xml (LGR) — belum diimplementasikan

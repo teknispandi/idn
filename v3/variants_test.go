@@ -155,3 +155,41 @@ func mustPunycode(t *testing.T, s string) string {
 	}
 	return p.alabel
 }
+
+// Guideline 13 ICANN: tabel dengan kebijakan varian dalam satu zona harus
+// seragam. Chinese dan Traditional-Chinese berbagi himpunan varian yang
+// sama; Japanese memuat aksara Han yang sama tanpa varian, jadi bentrok
+// antara 岩 dan 巖 bisa lolos bila kedua tabel dipakai di satu zona.
+func TestVariantCoherence(t *testing.T) {
+	m := NewIdnManagerFS(idn.Tables())
+	for zone, languages := range map[string][]string{
+		"hans-hant": {"chinese", "traditional-chinese"},
+		"zh-ja":     {"chinese", "japanese"},
+		"id":        {"latin", "und-bali"},
+	} {
+		if err := m.RegisterTld(zone, languages); err != nil {
+			t.Fatal(err)
+		}
+	}
+
+	for _, zone := range []string{"hans-hant", "id"} {
+		if conflicts, err := m.VariantConflicts(zone); err != nil || len(conflicts) != 0 {
+			t.Errorf("VariantConflicts(%s) = %v, %v; want none", zone, conflicts, err)
+		}
+	}
+
+	conflicts, err := m.VariantConflicts("zh-ja")
+	if err != nil || len(conflicts) != 1 {
+		t.Fatalf("VariantConflicts(zh-ja) = %v, %v; want 1 conflict", conflicts, err)
+	}
+	c := conflicts[0]
+	if c.TableA != "chinese" || c.TableB != "japanese" || c.Count == 0 || len(c.Examples) == 0 {
+		t.Errorf("conflict = %+v", c)
+	}
+
+	err = m.CheckVariantCoherence()
+	if err == nil || !strings.Contains(err.Error(), "zone zh-ja") || strings.Contains(err.Error(), "hans-hant") {
+		t.Errorf("CheckVariantCoherence() = %v, want only zh-ja", err)
+	}
+	t.Log(c)
+}

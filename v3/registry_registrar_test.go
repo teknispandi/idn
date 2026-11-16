@@ -452,7 +452,8 @@ func TestValidationError_Message(t *testing.T) {
 // kategori RFC 5892 yang sama. Selisih yang diketahui dan disengaja:
 //   - IgnorableBlocks (RFC 5892 §2.4) ditolak di sini, diterima PRECIS;
 //   - sejumlah huruf pengubah Lm (mis. U+02B9, U+A717) PVALID di IDNA2008
-//     tetapi ditolak PRECIS — tidak ada di tabel IDN mana pun.
+//     tetapi ditolak PRECIS; status PVALID-nya dicek terhadap tabel IANA di
+//     TestIDNA2008AgainstIANA.
 func TestIDNA2008MatchesPrecis(t *testing.T) {
 	ignorableBlock := func(r rune) bool {
 		return (r >= 0x20D0 && r <= 0x20FF) || (r >= 0x1D100 && r <= 0x1D24F)
@@ -485,4 +486,37 @@ func TestIDNA2008MatchesPrecis(t *testing.T) {
 		}
 	}
 	t.Logf("modifier letters accepted here but not by PRECIS: %d", lenient)
+}
+
+// Baris tabel turunan IANA (IDNA Parameters, idna-tables-12.0.0), dikutip
+// dari https://www.iana.org/assignments/idna-tables-12.0.0/ — termasuk huruf
+// pengubah yang ditolak PRECIS tetapi PVALID di IDNA2008.
+func TestIDNA2008AgainstIANA(t *testing.T) {
+	rows := []struct {
+		first, last rune
+		pvalid      bool
+	}{
+		{0x02B9, 0x02C1, true},  // MODIFIER LETTER PRIME..MODIFIER LETTER REVERSED GLOTTAL STOP
+		{0x02C6, 0x02D1, true},  // MODIFIER LETTER CIRCUMFLEX ACCENT..MODIFIER LETTER HALF TRIANGULAR COLON
+		{0x02EC, 0x02EC, true},  // MODIFIER LETTER VOICING
+		{0x2E2F, 0x2E2F, true},  // VERTICAL TILDE
+		{0xA67F, 0xA67F, true},  // CYRILLIC PAYEROK
+		{0xA717, 0xA71F, true},  // MODIFIER LETTER DOT VERTICAL BAR..LOW INVERTED EXCLAMATION MARK
+		{0xA787, 0xA788, true},  // LATIN SMALL LETTER INSULAR T..MODIFIER LETTER LOW CIRCUMFLEX ACCENT
+		{0x13A0, 0x13F5, true},  // CHEROKEE LETTER A..CHEROKEE LETTER MV
+		{0xAB70, 0xABBF, false}, // CHEROKEE SMALL LETTER A..CHEROKEE SMALL LETTER YA
+		{0x20D0, 0x20F0, false}, // COMBINING LEFT HARPOON ABOVE..COMBINING ASTERISK ABOVE
+	}
+	for _, row := range rows {
+		for r := row.first; r <= row.last; r++ {
+			s := string(r)
+			if unicode.In(r, unicode.Mn, unicode.Mc, unicode.Me) {
+				s = "a" + s
+			}
+			_, err := prepareLabel(s)
+			if got := err == nil; got != row.pvalid {
+				t.Errorf("%U: accepted=%v, IANA says PVALID=%v (%v)", r, got, row.pvalid, err)
+			}
+		}
+	}
 }

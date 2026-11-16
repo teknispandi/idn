@@ -78,6 +78,24 @@ Keputusan di luar teks RFC:
 
 Belum diverifikasi terhadap implementasi referensi ICANN (`lgr-core`).
 
+## Performance
+
+Diukur dengan `go test ./v4 -run '^$' -bench . -benchmem` (Apple M1 Pro,
+Go 1.26.1); jalankan ulang di server Anda.
+
+| Operasi | Waktu | Alokasi |
+|---|---|---|
+| `CheckLabel` und-Bali (`ᬩᬮᬶᬓ᭄ᬱ`) | 7,8 µs | 6,5 KB |
+| `CheckLabel` zh (`中国岩石`) | 1,0 µs | 437 B |
+| `CheckLabel` und-Arab (`مثال`) | 5,4 µs | 5,7 KB |
+| `VariantLabels` zh (`中国`) | 5,2 µs | 3,0 KB |
+| Memuat und-Bali.xml | 0,6 ms | 313 KB |
+| Memuat zh.xml (3,5 MB) | 153 ms | 92 MB dialokasikan |
+
+Muat LGR sekali saat start; `*LGR` aman dipakai bersamaan.
+
+Contoh lengkap: [`examples/v4`](../examples/v4) (`cd examples/v4 && go run .`).
+
 ## Data joining type
 
 Properti `jt:` tidak tersedia di pustaka standar Go. `joiningtype_table.go`

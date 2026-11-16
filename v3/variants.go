@@ -1,6 +1,8 @@
 package v3
 
 import (
+	"errors"
+	"fmt"
 	"regexp"
 	"sort"
 	"strconv"
@@ -220,4 +222,137 @@ func (t *IdnTable) isPreferred(r, candidate rune) bool {
 		}
 	}
 	return false
+}
+
+// --- Koherensi varian antar tabel dalam satu zona ---
+//
+// ICANN IDN Implementation Guidelines 4.0, Guideline 13: semua tabel IDN
+// dengan kebijakan varian dalam satu TLD harus memiliki code point varian
+// yang seragam. Di modul ini syarat itu juga teknis: VariantKey dihitung oleh
+// tabel yang menerima label, jadi bila dua tabel memberi index berbeda untuk
+// elemen yang sama, bentrok varian antar nama bisa lolos.
+
+// VariantSetTable adalah tabel yang mengekspos himpunan variannya untuk
+// pemeriksaan koherensi. *IdnTable dan *v4.LGR mengimplementasikannya;
+// tabel lain dilewati oleh VariantConflicts.
+type VariantSetTable interface {
+	LabelTable
+
+	// VariantElements memetakan setiap elemen yang dikenal tabel (anggota
+	// repertoire dan target varian; code point atau sekuens) ke index
+	// himpunan variannya. Elemen tanpa varian ber-index dirinya sendiri.
+	VariantElements() map[string]string
+}
+
+// VariantElements mengimplementasikan VariantSetTable
+func (t *IdnTable) VariantElements() map[string]string {
+	out := make(map[string]string, len(t.validCodepoints)+len(t.variantIndex))
+	for cp := range t.validCodepoints {
+		out[string(rune(cp))] = string(rune(cp))
+	}
+	for r, root := range t.variantIndex {
+		out[string(r)] = string(root)
+	}
+	return out
+}
+
+// VariantConflict menyatakan dua tabel dalam satu zona yang tidak sepakat
+// tentang himpunan varian sejumlah elemen bersama.
+type VariantConflict struct {
+	Zone     string
+	TableA   string
+	TableB   string
+	Count    int      // jumlah elemen bersama yang index-nya berbeda
+	Examples []string // hingga 5 contoh, mis. "U+5CA9 岩: chinese→U+55A6, japanese→U+5CA9"
+}
+
+func (c VariantConflict) String() string {
+	return fmt.Sprintf("zone %s: tables %s and %s disagree on the variant sets of %d shared code points (e.g. %s)",
+		c.Zone, c.TableA, c.TableB, c.Count, strings.Join(c.Examples, "; "))
+}
+
+// VariantConflicts membandingkan setiap pasangan tabel TLD yang setidaknya
+// salah satunya mendefinisikan varian. Hasil kosong berarti koheren.
+func (manager *IdnManager) VariantConflicts(tldName string) ([]VariantConflict, error) {
+	config, tables, err := manager.lookup(tldName)
+	if err != nil {
+		return nil, err
+	}
+
+	type info struct {
+		name     string
+		elements map[string]string
+		variants bool
+	}
+	var infos []info
+	for _, table := range tables {
+		vs, ok := table.(VariantSetTable)
+		if !ok {
+			continue
+		}
+		elements := vs.VariantElements()
+		hasVariants := false
+		for element, index := range elements {
+			if element != index {
+				hasVariants = true
+				break
+			}
+		}
+		infos = append(infos, info{table.GetName(), elements, hasVariants})
+	}
+
+	var conflicts []VariantConflict
+	for i := 0; i < len(infos); i++ {
+		for j := i + 1; j < len(infos); j++ {
+			a, b := infos[i], infos[j]
+			if !a.variants && !b.variants {
+				continue
+			}
+			var differing []string
+			for element, indexA := range a.elements {
+				if indexB, ok := b.elements[element]; ok && indexA != indexB {
+					differing = append(differing, element)
+				}
+			}
+			if len(differing) == 0 {
+				continue
+			}
+			sort.Slice(differing, func(x, y int) bool { return differing[x] < differing[y] })
+			c := VariantConflict{Zone: config.TldName, TableA: a.name, TableB: b.name, Count: len(differing)}
+			for _, element := range differing[:min(5, len(differing))] {
+				c.Examples = append(c.Examples, fmt.Sprintf("%s %s: %s→%s, %s→%s",
+					formatElement(element), element, a.name, formatElement(a.elements[element]), b.name, formatElement(b.elements[element])))
+			}
+			conflicts = append(conflicts, c)
+		}
+	}
+	return conflicts, nil
+}
+
+// CheckVariantCoherence memeriksa VariantConflicts untuk setiap TLD aktif.
+// Panggil saat registry mulai, bersama CheckRdeTableRefs.
+func (manager *IdnManager) CheckVariantCoherence() error {
+	var errs []error
+	for _, tld := range manager.ListRegisteredTlds() {
+		config, err := manager.GetTldConfig(tld)
+		if err != nil || !config.Enabled {
+			continue
+		}
+		conflicts, err := manager.VariantConflicts(tld)
+		if err != nil {
+			errs = append(errs, err)
+		}
+		for _, c := range conflicts {
+			errs = append(errs, errors.New(c.String()))
+		}
+	}
+	return errors.Join(errs...)
+}
+
+func formatElement(element string) string {
+	parts := make([]string, 0, len(element))
+	for _, r := range element {
+		parts = append(parts, fmt.Sprintf("U+%04X", r))
+	}
+	return strings.Join(parts, " ")
 }

@@ -196,3 +196,16 @@ func TestLGRConcurrentUse(t *testing.T) {
 	}
 	wg.Wait()
 }
+
+func TestLGRVariantCoherence(t *testing.T) {
+	m := v3.NewIdnManagerFS(idn.Tables())
+	if err := m.RegisterTable(mustLoad(t, "und-Bali")); err != nil {
+		t.Fatal(err)
+	}
+	if err := m.RegisterTld("id", []string{"latin", "und-bali"}); err != nil {
+		t.Fatal(err)
+	}
+	if conflicts, err := m.VariantConflicts("id"); err != nil || len(conflicts) != 0 {
+		t.Errorf("latin + und-bali LGR: %v, %v; want coherent", conflicts, err)
+	}
+}

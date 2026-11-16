@@ -20,6 +20,8 @@ go test ./v3 -run '^$' -bench .     # benchmarks only
 go vet ./...
 go generate ./v4                    # regenerate v4/joiningtype_table.go (must be byte-identical)
 cd examples/v3 && go run .          # runs the demo main.go currently calls
+cd examples/v4 && go run .          # LGR XML demo
+go test ./v3 ./v4 -run '^$' -bench . -benchmem   # numbers quoted in v3/README.md and v4/README.md
 ```
 
 Tests and examples find data through relative paths: `../idn` and `../lgrs/...` from `v3/`, and `../../idn` from `examples/v3/`. `go test` runs from the package dir automatically, but `go run` for the examples needs the `cd`. `examples/v3/main.go` calls one demo function. To switch demos, change which call is uncommented.
@@ -45,7 +47,9 @@ There are two table sources:
 1. **Loader/manager** (`idn_loader.go`, `idn_manager.go`) reads from an `fs.FS`: a directory via `NewIdnLoader(path)` or the embedded `idn.Tables()`. Names match file stems case-insensitively, without `-IDN.txt`/`.txt` (`und-bali` → `und-Bali.txt`). `IdnManager` is concurrency-safe. Per-TLD table slices are copy-on-write, so they can be used after the lock is released.
 2. **Nomulus-compatible registry** (`registry.go`, `validator.go`). `//go:embed *.txt` embeds `v3/*.txt`, keyed by `IdnTableType`. `IdnLabelValidator.CheckLabelForTld` / `FindValidIdnTableForTld` follow Nomulus: even ASCII labels must match a table, and it falls back to `ExtendedLatin` + `Japanese`.
 
-`TestTablesAreIDNA2008Valid` asserts that every table code point passes the IDNA2008 layer. Run it after adding or updating a table. `TestIDNA2008MatchesPrecis` pins the PVALID approximation against `x/text/secure/precis`; the only allowed differences are IgnorableBlocks and some `Lm` modifier letters. Unstable is detected through the UTS46 mapping (`mapProfile`), not `x/text/cases.Fold`, which flips Cherokee case.
+`VariantConflicts` / `CheckVariantCoherence` implement ICANN Guideline 13. Every pair of a TLD's tables must agree on the variant index of every shared element, because `VariantKey` comes from whichever table accepted the label. Tables expose their sets through `VariantSetTable`.
+
+`TestTablesAreIDNA2008Valid` asserts that every table code point passes the IDNA2008 layer. `TestIDNA2008AgainstIANA` pins rows quoted from IANA's idna-tables-12.0.0. Run it after adding or updating a table. `TestIDNA2008MatchesPrecis` pins the PVALID approximation against `x/text/secure/precis`; the only allowed differences are IgnorableBlocks and some `Lm` modifier letters. Unstable is detected through the UTS46 mapping (`mapProfile`), not `x/text/cases.Fold`, which flips Cherokee case.
 
 ## Architecture (v4)
 
@@ -65,7 +69,7 @@ There are two table sources:
 
 - `idn/`: Nomulus-format IDN tables read by `IdnLoader`. Keep only the latest version of each table (see `idn/README.md`).
 - `lgrs/`: ICANN LGR XML sets (`root-zone`, `second-level-reference`, `full-variant-set`). They are the source of truth for script rules. Check them against ICANN's published versions (links in `README.md`).
-- `doc/`: notes on RFC 5890–5893, the ICANN IDN guideline PDFs, `Notes.md` (v3 flow diagrams) and `Perbandingan.md` (v3 vs v4/LGR comparison).
+- `doc/`: notes on RFC 5890–5893, the ICANN IDN guideline PDFs, `Notes.md` (v3 flow diagrams), `Perbandingan.md` (v3 vs v4/LGR comparison) and `Integrasi-Registry-Registrar.md` (integration plan for nomnom and registrar-api). Keep the integration plan in sync when public APIs change.
 
 ## Conventions
 

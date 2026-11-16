@@ -7,5 +7,7 @@ func main() {
 	// SimpleUsage()
 	// ExampleBasicUtils()
 	// UtilsExample()
+	// ExampleRegistry()
+	// ExampleRegistrar()
 	ExampleBali()
 }

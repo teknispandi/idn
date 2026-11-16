@@ -469,3 +469,19 @@ func (n *node) attr(name string) string {
 	v, _ := n.attrOK(name)
 	return v
 }
+
+// VariantElements mengimplementasikan v3.VariantSetTable: setiap elemen
+// repertoire dan target varian beserta index himpunan variannya.
+func (l *LGR) VariantElements() map[string]string {
+	out := make(map[string]string, len(l.elements))
+	for key, e := range l.elements {
+		out[key] = key
+		for _, v := range e.vars {
+			out[string(v.cps)] = string(v.cps)
+		}
+	}
+	for key, root := range l.index {
+		out[key] = root
+	}
+	return out
+}

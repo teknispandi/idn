@@ -28,6 +28,12 @@ IDN V3 menyediakan sistem yang diperbaharui untuk mengelola dan memvalidasi Inte
 - Flexible URL dan Policy parsing
 - Backward compatibility dengan format lama
 
+### 4. Validasi Registry/Registrar (`idna2008.go`, `result.go`, `variants.go`)
+- IDNA2008 lengkap: A-label kanonik, PVALID, CONTEXTO/CONTEXTJ, bidi
+- `CheckDomain`: zona, tabel IDN, `VariantKey` untuk deteksi bentrok varian
+- Kesalahan bertipe (`*ValidationError`) untuk pesan EPP dan pengguna
+- Referensi RDE dan pemeriksaan koherensi varian antar tabel
+
 ## Installation
 
 ```bash
@@ -150,8 +156,13 @@ ditawarkan ke pendaftar yang sama. Sumber varian:
   varian *preferred* (kolom 2) → `allocatable`, lainnya → `blocked`;
 - LGR XML (package [v4](../v4)) — disposisi menurut aksi LGR.
 
-Tabel-tabel dalam satu zona harus koheren variannya (IDN Implementation
-Guidelines); index dihitung oleh tabel yang menerima label.
+**Koherensi varian.** Index dihitung oleh tabel yang menerima label, jadi
+tabel-tabel dalam satu zona harus sepakat tentang himpunan varian setiap code
+point yang mereka miliki bersama — ICANN IDN Implementation Guidelines 4.0,
+Guideline 13. `manager.VariantConflicts(tld)` / `manager.CheckVariantCoherence()`
+memeriksanya. Contoh nyata dari tabel di repo ini: `chinese` + `japanese` dalam
+satu zona berbeda untuk 1.001 aksara Han (mis. 亜: `chinese`→亚,
+`japanese`→亜), dan `chinese` (`.txt`) + LGR `zh` berbeda untuk 46 aksara.
 
 **RDE.** Header `# URL:`/`# Policy:` tabel Google di `idn/` menunjuk ke
 registrasi Google, bukan milik registry Anda. Isi `TableRefs` dan periksa saat
@@ -166,6 +177,7 @@ manager.RegisterTldConfig(v3.TldIdnConfig{
     },
 })
 if err := manager.CheckRdeTableRefs(); err != nil { log.Fatal(err) }
+if err := manager.CheckVariantCoherence(); err != nil { log.Fatal(err) }
 refs, _ := manager.RdeTableRefs("id") // untuk <rdeIDN:idnTableRef>
 ```
 
@@ -228,14 +240,16 @@ belakang dalam label (alasan yang paling relevan bagi pengguna).
 ```
 /idn/
   ├── Arabic-IDN.txt          # Arabic script IDN table
-  ├── Chinese-IDN.txt         # Chinese script IDN table
+  ├── Chinese-IDN.txt         # Chinese script IDN table (dengan varian RFC 3743)
   ├── Japanese-IDN.txt        # Japanese script IDN table
   ├── Korean-IDN.txt          # Korean script IDN table
   ├── Latin-IDN.txt           # Latin script IDN table
-  ├── Cyrillic-IDN.txt        # Cyrillic script IDN table
-  ├── Greek-IDN.txt           # Greek script IDN table
+  ├── und-Bali.txt            # Balinese (dari LGR second-level ICANN)
   └── ...                     # Other language tables
 ```
+
+Folder ini juga disematkan ke binary lewat package root modul
+(`idn.Tables()`, ±2 MB), sehingga server tidak perlu salinan file tabel.
 
 ## Supported IDN Formats
 
@@ -268,32 +282,38 @@ U+0627  # ARABIC LETTER ALEF
 
 ## Performance
 
-### Memory Cache System
-```go
-type IdnLoader struct {
-    idnPath string
-    cache   map[string]*IdnTable  // Memory cache
-    mutex   sync.RWMutex          // Thread-safe access
-}
-```
-### Cache Performance
-- **First Load**: ~695µs (from file)
-- **Cached Load**: ~125ns (from memory)
-- **Cache Speedup**: ~5500x faster
-- **Validations/second**: ~2.5M validations
+Diukur dengan `go test ./v3 -run '^$' -bench . -benchmem` (Apple M1 Pro,
+Go 1.26.1). Angka akan berbeda di mesin lain; jalankan ulang di server Anda.
 
-### Memory Usage
-- Efficient memory usage dengan shared instances
-- Thread-safe operations
-- Automatic garbage collection untuk unused tables
+| Operasi | Waktu | Alokasi |
+|---|---|---|
+| `CheckDomain("contoh-domain.id")` (ASCII) | 0,7 µs | 496 B |
+| `CheckDomain("café-kopi.id")` (IDN Latin) | 1,4 µs | 672 B |
+| `CheckDomain("xn--caf-kopi-e2a.id")` (A-label) | 1,5 µs | 800 B |
+| `CheckDomain("ᬩᬮᬶ.id")` (Bali, aturan bahasa) | 1,9 µs | 864 B |
+| `CheckDomain("中国岩石.zh")` (dengan `VariantKey`) | 2,4 µs | 864 B |
+| `CheckDomain("xn--ls8h.id")` (ditolak) | 0,6 µs | 376 B |
+| `VariantLabels` untuk `巖石` (7 varian) | 6,6 µs | 2,7 KB |
+| Memuat `latin` tanpa cache | 49 µs | 43 KB |
+| Memuat `chinese` tanpa cache (19.557 code point + varian) | 31 ms | 24,7 MB dialokasikan |
+
+Tabel dimuat sekali per proses dan di-cache (`IdnLoader`, aman untuk banyak
+goroutine); `IdnManager` juga aman dipakai bersamaan. Muat tabel saat start
+(`RegisterTld`) agar request pertama tidak menanggung biaya pemuatan.
 
 ## Examples
 
-Lihat folder `/examples/v3/` untuk contoh lengkap:
+Lihat folder `/examples/v3/` (jalankan dari folder itu; `main.go` memanggil
+satu fungsi — aktifkan yang ingin dicoba):
 
-- `simple_usage.go` - Basic usage examples
-- `main_enhanced.go` - Advanced features demonstration  
-- `performance_demo.go` - Performance testing dan benchmarks
+- `registry.go` — `ExampleRegistry`: konfigurasi zona, pemeriksaan saat start,
+  validasi create, bentrok varian lewat `VariantKey`, referensi RDE
+- `registrar.go` — `ExampleRegistrar`: normalisasi input pengguna dan pesan
+  kesalahan berbahasa Indonesia
+- `bali.go` — validator aksara Bali
+- `simple_usage.go`, `main_enhanced.go`, `performance_demo.go` — API loader/manager
+
+Contoh LGR XML ada di `/examples/v4/`.
 
 ## Configuration
 
@@ -311,22 +331,22 @@ stats := loader.GetCacheStats()
 ## Error Handling
 
 ```go
-// Handle missing IDN files
-table, err := loader.LoadTable("nonexistent")
-if err != nil {
-    if strings.Contains(err.Error(), "IDN file not found") {
-        // Handle missing file
-        log.Printf("Language not supported: %v", err)
-    } else {
-        // Handle other errors
-        return fmt.Errorf("failed to load IDN table: %w", err)
-    }
+// Tabel yang tidak ada: gagal saat start, jangan dilanjutkan tanpa tabel.
+if err := manager.RegisterTld("id", []string{"latin", "und-bali"}); err != nil {
+    log.Fatal(err)
 }
 
-// Handle validation errors
-isValid, languages, err := manager.ValidateLabel("tld", "label")
-if err != nil {
-    return fmt.Errorf("validation failed: %w", err)
+// Penolakan label: bedakan jenisnya dengan errors.Is / errors.As.
+_, err := manager.CheckDomain(name)
+var ve *v3.ValidationError
+switch {
+case err == nil:
+case errors.Is(err, v3.ErrCodepointNotInTable) && errors.As(err, &ve):
+    log.Printf("karakter %q di posisi %d tidak ada di tabel %s", ve.Rune, ve.Pos, ve.Table)
+case errors.Is(err, v3.ErrUnknownTld):
+    log.Printf("zona tidak terdaftar")
+default:
+    log.Printf("ditolak: %v", err)
 }
 ```
 
@@ -346,26 +366,28 @@ stats := loader.GetCacheStats()
 log.Printf("Cache efficiency: %d cached languages", stats["cached_languages"])
 ```
 
-### 3. Handle Errors Gracefully
+### 3. Gagal Tertutup (fail closed)
+Jika tabel atau konfigurasi TLD tidak tersedia, tolak pendaftaran — jangan
+jatuh ke validasi ASCII atau validator permisif. Registry yang meloloskan nama
+saat tabelnya hilang menerima nama yang tidak bisa ditarik kembali.
+
 ```go
-// Fallback untuk missing languages
-isValid, languages, err := manager.ValidateLabel("tld", "label")
+res, err := manager.CheckDomain(name)
 if err != nil {
-    // Fallback to basic ASCII validation
-    isValid = isBasicASCII(label)
+    return err // termasuk ErrUnknownTld / ErrTldDisabled
 }
 ```
 
 ### 4. Use Appropriate Method
 ```go
-// Untuk single validation
-isValid := table.IsValidLabel("label")
+// Registry dan registrar: validasi lengkap nama yang akan didaftarkan
+res, err := manager.CheckDomain("café.id")
 
-// Untuk multiple language support
-isValid, languages, err := manager.ValidateLabel("tld", "label")
+// Satu label untuk TLD tertentu (IDNA2008 + tabel)
+res, err := manager.CheckLabel("id", "café")
 
-// Untuk specific language
-isValid, err := manager.ValidateLabelForLanguage("tld", "arabic", "label")
+// Hanya cek tabel untuk U-label yang sudah divalidasi
+err := table.CheckLabel("café")
 ```
 
 ### 5. Dynamic Management
@@ -381,36 +403,20 @@ manager.DisableTld("global")
 manager.EnableTld("global")
 ```
 
-## Testing Results
+## Testing
 
-### Test Coverage
 ```bash
-$ go test ./v3 -v
-=== RUN   TestIdnLabelValidator_FindValidIdnTableForTld
---- PASS: TestIdnLabelValidator_FindValidIdnTableForTld (0.00s)
-=== RUN   TestIdnLabelValidator_GetIdnTablesForTld  
---- PASS: TestIdnLabelValidator_GetIdnTablesForTld (0.00s)
-=== RUN   TestJapaneseLanguageValidator_IsValidLabelForLanguage
---- PASS: TestJapaneseLanguageValidator_IsValidLabelForLanguage (0.00s)
-=== RUN   TestParseIdnTableType
---- PASS: TestParseIdnTableType (0.00s)
-PASS
-ok      github.com/al0fayz/idn/v3       0.469s
+go test ./...          # semua test
+go test -race ./...    # termasuk pemakaian bersamaan IdnManager/LGR
+go test ./v3 -run CheckDomain -v
 ```
 
-### Example Execution
-```bash
-$ go run examples/v3/simple_usage.go
-=== Simple IDN Usage Example ===
---- Using IDN Loader Directly ---
-✅ Arabic table loaded successfully
-Label 'مثال': true
---- Using IDN Manager ---
-✅ 'café' is valid (supported by: [latin])
---- Cache Statistics ---
-Cache stats: map[cached_languages:1 languages:[arabic]]
-Available languages: [arabic armenian bengali chinese cyrillic ...]
-```
+Test yang menjaga kebenaran terhadap sumber luar:
+
+- `TestIDNA2008AgainstIANA` — baris tabel turunan IANA (IDNA2008, Unicode 12.0.0)
+- `TestIDNA2008MatchesPrecis` — pembanding PRECIS (`x/text`) untuk semua code point
+- `TestTablesAreIDNA2008Valid` — setiap code point tabel lolos lapisan IDNA2008
+- `TestBalineseRepertoireMatchesLGR` — repertoire Bali sama dengan LGR XML
 
 ## API Documentation
 
@@ -429,33 +435,50 @@ func (loader *IdnLoader) GetCacheStats() map[string]interface{}
 #### IdnManager  
 ```go
 func NewIdnManager(idnPath string) *IdnManager
+func NewIdnManagerFS(fsys fs.FS) *IdnManager
 func (manager *IdnManager) RegisterTld(tldName string, languages []string) error
-func (manager *IdnManager) RegisterTldWithPreload(tldName string, languages []string) error
+func (manager *IdnManager) RegisterTldConfig(config TldIdnConfig) error
+func (manager *IdnManager) RegisterTable(table LabelTable) error
+func (manager *IdnManager) CheckDomain(domain string) (*DomainResult, error)
+func (manager *IdnManager) CheckDomainForTable(domain, table string) (*DomainResult, error)
+func (manager *IdnManager) CheckLabel(tldName, label string) (*LabelResult, error)
+func (manager *IdnManager) RdeTableRefs(tldName string) ([]TableRef, error)
+func (manager *IdnManager) CheckRdeTableRefs() error
+func (manager *IdnManager) VariantConflicts(tldName string) ([]VariantConflict, error)
+func (manager *IdnManager) CheckVariantCoherence() error
 func (manager *IdnManager) ValidateLabel(tldName, label string) (bool, []string, error)
 func (manager *IdnManager) ValidateLabelForLanguage(tldName, language, label string) (bool, error)
 func (manager *IdnManager) AddLanguageToTld(tldName, language string) error
 func (manager *IdnManager) RemoveLanguageFromTld(tldName, language string) error
 ```
 
-## Migration from V2
-
-### Key Changes
-1. **File Location**: IDN tables now read from `/idn` folder instead of embedded files
-2. **Multiple Languages**: Support for multiple IDN tables per TLD
-3. **Caching**: Built-in memory caching system
-4. **Management**: New IDN Manager for complex configurations
-
-### Migration Steps
+#### Hasil validasi
 ```go
-// Old V2 code
-validator := v2.NewIdnValidator()
-isValid := validator.ValidateLabel("example", "label")
-
-// New V3 code
-manager := v3.NewIdnManager("/path/to/idn")
-manager.RegisterTld("example", []string{"latin"})
-isValid, _, err := manager.ValidateLabel("example", "label")
+type DomainResult struct {
+    LabelResult              // ULabel, ALabel, IsIDN, Table, VariantKey
+    Zone, ASCIIName, UnicodeName string
+}
+func (r *LabelResult) TableName() string
+func (r *LabelResult) VariantLabels(limit int) ([]VariantLabel, bool)
 ```
+
+## Perubahan Perilaku sejak v1.0.2
+
+Signature lama tetap ada, tetapi beberapa perilaku diperketat karena versi
+v1.0.2 meloloskan nama yang tidak valid:
+
+| Sebelumnya (v1.0.2) | Sekarang |
+|---|---|
+| A-label (`xn--…`) tidak didekode, lolos sebagai ASCII | didekode, divalidasi, harus kanonik |
+| Label kosong, `-abc`, `ab--cd` dianggap valid | ditolak |
+| `DisableTld` tidak berpengaruh | validasi TLD nonaktif mengembalikan `ErrTldDisabled` |
+| Urutan bahasa dari `ValidateLabel` acak | sesuai urutan konfigurasi |
+| `ToASCII`/`ToUnicode` tanpa validasi (`"CAFÉ"` → `xn--CAF-pia`) | IDNA2008 ketat; error untuk input tidak valid |
+| `GetURL`/`GetPolicy` mengarang URL IANA | `nil` bila header tidak ada |
+| `IsValidDomainLabel` mengukur byte UTF-8 | mengukur oktet A-label, aturan IDNA2008 |
+| `und-Bali.txt` tidak bisa dimuat loader | dimuat sebagai `und-bali` |
+
+Fitur baru (`CheckDomain`, varian, RDE, LGR v4) hanya menambah API.
 
 ## Supported IDN Languages
 

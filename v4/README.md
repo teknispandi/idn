@@ -80,7 +80,9 @@ Keputusan di luar teks RFC:
 - Ke-146 LGR di `lgrs/` (rilis ICANN terbaru, lihat [lgrs/README.md](../lgrs/README.md))
   dimuat tanpa error (`TestLoadAllLGRs`).
 - LGR aksara Jawa (`und-Java`, 13 Agustus 2026) diuji terhadap aturan yang
-  dijelaskan di file-nya (`TestJavaneseLGR`).
+  dijelaskan di file-nya (`TestJavaneseLGR`), dan dibandingkan dengan
+  `v3.JavaneseLanguageValidator` yang ditulis tangan untuk 251.739 label
+  (155.994 sah): tidak ada perbedaan.
 - LGR `und-Bali.xml` dibandingkan dengan `v3.BalineseLanguageValidator` yang
   ditulis tangan — dua implementasi independen — untuk semua label 1–3
   karakter dari repertoire ditambah 100.000 label acak (391.918 label,

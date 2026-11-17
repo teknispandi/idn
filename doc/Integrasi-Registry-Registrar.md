@@ -359,7 +359,7 @@ non-Latin.
 
 | Keputusan | Pilihan |
 |---|---|
-| Tabel per zona `.id`, `co.id`, dst. dan urutannya | mis. `latin` + `und-bali` (LGR), dan `und-java` (LGR Jawa, rilis ICANN 13 Agustus 2026) bila aksara Jawa akan dibuka |
+| Tabel per zona `.id`, `co.id`, dst. dan urutannya | mis. `latin` + `und-bali` (LGR), dan `und-java` bila aksara Jawa akan dibuka — tabel `.txt` + validator, atau LGR (v4) bila varian perlu diblokir |
 | Campuran aksara per zona (`SingleScript`) | ikuti tabel (default), atau satu script saja |
 | Varian `allocatable` | boleh dialokasikan ke pendaftar yang sama, atau semua varian diblokir |
 | Result code EPP untuk penolakan kebijakan tabel | 2005 atau 2306 |

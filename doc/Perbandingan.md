@@ -166,8 +166,10 @@ memengaruhi request.
 Untuk `.id`: `latin` (`.txt`) bersama LGR `und-Bali`. `idn/und-Bali.txt`
 hanya berisi repertoire (catatan di header-nya: varian, konteks, dan aturan
 belum ada), sedangkan `und-Bali.xml` membawa varian dan aturannya. Aksara
-Jawa tersedia sebagai LGR `lgrs/second-level-reference/und-Java.xml`
-(rilis ICANN 13 Agustus 2026); tidak ada tabel `.txt`-nya.
+Jawa tersedia dalam dua bentuk dengan pola yang sama: `idn/und-Java.txt` +
+`JavaneseLanguageValidator` (v3, tanpa varian) dan LGR
+`lgrs/second-level-reference/und-Java.xml` (v4, dengan varian), keduanya dari
+rilis ICANN 13 Agustus 2026.
 
 Satu zona boleh mencampur tabel v3 dan v4, asalkan himpunan varian untuk
 code point bersama seragam — periksa dengan `IdnManager.CheckVariantCoherence`

@@ -3,6 +3,7 @@ package v3
 import (
 	"errors"
 	"reflect"
+	"sort"
 	"strings"
 	"sync"
 	"testing"
@@ -310,8 +311,13 @@ func TestIdnLoader_FindsAllTables(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if !reflect.DeepEqual(languages[len(languages)-1], "und-bali") {
-		t.Errorf("ListAvailableLanguages not sorted or missing und-bali: %v", languages)
+	if !sort.StringsAreSorted(languages) {
+		t.Errorf("ListAvailableLanguages not sorted: %v", languages)
+	}
+	for _, want := range []string{"latin", "und-bali", "und-java"} {
+		if i := sort.SearchStrings(languages, want); i == len(languages) || languages[i] != want {
+			t.Errorf("ListAvailableLanguages missing %s: %v", want, languages)
+		}
 	}
 
 	for _, name := range []string{"und-bali", "UND-Bali", "Traditional Chinese", "traditional_chinese"} {

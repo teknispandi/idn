@@ -9,5 +9,6 @@ func main() {
 	// UtilsExample()
 	// ExampleRegistry()
 	// ExampleRegistrar()
+	// ExampleJawa()
 	ExampleBali()
 }

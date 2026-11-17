@@ -1,0 +1,63 @@
+# Registry: lgrs/second-level-reference/und-Java.xml
+# Script: und-Java
+# Version: 1
+# Effective Date: 2026-08-13
+# Unicode Version: 16.0.0
+# Notes: Repertoire diturunkan dari Second Level Reference LGR aksara Jawa (ICANN, 13 Agustus 2026).
+#        Aturan konteks dan WLE diterapkan oleh v3.JavaneseLanguageValidator; varian hanya tersedia lewat LGR (package v4).
+#        U+A9B3 hanya sah sebagai bagian aksara rekan (KA/GA/JA/DA/PA/WA + CECAK TELU).
+
+# Repertoire
+U+002D                   # HYPHEN-MINUS
+U+A981                   # JAVANESE SIGN CECAK
+U+A982                   # JAVANESE SIGN LAYAR
+U+A983                   # JAVANESE SIGN WIGNYAN
+U+A984                   # JAVANESE LETTER A
+U+A986                   # JAVANESE LETTER I
+U+A988                   # JAVANESE LETTER U
+U+A989                   # JAVANESE LETTER PA CEREK
+U+A98A                   # JAVANESE LETTER NGA LELET
+U+A98C                   # JAVANESE LETTER E
+U+A98D                   # JAVANESE LETTER AI
+U+A98E                   # JAVANESE LETTER O
+U+A98F                   # JAVANESE LETTER KA
+U+A990                   # JAVANESE LETTER KA SASAK
+U+A991                   # JAVANESE LETTER KA MURDA
+U+A992                   # JAVANESE LETTER GA
+U+A993                   # JAVANESE LETTER GA MURDA
+U+A994                   # JAVANESE LETTER NGA
+U+A995                   # JAVANESE LETTER CA
+U+A997                   # JAVANESE LETTER JA
+U+A99A                   # JAVANESE LETTER NYA
+U+A99B                   # JAVANESE LETTER TTA
+U+A99D                   # JAVANESE LETTER DDA
+U+A99F                   # JAVANESE LETTER NA MURDA
+U+A9A0                   # JAVANESE LETTER TA
+U+A9A1                   # JAVANESE LETTER TA MURDA
+U+A9A2                   # JAVANESE LETTER DA
+U+A9A3                   # JAVANESE LETTER DA MAHAPRANA
+U+A9A4                   # JAVANESE LETTER NA
+U+A9A5                   # JAVANESE LETTER PA
+U+A9A6                   # JAVANESE LETTER PA MURDA
+U+A9A7                   # JAVANESE LETTER BA
+U+A9A8                   # JAVANESE LETTER BA MURDA
+U+A9A9                   # JAVANESE LETTER MA
+U+A9AA                   # JAVANESE LETTER YA
+U+A9AB                   # JAVANESE LETTER RA
+U+A9AD                   # JAVANESE LETTER LA
+U+A9AE                   # JAVANESE LETTER WA
+U+A9AF                   # JAVANESE LETTER SA MURDA
+U+A9B0                   # JAVANESE LETTER SA MAHAPRANA
+U+A9B1                   # JAVANESE LETTER SA
+U+A9B2                   # JAVANESE LETTER HA
+U+A9B3                   # JAVANESE SIGN CECAK TELU (hanya dalam aksara rekan)
+U+A9B4                   # JAVANESE VOWEL SIGN TARUNG
+U+A9B6                   # JAVANESE VOWEL SIGN WULU
+U+A9B8                   # JAVANESE VOWEL SIGN SUKU
+U+A9BA                   # JAVANESE VOWEL SIGN TALING
+U+A9BB                   # JAVANESE VOWEL SIGN DIRGA MURE
+U+A9BC                   # JAVANESE VOWEL SIGN PEPET
+U+A9BD                   # JAVANESE CONSONANT SIGN KERET
+U+A9BE                   # JAVANESE CONSONANT SIGN PENGKAL
+U+A9BF                   # JAVANESE CONSONANT SIGN CAKRA
+U+A9C0                   # JAVANESE PANGKON

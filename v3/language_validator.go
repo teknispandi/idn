@@ -32,6 +32,7 @@ var languageValidators = map[string]LanguageValidator{
 var scriptValidators = map[string]LanguageValidator{
 	"arab":     &ArabicLanguageValidator{},
 	"und-bali": &BalineseLanguageValidator{},
+	"und-java": &JavaneseLanguageValidator{},
 }
 
 // GetLanguageValidator mengembalikan validator bahasa untuk kode bahasa yang diberikan (jika ada)

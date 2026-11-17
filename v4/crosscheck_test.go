@@ -8,27 +8,59 @@ import (
 	v3 "github.com/al0fayz/idn/v3"
 )
 
-// v3.BalineseLanguageValidator (ditulis tangan) dan mesin LGR ini yang
-// membaca und-Bali.xml adalah dua implementasi independen dari LGR yang
-// sama; keduanya harus sepakat untuk setiap label. Ini menguji kelas
-// from-tag, choice, anchor, look-behind/look-ahead dan aksi sekaligus.
+// Validator yang ditulis tangan di v3 dan mesin LGR ini yang membaca file
+// XML-nya adalah dua implementasi independen dari LGR yang sama; keduanya
+// harus sepakat untuk setiap label. Ini menguji kelas from-tag, choice,
+// anchor, look-behind/look-ahead, sekuens dan aksi sekaligus.
+
 func TestBalineseLGRMatchesHandwrittenValidator(t *testing.T) {
-	lgr, err := LoadFile("../lgrs/second-level-reference/und-Bali.xml")
-	if err != nil {
-		t.Fatal(err)
+	var weighted []rune
+	for r := rune(0x1B13); r <= 0x1B33; r++ { // lebih banyak konsonan → label sah lebih sering
+		weighted = append(weighted, r, r)
 	}
-	var repertoire []rune
+	weighted = append(weighted, 0x1B44, 0x1B44, 0x1B44) // adeg-adeg
+	crossCheck(t, "und-Bali", &v3.BalineseLanguageValidator{}, 66, weighted, 50000)
+}
+
+func TestJavaneseLGRMatchesHandwrittenValidator(t *testing.T) {
+	var weighted []rune
+	for r := rune(0xA98F); r <= 0xA9B2; r++ { // konsonan (code point di luar repertoire dibuang crossCheck)
+		weighted = append(weighted, r, r)
+	}
+	weighted = append(weighted,
+		0xA9C0, 0xA9C0, 0xA9C0, // pangkon
+		0xA9B3, 0xA9B3, // cecak telu (aksara rekan)
+		0xA98F, 0xA992, 0xA997, 0xA9A2, 0xA9A5, 0xA9AE, // basis aksara rekan
+	)
+	crossCheck(t, "und-Java", &v3.JavaneseLanguageValidator{}, 53, weighted, 30000)
+}
+
+// crossCheck membandingkan validator dengan LGR untuk semua label sepanjang
+// 1–3 code point dari repertoire, ditambah 100.000 label acak sepanjang
+// 4–12. weighted menambah bobot code point tertentu agar label sah cukup
+// sering muncul; minValid memastikan sampelnya tidak didominasi label tidak sah.
+func crossCheck(t *testing.T, name string, handwritten v3.LanguageValidator, wantCodePoints int, weighted []rune, minValid int) {
+	t.Helper()
+	lgr := mustLoad(t, name)
+
+	inRepertoire := make(map[rune]bool)
 	for key := range lgr.elements {
-		repertoire = append(repertoire, []rune(key)...)
+		for _, r := range key {
+			inRepertoire[r] = true
+		}
+	}
+	repertoire := make([]rune, 0, len(inRepertoire))
+	for r := range inRepertoire {
+		repertoire = append(repertoire, r)
 	}
 	sort.Slice(repertoire, func(i, j int) bool { return repertoire[i] < repertoire[j] })
-	if len(repertoire) != 66 {
-		t.Fatalf("repertoire has %d code points, want 66", len(repertoire))
+	if len(repertoire) != wantCodePoints {
+		t.Fatalf("%s repertoire has %d code points, want %d", name, len(repertoire), wantCodePoints)
 	}
 
-	handwritten := &v3.BalineseLanguageValidator{}
-	mismatches, valid := 0, 0
+	mismatches, valid, checked := 0, 0, 0
 	compare := func(label []rune) {
+		checked++
 		want := handwritten.IsValidLabelForLanguage(string(label))
 		if want {
 			valid++
@@ -42,12 +74,10 @@ func TestBalineseLGRMatchesHandwrittenValidator(t *testing.T) {
 		}
 	}
 
-	checked := 0
 	var walk func(prefix []rune, depth int)
 	walk = func(prefix []rune, depth int) {
 		if len(prefix) > 0 {
 			compare(prefix)
-			checked++
 		}
 		if depth == 0 {
 			return
@@ -58,26 +88,26 @@ func TestBalineseLGRMatchesHandwrittenValidator(t *testing.T) {
 	}
 	walk(nil, 3)
 
-	rng := rand.New(rand.NewSource(1))
-	weighted := append([]rune{}, repertoire...)
-	for r := rune(0x1B13); r <= 0x1B33; r++ { // lebih banyak konsonan → label sah lebih sering
-		weighted = append(weighted, r, r)
+	pool := append([]rune{}, repertoire...)
+	for _, r := range weighted {
+		if inRepertoire[r] {
+			pool = append(pool, r)
+		}
 	}
-	weighted = append(weighted, 0x1B44, 0x1B44, 0x1B44)
+	rng := rand.New(rand.NewSource(1))
 	for i := 0; i < 100000; i++ {
 		label := make([]rune, 4+rng.Intn(9))
 		for j := range label {
-			label[j] = weighted[rng.Intn(len(weighted))]
+			label[j] = pool[rng.Intn(len(pool))]
 		}
 		compare(label)
-		checked++
 	}
+
 	if mismatches > 0 {
-		t.Errorf("%d of %d labels disagree", mismatches, checked)
+		t.Errorf("%s: %d of %d labels disagree", name, mismatches, checked)
 	}
-	// Perbandingan hanya bermakna bila banyak label yang sah ikut diuji.
-	if valid < 50000 {
-		t.Errorf("only %d valid labels among %d; sample too weak", valid, checked)
+	if valid < minValid {
+		t.Errorf("%s: only %d valid labels among %d; sample too weak", name, valid, checked)
 	}
-	t.Logf("%d labels compared, %d valid", checked, valid)
+	t.Logf("%s: %d labels compared, %d valid", name, checked, valid)
 }

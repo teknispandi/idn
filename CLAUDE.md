@@ -59,14 +59,15 @@ There are two table sources:
 
 `SupportedUnicodeVersion()` (`unicode_version.go`) is the lowest Unicode version among Go's `unicode`, `x/net/idna` and `x/text/norm`. An LGR declaring a newer `<unicode-version>` still loads as long as all its repertoire and variant code points are assigned at runtime; ICANN's 2025–2026 releases declare 15.1/16.0. Note that Go lists `Cn` (unassigned) in `unicode.Categories`, so "has a category" does not mean "assigned". It parses the XML into a generic `node` tree, then builds the repertoire. Sequences and ranges are expanded, and the `tags` index feeds `from-tag`. `compile()` eagerly compiles every named class and rule, so a broken or unsupported LGR fails at load time; keep that property. `pattern.go` is a continuation-passing backtracking matcher over `[]rune`. Go `regexp` can't express look-behind/look-ahead/anchor. Rules are searched anywhere in the label unless `start`/`end` anchor them. `evaluate.go` decomposes labels with DP (contexts depend only on label and position), evaluates actions in order with RFC 7940 §7.6 default actions appended, and generates variants with hard caps.
 
-`TestBalineseLGRMatchesHandwrittenValidator` compares the engine against `v3.BalineseLanguageValidator` on ~392k labels. Any change to either must keep them in agreement. `jt:` data comes from `internal/gen/joiningtype.go`, which probes PRECIS ZWNJ context rules. `x/net/idna` can't be used for this, because its joiner state machine treats type U like R.
+`crosscheck_test.go` compares the engine against the handwritten `v3.BalineseLanguageValidator` (~392k labels) and `v3.JavaneseLanguageValidator` (~252k labels) using the `crossCheck` helper. Any change to either side must keep them in agreement. Add a script the same way: generate `idn/und-Xxxx.txt` from the LGR, write a `v3` validator keyed by `# Script:`, and add a `crossCheck` call. `jt:` data comes from `internal/gen/joiningtype.go`, which probes PRECIS ZWNJ context rules. `x/net/idna` can't be used for this, because its joiner state machine treats type U like R.
 
 ### Script validators follow the LGR XML, not its prose
 
-`BalineseLanguageValidator` implements `lgrs/second-level-reference/und-Bali.xml`. The XML `<rules>` are normative. The prose description inside the LGR is not, and reading it literally caused past bugs: two consonants before a virama were wrongly rejected, and so was a word-final adeg-adeg. When changing a script validator:
+`BalineseLanguageValidator` implements `lgrs/second-level-reference/und-Bali.xml`, and `JavaneseLanguageValidator` implements `und-Java.xml`. The XML `<rules>` are normative. The prose description inside the LGR is not, and reading it literally caused past bugs: two consonants before a virama were wrongly rejected, and so was a word-final adeg-adeg. When changing a script validator:
 
 - Tie each check to its named LGR rule (`follows-c`, `disallow-for-1B44`, …), as the existing comments do.
-- Keep the repertoire identical to the XML `<data>`. `TestBalineseRepertoireMatchesLGR` enforces this.
+- Keep the repertoire identical to the XML `<data>`. `TestBalineseRepertoireMatchesLGR` and `TestJavaneseRepertoireMatchesLGR` enforce this.
+- Javanese: U+A9B3 CECAK TELU exists only inside aksara-rekan sequences (KA/GA/JA/DA/PA/WA + A9B3), and that pair counts as a consonant for the next character's context. The other sequences (layar + consonant, conjuncts) exist only to define variants and do not affect validity. `pangkon-disallowed` is a whole-label search over raw runes, so an aksara rekan between the bases breaks the pattern.
 - Count hyphen rules in runes inside the validator. `x/net/idna` counts bytes, so its checks never fire for multi-byte scripts.
 
 ## Data directories

@@ -327,6 +327,7 @@ satu fungsi — aktifkan yang ingin dicoba):
 - `registrar.go` — `ExampleRegistrar`: normalisasi input pengguna dan pesan
   kesalahan berbahasa Indonesia
 - `bali.go` — validator aksara Bali
+- `jawa.go` — `ExampleJawa`: validator aksara Jawa dan pemakaiannya lewat `IdnManager`
 - `simple_usage.go`, `main_enhanced.go`, `performance_demo.go` — API loader/manager
 
 Contoh LGR XML ada di `/examples/v4/`.
@@ -505,6 +506,13 @@ Based on `/idn` folder content:
 - Latin, Malayalam, Myanmar, Oriya, Sinhala
 - Tamil, Telugu, Thai, Tibetan, Traditional-Chinese
 - und-Bali (Balinese, dari LGR second-level ICANN)
+- und-Java (Jawa, dari LGR second-level ICANN 13 Agustus 2026)
+
+`und-bali` dan `und-java` membawa validator aturan aksara yang ditulis tangan
+(`BalineseLanguageValidator`, `JavaneseLanguageValidator`), terpasang otomatis
+lewat header `# Script:`. Keduanya dibandingkan secara exhaustive dengan LGR
+XML-nya di `v4` (`crosscheck_test.go`). Untuk pemblokiran varian, pakai LGR-nya
+lewat `v4` + `RegisterTable`.
 
 Tabel tersemat untuk `IdnLabelValidator` (port Nomulus): `extended_latin`,
 `unconfusable_latin`, `augmented_latin` (google_latn_3.0) dan `ja`.

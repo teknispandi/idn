@@ -18,6 +18,15 @@ import (
 //go:embed *.txt
 var tableFiles embed.FS
 
+// rangePattern mengenali baris rentang "U+XXXX..U+YYYY" (juga "U+XXXX..YYYY").
+var rangePattern = regexp.MustCompile(`^U\+([0-9a-fA-F]{4,6})\s*\.\.\s*(?:U\+)?([0-9a-fA-F]{4,6})`)
+
+// entryPattern mengenali satu entri "U+XXXX  # komentar". idn/Greek-IDN.txt
+// memuat baris tergabung berisi dua entri, mis.
+// "U+03B0 ## ΰ ... U+03B1 ## α GREEK SMALL LETTER ALPHA"; tanpa ini entri
+// kedua hilang tanpa pesan.
+var entryPattern = regexp.MustCompile(`U\+([0-9a-fA-F]{4,6})\s+#`)
+
 // IdnTable represents an IDN table for a particular TLD
 type IdnTable struct {
 	// name adalah nama bahasa untuk tabel ini (sesuai dengan nama file)
@@ -106,6 +115,29 @@ func NewIdnTable(language string, data []string, validator LanguageValidator) (*
 
 		// Lewati baris kosong dan komentar
 		if line == "" || strings.HasPrefix(line, "#") {
+			continue
+		}
+
+		// Rentang "U+XXXX..U+YYYY": tanpa ini readCodepoint hanya membaca
+		// code point pertama dan sisanya hilang tanpa pesan.
+		if m := rangePattern.FindStringSubmatch(line); m != nil {
+			first, _ := strconv.ParseInt(m[1], 16, 32)
+			last, _ := strconv.ParseInt(m[2], 16, 32)
+			if last < first {
+				return nil, fmt.Errorf("invalid range '%s' in table %s", line, language)
+			}
+			for cp := first; cp <= last; cp++ {
+				table.validCodepoints[int(cp)] = true
+			}
+			continue
+		}
+
+		// Baris tergabung berisi beberapa entri "U+XXXX # ..."
+		if entries := entryPattern.FindAllStringSubmatch(line, -1); len(entries) > 1 && !strings.Contains(line, ";") {
+			for _, entry := range entries {
+				cp, _ := strconv.ParseInt(entry[1], 16, 32)
+				table.validCodepoints[int(cp)] = true
+			}
 			continue
 		}
 

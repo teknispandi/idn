@@ -41,6 +41,11 @@ de.VariantIndex("strasse") == de.VariantIndex("straße") // true
 Nama tabel = nama file tanpa ekstensi (huruf kecil); ganti dengan `WithName`
 bila LGR dan tabel `.txt` untuk aksara yang sama dipasang berdampingan.
 
+LGR yang `<unicode-version>`-nya lebih baru dari `v4.SupportedUnicodeVersion()`
+(versi terendah di antara pustaka standar Go, `x/net/idna`, dan `x/text`;
+saat ini 15.0.0) ditolak saat dimuat — properti dan status PVALID code point
+baru tidak bisa dievaluasi dengan benar. Perbarui Go dan dependensi itu dulu.
+
 ## Semantik yang diterapkan
 
 | RFC 7940 | Implementasi |
@@ -63,7 +68,8 @@ Keputusan di luar teks RFC:
   ketat: label bisa dianggap bentrok walau varian bersyaratnya tidak berlaku,
   tidak pernah sebaliknya.
 - Pembangkitan varian dibatasi `limit` (default `v3.DefaultVariantLimit`),
-  64 partisi, dan 200.000 kombinasi; hasilnya ditandai `truncated`. Untuk
+  64 partisi, dan 200.000 kombinasi; hasilnya ditandai `truncated`. Hanya
+  varian yang juga lolos IDNA2008 yang dihitung terhadap `limit`. Untuk
   mendeteksi bentrok gunakan `VariantKey`, bukan daftar varian.
 
 ## Verifikasi

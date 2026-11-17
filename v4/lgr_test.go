@@ -2,6 +2,7 @@ package v4
 
 import (
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -23,4 +24,25 @@ func TestLoadAllLGRs(t *testing.T) {
 		}
 	}
 	t.Logf("loaded %d LGR files", len(files))
+}
+
+func TestUnicodeVersionCheck(t *testing.T) {
+	lgr := func(version string) string {
+		return `<lgr xmlns="urn:ietf:params:xml:ns:lgr-1.0"><meta><unicode-version>` + version +
+			`</unicode-version></meta><data><char cp="0061"/></data></lgr>`
+	}
+	for version, wantErr := range map[string]bool{
+		"11.0.0":                  false,
+		SupportedUnicodeVersion(): false,
+		"99.0.0":                  true,
+		"not-a-version":           true,
+	} {
+		_, err := Parse(strings.NewReader(lgr(version)))
+		if (err != nil) != wantErr {
+			t.Errorf("unicode-version %q: err = %v, want error=%v", version, err, wantErr)
+		}
+	}
+	if compareVersions("14.0.0", "15.0.0") >= 0 || compareVersions("15.1", "15.0.0") <= 0 {
+		t.Error("compareVersions ordering is wrong")
+	}
 }

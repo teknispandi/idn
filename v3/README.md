@@ -158,8 +158,10 @@ ditawarkan ke pendaftar yang sama. Sumber varian:
 
 **Koherensi varian.** Index dihitung oleh tabel yang menerima label, jadi
 tabel-tabel dalam satu zona harus sepakat tentang himpunan varian setiap code
-point yang mereka miliki bersama — ICANN IDN Implementation Guidelines 4.0,
-Guideline 13. `manager.VariantConflicts(tld)` / `manager.CheckVariantCoherence()`
+point yang mereka miliki bersama — Guideline 13 ICANN IDN Implementation
+Guidelines (diusulkan di v4.0, ditangguhkan di v4.1; lihat
+`doc/idn-guidelines-22sep22-en.pdf`). `manager.VariantConflicts(tld)` /
+`manager.CheckVariantCoherence()`
 memeriksanya. Contoh nyata dari tabel di repo ini: `chinese` + `japanese` dalam
 satu zona berbeda untuk 1.001 aksara Han (mis. 亜: `chinese`→亚,
 `japanese`→亜), dan `chinese` (`.txt`) + LGR `zh` berbeda untuk 46 aksara.
@@ -279,6 +281,14 @@ U+0660  # ARABIC-INDIC DIGIT ZERO
 U+0661  # ARABIC-INDIC DIGIT ONE
 U+0627  # ARABIC LETTER ALEF
 ```
+
+### Rentang
+```
+U+0061..U+007A  # a..z
+```
+
+Baris yang memuat beberapa entri `U+XXXX # …` (seperti beberapa baris di
+`Greek-IDN.txt`) dibaca semua entrinya.
 
 ## Performance
 

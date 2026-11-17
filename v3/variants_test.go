@@ -156,7 +156,7 @@ func mustPunycode(t *testing.T, s string) string {
 	return p.alabel
 }
 
-// Guideline 13 ICANN: tabel dengan kebijakan varian dalam satu zona harus
+// Guideline 13 ICANN (ditangguhkan di v4.1): tabel dengan kebijakan varian dalam satu zona harus
 // seragam. Chinese dan Traditional-Chinese berbagi himpunan varian yang
 // sama; Japanese memuat aksara Han yang sama tanpa varian, jadi bentrok
 // antara 岩 dan 巖 bisa lolos bila kedua tabel dipakai di satu zona.
@@ -192,4 +192,23 @@ func TestVariantCoherence(t *testing.T) {
 		t.Errorf("CheckVariantCoherence() = %v, want only zh-ja", err)
 	}
 	t.Log(c)
+}
+
+// Varian yang melanggar IDNA2008 tidak boleh memakan jatah limit: dulu
+// VariantLabels(1) bisa mengembalikan daftar kosong walau ada varian sah.
+func TestVariantLabelsLimitCountsOnlyValid(t *testing.T) {
+	table, err := NewIdnTable("hyphen-variants", []string{
+		"U+002D(0);U+002D(0);U+0078(0)", // '-' ↔ 'x'
+		"U+0078(0);U+0078(0);U+002D(0)",
+		"U+0061(0);U+0061(0);U+0062(0)", // 'a' ↔ 'b'
+		"U+0062(0);U+0062(0);U+0061(0)",
+	}, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	// Varian "xa": "-a", "-b" (diawali tanda hubung: tidak valid), "xb".
+	variants, truncated := table.VariantLabels("xa", 1)
+	if len(variants) != 1 || variants[0].ULabel != "xb" || truncated {
+		t.Errorf("VariantLabels(xa, 1) = %+v, truncated=%v; want [xb], false", variants, truncated)
+	}
 }

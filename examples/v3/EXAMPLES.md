@@ -1,5 +1,9 @@
 # IDN Configuration Examples
 
+Cuplikan di bawah memperlihatkan API loader/manager. Untuk alur lengkap
+registry dan registrar (IDNA2008, zona, `VariantKey`, RDE, pesan kesalahan)
+lihat `registry.go` dan `registrar.go` di folder ini, dan `../v4` untuk LGR XML.
+
 ## Example 1: Basic Single Language TLD
 
 ```go
@@ -43,8 +47,11 @@ import (
 func main() {
     manager := v3.NewIdnManager("./idn")
     
-    // TLD untuk wilayah Asia dengan multiple script
-    asiaLanguages := []string{"chinese", "japanese", "korean", "thai", "khmer"}
+    // TLD untuk wilayah Asia dengan multiple script.
+    // Jangan pasang "chinese" dan "japanese" bersama: keduanya memuat aksara
+    // Han yang sama dengan himpunan varian berbeda (1.001 aksara), sehingga
+    // bentrok varian bisa lolos. CheckVariantCoherence di bawah menangkapnya.
+    asiaLanguages := []string{"chinese", "korean", "thai", "khmer"}
     err := manager.RegisterTldWithPreload("asia", asiaLanguages)
     if err != nil {
         log.Fatal(err)
@@ -66,10 +73,15 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
+
+    // Tabel dengan varian dalam satu zona harus seragam variannya
+    if err := manager.CheckVariantCoherence(); err != nil {
+        log.Fatal(err)
+    }
     
     // Test validation
     testCases := map[string][]string{
-        "asia": {"例え", "예시", "ตัวอย่าง", "例子"},
+        "asia": {"예시", "ตัวอย่าง", "例子"},
         "me":   {"مثال", "דוגמה", "օրինակ"},
         "global": {"example", "пример", "παράδειγμα", "उदाहरण"},
     }
@@ -223,118 +235,87 @@ func main() {
 }
 ```
 
-## Example 5: Error Handling and Fallback
+## Example 5: Error Handling (gagal tertutup)
+
+Bila tabel atau konfigurasi TLD tidak tersedia, hentikan start atau tolak
+pendaftaran. Jangan jatuh ke validasi ASCII sederhana: registry yang
+meloloskan nama saat tabelnya hilang menerima nama yang tidak bisa ditarik
+kembali.
 
 ```go
 package main
 
 import (
+    "errors"
     "fmt"
     "log"
-    "strings"
+
+    idn "github.com/al0fayz/idn"
     v3 "github.com/al0fayz/idn/v3"
 )
 
 func main() {
-    manager := v3.NewIdnManager("./idn")
-    
-    // Try to register TLD with both existing and non-existing languages
-    mixedLanguages := []string{"latin", "arabic", "nonexistent", "chinese", "invalid-lang"}
-    
-    fmt.Println("=== Robust TLD Registration ===")
-    var validLanguages []string
-    
-    for _, lang := range mixedLanguages {
-        // Try to load individual language first
-        loader := v3.NewIdnLoader("./idn")
-        _, err := loader.LoadTable(lang)
-        if err != nil {
-            if strings.Contains(err.Error(), "IDN file not found") {
-                fmt.Printf("⚠️  Language '%s' not available, skipping\n", lang)
-                continue
-            } else {
-                fmt.Printf("❌ Error loading '%s': %v\n", lang, err)
-                continue
-            }
-        }
-        
-        validLanguages = append(validLanguages, lang)
-        fmt.Printf("✅ Language '%s' validated\n", lang)
-    }
-    
-    // Register with only valid languages
-    if len(validLanguages) > 0 {
-        err := manager.RegisterTld("robust", validLanguages)
-        if err != nil {
-            log.Printf("Failed to register TLD: %v", err)
-        } else {
-            fmt.Printf("✅ TLD 'robust' registered with languages: %v\n", validLanguages)
-        }
-    }
-    
-    // Validation with error handling
-    fmt.Println("\n=== Robust Validation ===")
-    testLabels := []string{"example", "invalid-chars-™", "café", "тест"}
-    
-    for _, label := range testLabels {
-        isValid, languages, err := manager.ValidateLabel("robust", label)
-        
-        if err != nil {
-            // Fallback to basic validation
-            fmt.Printf("⚠️  %s: Validation error (%v), using fallback\n", label, err)
-            isBasicASCII := isBasicASCII(label)
-            fmt.Printf("   Fallback result: %v\n", isBasicASCII)
-        } else {
-            if isValid {
-                fmt.Printf("✅ %s: Valid (supported by: %v)\n", label, languages)
-            } else {
-                fmt.Printf("❌ %s: Invalid for this TLD\n", label)
-            }
-        }
-    }
-}
+    manager := v3.NewIdnManagerFS(idn.Tables())
 
-// Helper function untuk basic ASCII validation
-func isBasicASCII(s string) bool {
-    for _, r := range s {
-        if r > 127 || (r < 'a' || r > 'z') && (r < 'A' || r > 'Z') && 
-           (r < '0' || r > '9') && r != '-' && r != '.' {
-            return false
+    // Tabel yang tidak ada membuat registrasi TLD gagal: hentikan start.
+    if err := manager.RegisterTld("robust", []string{"latin", "nonexistent"}); err != nil {
+        log.Printf("konfigurasi ditolak: %v", err)
+    }
+    if err := manager.RegisterTld("robust", []string{"latin"}); err != nil {
+        log.Fatal(err)
+    }
+
+    for _, name := range []string{"example.robust", "invalid-chars-™.robust", "café.robust", "тест.robust", "contoh.unknown"} {
+        res, err := manager.CheckDomain(name)
+        var ve *v3.ValidationError
+        switch {
+        case err == nil:
+            fmt.Printf("✅ %s → %s (tabel %q)\n", name, res.ASCIIName, res.TableName())
+        case errors.Is(err, v3.ErrUnknownTld):
+            fmt.Printf("❌ %s: zona tidak terdaftar\n", name)
+        case errors.As(err, &ve) && ve.Rune != 0:
+            fmt.Printf("❌ %s: karakter %q di posisi %d ditolak (%v)\n", name, ve.Rune, ve.Pos+1, ve.Kind)
+        default:
+            fmt.Printf("❌ %s: %v\n", name, err)
         }
     }
-    return len(s) > 0
 }
 ```
 
 ## Configuration File Example (JSON)
 
+`v3.TldIdnConfig` sudah memiliki tag JSON, jadi konfigurasi zona bisa dibaca
+langsung. URL di bawah hanya contoh (`.invalid`); isi dengan URL tabel milik
+registry di IANA Repository of IDN Practices.
+
 ```json
 {
-  "idn_path": "/path/to/idn/tables",
-  "cache_config": {
-    "enabled": true,
-    "preload_common": true,
-    "max_cached_languages": 50
-  },
-  "tlds": {
-    "com": {
+  "idn_path": "",
+  "tlds": [
+    {
+      "tld_name": "id",
+      "languages": ["latin", "und-bali"],
+      "enabled": true,
+      "allow_ascii": true,
+      "table_refs": {
+        "latin":    {"url": "https://contoh.invalid/idn/latin.txt", "policy": "https://contoh.invalid/kebijakan-idn"},
+        "und-bali": {"url": "https://contoh.invalid/idn/und-bali.xml", "policy": "https://contoh.invalid/kebijakan-idn"}
+      }
+    },
+    {
+      "tld_name": "co.id",
       "languages": ["latin"],
       "enabled": true,
-      "preload": true
-    },
-    "asia": {
-      "languages": ["chinese", "japanese", "korean", "thai"],
-      "enabled": true,
-      "preload": true
-    },
-    "global": {
-      "languages": ["latin", "cyrillic", "arabic", "chinese", "japanese"],
-      "enabled": true,
-      "preload": false
+      "allow_ascii": true,
+      "table_refs": {
+        "latin": {"url": "https://contoh.invalid/idn/latin.txt", "policy": "https://contoh.invalid/kebijakan-idn"}
+      }
     }
-  }
+  ]
 }
 ```
+
+`idn_path` kosong berarti memakai tabel yang disematkan di binary.
 
 ## Best Practice Configuration
 
@@ -343,60 +324,44 @@ package main
 
 import (
     "encoding/json"
-    "fmt"
+    "errors"
+    "log"
     "os"
+
+    idn "github.com/al0fayz/idn"
     v3 "github.com/al0fayz/idn/v3"
 )
 
 type Config struct {
-    IdnPath     string `json:"idn_path"`
-    CacheConfig struct {
-        Enabled           bool `json:"enabled"`
-        PreloadCommon     bool `json:"preload_common"`
-        MaxCachedLanguages int `json:"max_cached_languages"`
-    } `json:"cache_config"`
-    TLDs map[string]struct {
-        Languages []string `json:"languages"`
-        Enabled   bool     `json:"enabled"`
-        Preload   bool     `json:"preload"`
-    } `json:"tlds"`
+    IdnPath string            `json:"idn_path"`
+    TLDs    []v3.TldIdnConfig `json:"tlds"`
 }
 
 func main() {
-    // Load configuration
     config, err := loadConfig("config.json")
     if err != nil {
-        fmt.Printf("Failed to load config: %v\n", err)
-        return
+        log.Fatal(err)
     }
-    
-    // Initialize manager
-    manager := v3.NewIdnManager(config.IdnPath)
-    
-    // Register TLDs based on configuration
-    for tldName, tldConfig := range config.TLDs {
-        if !tldConfig.Enabled {
-            fmt.Printf("Skipping disabled TLD: %s\n", tldName)
-            continue
-        }
-        
-        var err error
-        if tldConfig.Preload {
-            err = manager.RegisterTldWithPreload(tldName, tldConfig.Languages)
-        } else {
-            err = manager.RegisterTld(tldName, tldConfig.Languages)
-        }
-        
-        if err != nil {
-            fmt.Printf("❌ Failed to register TLD %s: %v\n", tldName, err)
-        } else {
-            fmt.Printf("✅ Registered TLD %s with %d languages\n", tldName, len(tldConfig.Languages))
+
+    manager := v3.NewIdnManagerFS(idn.Tables())
+    if config.IdnPath != "" {
+        manager = v3.NewIdnManager(config.IdnPath)
+    }
+
+    // TLD nonaktif tetap didaftarkan, agar validasinya mengembalikan
+    // ErrTldDisabled (bukan ErrUnknownTld).
+    for _, tld := range config.TLDs {
+        if err := manager.RegisterTldConfig(tld); err != nil {
+            log.Fatalf("TLD %s: %v", tld.TldName, err)
         }
     }
-    
-    // Show final statistics
-    stats := manager.GetStats()
-    fmt.Printf("\nFinal statistics: %+v\n", stats)
+
+    // Gagal di sini lebih baik daripada saat deposit RDE atau saat bentrok
+    // varian lolos.
+    if err := errors.Join(manager.CheckRdeTableRefs(), manager.CheckVariantCoherence()); err != nil {
+        log.Fatal(err)
+    }
+    log.Printf("IDN siap: %v", manager.ListRegisteredTlds())
 }
 
 func loadConfig(filename string) (*Config, error) {
@@ -405,10 +370,9 @@ func loadConfig(filename string) (*Config, error) {
         return nil, err
     }
     defer file.Close()
-    
+
     var config Config
-    decoder := json.NewDecoder(file)
-    err = decoder.Decode(&config)
+    err = json.NewDecoder(file).Decode(&config)
     return &config, err
 }
 ```

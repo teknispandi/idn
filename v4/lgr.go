@@ -154,6 +154,7 @@ func Parse(r io.Reader) (*LGR, error) {
 		switch section.XMLName.Local {
 		case "meta":
 			l.parseMeta(&section)
+			err = checkUnicodeVersion(l.meta.UnicodeVersion)
 		case "data":
 			err = l.parseData(&section)
 		case "rules":

@@ -69,7 +69,8 @@ func main() {
 	fmt.Println("(variant_key sama → registry menolak nama kedua)")
 
 	// Tabel .txt Chinese dan LGR zh berbeda data variannya: memasang
-	// keduanya di satu zona melanggar Guideline 13 ICANN.
+	// keduanya di satu zona membuat VariantKey bergantung pada tabel yang
+	// menerima label (Guideline 13 ICANN, ditangguhkan di v4.1).
 	must(manager.RegisterTld("cn-campur", []string{"chinese", "zh"}))
 	conflicts, err := manager.VariantConflicts("cn-campur")
 	if err != nil {

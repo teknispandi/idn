@@ -115,7 +115,8 @@ if err := errors.Join(manager.CheckRdeTableRefs(), manager.CheckVariantCoherence
   validator permisif. Untuk zona yang memang hanya ASCII, daftarkan dengan
   `Languages: nil, AllowASCII: true`.
 - `CheckVariantCoherence` menolak kombinasi tabel yang varian bersamanya tidak
-  seragam (ICANN IDN Implementation Guidelines 4.0, Guideline 13). Contoh dari
+  seragam (Guideline 13 ICANN IDN Implementation Guidelines; diusulkan di
+  v4.0 dan ditangguhkan di v4.1, tetapi tetap syarat teknis `VariantKey`). Contoh dari
   tabel di modul ini: `chinese` + `japanese` berbeda untuk 1.001 aksara Han.
 - Ekspos konfigurasi ini ke registrar (endpoint admin read-only atau dokumen
   yang diterbitkan) agar registrar memakai konfigurasi yang sama.
@@ -143,8 +144,9 @@ Lalu:
    Tangkap pelanggarannya sebagai `codes.AlreadyExists` (sekaligus memperbaiki
    poin 3.0-8 untuk nama yang sama persis).
 3. **Varian allocatable**: bila kebijakan PANDI mengizinkan varian dialokasikan
-   ke pendaftar yang sama (Guideline 11 ICANN: varian harus *allocatable hanya
-   ke pendaftar yang sama* atau *blocked*), bentrok kunci dengan domain milik
+   ke pendaftar yang sama (Guideline 11 ICANN — juga ditangguhkan di v4.1 —
+   mengusulkan varian *allocatable hanya ke pendaftar yang sama* atau
+   *blocked*), bentrok kunci dengan domain milik
    pendaftar yang sama dan `res.VariantLabels` menyebut nama itu
    `allocatable` boleh diteruskan. Tanpa kebijakan itu, semua bentrok ditolak.
 4. Simpan `res.ASCIIName` sebagai `name`, ditambah kolom baru di 3.4.

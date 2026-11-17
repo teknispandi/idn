@@ -346,8 +346,13 @@ func (g *variantGenerator) emit(label []rune, chosen []variantOption) {
 	}
 	g.seen[s] = true
 
-	// Label varian harus valid sendiri: repertoire dan konteks code point (§8.3).
+	// Label varian harus valid sendiri: repertoire dan konteks code point
+	// (§8.3), serta IDNA2008, agar hanya varian yang bisa didaftarkan yang
+	// dihitung terhadap limit.
 	if _, err := g.l.decompose(label); err != nil {
+		return
+	}
+	if !v3.DefaultIdnUtils.IsValidDomainLabel(s) {
 		return
 	}
 	vt := variantTypes{types: make(map[string]bool), mapped: true}

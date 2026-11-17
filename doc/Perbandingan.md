@@ -1,255 +1,174 @@
-**versi pedoman teknis IDN dari ICANN / IETF (bukan versi file di IANA)**, yaitu perbedaan antara:
+# Perbandingan v3 (tabel IDN `.txt`) dan v4 (LGR XML)
 
-* **IDN versi 3 (IDNA2008)**
-* **IDN versi 4 (LGR-based / Root Zone LGR framework)**
+Di repo ini, **v3** dan **v4** adalah nama package menurut **format data
+tabel IDN**, bukan versi protokol IDNA:
 
-Keduanya memang sering disebut “v3” dan “v4” di dokumen dan komunitas IDN karena mewakili **dua generasi besar sistem validasi IDN**.
-Mari kita bahas dengan presisi teknis 👇
+| Package | Format tabel | Sumber di repo |
+|---|---|---|
+| `v3` | daftar code point `.txt` (format tabel IDN Nomulus/IANA lama), plus kolom varian RFC 3743 | `idn/*.txt` |
+| `v4` | Label Generation Ruleset XML, RFC 7940 | `lgrs/*/*.xml` |
 
----
-
-## 🧩 1. Evolusi singkat sistem IDN
-
-| Era       | Nama Teknis                                                             | Tahun           | Ciri Utama                                                                                            | Dipakai di mana                                        |
-| --------- | ----------------------------------------------------------------------- | --------------- | ----------------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
-| **v1–v2** | IDNA2003 (RFC 3490–3492)                                                | 2003            | Berbasis Unicode 3.2, banyak anomali casing & mapping                                                 | Banyak registry lama (.com, .jp, dll)                  |
-| **v3**    | **IDNA2008** (RFC 5890–5895)                                            | 2008            | Berbasis Unicode 5.x+, memperkenalkan *ContextJ*, *ContextO*, *PVALID*, *DISALLOWED*                  | Dasar semua sistem modern, termasuk **Nomulus**        |
-| **v4**    | **ICANN Root Zone LGR framework** (RFC 7940 + RFC 7941 + RZ-LGR series) | 2015 → sekarang | Memperkenalkan **Label Generation Rules (LGR XML)**, varian antar-skrip, dan *Whole Label Evaluation* | Digunakan oleh ICANN Root Zone & IDN ccTLD gTLD modern |
+Keduanya memakai lapisan **IDNA2008** yang sama (di `v3/idna2008.go`) dan
+dipasang ke `v3.IdnManager` yang sama, sehingga `CheckDomain`, `VariantKey`,
+kesalahan bertipe, dan referensi RDE berlaku untuk keduanya.
 
 ---
 
-## ⚙️ 2. Apa itu “IDN v3 (IDNA 2008)”
+## 1. Standar yang terlibat
 
-Ini adalah **kerangka teknis IETF** yang menetapkan aturan global untuk domain berbasis Unicode.
+| Standar | Isi | Dipakai di |
+|---|---|---|
+| IDNA2003 — RFC 3490–3492 | protokol IDN pertama (Nameprep, Punycode) | tidak dipakai; digantikan IDNA2008 |
+| **IDNA2008** — RFC 5890–5894 (+ RFC 5895, pemetaan informatif) | properti code point (PVALID, CONTEXTJ, CONTEXTO, DISALLOWED), aturan bidi, tanda hubung | v3 dan v4 (`prepareLabel`) |
+| RFC 3743 (JET) | tabel dan varian aksara CJK: varian *preferred* dan varian karakter | v3, kolom 2–3 `Chinese-IDN.txt` |
+| **RFC 7940** | format XML LGR: repertoire, varian, aturan konteks/WLE, aksi | v4 |
+| RFC 8228 | panduan merancang LGR dengan varian (simetri, transitivitas) | dirujuk oleh LGR di `lgrs/` |
+| UTS #46 | pemetaan input pengguna (huruf kecil, lebar penuh, titik ideografik) | `IdnUtils.NormalizeDomainName` (registrar) |
 
-📘 **Referensi utama:**
+**Pedoman ICANN** (kebijakan, bukan protokol) — keduanya ada di `doc/`:
 
-* RFC 5890 — Definitions and Document Framework
-* RFC 5891 — Registration and Processing
-* RFC 5892 — Code Points
-* RFC 5893 — Bidirectional Scripts (Arabic/Hebrew)
-* RFC 5894 — Rationale and Background
-* RFC 5895 — Mapping
+- *Guidelines for the Implementation of IDNs* **versi 3.0** (2 September 2011,
+  `idn-guidelines-02sep11-en.pdf`): menyesuaikan pedoman dengan IDNA2008.
+- *IDN Implementation Guidelines* **versi 4.1** (22 September 2022,
+  `idn-guidelines-22sep22-en.pdf`): menggantikan 3.0. Guideline 6(a) — tabel
+  IDN wajib berformat LGR RFC 7940 — serta guideline 11, 12, 13 dan 18
+  (varian) **ditangguhkan** oleh ICANN Board; 6(b) tetap *mendorong* registry
+  yang tabelnya sudah ada di IANA untuk beralih ke format LGR, dan 6(c)
+  meminta tabel memuat repertoire lengkap, varian, dan aturan konteks.
 
-🧠 **Konsep kunci IDNA 2008:**
-
-* Menetapkan kategori karakter:
-
-  * `PVALID` (boleh digunakan)
-  * `CONTEXTJ` / `CONTEXTO` (boleh dengan konteks tertentu)
-  * `DISALLOWED`
-* Tidak lagi bergantung pada Unicode 3.2 (boleh upgrade)
-* Tidak mendukung *mapping heuristik* seperti di IDNA2003 (contoh: full-width Latin → Latin biasa tidak otomatis)
-* Tidak mengatur bahasa/spesifik skrip — hanya per-karakter secara global
-* Tidak mengenal *variant mapping*
-
-🧩 **Dipakai di Nomulus:**
-Nomulus mengikuti **IDNA 2008** melalui library Java bawaan (Java 11+ menggunakan algoritma IDNA 2008), lalu menambahkan **IDN table TXT** untuk membatasi karakter sesuai skrip.
+Jadi penamaan v3/v4 kebetulan selaras dengan era pedoman: tabel `.txt` adalah
+format era pedoman 3.0, LGR XML adalah format yang diarahkan pedoman 4.x.
 
 ---
 
-## 🧠 3. Apa itu “IDN v4 (LGR Framework / Root Zone LGR)”
+## 2. Struktur file
 
-Ini adalah evolusi di bawah koordinasi **ICANN IDN Variant Program**, bukan sekadar RFC IETF.
+### v3 — `.txt`
 
-📘 **Dokumen dasar:**
-
-* RFC 7940 — *Representing Label Generation Rulesets (LGRs) in XML*
-* RFC 7941 — *LGR XML Format Registration*
-* *Root Zone LGR-X (Version X)* — definisi LGR per skrip yang disetujui oleh ICANN Root Zone Project
-
-🧠 **Konsep kunci LGR v4:**
-
-* Menggunakan file **XML berbasis aturan (ruleset)**, bukan daftar code point `.txt`
-* Mendefinisikan:
-
-  * Karakter valid (`<char>` dan `<range>`)
-  * **Variant sets** (untuk mengelola bentuk alternatif seperti bentuk murda di Jawa)
-  * **Whole Label Evaluation (WLE)** rules → mis. “repha hanya boleh di awal”, “konsonan tidak boleh dua kali tanpa pasangan”
-* Dapat memiliki **cross-script variants** (contoh: Cyrillic а vs Latin a)
-* Menjadi dasar untuk sistem **Root Zone** (TLD level) dan **Second Level LGR** (registry seperti .id)
-
-🧩 **ICANN menyebut ini kadang “IDN Guideline v4”** karena menjadi pedoman resmi penerapan IDN bagi registry sejak 2018 → 2024 (revisi terakhir).
-
----
-
-## 🧮 4. Ringkasan perbedaan teknis
-
-| Aspek                    | IDN v3 / IDNA 2008                   | IDN v4 / LGR Framework               |
-| ------------------------ | ------------------------------------ | ------------------------------------ |
-| Standar dasar            | RFC 5890 – 5895                      | RFC 7940 – 7941                      |
-| Basis data               | Unicode Property Table               | LGR XML per skrip                    |
-| Unit validasi            | Per karakter                         | Per label (Whole Label Eval)         |
-| Varian antar karakter    | ❌ Tidak ada                          | ✅ Ada (`<var>`)                      |
-| Konteks skrip/bahasa     | Umum (Latin/Arabic/Bidi)             | Spesifik (mis. Jawa, Thai, Tamil)    |
-| Implementasi di registry | IDN tables (.txt)                    | LGR (.xml)                           |
-| Contoh di Nomulus        | `Javanese-IDN.txt`                   | (Belum native, perlu adapter XML)    |
-| Validasi ekstensi        | Library Java / ICU                   | LGR Evaluator (ICANN tool)           |
-| Cocok untuk              | Registry lama / kompatibilitas cepat | Registry baru / multi-skrip kompleks |
-
----
-
-## 🧩 5. Bagaimana kaitannya dengan **Nomulus**
-
-* Nomulus saat ini masih berada di **arus IDNA 2008 (v3)** — artinya:
-
-  * Validasi Unicode berbasis kategori PVALID, dll.
-  * Pembatasan melalui *tabel IDN per bahasa* (TXT)
-  * Tidak memahami varian atau aturan LGR XML secara native
-* Untuk mendukung **LGR v4**, diperlukan:
-
-  1. **Parser LGR XML** (bisa di luar Nomulus)
-  2. Konversi hasilnya ke struktur `IdnTable` di cache
-  3. Integrasi dengan pipeline validasi label (yang kamu sudah petakan di flowchart)
-
----
-
-## ✅ 6. Kesimpulan praktis
-
-| IDN versi              | Digunakan oleh                          | Ciri                                                       | Implementasi di Nomulus                    |
-| ---------------------- | --------------------------------------- | ---------------------------------------------------------- | ------------------------------------------ |
-| **v3 (IDNA 2008)**     | Semua registry modern, termasuk Nomulus | Validasi karakter berbasis kategori Unicode (tanpa varian) | Native                                     |
-| **v4 (LGR Framework)** | ICANN Root Zone, TLD IDN terbaru        | Validasi label lengkap, variant sets, WLE                  | Belum native, bisa diintegrasi via adapter |
-
----
-
-# 📘 **Perbandingan antara IDN versi 3 (IDNA2008 + IDN Table .txt)** dan **IDN versi 4 (LGR XML Framework)**
-
-## 🧩 1. Konsep Dasar
-
-| Aspek                | **IDN v3 (IDNA2008)**                          | **IDN v4 (LGR Framework / RFC 7940)**                                   |
-| -------------------- | ---------------------------------------------- | ----------------------------------------------------------------------- |
-| Definisi utama       | RFC 5890–5895 (IETF)                           | RFC 7940–7941 (ICANN/IETF)                                              |
-| Unit validasi        | Per **karakter**                               | Per **label (string domain)**                                           |
-| Format data          | File `.txt` (IDN Table)                        | File `.xml` (LGR)                                                       |
-| Tujuan utama         | Memastikan karakter valid & tidak campur skrip | Memastikan **karakter valid + konteks + varian + aturan label lengkap** |
-| Tingkat kompleksitas | Sederhana, cepat                               | Kompleks, mendukung aturan spesifik bahasa                              |
-| Cocok untuk          | Registry umum (Latin, Cyrillic, Arabic)        | Registry multi-skrip (Jawa, Thai, Devanagari, dll.)                     |
-
----
-
-## 🧠 2. Struktur File
-
-### 🧾 IDN v3 — Format `.txt`
-
-Contoh: `Javanese-IDN.txt`
+Cuplikan `idn/Latin-IDN.txt`:
 
 ```
-# IDN Table for Javanese
-# Version: 1.0
-U+A980 ; valid  # JAVANESE SIGN PANYANGGA
-U+A981 ; valid  # JAVANESE SIGN CECAK
-U+A982 ; valid  # JAVANESE SIGN LAYAR
-U+A983 ; valid  # JAVANESE SIGN WIGNYAN
-U+A984..U+A9B2 ; valid # JAVANESE LETTERS
-U+A9B4 ; valid  # JAVANESE VOWEL SIGN TARUNG
+# Registry: Charleston Road Registry Inc.
+# Script: Latn
+# Version: 2.0
+# Effective Date: 2023-04-04
+# URL: https://www.iana.org/domains/idn-tables/tables/google_latn_2.0.txt
+# Policy: https://www.registry.google/about/policies/domainabuse/
+U+002D                         # HYPHEN-MINUS
+U+0030                         # DIGIT ZERO
 ```
 
-➡️ Hanya daftar **codepoint** yang diizinkan, tanpa hubungan antar-karakter atau konteks.
-🧮 Parsing-nya sederhana → cocok untuk `map[rune]bool` di Nomulus.
+Format yang dikenali parser (`NewIdnTable`):
 
----
+- `U+XXXX` per baris, komentar `#`;
+- rentang `U+XXXX..U+YYYY`;
+- format RFC 3743: `U+XXXX(ref);<varian preferred>;<varian karakter>,…`
+  (Chinese, Traditional-Chinese) — kolom 2–3 menjadi himpunan varian;
+- header `# Script:`, `# Version:`, `# Effective Date:`, `# URL:`, `# Policy:`.
 
-### 🧾 IDN v4 — Format `.xml` (LGR)
+Aturan konteks **tidak** ada di file: aturan per aksara ditulis tangan di Go
+(`JapaneseLanguageValidator` untuk tabel `ja`, `ArabicLanguageValidator`,
+`BalineseLanguageValidator`) dan dipasang menurut header `# Script:`.
 
-Contoh: `javanese-lgr.xml`
+### v4 — LGR XML
+
+Cuplikan `lgrs/second-level-reference/und-Bali.xml` (disingkat):
 
 ```xml
 <lgr xmlns="urn:ietf:params:xml:ns:lgr-1.0">
   <meta>
-    <language>Javanese</language>
-    <unicode-version>15.0.0</unicode-version>
+    <language>und-Bali</language>
+    <unicode-version>14.0.0</unicode-version>
   </meta>
-  <char cp="A984" tag="consonant"/>
-  <char cp="A985" tag="consonant"/>
-  <char cp="A9B4" tag="vowel"/>
-  
-  <!-- Variant definition -->
-  <variant cp="A9B4" type="blocked"/>
-
-  <!-- Whole Label Evaluation (WLE) rule -->
-  <rule name="NoDoubleRepha">
-    <comment>Prevent double repha in label</comment>
-    <class by-ref="consonant"/>
-    <match count=">1" ref="A9A0"/>
-  </rule>
+  <data>
+    <char cp="1B13" tag="consonant sc:Bali">
+      <var cp="1B14" type="blocked" />
+    </char>
+    <char cp="1B44" not-when="disallow-for-1B44" tag="sc:Bali sign" />
+  </data>
+  <rules>
+    <class name="c" from-tag="consonant" />
+    <rule name="disallow-for-1B44">
+      <choice>
+        <rule>
+          <look-behind>
+            <choice><start /><char cp="002D" /><!-- … --></choice>
+          </look-behind>
+          <anchor />
+        </rule>
+        <!-- … -->
+      </choice>
+    </rule>
+    <action disp="blocked" any-variant="blocked" />
+    <action disp="valid" />
+  </rules>
 </lgr>
 ```
 
-➡️ File XML ini menyertakan:
-
-* `<char>` dan `<range>` → daftar karakter valid
-* `<variant>` → hubungan antar karakter yang mirip (varian)
-* `<rule>` → aturan konteks label (*Whole Label Evaluation*)
+Varian ditulis sebagai `<var>` di dalam `<char>`; konteks lewat atribut
+`when`/`not-when` yang merujuk `<rule>`; `count` berformat `n`, `n+`, atau
+`n:m`; disposisi ditentukan `<action>` secara berurutan.
 
 ---
 
-## ⚙️ 3. Mekanisme Validasi
+## 3. Mekanisme validasi
 
-| Tahap                 | **IDN v3 (Nomulus sekarang)** | **IDN v4 (LGR Framework)**       |
-| --------------------- | ----------------------------- | -------------------------------- |
-| 1️⃣ Input             | Label Unicode                 | Label Unicode                    |
-| 2️⃣ Normalisasi       | NFC                           | NFC                              |
-| 3️⃣ Validasi karakter | Cek `U+xxxx` di tabel `.txt`  | Cek `<char>` & `<range>` di XML  |
-| 4️⃣ Cek varian        | Tidak ada                     | Gunakan `<variant>` rule         |
-| 5️⃣ Cek aturan label  | Tidak ada                     | Gunakan `<rule>` / `<wle>`       |
-| 6️⃣ Output            | Boolean valid/invalid         | Valid, invalid, atau varian list |
+Keduanya lewat `IdnManager.CheckDomain`; yang berbeda hanya langkah 4.
 
-📍 IDN v3 hanya tahu “boleh/tidak boleh”.
-📍 IDN v4 tahu “boleh”, “varian ini diblokir”, atau “melanggar aturan label”.
-
----
-
-## 🧮 4. Model Data Internal
-
-| Struktur          | v3 (`.txt`)    | v4 (`.xml`)                         |
-| ----------------- | -------------- | ----------------------------------- |
-| `validCodepoints` | `map[int]bool` | `map[int]Char{tag,variant,context}` |
-| `variantSets`     | ❌              | ✅ `map[int][]Variant`               |
-| `rules` (WLE)     | ❌              | ✅ `[]Rule{match,ref,count}`         |
-| `languageTag`     | String         | String                              |
-| `unicodeVersion`  | Tidak disimpan | Disimpan eksplisit                  |
-| `parseTime`       | Mikrodetik     | Lebih lama (parse XML)              |
+| Langkah | v3 (`.txt`) | v4 (LGR) |
+|---|---|---|
+| 1. Struktur label | panjang A-label, tanda hubung (per code point) | sama |
+| 2. A-label | didekode, divalidasi, harus kanonik | sama |
+| 3. IDNA2008 | NFC (input non-NFC ditolak, tidak dinormalisasi), PVALID, CONTEXTO/J, bidi | sama |
+| 4. Tabel | code point ada di tabel + validator bahasa Go | repertoire (termasuk sekuens) + konteks `when`/`not-when` + aksi WLE |
+| 5. Varian | RFC 3743: preferred → `allocatable`, lainnya → `blocked` | `<var>` + aksi → `blocked`/`allocatable`/`activated` |
+| 6. Kunci varian | index label (RFC 7940 §8.5) | sama |
+| Hasil | `*DomainResult` atau `*ValidationError` | sama; label asli diterima hanya bila disposisinya `valid` |
 
 ---
 
-## 🧱 5. Implementasi di Registry (mis. Nomulus)
+## 4. Model data
 
-| Komponen         | v3                     | v4 (adaptasi)                    |
-| ---------------- | ---------------------- | -------------------------------- |
-| **File storage** | `/idn/{Lang}-IDN.txt`  | `/lgr/{Lang}.xml`                |
-| **Loader**       | `IdnLoader`            | `LgrLoader`                      |
-| **Cache**        | `map[string]*IdnTable` | `map[string]*LgrTable`           |
-| **Validator**    | `IsValidLabel()`       | `EvaluateLabel()`                |
-| **Varian check** | Manual blocklist       | XML `<variant>` rules            |
-| **Context rule** | Tidak didukung         | `<rule>` / `<wle>` evaluasi      |
-| **Performance**  | Sangat cepat           | Sedikit lebih lambat tapi akurat |
+| | v3 `*IdnTable` | v4 `*LGR` |
+|---|---|---|
+| Repertoire | `map[int]bool` code point tunggal | elemen code point atau sekuens, diindeks per code point pertama |
+| Varian | union-find atas kolom RFC 3743 | union-find atas semua `<var>` |
+| Konteks | `LanguageValidator` (Go) | aturan RFC 7940 dikompilasi ke *backtracking matcher* |
+| Properti Unicode | — | `gc:*` (tabel Go), `jt:R/D/L` (dibangkitkan dari `x/text`) |
+| Metadata | header `.txt` | `<meta>`: versi, tanggal, bahasa, `unicode-version` |
 
 ---
 
-## 📊 6. Kelebihan dan Kekurangan
+## 5. Performa
 
-| Aspek                   | **v3 (TXT)**    | **v4 (LGR)**                 |
-| ----------------------- | --------------- | ---------------------------- |
-| Kecepatan validasi      | ⚡ Sangat cepat  | ⚙️ Sedikit lebih lambat      |
-| Ketepatan linguistik    | ❌ Terbatas      | ✅ Akurat, sesuai skrip       |
-| Dukungan varian         | ❌ Tidak ada     | ✅ Ada                        |
-| Dukungan aturan konteks | ❌ Tidak ada     | ✅ Ada (WLE)                  |
-| Kompatibilitas Nomulus  | ✅ Native        | ❌ Butuh adaptor              |
-| Cocok untuk             | Latin, Cyrillic | Jawa, Arab, Devanagari, Thai |
-| Format modern ICANN     | ❌               | ✅                            |
+Diukur di Apple M1 Pro, Go 1.26.1 (lihat `v3/README.md` dan `v4/README.md`
+untuk cara mengulang):
 
----
+| | v3 | v4 |
+|---|---|---|
+| Validasi satu nama | `CheckDomain` 0,6–2,4 µs (termasuk IDNA2008) | `CheckLabel` 1–8 µs (hanya tabel) |
+| Memuat tabel | Latin 49 µs, Chinese 31 ms | und-Bali 0,6 ms, zh 153 ms |
 
-## 🧠 7. Kesimpulan Praktis
-
-| Tujuan                                            | Solusi                                 |
-| ------------------------------------------------- | -------------------------------------- |
-| Validasi cepat untuk TLD biasa (Latin, ASCII)     | Gunakan **IDN v3 (.txt)**              |
-| Validasi skrip kompleks (Jawa, Bali, Arab, Tamil) | Gunakan **IDN v4 (LGR XML)**           |
-| Integrasi di Nomulus                              | Buat **adapter parser XML → IdnTable** |
-| Validasi antar varian                             | Gunakan `<variant>` mapping            |
-| Validasi struktur kata/label                      | Gunakan `<rule>` WLE                   |
+Kedua format dimuat sekali saat start, jadi perbedaan waktu muat tidak
+memengaruhi request.
 
 ---
 
+## 6. Kapan memakai yang mana
+
+| Kebutuhan | Pilihan |
+|---|---|
+| Latin/ASCII dan tabel yang sudah terdaftar di IANA dalam format `.txt` | v3 |
+| Aksara dengan aturan susunan (Bali, Jawa, Devanagari, Thai, …) | v4 — aturan berasal dari file, bukan kode Go |
+| Varian dengan disposisi selain blocked/allocatable, atau sekuens multi-code-point | v4 |
+| Menyerahkan tabel ke IANA sesuai arah pedoman ICANN 4.x | v4 (LGR) |
+
+Untuk `.id`: `latin` (`.txt`) bersama LGR `und-Bali`. `idn/und-Bali.txt`
+hanya berisi repertoire (catatan di header-nya: varian, konteks, dan aturan
+belum ada), sedangkan `und-Bali.xml` membawa varian dan aturannya. Tidak ada
+LGR Jawa di `lgrs/`; aksara Jawa memerlukan LGR yang disusun lebih dulu.
+
+Satu zona boleh mencampur tabel v3 dan v4, asalkan himpunan varian untuk
+code point bersama seragam — periksa dengan `IdnManager.CheckVariantCoherence`
+(contoh: `chinese` `.txt` dan LGR `zh` berbeda untuk 46 aksara, jadi jangan
+dipasang bersama).

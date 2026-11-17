@@ -33,7 +33,8 @@ type VariantTable interface {
 
 	// VariantLabels menghasilkan label varian (tanpa label aslinya) beserta
 	// disposisinya, paling banyak limit buah (limit <= 0 berarti
-	// DefaultVariantLimit). truncated bernilai true jika dipotong.
+	// DefaultVariantLimit). Hanya varian yang lolos IDNA2008 yang dihitung
+	// terhadap limit. truncated bernilai true jika dipotong.
 	VariantLabels(label string, limit int) (variants []VariantLabel, truncated bool)
 }
 
@@ -52,6 +53,10 @@ const (
 // Jumlah varian tumbuh eksponensial terhadap panjang label; untuk mendeteksi
 // bentrok gunakan VariantKey, bukan daftar lengkap varian.
 const DefaultVariantLimit = 1000
+
+// maxVariantCombinations membatasi kombinasi yang dicoba IdnTable.VariantLabels,
+// agar label yang sebagian besar variannya tidak valid tetap cepat selesai.
+const maxVariantCombinations = 200_000
 
 // VariantLabel adalah satu label varian.
 type VariantLabel struct {
@@ -180,6 +185,7 @@ func (t *IdnTable) VariantLabels(label string, limit int) ([]VariantLabel, bool)
 	var out []VariantLabel
 	current := make([]rune, len(runes))
 	truncated := false
+	tried := 0
 	var walk func(pos int, preferred, changed bool)
 	walk = func(pos int, preferred, changed bool) {
 		if truncated {
@@ -187,6 +193,16 @@ func (t *IdnTable) VariantLabels(label string, limit int) ([]VariantLabel, bool)
 		}
 		if pos == len(runes) {
 			if !changed {
+				return
+			}
+			if tried++; tried > maxVariantCombinations {
+				truncated = true
+				return
+			}
+			// Varian yang melanggar IDNA2008 (mis. tanda hubung di awal) tidak
+			// dihitung terhadap limit.
+			p, err := prepareLabel(string(current))
+			if err != nil {
 				return
 			}
 			if len(out) == limit {
@@ -197,7 +213,7 @@ func (t *IdnTable) VariantLabels(label string, limit int) ([]VariantLabel, bool)
 			if preferred {
 				disp = DispositionAllocatable
 			}
-			out = append(out, VariantLabel{ULabel: string(current), Disposition: disp})
+			out = append(out, VariantLabel{ULabel: p.ulabel, ALabel: p.alabel, Disposition: disp})
 			return
 		}
 		for _, candidate := range options[pos] {
@@ -226,9 +242,10 @@ func (t *IdnTable) isPreferred(r, candidate rune) bool {
 
 // --- Koherensi varian antar tabel dalam satu zona ---
 //
-// ICANN IDN Implementation Guidelines 4.0, Guideline 13: semua tabel IDN
-// dengan kebijakan varian dalam satu TLD harus memiliki code point varian
-// yang seragam. Di modul ini syarat itu juga teknis: VariantKey dihitung oleh
+// ICANN IDN Implementation Guidelines, Guideline 13 (diusulkan di v4.0,
+// ditangguhkan/deferred di v4.1): semua tabel IDN dengan kebijakan varian
+// dalam satu TLD harus memiliki code point varian yang seragam. Terlepas
+// dari status pedoman itu, di modul ini syaratnya teknis: VariantKey dihitung oleh
 // tabel yang menerima label, jadi bila dua tabel memberi index berbeda untuk
 // elemen yang sama, bentrok varian antar nama bisa lolos.
 

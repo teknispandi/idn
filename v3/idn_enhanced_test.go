@@ -263,3 +263,46 @@ func BenchmarkValidation(b *testing.B) {
 		}
 	}
 }
+
+func TestIdnTableRanges(t *testing.T) {
+	table, err := NewIdnTable("ranges", []string{
+		"U+0061..U+0063  # a..c",
+		"U+0078..007A    # x..z, tanpa U+ kedua",
+		"U+002D",
+	}, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for label, want := range map[string]bool{"abc": true, "b-x": true, "xyz": true, "abd": false} {
+		if got := table.IsValidLabel(label); got != want {
+			t.Errorf("IsValidLabel(%q) = %v, want %v", label, got, want)
+		}
+	}
+	if _, err := NewIdnTable("bad", []string{"U+0063..U+0061"}, nil); err == nil {
+		t.Error("descending range accepted")
+	}
+}
+
+// idn/Greek-IDN.txt memuat baris berisi dua entri; dulu entri kedua hilang,
+// termasuk U+03B1 α, sehingga kata Yunani biasa ditolak.
+func TestIdnTableMergedLines(t *testing.T) {
+	table, err := NewIdnTable("merged", []string{
+		"U+0390 ## ΐ GREEK SMALL LETTER IOTA WITH DIALYTIKA AND TONOS U+03AC ## ά GREEK SMALL LETTER ALPHA WITH TONOS",
+	}, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !table.IsValidLabel("ΐά") {
+		t.Error("second entry on a merged line was dropped")
+	}
+
+	greek, err := NewIdnLoader(filepath.Join("..", "idn")).LoadTable("greek")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, label := range []string{"παράδειγμα", "αθήνα", "ελλάδα"} {
+		if err := greek.CheckLabel(label); err != nil {
+			t.Errorf("greek rejects %q: %v", label, err)
+		}
+	}
+}

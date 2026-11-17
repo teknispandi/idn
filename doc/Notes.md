@@ -1,6 +1,7 @@
 # Ref
 - [IDN Repository Table ](https://www.iana.org/domains/idn-tables)
 - [ICANN IDN Guideline](https://www.icann.org/resources/pages/implementation-guidelines-2012-02-25-en)
+- ICANN IDN Implementation Guidelines 3.0 (2011) dan 4.1 (2022): `doc/idn-guidelines-*.pdf`
 
 
 # RFC 
@@ -8,6 +9,7 @@
 - [Internationalized Domain Names in Applications (IDNA): Protocol](https://datatracker.ietf.org/doc/html/rfc5891)
 - [The Unicode Code Points and Internationalized Domain Names for Applications (IDNA)](https://datatracker.ietf.org/doc/html/rfc5892)
 - [Right-to-Left Scripts for Internationalized Domain Names for Applications (IDNA)](https://datatracker.ietf.org/doc/html/rfc5893)
+- [Representing Label Generation Rulesets Using XML](https://datatracker.ietf.org/doc/html/rfc7940) (LGR, package v4)
 
 # Flow V3
 
@@ -18,31 +20,40 @@
 ├── Chinese-IDN.txt  
 ├── Japanese-IDN.txt
 ├── Hebrew-IDN.txt
-└── ... (26+ bahasa lainnya)
+├── und-Bali.txt
+└── ... (26 tabel)
 ```
 
 **Implementasi di idn_loader.go:**
-- `NewIdnLoader(idnPath string)` - Inisialisasi loader dengan path ke folder /idn
-- `findIdnFile(language string)` - Mencari file IDN dengan pola nama: `{Language}-IDN.txt`
+- `NewIdnLoader(idnPath string)` - Loader dari folder di disk
+- `NewIdnLoaderFS(fsys fs.FS)` - Loader dari `fs.FS`, mis. tabel yang disematkan di binary (`idn.Tables()`)
+- `findIdnFile(language string)` - Mencocokkan nama bahasa dengan nama file tanpa `-IDN.txt` / `.txt`, tidak peka huruf besar/kecil: `latin` → `Latin-IDN.txt`, `und-bali` → `und-Bali.txt`
 - `loadFromFile(filename string)` - Membaca file IDN line by line
 
 ### 2. **Register TLD ke idn_manager dengan Bahasa yang di-Support (untuk Caching)**
 ```go
 // Di idn_manager.go
-manager := NewIdnManager("/path/to/idn")
-manager.RegisterTld("asia", []string{"chinese", "japanese", "korean"})
+manager := NewIdnManagerFS(idn.Tables())
+manager.RegisterTld("zh", []string{"chinese", "traditional-chinese"})
+
+// Tabel LGR (package v4) didaftarkan dulu, lalu dipakai seperti tabel .txt
+manager.RegisterTable(baliLGR)
+manager.RegisterTld("id", []string{"latin", "und-bali"})
 ```
 
 **Flow:**
-- `IdnManager` menyimpan mapping: `TLD -> [Bahasa1, Bahasa2, ...]`
-- Setiap TLD punya `TldIdnConfig` yang berisi daftar bahasa yang didukung
-- Tables disimpan dalam struktur: `map[string]map[string]*IdnTable` (TLD -> Language -> Table)
+- `IdnManager` menyimpan mapping: `TLD -> [Tabel1, Tabel2, ...]`, **terurut**: tabel pertama yang menerima label adalah tabel yang dicatat (idnTableId RDE)
+- Setiap TLD punya `TldIdnConfig`: `Languages`, `Enabled`, `AllowASCII`, `TableRefs`
+- Nama TLD dinormalisasi ke A-label huruf kecil (`ID.` → `id`, `рф` → `xn--p1ai`)
+- Tables disimpan sebagai `map[string][]LabelTable` (copy-on-write); tabel dari `RegisterTable` diutamakan di atas file loader
 
 ### 3. **Caching Bahasa dengan Membaca File menggunakan sync.RWMutex**
 
 **Implementasi Double-Check Locking Pattern di idn_loader.go:**
 ```go
 func (loader *IdnLoader) LoadTable(language string) (*IdnTable, error) {
+    language = normalizeLanguageName(language) // "Traditional Chinese" → "traditional-chinese"
+
     // 1. Read Lock - cek cache
     loader.mutex.RLock()
     if table, exists := loader.cache[language]; exists {
@@ -63,8 +74,8 @@ func (loader *IdnLoader) LoadTable(language string) (*IdnTable, error) {
     // 4. Load dari file dan cache
     filename, err := loader.findIdnFile(language)
     data, err := loader.loadFromFile(filename)
-    table, err := NewIdnTable(language, data, validator)
-    
+    table, err := NewIdnTable(language, data, GetLanguageValidator(language))
+
     loader.cache[language] = table
     return table, nil
 }
@@ -72,43 +83,43 @@ func (loader *IdnLoader) LoadTable(language string) (*IdnTable, error) {
 
 ### 4. **Masukan Format Unicode ke Rune**
 
-**Implementasi di idn.go:**
+**Implementasi di idn.go** (label harus U-label yang sudah lolos IDNA2008):
 ```go
-func (t *IdnTable) IsValidLabel(label string) bool {
-    // Iterasi melalui setiap codepoint dalam label
-    for _, r := range label {  // <- Unicode string di-convert ke rune
+func (t *IdnTable) CheckLabel(label string) error {
+    if label == "" {
+        return newLabelError(ErrEmptyLabel, label)
+    }
+    for i, r := range []rune(label) { // <- Unicode string di-convert ke rune
         if !t.validCodepoints[int(r)] {
-            return false
+            return newRuneError(ErrCodepointNotInTable, label, i, r) // menyebut posisi
         }
     }
-    return true
+    if t.languageValidator != nil { // dipilih dari header "# Script:"
+        return checkLanguageRules(t.languageValidator, t.name, label)
+    }
+    return nil
 }
 ```
 
-**Parsing Unicode dari File IDN:**
-```go
-func readCodepoint(line string, pattern *regexp.Regexp) (int, error) {
-    // Parse format: U+XXXX menjadi int codepoint
-    matches := pattern.FindStringSubmatch(line)
-    hexString := matches[1]
-    codepoint, err := strconv.ParseInt(hexString, 16, 32)
-    return int(codepoint), nil
-}
-```
+**Parsing Unicode dari File IDN** (`NewIdnTable`):
+- `U+XXXX` → satu code point
+- `U+XXXX..U+YYYY` → rentang
+- `U+XXXX(ref);U+YYYY(ref);U+ZZZZ(ref),…` (RFC 3743) → code point + varian preferred + varian karakter
+- header `# Script:`, `# Version:`, `# Effective Date:`, `# URL:`, `# Policy:`
 
 ## Diagram Flow IDN v3
 
 ```mermaid
 flowchart TD
     %% === Application Initialization ===
-    A[Application Start] --> B["NewIdnManager(idnPath)"]
-    B --> C["NewIdnLoader(idnPath)"]
+    A[Application Start] --> B["NewIdnManagerFS(idn.Tables())<br/>atau NewIdnManager(idnPath)"]
+    B --> C["NewIdnLoaderFS(fsys)"]
     C --> D["Initialize Cache: map[string]*IdnTable"]
 
     %% === TLD Registration ===
-    D --> E["RegisterTld(tldName, languages)"]
-    E --> F[Create TldIdnConfig]
-    F --> G["LoadMultipleTables(languages)"]
+    D --> E["RegisterTld / RegisterTldConfig"]
+    E --> F["Normalisasi zona ke A-label<br/>+ TldIdnConfig"]
+    F --> G["resolveTable(language)<br/>RegisterTable dulu, lalu loader"]
 
     %% === Load Tables per Language ===
     G --> H{For each language}
@@ -125,24 +136,26 @@ flowchart TD
     M -->|Miss| N["findIdnFile(language)"]
 
     %% === Load from IDN Folder ===
-    N --> O["Load File from /idn/<br/>Language-IDN.txt"]
-    O --> P["Parse Unicode Lines<br/>U+XXXX → int codepoint"]
-    P --> Q["Create NewIdnTable<br/>with validCodepoints map"]
+    N --> O["Load File<br/>Language-IDN.txt / und-Bali.txt"]
+    O --> P["Parse U+XXXX, rentang,<br/>kolom varian RFC 3743"]
+    P --> Q["NewIdnTable: validCodepoints,<br/>himpunan varian, validator per # Script:"]
     Q --> R["Cache Table in Memory<br/>(Protected by WLock)"]
     R --> S[Return Table]
 
     %% === Store in TLD Manager ===
-    S --> T["Store in tldTables:<br/>TLD → Language → Table"]
+    S --> T["Store in tldTables:<br/>TLD → []LabelTable (urutan prioritas)"]
 
     %% === Separate Label Validation Flow ===
-    U["🔍 ValidateLabel(tldName, label)"] --> V["GetTldTables(tldName)"]
-    V --> W{"For each supported<br/>language in TLD"}
-    W --> X["IsValidLabel(label)"]
-    
+    U["🔍 ValidateLabel(tldName, label)"] --> U2{"TLD terdaftar & aktif?"}
+    U2 -->|Tidak| ERR["Error: ErrUnknownTld / ErrTldDisabled"]
+    U2 -->|Ya| V["prepareLabel(label)<br/>A-label → U-label, IDNA2008"]
+    V --> W{"For each table<br/>(urutan konfigurasi)"}
+    W --> X["table.CheckLabel(ulabel)"]
+
     %% === Unicode to Rune Conversion ===
     X --> Y{"For each rune in label<br/>(Unicode → Rune conversion)"}
     Y --> Z["Check if rune exists in<br/>validCodepoints map"]
-    Z --> AA["Return Validation Result<br/>(bool + valid languages)"]
+    Z --> AA["Return Validation Result<br/>(bool + tabel yang menerima, terurut)"]
 
     %% === Additional Language Validator ===
     Z --> BB{Language Validator exists?}
@@ -163,33 +176,85 @@ flowchart TD
     T -.-> U
 ```
 
+## Diagram Flow CheckDomain (Registry & Registrar)
+
+Jalur yang dipakai registry (domain:create) dan registrar (sebelum EPP):
+
+```mermaid
+flowchart TD
+    IN["Input: café.co.id / xn--caf-dma.co.id"] --> NORM{"Dari pengguna?"}
+    NORM -->|Ya, registrar| N1["IdnUtils.NormalizeDomainName<br/>UTS46: huruf kecil, lebar penuh, 。→ ."]
+    NORM -->|Tidak, EPP| P
+    N1 --> P["prepareDomain: setiap label"]
+
+    P --> P1["Struktur: kosong, tanda hubung<br/>(posisi 3–4 per code point)"]
+    P1 --> P2{"Prefiks xn--?"}
+    P2 -->|Ya| P3["Dekode punycode,<br/>harus kanonik"]
+    P2 -->|Tidak| P4["IDNA2008: NFC, PVALID,<br/>CONTEXTO/J, bidi"]
+    P3 --> P4
+    P4 --> P5["Panjang A-label ≤ 63,<br/>nama ≤ 253 oktet"]
+
+    P5 --> Z1["Cari zona: akhiran terpanjang<br/>yang terdaftar (co.id sebelum id)"]
+    Z1 --> Z2{"Tepat satu label<br/>di bawah zona?"}
+    Z2 -->|Tidak| E1["ErrNotRegistrable / ErrUnknownTld"]
+    Z2 -->|Ya| M1{"Label ASCII murni<br/>& AllowASCII?"}
+    M1 -->|Ya| K1["Lolos tanpa tabel;<br/>VariantKey dari tabel yang menerima"]
+    M1 -->|Tidak| M2["Tabel pertama yang menerima<br/>(.txt atau LGR v4)"]
+    M2 -->|Tidak ada| E2["ValidationError dari tabel<br/>yang menolak paling belakang"]
+    M2 -->|Ada| K2["VariantKey = index label<br/>(RFC 7940 §8.5)"]
+
+    K1 --> OUT["DomainResult:<br/>ASCIIName, UnicodeName, Zone,<br/>TableName, VariantKey"]
+    K2 --> OUT
+
+    style IN fill:#e1f5fe,stroke:#0288d1,stroke-width:2px
+    style OUT fill:#e8f5e9,stroke:#4caf50,stroke-width:2px
+    style E1 fill:#ffebee,stroke:#f44336,stroke-width:2px
+    style E2 fill:#ffebee,stroke:#f44336,stroke-width:2px
+```
+
+Registry menyimpan `ASCIIName` dan `VariantKey` dengan indeks unik
+`(zona, variant_key)`; dua nama saling varian ⇔ kuncinya sama.
+
 ## Struktur Data Key
 
 1. **IdnManager**
    ```go
    type IdnManager struct {
-       loader     *IdnLoader                    // Loader untuk file IDN
-       tldConfigs map[string]*TldIdnConfig      // TLD -> Config
-       tldTables  map[string]map[string]*IdnTable // TLD -> Language -> Table  
-       mutex      sync.RWMutex                  // Concurrent access protection
+       loader       *IdnLoader                // Loader untuk file IDN
+       tldConfigs   map[string]*TldIdnConfig  // TLD (A-label) -> Config
+       tldTables    map[string][]LabelTable   // TLD -> tabel, urutan prioritas
+       customTables map[string]LabelTable     // tabel dari RegisterTable (mis. LGR)
+       mutex        sync.RWMutex              // Concurrent access protection
    }
    ```
 
 2. **IdnLoader** 
    ```go
    type IdnLoader struct {
-       idnPath string                   // Path ke folder /idn
-       cache   map[string]*IdnTable     // Language -> Cached Table
-       mutex   sync.RWMutex            // Cache protection
+       fsys  fs.FS                  // Folder /idn atau tabel tersemat
+       cache map[string]*IdnTable   // Language -> Cached Table
+       mutex sync.RWMutex           // Cache protection
    }
    ```
 
 3. **IdnTable**
    ```go
    type IdnTable struct {
-       name              string           // Nama bahasa
-       validCodepoints   map[int]bool     // Unicode codepoint -> valid
+       name              string            // Nama bahasa
+       url, policy       *url.URL          // dari header; nil bila tidak ada
+       script, version   string            // dari header
+       validCodepoints   map[int]bool      // Unicode codepoint -> valid
        languageValidator LanguageValidator // Validator tambahan
+       preferred         map[rune][]rune   // varian preferred (RFC 3743)
+       variantIndex      map[rune]rune     // code point -> index himpunan varian
+   }
+   ```
+
+4. **LabelTable** — antarmuka yang dipenuhi `*IdnTable` dan `*v4.LGR`
+   ```go
+   type LabelTable interface {
+       GetName() string
+       CheckLabel(label string) error
    }
    ```
 
@@ -200,6 +265,8 @@ flowchart TD
 3. **Unicode to Rune Conversion**: Otomatis saat validasi label
 4. **Multi-TLD Support**: Satu manager bisa handle multiple TLD dengan bahasa berbeda
 5. **Language Validation**: Support validator khusus per bahasa
+6. **IDNA2008 sebelum tabel**: A-label didekode dan divalidasi sebelum dicocokkan dengan tabel
+7. **Varian**: `VariantKey` per nama; koherensi antar tabel dicek `CheckVariantCoherence`
 
 ## Diagram Struktur Data dan Interaksi
 
@@ -210,12 +277,13 @@ flowchart LR
         IDM["🏗️ IdnManager"]
         IDM --> LOADER["loader: *IdnLoader"]
         IDM --> CONFIGS["tldConfigs: map[string]*TldIdnConfig"]
-        IDM --> TABLES["tldTables: map[string]map[string]*IdnTable"]
+        IDM --> TABLES["tldTables: map[string][]LabelTable"]
+        IDM --> CUSTOM["customTables: map[string]LabelTable"]
         IDM --> MUTEX1["mutex: sync.RWMutex"]
     end
 
     subgraph "IdnLoader Structure" 
-        LOADER --> PATH["idnPath: string"]
+        LOADER --> PATH["fsys: fs.FS"]
         LOADER --> CACHE["cache: map[string]*IdnTable"]
         LOADER --> MUTEX2["mutex: sync.RWMutex"]
     end
@@ -225,22 +293,28 @@ flowchart LR
         TABLE --> NAME["name: string"]
         TABLE --> CODEPOINTS["validCodepoints: map[int]bool"]
         TABLE --> VALIDATOR["languageValidator: LanguageValidator"]
-        TABLE --> URL["url: *url.URL"]
-        TABLE --> POLICY["policy: *url.URL"]
+        TABLE --> VARIANTS["variantIndex: map[rune]rune"]
+        TABLE --> URL["url, policy: *url.URL"]
+    end
+
+    subgraph "LGR (package v4)"
+        LGR["📜 *v4.LGR"]
     end
 
     %% === File System Interaction ===
-    subgraph "File System (/idn folder)"
-        FILES["📁 /idn/"]
+    subgraph "File System / embed"
+        FILES["📁 /idn/ atau idn.Tables()"]
         FILES --> AR["Arabic-IDN.txt"]
         FILES --> CH["Chinese-IDN.txt"]
-        FILES --> JP["Japanese-IDN.txt"]
-        FILES --> MORE["... (26+ languages)"]
+        FILES --> BA["und-Bali.txt"]
+        FILES --> MORE["... (26 tabel)"]
     end
 
     %% === Connections ===
     CACHE -.-> TABLE
     TABLES -.-> TABLE
+    TABLES -.-> LGR
+    CUSTOM -.-> LGR
     PATH -.-> FILES
     
     %% === Concurrency Flow ===
@@ -270,14 +344,14 @@ sequenceDiagram
     participant Tbl as IdnTable
 
     Note over App,Tbl: 🚀 Initialization Phase
-    App->>Mgr: NewIdnManager(idnPath)
-    Mgr->>Ldr: NewIdnLoader(idnPath)
+    App->>Mgr: NewIdnManagerFS(idn.Tables())
+    Mgr->>Ldr: NewIdnLoaderFS(fsys)
     
     Note over App,Tbl: 📝 TLD Registration Phase
-    App->>Mgr: RegisterTld("asia", ["chinese", "japanese"])
-    Mgr->>Ldr: LoadMultipleTables(languages)
+    App->>Mgr: RegisterTld("zh", ["chinese", "traditional-chinese"])
     
     loop For each language
+        Mgr->>Ldr: LoadTable(language)
         Ldr->>Ldr: RLock() - Check cache
         alt Cache Hit
             Ldr-->>Mgr: Return cached table
@@ -298,31 +372,34 @@ sequenceDiagram
         end
     end
     
-    Mgr->>Mgr: Store in tldTables[TLD][Language]
+    Mgr->>Mgr: Store in tldTables["zh"] (terurut)
     Mgr-->>App: Registration complete
+    App->>Mgr: CheckVariantCoherence()
+    Mgr-->>App: nil (kedua tabel berbagi himpunan varian yang sama)
 
     Note over App,Tbl: 🔍 Label Validation Phase  
-    App->>Mgr: ValidateLabel("asia", "测试")
-    Mgr->>Mgr: GetTldTables("asia")
+    App->>Mgr: CheckDomain("测试.zh")
+    Mgr->>Mgr: prepareDomain — IDNA2008, A-label "xn--0zwm56d"
     
-    loop For each language in TLD
-        Mgr->>Tbl: IsValidLabel("测试")
-        Tbl->>Tbl: for _, r := range label
+    loop For each table (urutan konfigurasi)
+        Mgr->>Tbl: CheckLabel("测试")
+        Tbl->>Tbl: for _, r := range []rune(label)
         Note over Tbl: Unicode string → rune conversion
         Tbl->>Tbl: Check validCodepoints[int(rune)]
         alt Has language validator
-            Tbl->>Tbl: languageValidator.IsValidLabelForLanguage(label)
+            Tbl->>Tbl: languageValidator (detail bila LanguageRuleChecker)
         end
-        Tbl-->>Mgr: Return validation result
+        Tbl-->>Mgr: nil atau *ValidationError
     end
     
-    Mgr-->>App: Return (isValid, validLanguages, error)
+    Mgr-->>App: DomainResult (ASCIIName, TableName, VariantKey) atau error
 ```
 
-Flow ini sudah mengikuti best practices untuk concurrent access, memory efficiency, dan performance optimization dengan:
+Flow ini mengikuti best practices untuk concurrent access, memory efficiency, dan performance optimization dengan:
 
 - **Double-check locking pattern** untuk menghindari race condition
 - **RWMutex** untuk memisahkan read dan write operations
+- **Copy-on-write** slice tabel per TLD, sehingga validasi tidak menahan lock
 - **Lazy loading** untuk efisiensi memory
 - **Unicode to Rune conversion** yang otomatis di Go
 - **Multi-level caching** (IdnLoader cache + IdnManager tables)

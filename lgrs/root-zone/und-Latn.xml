@@ -1,19 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <lgr xmlns="urn:ietf:params:xml:ns:lgr-1.0">
   <meta>
-    <version comment="Root Zone LGR for the Latin Script">5</version>
-    <date>2022-05-26</date>
+    <version comment="Root Zone LGR for the Latin Script">6</version>
+    <date>2025-09-23</date>
     <language>und-Latn</language>
     <scope type="domain">.</scope>
-    <unicode-version>11.0.0</unicode-version>
+    <unicode-version>16.0.0</unicode-version>
     <description type="text/html"><![CDATA[
     <h1>Root Zone Label Generation Rules for the Latin Script</h1>
-    
+
     <h2>Overview</h2>
-    <p>This file contains Label Generation Rules (LGR) for the Latin script for the Root Zone. 
-    For more details on this LGR and additional background on the script, 
-    see “Proposal for a Latin Script Root Zone LGR” [Proposal-Latin]], including the appendices [Proposal-Latin-Appendices].
-    This file is one of a set of LGR files that together form an integrated LGR for the DNS Root Zone [RZ-LGR-5].
+    <p>This file contains a set of Label Generation Rules (LGR) for the Latin script for the Root Zone. 
+     For more details on this LGR and additional background on the script, see “Proposal for a Latin Script Root Zone LGR” [Proposal-Latin], including the appendices [Proposal-Latin-Appendices].
+    This file is one of a set of LGR files that together form an integrated LGR for the DNS Root Zone [RZ-LGR-6]. 
     The format of this file follows [RFC 7940].</p>
 
     <h2>Repertoire</h2>
@@ -22,18 +21,16 @@
     as part of 21 explicitly defined combining sequences which form part of the repertoire. One additional 
     in-script sequence is  defined for use in variants. This results in a total of 219 repertoire elements.</p>
 
-    <p>The repertoire is based on [MSR-5], which is a subset of Unicode 11.0.0 [Unicode 11.0].</p>
+    <p>The repertoire is contained in [MSR-6], which is a subset of [Unicode 16.0.0].</p>
 
-    <p>Each code point is tagged with the script or scripts with which the code point is used. For each repertoire element, 
-    one or more references document sufficient justification for inclusion in the repertoire; see “References” below.
-    For code points that are part of the repertoire, comments identify the languages using it along with their [EGIDS] level.</p>
-    
-     <p>Code points outside the Latin script that are listed in this file are targets
-     for out-of-script variants and are identified by a reflexive (identity)
-     variant of type “out-of-repertoire-var”. They do not form part of the
-     repertoire.</p>  
-     
-     <p>As part of the Root Zone, this LGR includes neither decimal digits nor the HYPHEN-MINUS.</p>
+      <p>As part of the Root Zone, this LGR includes neither decimal digits nor the HYPHEN-MINUS.</p>
+
+    %BOILERPLATE(repertoire-listing-notes-notags-languages-egids))%
+
+      <p>Code points outside the Latin script repertoire that are listed in this file are targets
+      for out-of-repertoire variants and are identified by a reflexive (identity)
+      variant of type “out-of-repertoire-var”. They do not form part of the
+      repertoire.</p>
 
     <h3>Background on Script and Principal Languages Using It</h3>
     <p>The Latin script is a major writing system of the world, and the most widely used in terms of 
@@ -43,7 +40,7 @@
     level 1&ndash;4 together with many languages with EGIDS level 5, each spoken by more than 
     1 million estimated speakers. Altogether over 100 languages are cited here to justify 
     specific additions to the repertoire, but many other languages may also be written using 
-    some subset of the repertoire of this LGR. In a few cases, code points were excluded in [MSR-5] due to 
+    some subset of the repertoire of this LGR. In a few cases, code points were excluded in [MSR-6] due to 
     security concerns; for the affected languages, only a subrepertoire could be supported.
     More details in Section 3, “Background on Script and Principal Languages Using It” 
     of [Proposal-Latin].</p>
@@ -56,9 +53,9 @@
 
     <p><b>Variant Disposition:</b> Except for limited exceptions for the variants defined for 
     Latin Small Letter Sharp S and Latin Small Letter Dotless I all variants defined here result
-    in a variant label disposition of “blocked”</p>
-   
-    <p>The specification of variants in the Root Zone LGR follows the guidelines in [RFC 8228].</p>
+    in a variant label disposition of “blocked”.</p>
+
+      <p>The specification of variants in the Root Zone LGR follows the guidelines in [RFC 8228].</p>
 
     <h3>Latin Small Letter Sharp S</h3>
     <p>In the case of U+00DF Latin Small Letter Sharp S used in German, the LGR includes the code point together 
@@ -132,8 +129,8 @@
     out-of-repertoire variants are defined with a comment “Cross-script homoglyph” or “Cross-script near homoglyph” respectively.</p>
 
     <p>Because variant mappings, including cross-script variants, must be symmetric and transitive this LGR inherits additional 
-    blocked cross-script and in-script variants by integration; while not alwayas further identified, all such variants are listed here
-    in full  for ease of   reference. However, always use the Common LGR [RZ-LGR-5] for determining cross-script 
+    blocked cross-script and in-script variants by integration; while not always further identified, all such variants are listed here
+    in full  for ease of   reference. However, always use the Common LGR [RZ-LGR-6] for determining cross-script 
     collisions of labels.</p>
 
     <p>In particular, the Latin LGR inherits a number in-script variants as result of integration, primarily
@@ -143,22 +140,20 @@
 
     <p><b>Overlapped sequence:</b> one sequence with a variant “ss” is overlapped with a code point “s” that has a variant of its
      own. To ensure that the sets of variant <i>labels</i> are well-behaved, additional variant mappings had to be defined, including 
-     the following   out-of-repertoire sequences: U+0455 U+0455, U+0D1F U+0D1F.</p>
+     the following out-of-repertoire sequences: U+0455 U+0455, U+0D1F U+0D1F.</p>
 
     <h2>Character Classes</h2>
     <p>The LGR defines no character classes.</p>
     
     <h2>Whole Label Evaluation (WLE) and Context rules</h2>
 
-    <h3>Default Whole Label Evaluation Rules</h3>
+    <h3>Default Whole Label Evaluation Rules and Actions</h3>
     <p>The LGR includes the set of required default WLE rules and actions applicable to 
-    the Root Zone and defined in [MSR-5]. They are marked with &#x235F;.</p> 
-        
+    the Root Zone and defined in [MSR-6]. They are marked with &#x235F;.
+    The actions compute a label disposition based on WLE rules or variant mapping types.</p>
+
     <h3 id="latin_specific_rules">Latin-specific Rules</h3>
     <p>This LGR does not define Latin-specific Whole Label Evaluation Rules.</p>
-
-    <h3>Default Actions</h3>
-    <p>The LGR includes the set of required default actions applicable to the Root Zone and defined in [MSR-5]. They are marked with &#x235F;.</p>
 
     <h3 id="latin_specific_actions">Latin-specific Actions</h3>
     <p>The LGR contains additional Latin-specific actions as described in Section 6 of
@@ -184,9 +179,9 @@
 
     <h2>Methodology and Contributors</h2>
 
-    <p>The Root Zone LGR for the Latin script was developed by the Latin Generation Panel. 
-     For additional detail on methodology and contributors see Sections 4 and 8 in [Proposal-Latin], as well as [RZ-LGR-5-Overview].</p>
-     
+    <p>The Root Zone LGR for the Latin Script was developed by the Latin Generation Panel. For details on methodology and 
+       contributors, see Sections 4 and 8 in [Proposal-Latin], as well as [RZ-LGR-6-Overview].</p>
+
     <h2>References</h2> 
     <p>The following general references are cited in this document:</p>
     <dl class="references">
@@ -195,9 +190,9 @@
       documented in [SIL-Ethnologue] and summarized here:
       https://en.wikipedia.org/wiki/Expanded_Graded_Intergenerational_Disruption_Scale_(EGIDS)</dd>
 
-    <dt>[MSR-5]</dt>
-    <dd>Integration Panel, “Maximal Starting Repertoire — MSR-5 Overview and Rationale”, 24 June 2021,
-    https://www.icann.org/en/system/files/files/msr-5-overview-24jun21-en.pdf</dd>
+    <dt>[MSR-6]</dt>
+    <dd>Integration Panel, “Maximal Starting Repertoire — MSR-6 Overview and Rationale”, 23 September 2025,
+  https://www.icann.org/en/system/files/files/msr-6-overview-23sep25-en.pdf</dd>
 
     <dt>[Omniglot]</dt>
     <dd>Omniglot, “Writing Systems by Language”, https://www.omniglot.com/writing/langalph.htm (accessed on 13 January 2022)</dd>
@@ -210,40 +205,43 @@
     27 January 2022 (ZIP), https://www.icann.org/en/system/files/files/proposal-latin-lgr-appendices-27jan22-en.zip</dd>
 
     <dt>[RFC 7940]</dt>
-    <dd>Davies, K. and A. Freytag, “Representing Label Generation Rulesets Using XML”, RFC 7940, August 2016, https://www.rfc-editor.org/info/rfc7940. </dd> 
+    <dd>Davies, K. and A. Freytag, “Representing Label Generation Rulesets Using XML”, 
+     RFC 7940, August 2016, https://www.rfc-editor.org/info/rfc7940</dd> 
 
     <dt>[RFC 8228]</dt>
     <dd>A. Freytag, “Guidance on Designing Label Generation Rulesets (LGRs) Supporting Variant Labels”, RFC 8228, August 2017,
     https://www.rfc-editor.org/info/rfc8228</dd>
 
-     <dt>[RZ-LGR-5-Overview]</dt>
-     <dd>Integration Panel, “Root Zone Label Generation Rules (RZ LGR-5): Overview and Summary”, 26 May 2022, https://www.icann.org/sites/default/files/lgr/rz-lgr-5-overview-26may22-en.pdf</dd>
+     <dt>[RZ-LGR-6-Overview]</dt>
+     <dd>Integration Panel, “Root Zone Label Generation Rules (RZ LGR-6): Overview and Summary”, 23 September 2025, https://www.icann.org/sites/default/files/lgr/rz-lgr-6-overview-23sep25-en.pdf</dd>
 
-      <dt>[RZ-LGR-5]</dt>
-     <dd>Integration Panel, “Root Zone Label Generation Rules (RZ-LGR-5)”, 26 May 2022 (XML), https://www.icann.org/sites/default/files/lgr/rz-lgr-5-common-26may22-en.xml <br/>
-     <i>non-normative HTML presentation: https://www.icann.org/sites/default/files/lgr/rz-lgr-5-common-26may22-en.html</i></dd>
+      <dt>[RZ-LGR-6]</dt>
+     <dd>Integration Panel, “Root Zone Label Generation Rules (RZ-LGR-6)”, 23 September 2025 (XML), https://www.icann.org/sites/default/files/lgr/rz-lgr-6-common-23sep25-en.xml <br/>
+     <i>non-normative HTML presentation: https://www.icann.org/sites/default/files/lgr/rz-lgr-6-common-23sep25-en.html</i></dd>
 
      <dt>[SIL-Ethnologue]</dt>
      <dd>David M. Eberhard, Gary F. Simons &amp; Charles D. Fennig (eds.). 2021.
      Ethnologue: Languages of the World, Twenty fourth edition. Dallas, Texas: SIL
      International. Online version available as https://www.ethnologue.com</dd>
 
-    <dt>[Unicode 11.0]</dt>
-    <dd>The Unicode Consortium. The Unicode Standard, Version 11.0.0, (Mountain View, CA: The Unicode Consortium, 2018. ISBN 978-1-936213-19-1) https://www.unicode.org/versions/Unicode11.0.0/</dd>
+    <dt>[Unicode 16.0.0]</dt>
+    <dd>
+     The Unicode Consortium. The Unicode Standard, Version 16.0.0, (South San Francisco: The Unicode Consortium, 2024. ISBN 978-1-936213-34-4)
+     https://www.unicode.org/versions/Unicode16.0.0/
+     </dd>
     </dl>
     
-    <p>For references consulted particularly in designing the repertoire for the Latin script for the Root Zone 
-     please see details in the <a href="#table_of_references">Table of References</a> below.  
+    <p>For references consulted, particularly in designing the repertoire for the Latin script for the Root Zone, 
+  please see details in the <a href="#table_of_references">Table of References</a> below.
      References [0] and up refer to the Unicode Standard versions in which corresponding code points 
      were initially encoded. References [101] and up correspond to a source given in [Proposal-Latin] for justifying 
-     the inclusion of the corresponding code points. Entries in the table may have 
-     multiple source reference values.</p>
+     the inclusion of the corresponding code points. Entries in the table may have multiple source reference values.</p>
 
 ]]></description>
     <references>
-      <reference id="0" comment="Any code point originally encoded in Unicode 1.1">The Unicode Standard 1.1</reference>
-      <reference id="3" comment="Any code point originally encoded in Unicode 3.0">The Unicode Standard 3.0</reference>
-      <reference id="8" comment="Any code point originally encoded in Unicode 5.0">The Unicode Standard 5.0</reference>
+      <reference id="0" comment="Any code point originally encoded in Unicode Version 1.1">The Unicode Standard, Version 1.1</reference>
+      <reference id="3" comment="Any code point originally encoded in Unicode Version 3.0">The Unicode Standard, Version 3.0</reference>
+      <reference id="8" comment="Any code point originally encoded in Unicode Version 5.0">The Unicode Standard, Version 5.0</reference>
       <reference id="99" comment="Any code point cited is part of the Basic Latin (ASCII) set">CO Controls and Basic Latin, The Unicode Standard https://unicode.org/charts/PDF/U0000.pdf</reference>
       <reference id="100">ICANN, Second Level Reference Label Generation Rules for Spanish https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-spanish-30aug16-en.html (Accessed on 31 August 2018)</reference>
       <reference id="101">Omniglot, Czech (čeština) https://www.omniglot.com/writing/czech.htm (Accessed on 31 August 2018)</reference>

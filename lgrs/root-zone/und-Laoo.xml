@@ -1,57 +1,61 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <lgr xmlns="urn:ietf:params:xml:ns:lgr-1.0">
   <meta>
-    <version comment="Root Zone LGR for the Lao Script">5</version>
-    <date>2022-05-26</date>
+    <version comment="Root Zone LGR for the Lao Script">6</version>
+    <date>2025-09-23</date>
     <language>und-Laoo</language>
     <scope type="domain">.</scope>
-    <unicode-version>11.0.0</unicode-version>
+    <unicode-version>16.0.0</unicode-version>
     <description type="text/html"><![CDATA[
         <h1>Root Zone Label Generation Rules for the Lao Script</h1>
-    
+
         <h2>Overview</h2>
-        <p>This file contains Label Generation Rules (LGR) for the Lao script for the Root Zone. 
-         For more details on this LGR and additional background on the script, see “Proposal for a Lao Script Root Zone LGR” [Proposal-Lao].
-         This file is one of a set of LGR files that together form an integrated LGR for the DNS Root Zone [RZ-LGR-5]. 
-         The format of this file follows [RFC 7940].</p>
+        <p>This file contains a set of Label Generation Rules (LGR) for the Lao script for the Root Zone. 
+     For more details on this LGR and additional background on the script, see “Proposal for a Lao Script Root Zone LGR” [Proposal-Lao].
+         This file is one of a set of LGR files that together form an integrated LGR for the DNS Root Zone [RZ-LGR-6]. 
+    The format of this file follows [RFC 7940].</p>
 
        <h2>Repertoire</h2>
         <p>In addition to the 51 code points according to Section 5 “Repertoire” in [Proposal-Lao],
-          the sequence 0EB2 0EB0 has been defined to facilitate implementation 
-          of WLE rule <b>follows-vafter-context</b> as a context rule. The repertoire
-          only includes code points used by languages that are actively written in the Khmer script. The repertoire is
-          based on [MSR-5], which is a subset of [Unicode 11.0].</p>
+          the sequence U+0EB2 U+0EB0 has been defined to facilitate implementation 
+          of WLE rule <b>follows-vbefore-consonant-cluster</b> as a context rule. The repertoire
+          only includes code points used by languages that are actively written in the Khmer script.</p>
+          
+         <p>The repertoire is contained in [MSR-6], which is a subset of [Unicode 16.0.0].</p>
 
          <p>As part of the Root Zone, this LGR includes neither decimal digits nor the HYPHEN-MINUS.</p>
-         
-        <p>Each code point is tagged with the script or scripts with which the code point is used, one or more other character categories, 
-        and one or more references documenting sufficient justification for inclusion in the repertoire; see “References” below.
-        Comments identify the language using the code point.</p>
-        
+
+         <p><b>Repertoire Listing:</b> Each code point or range is tagged with the script or scripts with which the code point is used and one or more other character categories. For each repertoire element, 
+  one or more references document sufficient justification for inclusion in the repertoire; see the <a href="#ref_desc_sec_References">“References”</a> below. 
+     For code points in the repertoire, comments identify the language using the code point.</p>
+
         <h2>Variants</h2>
-        <p>According to Section 6, “Variants” in [Proposal-Lao], this LGR defines no variants.</p>
-        
+
+         <p>According to Section 6, “Variants” in [Proposal-Lao], this LGR defines no variants.</p>
+
         <h2>Character Classes</h2>
         <p><b>Consonants:</b> In regular syllables, consonants occur in limited combinations. However, arbitrary combinations are used for acronyms. 
          The LGR therefore considers the restriction on syllabic combinations a matter of spelling and does not enforce them. 
         Consonants may be followed by a semi-consonant mark. Some consonants have been given the tag “Cf”, which indicates final consonants. 
         See Section 5, “Consonants” in [Proposal-Lao].</p>
         
-         <p><b>Vowels:</b> Vowels are divided into vowel-above, vowel-before, vowel-below and vowel-after so as to enforce some of the syllable structure using context rules.
+        <p><b>Vowels:</b> Vowels are divided into vowel-above, vowel-before, vowel-below and vowel-after so as to enforce some of the syllable structure using context rules.
         However, many details have been considered spelling issues and, for simplification, are not modeled in this LGR. See Section 5 in [Proposal-Lao].</p>
          <p>Semi-consonant: The character U+0EBC LAO SEMIVOWEL SIGN LO follows consonants (see Section 5 in [Proposal-Lao]).</p>
         <p>Tone-mark: Any of four tone marks can follow a consonant or vowel-above or vowel-below (see Section 5 in [Proposal-Lao]).</p>
-        <p><b>Signs:</b> The character U+0ECC LAO CANCELLATION MARK follows a final consonant (Cf). The character U+0EC6 (ໆ)  LAO KO LA is a repetition mark that can only occur up to 3 times at the end of the label (See Section 5 in [Proposal-Lao]).</p>
+        <p><b>Signs:</b> The character U+0ECC LAO CANCELLATION MARK follows a final consonant (Cf). The character U+0EC6 LAO KO LA 
+        is a repetition mark that can only occur up to 3 times at the end of the label (See Section 5 in [Proposal-Lao]).</p>
 
         <h2>Whole Label Evaluation (WLE) and Context Rules</h2>
-        
+
         <h3>Default Whole Label Evaluation Rules and Actions</h3>
-        <p>The LGR includes the set of required default WLE rules and actions applicable 
-          to the Root Zone and defined in [MSR-5]. They are marked with &#x235F;. The 
-          default prohibition on leading combining marks is equivalent to ensuring that 
-          a label only starts with a consonant or vowel-before.</p> 
-        
-        <h3>Lao-specific Rules</h3>
+    <p>The LGR includes the set of required default WLE rules and actions applicable to 
+        the Root Zone and defined in [MSR-6]. They are marked with &#x235F;. 
+    The default prohibition on leading combining marks is equivalent to ensuring that 
+    a label only starts with a consonant or vowel-before. 
+    The actions compute a label disposition based on WLE rules or variant mapping types.</p>
+
+       <h3>Lao-specific Rules</h3>
         <p>Rules provided in the LGR as described in Section 7 of [Proposal-Lao] 
           reasonably restrict labels so that they conform to Lao syllable structure. 
           These constraints are presented exclusively as context rules. </p>
@@ -80,41 +84,43 @@
         <p>No context rules apply to “consonant” code points. For discussion, see 
           Section 5.1, “Consonants” in [Proposal-Lao].</p>
 
-         <h2>Methodology and Contributors</h2>
-        <p>The Root Zone LGR for the Lao script was developed by the Lao Generation Panel. For methodology and contributors, see Sections 4 and 8 in [Proposal-Lao], as well as [RZ-LGR-5-Overview].</p>
+        <h2>Methodology and Contributors</h2>
+
+        <p>The Root Zone LGR for the Lao Script was developed by the Lao Generation Panel. For details on methodology and 
+       contributors, see Sections 4 and 8 in [Proposal-Lao], as well as [RZ-LGR-6-Overview].</p>
 
         <h2>References</h2>
         <p>The following general references are cited in this document:</p>
         <dl class="references">
-        <dt>[MSR-5]</dt>
-        <dd>Integration Panel, “Maximal Starting Repertoire — MSR-5 Overview and Rationale”, 24 June 2021,
-         https://www.icann.org/en/system/files/files/msr-5-overview-24jun21-en.pdf    </dd>
+        <dt>[MSR-6]</dt>
+        <dd>Integration Panel, “Maximal Starting Repertoire — MSR-6 Overview and Rationale”, 23 September 2025,
+  https://www.icann.org/en/system/files/files/msr-6-overview-23sep25-en.pdf</dd>
         <dt>[Proposal-Lao]</dt>
         <dd>Lao Generation Panel, “Proposal for Lao Script Root Zone LGR”, Version 3.1,
          https://www.icann.org/en/system/files/files/proposal-lao-lgr-31jan17-en.pdf</dd> 
-        <dt>[RFC 7940]</dt>
-         <dd>Davies, K. and A. Freytag, “Representing Label Generation Rulesets Using XML”, RFC 7940, August 2016, https://www.rfc-editor.org/info/rfc7940</dd>
-        <dt>[RZ-LGR-5-Overview]</dt>
-        <dd>Integration Panel, “Root Zone Label Generation Rules (RZ LGR-5): Overview and Summary”, 26 May 2022, https://www.icann.org/sites/default/files/lgr/rz-lgr-5-overview-26may22-en.pdf</dd>
+          <dt>[RFC 7940]</dt>
+        <dd>Davies, K. and A. Freytag, “Representing Label Generation Rulesets Using XML”, 
+     RFC 7940, August 2016, https://www.rfc-editor.org/info/rfc7940</dd>
+        <dt>[RZ-LGR-6-Overview]</dt>
+        <dd>Integration Panel, “Root Zone Label Generation Rules (RZ LGR-6): Overview and Summary”, 23 September 2025, https://www.icann.org/sites/default/files/lgr/rz-lgr-6-overview-23sep25-en.pdf</dd>
 
-         <dt>[RZ-LGR-5]</dt>
-         <dd>Integration Panel, “Root Zone Label Generation Rules (RZ-LGR-5)”, 26 May 2022 (XML), https://www.icann.org/sites/default/files/lgr/rz-lgr-5-common-26may22-en.xml <br/>
-         <i>non-normative HTML presentation: https://www.icann.org/sites/default/files/lgr/rz-lgr-5-common-26may22-en.html</i></dd>
-        <dt>[Unicode 11.0]</dt>
-        <dd>The Unicode Consortium. The Unicode Standard, Version 11.0.0, (Mountain View, 
-          CA: The Unicode Consortium, 2018. ISBN 978-1-936213-19-1) 
-          https://www.unicode.org/versions/Unicode11.0.0/</dd>
+        <dt>[RZ-LGR-6]</dt>
+        <dd>Integration Panel, “Root Zone Label Generation Rules (RZ-LGR-6)”, 23 September 2025 (XML), https://www.icann.org/sites/default/files/lgr/rz-lgr-6-common-23sep25-en.xml <br/>
+     <i>non-normative HTML presentation: https://www.icann.org/sites/default/files/lgr/rz-lgr-6-common-23sep25-en.html</i></dd>
+        <dt>[Unicode 16.0.0]</dt>
+        <dd>
+     The Unicode Consortium. The Unicode Standard, Version 16.0.0, (South San Francisco: The Unicode Consortium, 2024. ISBN 978-1-936213-34-4)
+     https://www.unicode.org/versions/Unicode16.0.0/
+     </dd>
         </dl>
-         <p>For references consulted particularly in designing the repertoire for the Lao script for the Root Zone 
-          please see details in the <a href="#table_of_references">Table of References</a> below. 
-          Reference [0] refers to the Unicode Standard version
+         <p>For references consulted, particularly in designing the repertoire for the Lao script for the Root Zone, 
+  please see details in the <a href="#table_of_references">Table of References</a> below. Reference [0] refers to the Unicode Standard version
           in which corresponding code points were initially encoded. References 
           [201], [202], [203], [204], 205], [206], &amp; [207] correspond to sources given in [Proposal-Lao] justifying the 
           inclusion of or classification for the corresponding 
-          code points. Entries in the table may have
-          multiple source reference values.</p>]]></description>
+          code points. Entries in the table may have multiple source reference values.</p>]]></description>
     <references>
-      <reference id="0" comment="Any code point originally encoded in Unicode 1.1">The Unicode Standard 1.1</reference>
+      <reference id="0" comment="Any code point originally encoded in Unicode Version 1.1">The Unicode Standard, Version 1.1</reference>
       <reference id="201">Lao grammar book published by the Ministry of Education in 1967, 
         see Appendix B, Figure 1 in [Proposal-Lao] </reference>
       <reference id="202">Lao grammar book published by the Ministry of Education in 1967, 

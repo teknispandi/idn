@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <lgr xmlns="urn:ietf:params:xml:ns:lgr-1.0">
   <meta>
-    <version comment="Second Level Reference LGR">1</version>
-    <date>2024-10-25</date>
+    <version comment="Second Level Reference LGR">2</version>
+    <date>2026-08-13</date>
     <language>ja</language>
-    <unicode-version>11.0.0</unicode-version>
+    <unicode-version>16.0.0</unicode-version>
     <description type="text/html"><![CDATA[
        <div class="instructions">
 <h2>INSTRUCTIONS</h2>
   <ul>
     <li>These instructions cover how to adopt an LGR based on this reference LGR for a given
     zone and how to prepare the file for deposit in the IANA Repository of IDN Practices.</li>
-    <li>As described  the IANA procedure (https://www.iana.org/help/idn-repository-procedure) an 
+    <li>As described in the IANA procedure (https://www.iana.org/help/idn-repository-procedure) an 
     LGR MUST contain the following elements in its header:
       <ul style="list-style-type:square;">
         <li>Script or Language Designator (see below for guidance) </li>
@@ -37,13 +37,13 @@
   <p><code>&lt;version comment=&quot;</code>[Please replace (or delete) the optional comment]<code>&quot;&gt;</code>[Please fill in version number, starting at 1]<code>&lt;/version&gt;</code></p>
   <p><code>&lt;date&gt;</code>[Please fill in with publication date, in YYYY-MM-DD format]<code>&lt;/date&gt;</code></p>
   <p><code>&lt;validity-start&gt;</code>[Please fill in effective date, in YYYY-MM-DD format]<code>&lt;/validity-start&gt;</code></p>
-  <p>Note: the scope element may be repeated, so that the same document can serve for multiple domains.</p>
+  <p>Note: the scope element may be repeated, so that the same document can serve multiple domains.</p>
   <p><code>&lt;scope type=&quot;domain&quot;&gt;</code>[Please provide, in &quot;.domain&quot; format]<code>&lt;/scope&gt;</code></p>
 <p><strong>Registry Contact Information:</strong></p>
   <p>Please fill in the <a href="#registry_contact_details">Registry Contact Details</a>.</p>
 <p><strong>Change History</strong></p>
   <p>If you made technical modifications to the LGR, please summarize them in the <a href="#change_history">Change History</a> (and also note the details in the appropriate section of the description).</p>
-<p>PLEASE DELETE THESE INSTRUCTIONS BEFORE DEPOSITING THE DOCUMENT</p></div>
+<p>PLEASE DELETE THESE INSTRUCTIONS BEFORE DEPOSITING THE DOCUMENT.</p></div>
        
        <section id="registry_contact_details">
 <h2>Registry Contact Details</h2>
@@ -62,7 +62,7 @@
      The ultimate starting point for the development of this LGR can be found in the related Root Zone LGR [RZ-LGR-Jpan]. 
      Note that while it is the Japanese Script Root Zone LGR that forms the starting point, the LGR defined here covers the Japanese Language.
      The format of this file follows [RFC 7940].
-     This LGR is adapted from the “Reference LGR for the Second Level for the Japanese Language” [Ref-LGR-ja-Jpan], for details, see <a href="#change_history">Change History</a> below.</p>
+     This LGR is adapted from the “Reference LGR for the Second Level for the Japanese Language” [Ref-LGR-ja-Jpan]; for details, see <a href="#change_history">Change History</a> below.</p>
 
         <p>The Japanese language is written in a combination of elements from three Unicode scripts: Han (Kanji), Hiragana and Katakana. 
         Collectively they have the script code “Jpan” for Japanese. 
@@ -70,9 +70,9 @@
          including the appendices [Proposal-Japanese-Appendices].</p>
 
         <p><b>Standalone LGR:</b> This LGR is designed to be used in a zone that does not cater to IDNs 
-    other than those valid under this LGR. 
-    Following existing practice, this LGR also supports ASCII letters and where applicable accounts for any interaction with the 
-    remainder of the repertoire.</p>
+     other than those valid under this LGR. 
+     Following existing practice, this LGR also supports ASCII letters and where applicable accounts for any interaction with the 
+     remainder of the repertoire.</p>
 
         <h2>Repertoire</h2>
         <p>The repertoire   contains the code points used in writing the Japanese language using a repertoire appropriate for the Second Level. 
@@ -80,7 +80,7 @@
          and 2 Common (quasi-Kanji) characters for a subtotal of 6,532 repertoire elements. One of the common characters is shared between Han, 
          Hiragana, and Katakana while the other one is shared between Hiragana and Katakana.</p>
 
-        <p>The repertoire is a subset of [Unicode 11.0.0]. For details, see Section 5, “Repertoire” in [Proposal-Japanese].
+        <p>The repertoire is a subset of [Unicode 16.0.0]. For details, see Section 5, “Repertoire” in [Proposal-Japanese].
         (The proposal cited has been adopted for the Japanese script portion of the Root Zone LGR.)</p>
 
         <p>For the second level, the repertoire has been augmented with the ASCII digits, U+0030 to U+0039; the ASCII lowercase letters, U+0061 to U+007A;
@@ -133,47 +133,49 @@
         <p>By default, the LGR includes the rules and actions to implement the following restrictions mandated by the IDNA protocol. They are marked with &#x235F;.</p>
        <ul>
        <li><b>Hyphen Restrictions</b> &mdash; restrictions on the allowable placement of hyphens (no leading/ending hyphen
-             and no hyphen in positions 3 and 4). These restrictions are described in Section 4.2.3.1 of RFC 5891 [150]. 
-             They are implemented here as context rule on U+002D (-) HYPHEN-MINUS.</li>
+             and no hyphen in positions 3 and 4). These restrictions are described in Section 4.2.3.1 of RFC 5891 [5891]. 
+             They are implemented here as a context rule on U+002D (-) HYPHEN-MINUS.</li>
           <li><b>Leading Combining Marks</b>   &mdash;  restrictions on the allowable placement of combining marks
-             (no leading combining mark). This rule is described in Section 4.2.3.2 of RFC 5891 [150].</li>
+             (no leading combining mark). This rule is described in Section 4.2.3.2 of RFC 5891 [5891].</li>
        </ul>
 
         <h3>Japanese-specific Context Rules</h3>
-        <p>The LGR defines the following context rules.</p>
-        <ul>
-          <li><b>at-start-of-word</b> &mdash; No small kana, iteration mark or prolonged sound mark may start a label or word.</li>
-          <li><b>follows-kanji-numeral</b> &mdash; U+3007 IDEOGRAPHIC NUMBER ZERO must follow a Kanji numeral.</li>
-          <li><b>middle-dot-context</b> &mdash; U+30FB KATAKANA MIDDLE DOT is only used between Japanese characters and does not follow itself.</li>
-        </ul>
+        <p>The LGR defines the following script-specific context rules:</p>
+      <ul>
+        <li><b>at-start-of-word</b> &mdash; No small kana, iteration mark or prolonged sound mark may start a label or word.</li>
+        <li><b>follows-kanji-numeral</b> &mdash; U+3007 IDEOGRAPHIC NUMBER ZERO must follow a Kanji numeral.</li>
+        <li><b>middle-dot-context</b> &mdash; U+30FB KATAKANA MIDDLE DOT is only used between Japanese characters and does not follow itself.</li>
+      </ul>
 
-        <p>
-        Note that U+30FB KATAKANA MIDDLE DOT is used to separate words. Therefore, the letters following 
-        a KATAKANA MIDDLE DOT must be restricted to the same set as for the start of label. 
-        For the second level, the context rule “at-start-of-word” has been defined which covers the start 
-        of a label as well as the context following a KATAKANA MIDDLE DOT.</p>
+      <p>
+      Note that U+30FB KATAKANA MIDDLE DOT is used to separate words. Therefore, the letters following 
+      a KATAKANA MIDDLE DOT must be restricted to the same set as for the start of label. 
+      For the second level, the context rule “at-start-of-word” has been defined which covers the start 
+      of a label as well as the context following a KATAKANA MIDDLE DOT.</p>
 
-        <p>
-        <b>Iteration marks:</b> The iteration marks, U+3005, U+309D, U+309E, U+30FD, and U+30FE, 
-        are used to reiterate the pronunciation or meaning of the preceding character. As such,
-        these characters have neither particular pronunciation nor meanings by themselves. 
-        Similar considerations apply to the prolonged sound mark (U+30FC). Accordingly, 
-        any sequence of two or more iteration marks and/or the prolonged sound mark 
-        has no meaning and is disallowed by the following WLE rule:</p>
-        <ul>
-          <li><b>repeated-mark</b> &mdash; repeated iteration or prolonged sound marks are disallowed</li>
-        </ul>
+        <p><b>Iteration marks:</b> The iteration marks, U+309D, U+309E, U+30FD, and U+30FE, 
+      are used to reiterate the pronunciation of the preceding character, while the U+3005 IDEOGRAPHIC
+      ITERATION MARK repeats the meaning of the preceding character. As such,
+      these characters have neither particular pronunciation nor meanings by themselves. 
+      They also should not be applied to a closing mark U+3006, except that U+3005 IDEOGRAPHIC ITERATION MARK  may follow U+3006 IDEOGRAPHIC CLOSING MARK in the popular combination &#x3006;&#x3005; "shimeshime".</p>
+
+      <p>Similar considerations apply to U+30FC KATAKANA-HIRAGANA PROLONGED SOUND MARK. Accordingly, 
+      any sequence consisting of any combination of two or more iteration marks and/or the prolonged sound mark 
+      has no meaning and is disallowed by the following WLE rule and corresponding action:</p>
+      <ul>
+        <li><b>repeated-mark</b> &mdash; repeated iteration or prolonged sound marks, or such marks following a closing mark, are disallowed, except U+3006 IDEOGRAPHIC CLOSING MARK may be repeated and follow any of the other marks, and U+3005 IDEOGRAPHIC ITERATION MARK may follow a closing mark.</li>
+      </ul>
 
         <p>The following WLE rule implements an additional restriction on HYPHEN-MINUS in a Japanese context.</p>
-        <ul>
-          <li><b>hyphen-minus-restriction</b> &mdash; a hyphen is disallowed adjacent to Japanese characters</li>
-        </ul>
+    <ul>
+      <li><b>hyphen-minus-restriction</b> &mdash; a hyphen is disallowed adjacent to Japanese characters</li>
+    </ul>
 
         <h2>Actions</h2>
 
         <h3>Default Actions</h3>
 
-        <p>This LGR includes the default actions for LGRs as well as the action needed to
+        <p>This LGR includes the default actions for LGRs, as well as the action needed to
         invalidate labels with misplaced combining marks. They are marked with &#x235F;.
         For a description see [RFC 7940].</p>
 
@@ -189,8 +191,13 @@
        For more information on methodology and contributors to the underlying Root Zone LGR, see Sections 4 and 8 in [Proposal-Japanese], as well as [RZ-LGR-Overview].</p>
         
             <section id="change_history">
-              <h3>Changes from Version Dated 25 October 2024</h3>
-        <p>Adopted from the Second Level Reference LGR for the Japanese Language [Ref-LGR-ja-Jpan] without normative changes.</p>
+        <h3>Changes from Version Dated 25 October 2024</h3>  
+        <p>A WLE rule and action were added in [RZ-LGR-6] to ensure that iteration marks and the prolonged sound mark are not repeated and do not follow U+3006. These update the earlier context rule for these marks in the Reference LGR.
+        This may affect the validity of labels if they erroneously contain more than one of these symbols in an invalid combination, but permit other valid combinations.</p>
+
+              <h3>Changes from Version Dated 13 August 2026</h3>
+        <p>This is a placeholder to document any changes applied by the registry operator when adopting the reference LGR. If no change has been noted, the LGR is the same as the Second Level Reference LGR for the Japanese Language [Ref-LGR-ja-Jpan] without normative changes.
+    </p>
             </section>
         
         <h2>References</h2>
@@ -204,9 +211,9 @@
             <dd>ICANN, “Guidelines for Developing Reference LGRs for the Second Level”, (Los Angeles, California: ICANN, 27 May 2020), https://www.icann.org/en/system/files/files/lgr-guidelines-second-level-27may20-en.pdf</dd>
           <dt>[KLGR]</dt>
             <dd>Root Zone Label Generation Rules for Korean, 1 May 2021, https://www.icann.org/en/system/files/files/proposal-korean-lgr-01may21-en.xml</dd>
-          <dt>[MSR-5]</dt>
-            <dd>Integration Panel, “Maximal Starting Repertoire — MSR-5 Overview and Rationale”, 24 June 2021,
-     https://www.icann.org/en/system/files/files/msr-5-overview-24jun21-en.pdf</dd>
+          <dt>[MSR-6]</dt>
+            <dd>Integration Panel, “Maximal Starting Repertoire — MSR-6 Overview and Rationale”, 23 September 2025,
+     https://www.icann.org/en/system/files/files/msr-6-overview-23sep25-en.pdf</dd>
           <dt>[Proposal-Japanese]</dt>
             <dd>Japanese Script Generation Panel (JGP), “Proposal for a Japanese Script Root Zone LGR”, 20 December 2021 (PDF), https://www.icann.org/en/system/files/files/proposal-japanese-lgr-20dec21-en.pdf</dd>
           <dt>[Proposal-Japanese-Appendices] </dt>
@@ -216,23 +223,29 @@
             <dd>Davies, K. and A. Freytag, “Representing Label Generation Rulesets Using XML”, 
      RFC 7940, August 2016, https://www.rfc-editor.org/info/rfc7940</dd>
          <dt>[RZ-LGR-Jpan]</dt>
-         <dd>ICANN, Root Zone Label Generation Rules for the Japanese Script (und-Jpan), 26 May 2022 (XML)
-      https://www.icann.org/sites/default/files/lgr/rz-lgr-5-japanese-script-26may22-en.xml</dd>
+         <dd>ICANN, Root Zone Label Generation Rules for the Japanese Script (und-Jpan), 23 September 2025 (XML)
+      https://www.icann.org/sites/default/files/lgr/rz-lgr-6-japanese-script-23sep25-en.xml<br />
+      <i>
+        non-normative HTML presentation at:
+        https://www.icann.org/sites/default/files/lgr/rz-lgr-6-japanese-script-23sep25-en.html
+      </i>
+  </dd>
           <dt>[RFC 8228]</dt>
             <dd>A. Freytag, “Guidance on Designing Label Generation Rulesets (LGRs) Supporting Variant Labels”, RFC 8228, August 2017,
     https://www.rfc-editor.org/info/rfc8228</dd>
           <dt>[RZ-LGR-Overview]</dt>
-            <dd>Integration Panel, “Root Zone Label Generation Rules (RZ LGR-5): Overview and Summary”, 26 May 2022 (PDF), https://www.icann.org/sites/default/files/lgr/rz-lgr-5-overview-26may22-en.pdf</dd>
-          <dt>[RZ-LGR-5]</dt>
-           <dd>Integration Panel, “Root Zone Label Generation Rules (RZ-LGR-5)”, 26 May 2022 (XML), https://www.icann.org/sites/default/files/lgr/rz-lgr-5-common-26may22-en.xml <br/>
-     <i>non-normative HTML presentation: https://www.icann.org/sites/default/files/lgr/rz-lgr-5-common-26may22-en.html</i></dd>
+            <dd>Integration Panel, “Root Zone Label Generation Rules (RZ LGR-6): Overview and Summary”, 23 September 2025 (PDF), https://www.icann.org/sites/default/files/packages/lgr/rz-lgr-6-overview-23sep25-en.pdf</dd>
+          <dt>[RZ-LGR-6]</dt>
+           <dd>Integration Panel, “Root Zone Label Generation Rules (RZ-LGR-6)”, 23 September 2025 (XML), https://www.icann.org/sites/default/files/lgr/rz-lgr-6-common-23sep25-en.xml <br/>
+     <i>non-normative HTML presentation: https://www.icann.org/sites/default/files/lgr/rz-lgr-6-common-23sep25-en.html</i></dd>
           <dt>[Ref-LGR-ja-Jpan]</dt>
-              <dd>ICANN, Second Level Reference Label Generation Rules for the Japanese Language (ja-Jpan), 25 October 2024 (XML)
-      https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-japanese-language-25oct24-en.xml
-      non-normative HTML presentation: https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-japanese-language-25oct24-en.html</dd>
-                <dt>[Unicode 11.0.0]</dt>
-           <dd>The Unicode Consortium. The Unicode Standard, Version 11.0.0, (Mountain View, CA: The Unicode Consortium, 2018. ISBN 978-1-936213-19-1) 
-     https://www.unicode.org/versions/Unicode11.0.0/</dd>
+              <dd>ICANN, Second Level Reference Label Generation Rules for the Japanese Language (ja-Jpan), 13 August 2026 (XML)
+      https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-japanese-language-13aug26-en.xml
+      non-normative HTML presentation: https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-japanese-language-13aug26-en.html</dd>
+                <dt>[Unicode 16.0.0]</dt>
+           <dd>The Unicode Consortium. The Unicode Standard, Version 16.0.0 (South San Francisco: The Unicode Consortium, 2024. ISBN 978-1-936213-34-4)
+https://www.unicode.org/versions/Unicode16.0.0/
+</dd>
           </dl>
 
           <p>In the listing of the <a href="#repertoire">repertoire by code point</a>, references starting from [0] refer to
@@ -240,8 +253,8 @@
         Other references (starting from [100]) document usage of code points. Entries in the table may have
         multiple source reference values. 
         In the listing of <a href="#whole_label_evaluation_and_context_rules">whole label evaluation and context rules</a>,
-        reference [150] indicates the source for common rules.
-        For more details, see the      <a href="#table_of_references">Table of References</a> below.</p>
+        reference [5891] indicates the source for common rules.
+        For more details, see the <a href="#table_of_references">Table of References</a> below.</p>
           
           <p>Where links to certain references are not available, the data may be archived as part of [Proposal-Japanese].</p>
     ]]></description>
@@ -249,12 +262,12 @@
       <reference id="0" comment="Any code point originally encoded in Unicode Version 1.1">The Unicode Standard, Version 1.1</reference>
       <reference id="100">JIS X 0208:1997, Japanese Industrial Standard, 7-bit and 8-bit double byte coded KANJI sets for information interchange, https://www.jisc.go.jp/, see also https://en.wikipedia.org/wiki/JIS_X_0208</reference>
       <reference id="101">Research paper: Survey on the User Perception of the Homographic Character Set Specified by JGP, Appendix B to [Proposal-Japanese], https://www.icann.org/en/system/files/files/proposal-japanese-lgr-appendices-20dec21-en.zip</reference>
-      <reference id="150">RFC 5891, Internationalized Domain Names in Applications (IDNA): Protocol https://tools.ietf.org/html/rfc5891</reference>
       <reference id="700">Japan Registry Services (.jp cctld Japanese Register) https://www.iana.org/domains/idn-tables/tables/jp_ja-jp_1.2.html</reference>
+      <reference id="5891">RFC 5891, Internationalized Domain Names in Applications (IDNA): Protocol https://tools.ietf.org/html/rfc5891</reference>
     </references>
   </meta>
   <data>
-    <char cp="002D" not-when="hyphen-minus-disallowed" tag="sc:Zyyy" ref="0 700" comment="HYPHEN-MINUS" />
+    <char cp="002D" not-when="hyphen-minus-disallowed" tag="Hyphen sc:Zyyy" ref="0 700" comment="HYPHEN-MINUS" />
     <char cp="0030" tag="Common-digit sc:Zyyy" ref="0 700" comment="DIGIT ZERO; &#x235F;" />
     <char cp="0031" tag="Common-digit sc:Zyyy" ref="0 700" comment="DIGIT ONE; &#x235F;" />
     <char cp="0032" tag="Common-digit sc:Zyyy" ref="0 700" comment="DIGIT TWO; &#x235F;" />
@@ -293,8 +306,8 @@
     <char cp="0078" tag="sc:Latn" ref="0 700" comment="LATIN SMALL LETTER X" />
     <char cp="0079" tag="sc:Latn" ref="0 700" comment="LATIN SMALL LETTER Y" />
     <char cp="007A" tag="sc:Latn" ref="0 700" comment="LATIN SMALL LETTER Z" />
-    <char cp="3005" not-when="at-start-of-word" tag="iteration-mark sc:Hani" ref="0 100" />
-    <char cp="3006" tag="sc:Hani sc:Hira sc:Kana" ref="0 100" />
+    <char cp="3005" not-when="at-start-of-word" tag="ideographic-iteration sc:Hani" ref="0 100" />
+    <char cp="3006" tag="closing-mark sc:Hani sc:Hira sc:Kana" ref="0 100" />
     <char cp="3007" when="follows-only-kanji-numeral" tag="Kanji-numeral sc:Hani" ref="0 100">
       <var cp="006F" type="blocked" comment="Cross-script homoglyph" />
     </char>
@@ -6891,14 +6904,14 @@
       <class by-ref="katakana" />
     </union>
     <!--Whole label evaluation and context rules go here-->
-    <rule name="leading-combining-mark" ref="150" comment="RFC 5891 restrictions on placement of combining marks &#x235F;">
+    <rule name="leading-combining-mark" ref="5891" comment="RFC 5891 restrictions on placement of combining marks &#x235F;">
       <start />
       <union>
         <class property="gc:Mn" />
         <class property="gc:Mc" />
       </union>
     </rule>
-    <rule name="hyphen-minus-disallowed" ref="150" comment="RFC 5891 restrictions on placement of U+002D HYPHEN-MINUS &#x235F;">
+    <rule name="hyphen-minus-disallowed" ref="5891" comment="RFC 5891 restrictions on placement of U+002D HYPHEN-MINUS &#x235F;">
       <choice>
         <rule comment="no leading hyphen">
           <look-behind>
@@ -6964,14 +6977,24 @@
         <rule by-ref="precedes-japanese" />
       </choice>
     </rule>
-    <rule name="repeated-mark">
-      <choice count="2+">
-        <class from-tag="iteration-mark" />
-        <class from-tag="prolonged-sound" />
+    <rule name="repeated-mark" comment="Iteration marks or prolonged sound marks may not be repeated, follow each other or, except for the ideographic iteration mark, follow a closing mark">
+      <choice>
+        <rule>
+          <class from-tag="closing-mark" />
+          <choice>
+            <class from-tag="iteration-mark" />
+            <class from-tag="prolonged-sound" />
+          </choice>
+        </rule>
+        <choice count="2+">
+          <class from-tag="ideographic-iteration" />
+          <class from-tag="iteration-mark" />
+          <class from-tag="prolonged-sound" />
+        </choice>
       </choice>
     </rule>
     <!--Action elements go here - order defines precedence-->
-    <action disp="invalid" match="leading-combining-mark" comment="labels with leading combining marks are invalid &#x235F;" />
+    <action disp="invalid" match="leading-combining-mark" ref="5891" comment="labels with leading combining marks are invalid &#x235F;" />
     <action disp="invalid" match="hyphen-minus-restriction" comment="labels with hyphen-minus preceeding or followin Japanese is invalid" />
     <action disp="invalid" any-variant="out-of-repertoire-var" comment="any variant label with a code point out of repertoire is invalid &#x235F;" />
     <action disp="invalid" match="repeated-mark" comment="iteration marks or prolonged sound mark may not be repeated" />

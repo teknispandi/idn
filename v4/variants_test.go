@@ -209,3 +209,33 @@ func TestLGRVariantCoherence(t *testing.T) {
 		t.Errorf("latin + und-bali LGR: %v, %v; want coherent", conflicts, err)
 	}
 }
+
+// und-Java.xml (second-level reference LGR 13 Agustus 2026). Ekspektasi dari
+// komentar aturan di file itu: pangkon (U+A9C0) harus mengikuti konsonan,
+// aksara rekan, atau vokal mandiri; dua pangkon berturut-turut yang diikuti
+// konsonan ketiga dilarang; layar+na murda ↔ layar+na diblokir sebagai varian.
+func TestJavaneseLGR(t *testing.T) {
+	java := mustLoad(t, "und-Java")
+
+	for _, label := range []string{"ꦗꦮ", "ꦗ꧀ꦮ", "ꦏꦂꦟ", "ꦏꦂꦤ"} {
+		if err := java.CheckLabel(label); err != nil {
+			t.Errorf("CheckLabel(%s): %v", label, err)
+		}
+	}
+	for label, rule := range map[string]string{
+		"꧀ꦗ":    "follows-cons-aksara-rekan-vowel",
+		"ꦏ꧀ꦏ꧀ꦏ": "pangkon-disallowed",
+	} {
+		var ve *v3.ValidationError
+		if err := java.CheckLabel(label); !errors.As(err, &ve) || ve.Rule != rule {
+			t.Errorf("CheckLabel(%s) = %v, want rule %s", label, err, rule)
+		}
+	}
+
+	if a, b := java.VariantIndex("ꦏꦂꦟ"), java.VariantIndex("ꦏꦂꦤ"); a != b {
+		t.Errorf("VariantIndex layar+na murda / layar+na = %q / %q, want equal", a, b)
+	}
+	if disp := variantMap(must(java.VariantLabels("ꦏꦂꦟ", 0)))["ꦏꦂꦤ"]; disp != v3.DispositionBlocked {
+		t.Errorf("ꦏꦂꦟ → ꦏꦂꦤ = %q, want blocked", disp)
+	}
+}

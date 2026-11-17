@@ -1,40 +1,40 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <lgr xmlns="urn:ietf:params:xml:ns:lgr-1.0">
   <meta>
-    <version comment="Root Zone LGR for the Chinese Script">5</version>
-    <date>2022-05-26</date>
+    <version comment="Root Zone LGR for the Chinese Script">6</version>
+    <date>2025-09-23</date>
     <language>und-Hani</language>
     <scope type="domain">.</scope>
-    <unicode-version>11.0.0</unicode-version>
+    <unicode-version>16.0.0</unicode-version>
     <description type="text/html"><![CDATA[
   <h1>Root Zone Label Generation Rules for the Chinese Script</h1>
+
     <h2>Overview</h2>
-      <p>This file contains Label Generation Rules for the Chinese script (CLGR) for the Root Zone.  
-      For more details on this LGR and additional background on the script, 
-      see “Proposal for a Chinese Script      Root Zone LGR” [Proposal-Chinese] including the appendices [Proposal-Chinese-Appendices]. 
-      This file is one of a set of LGR files that together form an integrated LGR for the DNS Root Zone [RZ-LGR-5].
-      The format of this file follows [RFC 7940].</p>
+      <p>This file contains a set of Label Generation Rules (LGR) for the Chinese script for the Root Zone. 
+     For more details on this LGR and additional background on the script, see “Proposal for a Chinese Script Root Zone LGR” [Proposal-Chinese] including the appendices [Proposal-Chinese-Appendices]. 
+      This file is one of a set of LGR files that together form an integrated LGR for the DNS Root Zone [RZ-LGR-6]. 
+    The format of this file follows [RFC 7940].</p>
 
     <h2>Repertoire</h2>
       <p>The Root Zone repertoire for the Chinese script contains 19,685 single code points.
       It represents the union of the CDNC IDN Table and 
       the dotAsia IDN Table. For more details, see Section 5, “Repertoire” in [Proposal-Chinese].</p>
-      
-     <p>The repertoire is contained in [MSR-5], which is a subset of [Unicode 11.0].</p>
 
      <p>Note: This LGR contains 62 code points from the Unicode block: CJK UNIFIED IDEOGRAPHS EXTENDED B.</p>
- 
-     <p>Code points outside the Chinese script repertoire that are listed in this file are targets
+      
+      <p>The repertoire is contained in [MSR-6], which is a subset of [Unicode 16.0.0].</p>
+
+      <p>As part of the Root Zone, this LGR includes neither decimal digits nor the HYPHEN-MINUS.</p>
+
+      <p><b>Repertoire Listing:</b> Each code point or range is tagged with the script or scripts with which the code point is used. For each repertoire element, 
+    one or more references document sufficient justification for inclusion in the repertoire; see the <a href="#ref_desc_sec_References">“References”</a> below.</p>
+
+      <p>Code points outside the Chinese script repertoire that are listed in this file are targets
       for out-of-repertoire variants and are identified by a reflexive (identity)
       variant of type “out-of-repertoire-var”. They do not form part of the
       repertoire.</p>
-        
-        <p>As part of the Root Zone, this LGR includes neither decimal digits nor the HYPHEN-MINUS.</p>
 
-    <p>Each code point is tagged with the script or scripts with which the code point is used,
-    and one or more references documenting sufficient justification for inclusion in the repertoire; see “References” below.</p>
-
-    <h2>Variants</h2>
+      <h2>Variants</h2>
       <p>According to Sections 6 and 7 of [Proposal-Chinese] the LGR defines semantically exchangeable variants 
       (same pronunciations as well as the same meanings) and visually identical variants.
       Many, but not all, of the semantic variants lead to variant label dispositions of “allocatable” as described below, 
@@ -75,7 +75,7 @@
       can occur for labels containing code points that are part of a small number of variant sets that have 
       multiple traditional or simplified variants.</p>
 
-      <p>Note that a label containing only reflexive mappings, including “r-neither”, but not "out-of-repertoire-var" is an 
+      <p>Note that a label containing only reflexive mappings, including “r-neither”, but not “out-of-repertoire-var” is an 
       original label and receives a disposition of “valid”. (See also <a href="#chinese_specific_actions">“Chinese-specific Actions”</a> below.)</p>
       
       <p>The LGR does not define specific variant types to handle visually identical variants, 
@@ -98,7 +98,7 @@
       variant is a code point that could in principle be used with both trad and simp (“r-both”), 
       but because the same variant set has at least one other variant of type 
       “simp” (or of one of the other simplified types), the variant is preferred in a traditional 
-      context, such that   a “trad”  label containing this variant     should be “allocatable”, but a “simp” 
+      context, such that   a “trad”  label containing this variant should be “allocatable”, but a “simp” 
       label containing this variant should be “blocked”. The “ms” in the naming convention
       means that the simplified aspect of the variant is “muted”, even though inherently if would
       have been of type “r-both”. Effectively, such a variant leads to the same dispositions as an “r-trad”, 
@@ -109,20 +109,20 @@
     <p>The LGR does not define character classes.</p>
 
     <h2>Whole Label Evaluation (WLE) and Context Rules</h2>
-    <h3>Default Whole Label Evaluation Rules</h3>
-     <p>The LGR includes the set of required default WLE rules and actions applicable to 
-      the Root Zone and defined in [MSR-5]. They are marked with &#x235F;.</p>   
+
+     <h3>Default Whole Label Evaluation Rules and Actions</h3>
+    <p>The LGR includes the set of required default WLE rules and actions applicable to 
+    the Root Zone and defined in [MSR-6]. They are marked with &#x235F;.
+    The actions compute a label disposition based on WLE rules or variant mapping types.</p>
+
     <h3>Chinese-specific Rules</h3>
     <p>None.</p>
 
     <h2>Label and Variant Label Disposition</h2>
     <p>The LGR defines a number of actions that compute a label disposition based on WLE rules or variant
     mapping types. Some of these are common to all LGRs, and some are specific to this LGR.</p>
-    
-    <h3>Default Actions</h3>
-      <p>The LGR includes the set of required default actions applicable to the Root Zone and defined in [MSR-5]. They are marked with &#x235F;.</p>
 
-    <h3 id="chinese_specific_actions">Chinese-specific Actions</h3>
+     <h3 id="chinese_specific_actions">Chinese-specific Actions</h3>
       <p>The LGR contains additional Chinese-specific actions as described in Sections 6 and 7
       of [Proposal-Chinese]. These resolve the extended set of variant types into a disposition 
       for variant labels of either “allocatable”, “blocked” (or “valid” for an original label that is the identity variant).
@@ -147,34 +147,42 @@
       see Section 8, “Assigning Variant Dispositions to Labels” in [Proposal-Chinese]. 
       The specification of variants in the LGR follows the guidelines in [RFC 8228].</p>
 
-     <h3>Changes from LGR-4</h3>
+     <h2>Methodology and Contributors</h2>
+     
+     <p>The Root Zone LGR for the Chinese Script was developed by the Chinese Generation Panel. For details on methodology and 
+       contributors, see Sections 4 and 9 in [Proposal-Chinese], as well as [RZ-LGR-6-Overview].</p>
+
+     <section id="change_history">
+     <h3>Changes from RZ LGR-4</h3>
      <p>For consistency with all other RZ LGRs, the disposition for labels consisting of only original code points is
       now “valid” instead of “allocatable”. With this change, original labels across the Root Zone LGR are now
       either valid or invalid, whereas any variant labels are either allocatable or blocked. This removes an
       exception in processing original labels without affecting the set of labels available for delegation.
       For the prior version see [RZ-LGR-4-Hani].</p>
+      </section>
 
-    <h2>Methodology and Contributors</h2>
-      <p>The Root Zone LGR for the Chinese script was developed by the Chinese Script Generation Panel (CGP). 
-      For further details on methodology and contributors, see Sections 4 and 9 in [Proposal-Chinese], as well 
-      as [RZ-LGR-5-Overview].</p>
-
-    <h2>References</h2>
+      <h2>References</h2>
       <p>References [0] to [4] refer to the Unicode Standard versions in which corresponding code points were initially encoded. 
       For example, a reference value of [4] means a character was first encoded in Unicode Version 3.1.
       References [100] and up indicate that the code point is included in one of the following source references: 
-      CDNC IDN Table, dotAsia IDN Table, JGP repertoire, KGP repertoire, and IICORE or some other list of code points. 
+      CDNC IDN Table, dotAsia IDN Table, JGP repertoire [JLGR], KGP repertoire [KLGR], and IICORE or some other list of code points. 
       For example, a reference value of [200] means a code point listed here is included in the dotAsia IDN Table. 
       References cited for variants indicate whether variant mappings match a source reference
       in mapping, variant type or both. 
       Entries in the table may have multiple source reference values.</p>
     
-    <p>In addition, the following general references are cited in this document:</p>
+     <p>In addition, the following general references are cited in this document:</p>
     
     <dl class="references">
-     <dt>[MSR-5]</dt>
-     <dd>Integration Panel, “Maximal Starting Repertoire — MSR-5 Overview and Rationale”, 24 June 2021,
-     https://www.icann.org/en/system/files/files/msr-5-overview-24jun21-en.pdf     </dd>
+     <dt>[JLGR]</dt>
+     <dd>Root Zone Label Generation Rules for Japanese, 20 December 2021, https://www.icann.org/en/system/files/files/proposal-japanese-lgr-20dec21-en.xml</dd>
+
+     <dt>[KLGR]</dt>
+     <dd>Root Zone Label Generation Rules for Korean, 1 May 2021, https://www.icann.org/en/system/files/files/proposal-korean-lgr-01may21-en.xml</dd>
+
+     <dt>[MSR-6]</dt>
+     <dd>Integration Panel, “Maximal Starting Repertoire — MSR-6 Overview and Rationale”, 23 September 2025,
+  https://www.icann.org/en/system/files/files/msr-6-overview-23sep25-en.pdf</dd>
 
      <dt>[Proposal-Chinese] </dt>
      <dd>Chinese Script Generation Panel (CGP), “Proposal for a Chinese Script Root Zone LGR”, 
@@ -194,35 +202,42 @@
 
      <dt>[RFC 7940]</dt>
      <dd>Davies, K. and A. Freytag, “Representing Label Generation Rulesets Using XML”, 
-       RFC 7940, August 2016, https://www.rfc-editor.org/info/rfc7940</dd> 
+     RFC 7940, August 2016, https://www.rfc-editor.org/info/rfc7940</dd> 
 
      <dt>[RFC 8228]</dt>
       <dd>A. Freytag, “Guidance on Designing Label Generation Rulesets (LGRs) Supporting Variant Labels”, RFC 8228, August 2017,
-      https://www.rfc-editor.org/info/rfc8228</dd>
+    https://www.rfc-editor.org/info/rfc8228</dd>
 
-    <dt>[RZ-LGR-4-Hani]</dt>
-    <dd>ICANN, Root Zone Label Generation Rules for the Chinese Script (und-Hani), Version 4, 5 November 2020 (XML)
-    https://www.icann.org/sites/default/files/lgr/lgr-4-chinese-script-05nov20-en.xml <br/>
-    <i>non-normative HTML presentation: https://www.icann.org/sites/default/files/lgr/lgr-4-chinese-script-05nov20-en.html</i></dd>
+     <dt>[RZ-LGR-4-Hani]</dt>
+     <dd>ICANN, Root Zone Label Generation Rules for the Chinese Script (und-Hani), Version 4, 5 November 2020 (XML)
+     https://www.icann.org/sites/default/files/lgr/lgr-4-chinese-script-05nov20-en.xml <br/>
+     <i>non-normative HTML presentation: https://www.icann.org/sites/default/files/lgr/lgr-4-chinese-script-05nov20-en.html</i></dd>
 
-     <dt>[RZ-LGR-5-Overview]</dt>
-     <dd>Integration Panel, “Root Zone Label Generation Rules (RZ LGR-5): Overview and Summary”, 26 May 2022, https://www.icann.org/sites/default/files/lgr/rz-lgr-5-overview-26may22-en.pdf</dd>
+     <dt>[RZ-LGR-6-Overview]</dt>
+     <dd>Integration Panel, “Root Zone Label Generation Rules (RZ LGR-6): Overview and Summary”, 23 September 2025, https://www.icann.org/sites/default/files/lgr/rz-lgr-6-overview-23sep25-en.pdf</dd>
 
-     <dt>[RZ-LGR-5]</dt>
-     <dd>Integration Panel, “Root Zone Label Generation Rules (RZ-LGR-5)”, 26 May 2022 (XML), https://www.icann.org/sites/default/files/lgr/rz-lgr-5-common-26may22-en.xml <br/>
-     <i>non-normative HTML presentation: https://www.icann.org/sites/default/files/lgr/rz-lgr-5-common-26may22-en.html</i></dd>
+     <dt>[RZ-LGR-6]</dt>
+     <dd>Integration Panel, “Root Zone Label Generation Rules (RZ-LGR-6)”, 23 September 2025 (XML), https://www.icann.org/sites/default/files/lgr/rz-lgr-6-common-23sep25-en.xml <br/>
+     <i>non-normative HTML presentation: https://www.icann.org/sites/default/files/lgr/rz-lgr-6-common-23sep25-en.html</i></dd>
 
-     <dt>[Unicode 11.0]</dt>
-     <dd>The Unicode Consortium. The Unicode Standard, Version 11.0.0, (Mountain View, CA: The Unicode Consortium, 2018. ISBN 978-1-936213-19-1) 
-     https://www.unicode.org/versions/Unicode11.0.0/</dd>      
+     <dt>[Unicode 16.0.0]</dt>
+     <dd>
+     The Unicode Consortium. The Unicode Standard, Version 16.0.0, (South San Francisco: The Unicode Consortium, 2024. ISBN 978-1-936213-34-4)
+     https://www.unicode.org/versions/Unicode16.0.0/
+     </dd>      
     </dl>
-   <p>For additional detail on references cited in the remainder of the document refer to the Table of References below. 
-   Where links to certain references are not available, the data may be archived as part of [Proposal-Chinese].</p> 
+   <p>For references consulted, particularly in designing the repertoire for the Chinese script for the Root Zone, 
+  please see details in the <a href="#table_of_references">Table of References</a> below.
+    References [0] and above refer to the Unicode Standard version in which corresponding code points 
+    were initially encoded. References [100] and above correspond to a source given in [Proposal-Chinese] for justifying 
+    the inclusion of the corresponding code points and variants. Entries in the table may have 
+    multiple source reference values. If links to certain references are not available, the data may be archived as part of [Proposal-Chinese].</p>
+  
   ]]></description>
     <references>
-      <reference id="0" comment="Any code point originally encoded in Unicode 1.1">The Unicode Standard 1.1</reference>
-      <reference id="3" comment="Any code point originally encoded in Unicode 3.0">The Unicode Standard 3.0</reference>
-      <reference id="4" comment="Any code point originally encoded in Unicode 3.1">The Unicode Standard 3.1</reference>
+      <reference id="0" comment="Any code point originally encoded in Unicode Version 1.1">The Unicode Standard, Version 1.1</reference>
+      <reference id="3" comment="Any code point originally encoded in Unicode Version 3.0">The Unicode Standard, Version 3.0</reference>
+      <reference id="4" comment="Any code point originally encoded in Unicode Version 3.1">The Unicode Standard, Version 3.1</reference>
       <reference id="100" comment="Also documented in Appendices G.1 and G.2">CDNC Chinese Characters and Variants Table https://www.cdnc.asia/file/unicode-1-2.txt</reference>
       <reference id="200" comment="Also documented in Appendices M.1 and M.2">DotAsia, .ASIA ZH IDN Language Table https://www.iana.org/domains/idn-tables/tables/asia_zh_1.1.txt</reference>
       <reference id="300">Table of General Standard Chinese Characters by China’s State Council https://www.gov.cn/zwgk/2013-08/19/content_2469793.htm</reference>
@@ -235,8 +250,8 @@
       <reference id="201" comment="Variants that match in both dotAsia code point and variant type">dotASIA ZH IDN Language Table https://www.iana.org/domains/idn-tables/tables/asia_zh_1.1.txt</reference>
       <reference id="202" comment="Variants that match only in dotAsia code point but not variant type">dotASIA ZH IDN Language Table https://www.iana.org/domains/idn-tables/tables/asia_zh_1.1.txt</reference>
       <reference id="203" comment="Variants that match no dotAsia code point">dotASIA ZH IDN Language Table https://www.iana.org/domains/idn-tables/tables/asia_zh_1.1.txt</reference>
-      <reference id="301" comment="Variants that match in both CGP Intrernal Review code point and variant type">CGP Internal Review, as documented in Appendix N</reference>
-      <reference id="501" comment="Variants that match only in KGP variant groups">KLGP Proposal</reference>
+      <reference id="301" comment="Variants that match in both CGP Internal Review code point and variant type">CGP Internal Review, as documented in Appendix N</reference>
+      <reference id="501" comment="Variants that match only in KGP variant groups">KLGR Proposal</reference>
       <reference id="701" comment="Variants that match suggestions by the Integration Panel">IP Communication May 2019, as documented in Appendix F</reference>
       <reference id="801" comment="Out-of-repertoire variant entry that matches no one else">Out-of-repertoire variants</reference>
     </references>

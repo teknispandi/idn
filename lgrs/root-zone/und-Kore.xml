@@ -1,50 +1,52 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <lgr xmlns="urn:ietf:params:xml:ns:lgr-1.0">
   <meta>
-    <version comment="Root Zone LGR for the Korean Script">5</version>
-    <date>2022-05-26</date>
+    <version comment="Root Zone LGR for the Korean Script">6</version>
+    <date>2025-09-23</date>
     <language>und-Kore</language>
     <scope type="domain">.</scope>
-    <unicode-version>11.0.0</unicode-version>
+    <unicode-version>16.0.0</unicode-version>
     <description type="text/html"><![CDATA[
 <h1>Root Zone Label Generation Rules for the Korean Script</h1>
 
 <h2>Overview</h2>
-<p>This file contains a set of Label Generation Rules for the Korean script for the Root Zone. 
-  The term “Korean script” is usually synonymous with “Hangul”. However, in the context of the Korean LGR, 
-  “Korean script” refers to the union of Hangul Syllables and Han characters used in
-  writing Korean (Hanja).</p>
-
-<p>For more details on this LGR and additional background on the script, 
-see “Proposal for a Korean Script Root Zone Label Generation Ruleset (LGR)” [Proposal-Korean], 
+<p>This file contains a set of Label Generation Rules (LGR) for the Korean script for the Root Zone. 
+     For more details on this LGR and additional background on the script, see “Proposal for a Korean Script Root Zone Label Generation Ruleset (LGR)” [Proposal-Korean], 
 including the appendices [Proposal-Korean-Appendices].
-This file is one of a set of LGR files that together form an integrated LGR for the DNS Root Zone [RZ-LGR-5]. 
-The format of this file follows [RFC 7940].</p>
+The term “Korean script” is usually synonymous with “Hangul”. However, in the context of the Korean LGR, 
+  “Korean script” refers to the union of Hangul Syllables and Han characters used in
+  writing Korean (Hanja).
+This file is one of a set of LGR files that together form an integrated LGR for the DNS Root Zone [RZ-LGR-6]. 
+    The format of this file follows [RFC 7940].</p>
 
 <h2>Repertoire</h2>
 <p>The repertoire includes 11,172 Hangul syllables and 4,758 Hanja characters 
 for a total of 15,930 code points (11,172 + 4,758). 
 For more details, see Section 5, “Repertoire” in [Proposal-Korean].</p>
 
-<p>The repertoire is based on [MSR-5], which is a subset of [Unicode 11.0].</p>
-
-<p>Code points outside the Korean script repertoire that are listed in this file are targets
-for out-of-repertoire variants and are identified by a reflexive (identity)
-variant of type “out-of-repertoire-var”. They do not form part of the
-repertoire.</p>
+<p>The repertoire is contained in [MSR-6], which is a subset of [Unicode 16.0.0].</p>
 
 <p>As part of the Root Zone, this LGR includes neither decimal digits nor the HYPHEN-MINUS.</p>
 
-<p>Each code point or range is tagged with the script or scripts with which the code points are used, 
-and one or more references documenting sufficient justification for inclusion in the repertoire; see “References” below.</p>
+<p><b>Repertoire Listing:</b> Each code point or range is tagged with the script or scripts with which the code point is used. For each repertoire element, 
+    one or more references document sufficient justification for inclusion in the repertoire; see the <a href="#ref_desc_sec_References">“References”</a> below.</p>
 
-<p>For more details, see Section 5 “Repertoire” in [Proposal-Korean].</p>
+<p>Code points outside the Korean script repertoire that are listed in this file are targets
+      for out-of-repertoire variants and are identified by a reflexive (identity)
+      variant of type “out-of-repertoire-var”. They do not form part of the
+      repertoire.</p>
 
 <h2>Variants</h2>
 <p>There are no variants defined between Hangul syllables. However, the LGR defines
 37 variant sets among Hanja, and 7 variant sets containing at least one Hangul 
-syllable. All additional variants between in-repertoire Hanja required by integration
-with the Chinese LGR [CLGR] are also listed but not further identified in comments.</p>
+syllable. For more details, see Section 6 “Variants” in [Proposal-Korean].</p>
+
+<p><b>Additional Variants:</b>This LGR inherits additional blocked cross-script variants by integration; they may not be listed here unless they result in
+    in-script variants. See the merged, Common LGR [RZ-LGR-6] for details of all applicable cross-script variants,
+    including any not listed here; always use the Common LGR for determining cross-script collisions of labels. For example, this LGR includes all in-script Hanja variants acquired through integration with the Chinese RZ-LGR [CLGR].
+In addition to the variants listed in this LGR, integration into the Root Zone LGR will result in many additional
+variants to out-of-repertoire code points as result of variants defined in other LGRs, including the effects of
+transitivity.</p>
 
 <p>Altogether, this LGR lists 289 variant sets, which can be classified as follows:</p>
 <ul>
@@ -59,18 +61,14 @@ One variant set also includes one in-repertoire Hanja character.</li>
 </ul>
 <p>Because one variant set is classified in both group 1 and 2, the total of variant sets is 283+4+3-1 = 289.</p>
 
-<p><b>Additional Variants:</b> In addition to the variants listed in this LGR, integration into the Root Zone LGR will result in many additional
-variants to out-of-repertoire code points as result of variants defined in other LGRs, including the effects of
-transitivity. However, the list of in-repertoire variants in this LGR is exhaustive.</p>
+<p><b>Variant Disposition:</b> All variants are of type “blocked”, making labels that 
+    differ only by these variants mutually exclusive: whichever label containing either of 
+    these variants is chosen earlier would be delegated, while any other equivalent labels should be blocked.
+    There is no preference among these labels.</p>
 
-<p>See the merged, Common LGR [RZ-LGR-5] for details of all applicable cross-repertoire variants, 
-including any not listed here; always use the Common LGR for determining cross-script collisions of labels. </p>
+    <p>This LGR does not define allocatable variants.</p>
 
-<h3>Variant Mapping Types</h3>
-<p>All non-reflexive variant mappings defined are of type “blocked” and all reflexive ones of type “out-of-repertoire-var”.  
-For more details, see Section 6 “Variants” in [Proposal-Korean].</p>
-
-<p>This LGR does not define allocatable variants.</p>
+    <p>The specification of variants in the Root Zone LGR follows the guidelines in [RFC 8228].</p>
 
 <h3>Source References for Variants</h3>
 <p>The following source references are used for variant entries in this LGR:</p>
@@ -91,9 +89,10 @@ For more details, see Section 6 “Variants” in [Proposal-Korean].</p>
 
 <h2>Whole Label Evaluation (WLE) rules and Context Rules</h2>
 
-<h3>Default Whole Label Evaluation Rules</h3>
-<p>The LGR includes the set of required default WLE rules and actions applicable to the Root Zone and defined in [MSR-5]. 
-They are marked with &#x235F;. </p> 
+<h3>Default Whole Label Evaluation Rules and Actions</h3>
+    <p>The LGR includes the set of required default WLE rules and actions applicable to 
+    the Root Zone and defined in [MSR-6]. They are marked with &#x235F;.
+    The actions compute a label disposition based on WLE rules or variant mapping types.</p>
 
 <h3>Korean-specific Rules and Actions</h3>
 <p>A label may consist of Hangul syllables or Hanja characters only; no mixes are allowed. 
@@ -102,8 +101,9 @@ See also Section 7, “Whole Label Evaluation Rules (WLE)” in [Proposal-Korean
 <li><b>no-hangul-hanja-mixed-label</b> &mdash; a WLE rule triggering a Korean-specific action invalidating any mixed labels</li>
 </ul>
 <h2>Methodology and Contributors</h2>
-<p>The Root Zone LGR for the Korean script was developed by the Korean Script Generation Panel (KGP). 
-For further details on methodology and contributors, see Sections 4 and 8 in [Proposal-Korean], as well as [RZ-LGR-5-Overview].</p>
+
+<p>The Root Zone LGR for the Korean Script was developed by the Korean Generation Panel. For details on methodology and 
+       contributors, see Sections 4 and 8 in [Proposal-Korean], as well as [RZ-LGR-6-Overview].</p>
 
 <h2>References</h2>
 <p>References [0] to [3] refer to the Unicode Standard versions in which corresponding code points were initially encoded. 
@@ -122,9 +122,9 @@ For example, a reference value of [3] means a character was first encoded in Uni
 <dt>[CLGR]</dt>
 <dd>Root Zone Label Generation Rules for Chinese, 26 May 2020, https://www.icann.org/en/system/files/files/proposal-chinese-lgr-26may20-en.xml</dd>
 
-<dt>[MSR-5]</dt>
-<dd>Integration Panel, “Maximal Starting Repertoire — MSR-5 Overview and Rationale”, 24 June 2021,
-https://www.icann.org/en/system/files/files/msr-5-overview-24jun21-en.pdf</dd>
+<dt>[MSR-6]</dt>
+<dd>Integration Panel, “Maximal Starting Repertoire — MSR-6 Overview and Rationale”, 23 September 2025,
+  https://www.icann.org/en/system/files/files/msr-6-overview-23sep25-en.pdf</dd>
 
 <dt>[Proposal-Korean]</dt>
 <dd>Korean Script Generation Panel (KGP), “Proposal for a Korean Script Root Zone LGR”, 
@@ -135,31 +135,38 @@ https://www.icann.org/en/system/files/files/msr-5-overview-24jun21-en.pdf</dd>
 https://www.icann.org/en/system/files/files/proposal-korean-lgr-appendices-01may21-en.zip</dd>
 
 <dt>[RFC 7940]</dt>
-<dd>Davies, K. and A. Freytag, “Representing Label Generation Rulesets Using XML”, RFC 7940, August 2016, 
-https://www.rfc-editor.org/info/rfc7940.</dd> 
+<dd>Davies, K. and A. Freytag, “Representing Label Generation Rulesets Using XML”, 
+     RFC 7940, August 2016, https://www.rfc-editor.org/info/rfc7940</dd> 
+<dt>[RFC 8228]</dt>
+<dd>A. Freytag, “Guidance on Designing Label Generation Rulesets (LGRs) Supporting Variant Labels”, RFC 8228, August 2017,
+    https://www.rfc-editor.org/info/rfc8228</dd>
 
-<dt>[RZ-LGR-5-Overview]</dt>
-<dd>Integration Panel, “Root Zone Label Generation Rules (RZ LGR-5): Overview and Summary”,26 May 2022, https://www.icann.org/sites/default/files/lgr/rz-lgr-5-overview-26may22-en.pdf</dd>
-<dt>[RZ-LGR-5]</dt>
-<dd>Integration Panel, “Root Zone Label Generation Rules (RZ-LGR-5)”, 26 May 2022 (XML), https://www.icann.org/sites/default/files/lgr/rz-lgr-5-common-26may22-en.xml <br/>
-<i>non-normative HTML presentation: https://www.icann.org/sites/default/files/lgr/rz-lgr-5-common-26may22-en.html</i></dd>
-<dt>[Unicode 11.0]</dt>
-<dd>The Unicode Consortium. The Unicode Standard, Version 11.0.0, 
-(Mountain View, CA: The Unicode Consortium, 2018. ISBN 978-1-936213-19-1) 
-https://www.unicode.org/versions/Unicode11.0.0/</dd>
+<dt>[RZ-LGR-6-Overview]</dt>
+<dd>Integration Panel, “Root Zone Label Generation Rules (RZ LGR-6): Overview and Summary”, 23 September 2025, https://www.icann.org/sites/default/files/lgr/rz-lgr-6-overview-23sep25-en.pdf</dd>
+<dt>[RZ-LGR-6]</dt>
+<dd>Integration Panel, “Root Zone Label Generation Rules (RZ-LGR-6)”, 23 September 2025 (XML), https://www.icann.org/sites/default/files/lgr/rz-lgr-6-common-23sep25-en.xml <br/>
+     <i>non-normative HTML presentation: https://www.icann.org/sites/default/files/lgr/rz-lgr-6-common-23sep25-en.html</i></dd>
+<dt>[Unicode 16.0.0]</dt>
+<dd>
+     The Unicode Consortium. The Unicode Standard, Version 16.0.0, (South San Francisco: The Unicode Consortium, 2024. ISBN 978-1-936213-34-4)
+     https://www.unicode.org/versions/Unicode16.0.0/
+     </dd>
 <dt>[Unihan]</dt>
-<dd>The Unicode Consortium, UAX#38 "The Unicode Han Database (Unihan)", Latest version available at: http://unicode.org/reports/tr38/</dd>
+<dd>The Unicode Consortium, UAX#38 “The Unicode Han Database (Unihan)” , Latest version available at: http://unicode.org/reports/tr38/</dd>
 </dl>
 
-<p>For additional detail on references cited in the remainder of the document refer to the Table of References below. </p>
-
-<p>Where links to certain references are not available, the data may be archived as part of [Proposal-Korean].</p>
+<p>For references consulted, particularly in designing the repertoire for the Korean script for the Root Zone, 
+  please see details in the <a href="#table_of_references">Table of References</a> below.
+References [0] and above refer to the Unicode Standard version in which corresponding code points 
+were initially encoded. References [101] and above correspond to a source given in [Proposal-Korean] for justifying 
+the inclusion of the corresponding code points and variants. Entries in the table may have 
+multiple source reference values. If links to certain references are not available, the data may be archived as part of [Proposal-Korean].</p>
 
 ]]></description>
     <references>
-      <reference id="0" comment="Any code point originally encoded in Unicode 1.1">Unicode 1.1</reference>
-      <reference id="1" comment="Any code point originally encoded in Unicode 2.0">Unicode 2.0</reference>
-      <reference id="3" comment="Any code point originally encoded in Unicode 3.0">Unicode 3.0</reference>
+      <reference id="0" comment="Any code point originally encoded in Unicode Version 1.1">The Unicode Standard, Version 1.1</reference>
+      <reference id="1" comment="Any code point originally encoded in Unicode Version 2.0">The Unicode Standard, Version 2.0</reference>
+      <reference id="3" comment="Any code point originally encoded in Unicode Version 3.0">The Unicode Standard, Version 3.0</reference>
       <reference id="101">‘kIRG_KSource’ values starting by K0 in the Unihan database </reference>
       <reference id="102">‘kIICore’ values including the letter ‘K’(indicating source) in the Unihan database </reference>
       <reference id="201" comment="Korean specific variants between Hanja">Table 1-1, from worksheet: ‘K_LGR_v2.3_20210501_vg_37+4+3’ in Appendix F, found in Appendices to “Proposal for a Korean Script Root Zone LGR”, 1 May 2021 (ZIP), 
@@ -170,7 +177,7 @@ https://www.unicode.org/versions/Unicode11.0.0/</dd>
                    https://www.icann.org/en/system/files/files/proposal-korean-lgr-appendices-01may21-en.zip</reference>
       <reference id="204" comment="In repertoire Hanja variants originating from [300]">Table 2-1, from worksheet: ‘K_LGR_v2.3_20210501_vg_exp’in Appendix F, found in Appendices to “Proposal for a Korean Script Root Zone LGR”, 1 May 2021 (ZIP), 
                    https://www.icann.org/en/system/files/files/proposal-korean-lgr-appendices-01may21-en.zip</reference>
-      <reference id="300" comment="non-normative HTML presentation: https://www.icann.org/sites/default/files/lgr/rz-lgr-5-chinese-script-26may22-en.html">Root Zone Label Generation Rules for Chinese, 26 May 2022, https://www.icann.org/sites/default/files/lgr/rz-lgr-5-chinese-script-26may22-en.xml</reference>
+      <reference id="300" comment="non-normative HTML presentation: https://www.icann.org/sites/default/files/lgr/rz-lgr-6-chinese-script-23sep25-en.html">Root Zone Label Generation Rules for Chinese, 23 September 2025, https://www.icann.org/sites/default/files/lgr/rz-lgr-6-chinese-script-23sep25-en.xml</reference>
     </references>
   </meta>
   <data>

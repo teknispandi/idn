@@ -155,41 +155,7 @@ func (u *IdnUtils) CountCodepoints(s string) int {
 // dihitung, dan kombinasi yang lazim dalam satu bahasa tidak dianggap campuran:
 // Han+Hiragana+Katakana (Jepang), Han+Hangul (Korea), Han+Bopomofo.
 func (u *IdnUtils) HasMixedScripts(s string) bool {
-	scripts := make(map[string]bool)
-	for _, r := range s {
-		if name := scriptOf(r); name != "" && name != "Common" && name != "Inherited" {
-			scripts[name] = true
-		}
-	}
-
-	// Jika hanya ada satu script atau tidak ada script, tidak mixed
-	if len(scripts) <= 1 {
-		return false
-	}
-
-	for _, allowed := range [][]string{{"Han", "Hiragana", "Katakana"}, {"Han", "Hangul"}, {"Han", "Bopomofo"}} {
-		covered := 0
-		for _, name := range allowed {
-			if scripts[name] {
-				covered++
-			}
-		}
-		if covered == len(scripts) {
-			return false
-		}
-	}
-
-	return true
-}
-
-// scriptOf mengembalikan nama script Unicode untuk rune, atau "" jika tidak dikenal
-func scriptOf(r rune) string {
-	for name, table := range unicode.Scripts {
-		if unicode.Is(table, r) {
-			return name
-		}
-	}
-	return ""
+	return mixedScriptAt([]rune(s)) >= 0
 }
 
 // IsConfusable memeriksa apakah string berpotensi membingungkan

@@ -21,8 +21,8 @@ var tableFiles embed.FS
 // rangePattern mengenali baris rentang "U+XXXX..U+YYYY" (juga "U+XXXX..YYYY").
 var rangePattern = regexp.MustCompile(`^U\+([0-9a-fA-F]{4,6})\s*\.\.\s*(?:U\+)?([0-9a-fA-F]{4,6})`)
 
-// entryPattern mengenali satu entri "U+XXXX  # komentar". idn/Greek-IDN.txt
-// memuat baris tergabung berisi dua entri, mis.
+// entryPattern mengenali satu entri "U+XXXX  # komentar". Salinan lama
+// idn/Greek-IDN.txt memuat baris tergabung berisi dua entri, mis.
 // "U+03B0 ## ΰ ... U+03B1 ## α GREEK SMALL LETTER ALPHA"; tanpa ini entri
 // kedua hilang tanpa pesan.
 var entryPattern = regexp.MustCompile(`U\+([0-9a-fA-F]{4,6})\s+#`)

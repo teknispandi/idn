@@ -2,7 +2,7 @@
 <lgr xmlns="urn:ietf:params:xml:ns:lgr-1.0">
   <meta>
     <version comment="Second Level Reference LGR">1</version>
-    <date>2024-10-25</date>
+    <date>2026-08-13</date>
     <language>und-Cyrl</language>
     <unicode-version>11.0.0</unicode-version>
     <description type="text/html"><![CDATA[
@@ -11,7 +11,7 @@
   <ul>
     <li>These instructions cover how to adopt an LGR based on this reference LGR for a given
     zone and how to prepare the file for deposit in the IANA Repository of IDN Practices.</li>
-    <li>As described  the IANA procedure (https://www.iana.org/help/idn-repository-procedure) an 
+    <li>As described in the IANA procedure (https://www.iana.org/help/idn-repository-procedure) an 
     LGR MUST contain the following elements in its header:
       <ul style="list-style-type:square;">
         <li>Script or Language Designator (see below for guidance) </li>
@@ -37,13 +37,13 @@
   <p><code>&lt;version comment=&quot;</code>[Please replace (or delete) the optional comment]<code>&quot;&gt;</code>[Please fill in version number, starting at 1]<code>&lt;/version&gt;</code></p>
   <p><code>&lt;date&gt;</code>[Please fill in with publication date, in YYYY-MM-DD format]<code>&lt;/date&gt;</code></p>
   <p><code>&lt;validity-start&gt;</code>[Please fill in effective date, in YYYY-MM-DD format]<code>&lt;/validity-start&gt;</code></p>
-  <p>Note: the scope element may be repeated, so that the same document can serve for multiple domains.</p>
+  <p>Note: the scope element may be repeated, so that the same document can serve multiple domains.</p>
   <p><code>&lt;scope type=&quot;domain&quot;&gt;</code>[Please provide, in &quot;.domain&quot; format]<code>&lt;/scope&gt;</code></p>
 <p><strong>Registry Contact Information:</strong></p>
   <p>Please fill in the <a href="#registry_contact_details">Registry Contact Details</a>.</p>
 <p><strong>Change History</strong></p>
   <p>If you made technical modifications to the LGR, please summarize them in the <a href="#change_history">Change History</a> (and also note the details in the appropriate section of the description).</p>
-<p>PLEASE DELETE THESE INSTRUCTIONS BEFORE DEPOSITING THE DOCUMENT</p></div>
+<p>PLEASE DELETE THESE INSTRUCTIONS BEFORE DEPOSITING THE DOCUMENT.</p></div>
        
        <section id="registry_contact_details">
 <h2>Registry Contact Details</h2>
@@ -61,16 +61,17 @@
     <p>This document specifies a set of Label Generation Rules (LGR) for the Cyrillic script for the second level domain or domains identified above. 
     The starting point for the development of this LGR can be found in the related Root Zone LGR [RZ-LGR-Cyrl]. 
     The format of this file follows [RFC 7940].
-    This LGR is adapted from the “Reference LGR for the Second Level for the Cyrillic Script” [Ref-LGR-und-Cyrl], for details, see <a href="#change_history">Change History</a> below.</p>
+    This LGR is adapted from the “Reference LGR for the Second Level for the Cyrillic Script” [Ref-LGR-und-Cyrl]; for details, see <a href="#change_history">Change History</a> below.</p>
 
   <p>For details and additional background on the Cyrillic script, see “Proposal for a Cyrillic Script Root Zone LGR” [Proposal-Cyrillic].</p>
 
   <h2>Repertoire</h2>
-       <p>The repertoire   includes 86 code points used by languages written in the Cyrillic script. 
+       <p>The repertoire includes 86 code points used by languages written in the Cyrillic script. 
+       They share 23 characters from the Base Cyrillic set defined in RFC 5992 [5992].
        </p>
-
+ 
       <p>The repertoire only includes code points used by languages that are actively written in the Cyrillic script. All languages
-      with [EGIDS] level 1 through 4 were included. Level 5 languages were analyzed and included on a case by case basis. 
+      with [EGIDS] levels 1 through 4 were included. Level 5 languages were analyzed and included on a case by case basis. 
        The repertoire is a subset of [Unicode 11.0.0]. For details, see Section 5, “Repertoire” in [Proposal-Cyrillic].
         (The proposal cited has been adopted for the Cyrillic script portion of the Root Zone LGR.)</p>
 
@@ -128,12 +129,12 @@
     <p>These variant definitions are required when using this LGR together with the Common LGR in label processing, 
     but they also reflect a certain consistency in the approach to variants across typographically related scripts.</p>
 
-    <p><b>Implicit Variant Sequences:</b> The full set of inherited cross script variants would include certain otherwise redundant
+    <p><b>Implicit Variant Sequences:</b> The full set of inherited cross-script variants would include certain otherwise redundant
     sequences. These are defined as having a partition into other repertoire elements, where each element has a cross-script
     variant of its own, making a concatenation of these variants an implicit cross-script variant for the sequence. Where such
     sequences do not contribute to the set of available valid labels, where they produce the same index variant as all
     of their valid partitions, and where they do not participate in allocatable variants, they are not listed anywhere. 
-    See Section 4.5.8 “Implicit Cross-script Variants” of [Level-2-Overview] for further details.</p>
+    See Section 4.5.8, “Implicit Cross-script Variants” of [Level-2-Overview] for further details.</p>
     
     <p>Affected sequences in this LGR include: U+0455 U+0455 and U+04CF U+04CF.</p>
     
@@ -156,10 +157,10 @@
     <p>By default, the LGR includes the rules and actions to implement the following restrictions mandated by the IDNA protocol. They are marked with &#x235F;.</p>
        <ul>
        <li><b>Hyphen Restrictions</b> &mdash; restrictions on the allowable placement of hyphens (no leading/ending hyphen
-             and no hyphen in positions 3 and 4). These restrictions are described in Section 4.2.3.1 of RFC 5891 [150]. 
-             They are implemented here as context rule on U+002D (-) HYPHEN-MINUS.</li>
+             and no hyphen in positions 3 and 4). These restrictions are described in Section 4.2.3.1 of RFC 5891 [5891]. 
+             They are implemented here as a context rule on U+002D (-) HYPHEN-MINUS.</li>
           <li><b>Leading Combining Marks</b>   &mdash;  restrictions on the allowable placement of combining marks
-             (no leading combining mark). This rule is described in Section 4.2.3.2 of RFC 5891 [150].</li>
+             (no leading combining mark). This rule is described in Section 4.2.3.2 of RFC 5891 [5891].</li>
        </ul>
 
     <h3>Cyrillic-specific Rules</h3>
@@ -168,7 +169,7 @@
 
    <h2>Actions</h2>
 
-   <p>This LGR includes the default actions for LGRs as well as the action needed to
+   <p>This LGR includes the default actions for LGRs, as well as the action needed to
         invalidate labels with misplaced combining marks. They are marked with &#x235F;.
         For a description see [RFC 7940].</p>
 
@@ -180,8 +181,9 @@
        For more information on methodology and contributors to the underlying Root Zone LGR, see Sections 4 and 8 in [Proposal-Cyrillic], as well as [RZ-LGR-Overview].</p>
 
        <section id="change_history">
-        <h3>Changes from Version Dated 25 October 2024</h3>
-        <p>Adopted from the Second Level Reference LGR for the Cyrillic Script [Ref-LGR-und-Cyrl] without normative changes.</p>
+        <h3>Changes from Version Dated 13 August 2026</h3>
+        <p>This is a placeholder to document any changes applied by the registry operator when adopting the reference LGR. If no change has been noted, the LGR is the same as the Second Level Reference LGR for the Cyrillic Script [Ref-LGR-und-Cyrl] without normative changes.
+    </p>
     </section>
 
   <h2>References</h2> 
@@ -197,25 +199,25 @@
 
     <dt>[Level-2-Overview]</dt>
     <dd>Internet Corporation for Assigned Names and Numbers, (ICANN),“Reference Label Generation Rules (LGR) for the Second Level: Overview and Summary” (PDF), 
-     (Los Angeles, California: ICANN, 25 October 2024), https://www.icann.org/en/system/files/files/level2-lgr-overview-summary-25oct24-en.pdf
+     (Los Angeles, California: ICANN, 13 August 2026), https://www.icann.org/en/system/files/files/level2-lgr-overview-summary-13aug26-en.pdf
       </dd>
     
-    <dt>[MSR-5]</dt>
-    <dd>Integration Panel, “Maximal Starting Repertoire — MSR-5 Overview and Rationale”, 24 June 2021,
-     https://www.icann.org/en/system/files/files/msr-5-overview-24jun21-en.pdf</dd>
+    <dt>[MSR-6]</dt>
+    <dd>Integration Panel, “Maximal Starting Repertoire — MSR-6 Overview and Rationale”, 23 September 2025,
+     https://www.icann.org/en/system/files/files/msr-6-overview-23sep25-en.pdf</dd>
 
     <dt>[Proposal-Cyrillic]</dt>
     <dd>Cyrillic Generation Panel, “Proposal for Cyrillic Script Root Zone Label Generation Rules”, 3 April 2018, https://www.icann.org/en/system/files/files/proposal-cyrillic-lgr-03apr18-en.pdf</dd> 
 
     <dt>[Ref-LGR-und-Cyrl]</dt>
-    <dd>ICANN, Second Level Reference Label Generation Rules for the Cyrillic Script (und-Cyrl), 25 October 2024 (XML)
-      https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-cyrillic-script-25oct24-en.xml
-      non-normative HTML presentation: https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-cyrillic-script-25oct24-en.html</dd>
+    <dd>ICANN, Second Level Reference Label Generation Rules for the Cyrillic Script (und-Cyrl), 13 August 2026 (XML)
+      https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-cyrillic-script-13aug26-en.xml
+      non-normative HTML presentation: https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-cyrillic-script-13aug26-en.html</dd>
 
     <dt>[Ref-LGR-Latin-Full-Variant-Script]</dt>
-    <dd>ICANN, Second Level Reference Label Generation Rules for the Latin Script (und-Latn), 25 October 2024 (XML)
-      https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-latin-full-variant-script-25oct24-en.xml
-      non-normative HTML presentation: https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-latin-full-variant-script-25oct24-en.html</dd>    
+    <dd>ICANN, Second Level Reference Label Generation Rules for the Latin Script (und-Latn), 13 August 2026 (XML)
+      https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-latin-full-variant-script-13aug26-en.xml
+      non-normative HTML presentation: https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-latin-full-variant-script-13aug26-en.html</dd>    
 
     <dt>[RFC 6912]</dt>
     <dd>Sullivan, A., Thaler, D., Klensin, J., and O. Kolkman,  “Principles for Unicode Code Point Inclusion in Labels in the DNS”, RFC 6912, April 2013, https://www.rfc-editor.org/info/rfc6912</dd>
@@ -229,40 +231,45 @@
     https://www.rfc-editor.org/info/rfc8228</dd>
 
     <dt>[RZ-LGR-Overview]</dt>
-    <dd>Integration Panel, “Root Zone Label Generation Rules (RZ LGR-5): Overview and Summary”, 26 May 2022 (PDF), https://www.icann.org/sites/default/files/lgr/rz-lgr-5-overview-26may22-en.pdf</dd>
+    <dd>Integration Panel, “Root Zone Label Generation Rules (RZ LGR-6): Overview and Summary”, 23 September 2025 (PDF), https://www.icann.org/sites/default/files/packages/lgr/rz-lgr-6-overview-23sep25-en.pdf</dd>
 
-    <dt>[RZ-LGR-5]</dt>
-    <dd>Integration Panel, “Root Zone Label Generation Rules (RZ-LGR-5)”, 26 May 2022 (XML), https://www.icann.org/sites/default/files/lgr/rz-lgr-5-common-26may22-en.xml <br/>
-     <i>non-normative HTML presentation: https://www.icann.org/sites/default/files/lgr/rz-lgr-5-common-26may22-en.html</i></dd>
+    <dt>[RZ-LGR-6]</dt>
+    <dd>Integration Panel, “Root Zone Label Generation Rules (RZ-LGR-6)”, 23 September 2025 (XML), https://www.icann.org/sites/default/files/lgr/rz-lgr-6-common-23sep25-en.xml <br/>
+     <i>non-normative HTML presentation: https://www.icann.org/sites/default/files/lgr/rz-lgr-6-common-23sep25-en.html</i></dd>
      
     <dt>[RZ-LGR-Cyrl]</dt>
-    <dd>ICANN, Root Zone Label Generation Rules for the Cyrillic Script (und-Cyrl), 26 May 2022 (XML)
-      https://www.icann.org/sites/default/files/lgr/rz-lgr-5-cyrillic-script-26may22-en.xml</dd>
+    <dd>ICANN, Root Zone Label Generation Rules for the Cyrillic Script (und-Cyrl), 23 September 2025 (XML)
+      https://www.icann.org/sites/default/files/lgr/rz-lgr-6-cyrillic-script-23sep25-en.xml<br />
+      <i>
+        non-normative HTML presentation at:
+        https://www.icann.org/sites/default/files/lgr/rz-lgr-6-cyrillic-script-23sep25-en.html
+      </i>
+  </dd>
 
     <dt>[RZ-LGR-Greek]</dt>
-    <dd>“Root Zone Label Generation Rules for the Greek Script”, 26 May 2022 (XML), https://www.icann.org/sites/default/files/lgr/rz-lgr-5-greek-script-26may22-en.xml <br/>
-     <i>non-normative HTML presentation: https://www.icann.org/sites/default/files/lgr/rz-lgr-5-greek-script-26may22-en.html</i></dd>
+    <dd>“Root Zone Label Generation Rules for the Greek Script”, 23 September 2025 (XML), https://www.icann.org/sites/default/files/lgr/rz-lgr-6-greek-script-23sep25-en.xml <br/>
+     <i>non-normative HTML presentation: https://www.icann.org/sites/default/files/lgr/rz-lgr-6-greek-script-23sep25-en.html</i></dd>
      
     <dt>[RZ-LGR-Latin]</dt>
-    <dd>“Root Zone Label Generation Rules for the Latin Script”, 26 May 2022 (XML), https://www.icann.org/sites/default/files/lgr/rz-lgr-5-latin-script-26may22-en.xml <br/>
-     <i>non-normative HTML presentation: https://www.icann.org/sites/default/files/lgr/rz-lgr-5-latin-script-26may22-en.html</i></dd>
+    <dd>“Root Zone Label Generation Rules for the Latin Script”, 23 September 2025 (XML), https://www.icann.org/sites/default/files/lgr/rz-lgr-6-latin-script-23sep25-en.xml <br/>
+     <i>non-normative HTML presentation: https://www.icann.org/sites/default/files/lgr/rz-lgr-6-latin-script-23sep25-en.html</i></dd>
 
      <dt>[SIL-Ethnologue]</dt>
      <dd>David M. Eberhard, Gary F. Simons &amp; Charles D. Fennig (eds.). 2021.
-     Ethnologue: Languages of the World, Twenty fourth edition. Dallas, Texas: SIL
+     Ethnologue: Languages of the World, twenty-fourth edition. Dallas, Texas: SIL
      International. Online version available as https://www.ethnologue.com</dd>
 
      <dt>[Unicode 11.0.0]</dt>
-     <dd>The Unicode Consortium. The Unicode Standard, Version 11.0.0, (Mountain View, CA: The Unicode Consortium, 2018. ISBN 978-1-936213-19-1) 
+     <dd>The Unicode Consortium. The Unicode Standard, Version 11.0.0 (Mountain View, CA: The Unicode Consortium, 2018. ISBN 978-1-936213-19-1) 
      https://www.unicode.org/versions/Unicode11.0.0/</dd>
   </dl>
 
       <p>For references consulted particularly in designing the repertoire for the Cyrillic Script for the second level 
       please see details in the <a href="#table_of_references">Table of References</a> below.</p>
 
-      <p>Reference [0] refers to the Unicode Standard version in which corresponding code points were
-      initially encoded. References [100] to [122] correspond to sources given in [Proposal-Cyrillic] for justifying 
-      the inclusion of for the corresponding code points. Single code points or ranges may have 
+      <p>References [0] through [10] refer to the Unicode Standard version in which corresponding code points were
+      initially encoded. References [101] to [122] correspond to sources given in [Proposal-Cyrillic] for justifying 
+      the inclusion of for the corresponding code points other than the Base Cyrillic set. Single code points or ranges may have 
       multiple source reference values.</p> 
 
   ]]></description>
@@ -270,8 +277,6 @@
       <reference id="0" comment="Any code point originally encoded in Unicode Version 1.1">The Unicode Standard, Version 1.1</reference>
       <reference id="8" comment="Any code point originally encoded in Unicode Version 5.0">The Unicode Standard, Version 5.0</reference>
       <reference id="10" comment="Any code point originally encoded in Unicode Version 5.2">The Unicode Standard, Version 5.2</reference>
-      <reference id="100" comment="For a definition of Base Cyrillic">S. Sharikov, D. Miloshevic and J. Klensin, “Internationalized Domain Names Registration 
-      and Administration Guidelines for European Languages Using Cyrillic”, RFC 5992, October 2010, https://www.rfc-editor.org/info/rfc5992</reference>
       <reference id="101">Omniglot, “Byelorussian”, https://www.omniglot.com/writing/belarusian.htm</reference>
       <reference id="102">Omniglot, “Kazakh”, https://www.omniglot.com/writing/kazakh.htm</reference>
       <reference id="103">Omniglot, “Kyrgyz”, https://www.omniglot.com/writing/kirghiz.htm</reference>
@@ -290,27 +295,29 @@
       <reference id="116" comment="Also see Ethnologue at https://www.ethnologue.com/language/udm">Omniglot, “Udmurt”, https://www.omniglot.com/writing/udmurt.htm</reference>
       <reference id="117">Omniglot, “Khanty”, https://www.omniglot.com/writing/khanty.htm</reference>
       <reference id="122">Omniglot, “Chechen”, https://www.omniglot.com/writing/chechen.htm</reference>
-      <reference id="150">RFC 5891, Internationalized Domain Names in Applications (IDNA): Protocol https://tools.ietf.org/html/rfc5891</reference>
-      <reference id="301" comment="non-normative HTML presentation:  https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-belorusian-language-25oct24-en.html">Second Level Reference Label Generation Rules for the Belorusian Language (be),
-		  https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-belorusian-language-25oct24-en.xml</reference>
-      <reference id="302" comment="non-normative HTML presentation:  https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-bosnian-cyrillic-language-25oct24-en.html">Second Level Reference Label Generation Rules for the Bosnian-Cyrillic Language (bs-Cyrl),
-		  https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-bosnian-cyrillic-language-25oct24-en.xml</reference>
-      <reference id="303" comment="non-normative HTML presentation:  https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-bulgarian-language-25oct24-en.html">Second Level Reference Label Generation Rules for the Bulgarian Language (bu),
-		  https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-bulgarina-language-25oct24-en.xml</reference>
-      <reference id="304" comment="non-normative HTML presentation:  https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-macedonian-language-25oct24-en.html">Second Level Reference Label Generation Rules for the Macedonian Language (mk),
-		  https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-macedonian-language-25oct24-en.xml</reference>
-      <reference id="305" comment="non-normative HTML presentation:  https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-montenegrin-cyrillic-language-25oct24-en.html">Second Level Reference Label Generation Rules for the Montenegrin-Cyrillic Language (cnr-Cyril),
-		  https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-montenegrin-cyrillic-language-25oct24-en.xml</reference>
-      <reference id="306" comment="non-normative HTML presentation:  https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-russian-language-25oct24-en.html">Second Level Reference Label Generation Rules for the Russian Language (ru),
-		  https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-russian-language-25oct24-en.xml</reference>
-      <reference id="307" comment="non-normative HTML presentation:  https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-serbian-cyrillic-language-25oct24-en.html">Second Level Reference Label Generation Rules for the Serbian-Cyrillic Language (sr-Cyrl),
-		  https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-serbian-cyrillic-language-25oct24-en.xml</reference>
-      <reference id="308" comment="non-normative HTML presentation:  https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-ukrainian-language-25oct24-en.html">Second Level Reference Label Generation Rules for the Ukrainian Language (uk),
-		  https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-ukrainian-language-25oct24-en.xml</reference>
+      <reference id="5891">RFC 5891, Internationalized Domain Names in Applications (IDNA): Protocol https://tools.ietf.org/html/rfc5891</reference>
+      <reference id="5992" comment="For a definition of Base Cyrillic">S. Sharikov, D. Miloshevic and J. Klensin, “Internationalized Domain Names Registration 
+      and Administration Guidelines for European Languages Using Cyrillic”, RFC 5992, October 2010, https://www.rfc-editor.org/info/rfc5992</reference>
+      <reference id="301" comment="non-normative HTML presentation:  https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-belorusian-language-13aug26-en.html">Second Level Reference Label Generation Rules for the Belorusian Language (be),
+		  https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-belorusian-language-13aug26-en.xml</reference>
+      <reference id="302" comment="non-normative HTML presentation:  https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-bosnian-cyrillic-language-13aug26-en.html">Second Level Reference Label Generation Rules for the Bosnian-Cyrillic Language (bs-Cyrl),
+		  https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-bosnian-cyrillic-language-13aug26-en.xml</reference>
+      <reference id="303" comment="non-normative HTML presentation:  https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-bulgarian-language-13aug26-en.html">Second Level Reference Label Generation Rules for the Bulgarian Language (bu),
+		  https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-bulgarina-language-13aug26-en.xml</reference>
+      <reference id="304" comment="non-normative HTML presentation:  https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-macedonian-language-13aug26-en.html">Second Level Reference Label Generation Rules for the Macedonian Language (mk),
+		  https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-macedonian-language-13aug26-en.xml</reference>
+      <reference id="305" comment="non-normative HTML presentation:  https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-montenegrin-cyrillic-language-13aug26-en.html">Second Level Reference Label Generation Rules for the Montenegrin-Cyrillic Language (cnr-Cyril),
+		  https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-montenegrin-cyrillic-language-13aug26-en.xml</reference>
+      <reference id="306" comment="non-normative HTML presentation:  https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-russian-language-13aug26-en.html">Second Level Reference Label Generation Rules for the Russian Language (ru),
+		  https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-russian-language-13aug26-en.xml</reference>
+      <reference id="307" comment="non-normative HTML presentation:  https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-serbian-cyrillic-language-13aug26-en.html">Second Level Reference Label Generation Rules for the Serbian-Cyrillic Language (sr-Cyrl),
+		  https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-serbian-cyrillic-language-13aug26-en.xml</reference>
+      <reference id="308" comment="non-normative HTML presentation:  https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-ukrainian-language-13aug26-en.html">Second Level Reference Label Generation Rules for the Ukrainian Language (uk),
+		  https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-ukrainian-language-13aug26-en.xml</reference>
     </references>
   </meta>
   <data>
-    <char cp="002D" not-when="hyphen-minus-disallowed" tag="sc:Zyyy" ref="0" comment="HYPHEN-MINUS; &#x235F;" />
+    <char cp="002D" not-when="hyphen-minus-disallowed" tag="Hyphen sc:Zyyy" ref="0" comment="HYPHEN-MINUS; &#x235F;" />
     <char cp="0030" tag="Common-digit sc:Zyyy" ref="0" comment="DIGIT ZERO; &#x235F;" />
     <char cp="0031" tag="Common-digit sc:Zyyy" ref="0" comment="DIGIT ONE; &#x235F;" />
     <char cp="0032" tag="Common-digit sc:Zyyy" ref="0" comment="DIGIT TWO; &#x235F;" />
@@ -321,33 +328,33 @@
     <char cp="0037" tag="Common-digit sc:Zyyy" ref="0" comment="DIGIT SEVEN; &#x235F;" />
     <char cp="0038" tag="Common-digit sc:Zyyy" ref="0" comment="DIGIT EIGHT; &#x235F;" />
     <char cp="0039" tag="Common-digit sc:Zyyy" ref="0" comment="DIGIT NINE; &#x235F;" />
-    <char cp="0430" tag="sc:Cyrl" ref="0 100" comment="Base Cyrillic" />
-    <char cp="0431" tag="sc:Cyrl" ref="0 100" comment="Base Cyrillic" />
-    <char cp="0432" tag="sc:Cyrl" ref="0 100" comment="Base Cyrillic" />
-    <char cp="0433" tag="sc:Cyrl" ref="0 100" comment="Base Cyrillic" />
-    <char cp="0434" tag="sc:Cyrl" ref="0 100" comment="Base Cyrillic" />
-    <char cp="0435" tag="sc:Cyrl" ref="0 100" comment="Base Cyrillic" />
-    <char cp="0436" tag="sc:Cyrl" ref="0 100" comment="Base Cyrillic" />
-    <char cp="0437" tag="sc:Cyrl" ref="0 100" comment="Base Cyrillic" />
+    <char cp="0430" tag="sc:Cyrl" ref="0 5992" comment="Base Cyrillic" />
+    <char cp="0431" tag="sc:Cyrl" ref="0 5992" comment="Base Cyrillic" />
+    <char cp="0432" tag="sc:Cyrl" ref="0 5992" comment="Base Cyrillic" />
+    <char cp="0433" tag="sc:Cyrl" ref="0 5992" comment="Base Cyrillic" />
+    <char cp="0434" tag="sc:Cyrl" ref="0 5992" comment="Base Cyrillic" />
+    <char cp="0435" tag="sc:Cyrl" ref="0 5992" comment="Base Cyrillic" />
+    <char cp="0436" tag="sc:Cyrl" ref="0 5992" comment="Base Cyrillic" />
+    <char cp="0437" tag="sc:Cyrl" ref="0 5992" comment="Base Cyrillic" />
     <char cp="0438" tag="sc:Cyrl" ref="0 106" comment="Russian (1)" />
     <char cp="0439" tag="sc:Cyrl" ref="0 106" comment="Russian (1)" />
-    <char cp="043A" tag="sc:Cyrl" ref="0 100" comment="Base Cyrillic" />
-    <char cp="043B" tag="sc:Cyrl" ref="0 100" comment="Base Cyrillic" />
-    <char cp="043C" tag="sc:Cyrl" ref="0 100" comment="Base Cyrillic" />
-    <char cp="043D" tag="sc:Cyrl" ref="0 100" comment="Base Cyrillic" />
-    <char cp="043E" tag="sc:Cyrl" ref="0 100" comment="Base Cyrillic" />
-    <char cp="043F" tag="sc:Cyrl" ref="0 100" comment="Base Cyrillic" />
-    <char cp="0440" tag="sc:Cyrl" ref="0 100" comment="Base Cyrillic" />
-    <char cp="0441" tag="sc:Cyrl" ref="0 100" comment="Base Cyrillic" />
-    <char cp="0442" tag="sc:Cyrl" ref="0 100" comment="Base Cyrillic" />
-    <char cp="0443" tag="sc:Cyrl" ref="0 100" comment="Base Cyrillic">
+    <char cp="043A" tag="sc:Cyrl" ref="0 5992" comment="Base Cyrillic" />
+    <char cp="043B" tag="sc:Cyrl" ref="0 5992" comment="Base Cyrillic" />
+    <char cp="043C" tag="sc:Cyrl" ref="0 5992" comment="Base Cyrillic" />
+    <char cp="043D" tag="sc:Cyrl" ref="0 5992" comment="Base Cyrillic" />
+    <char cp="043E" tag="sc:Cyrl" ref="0 5992" comment="Base Cyrillic" />
+    <char cp="043F" tag="sc:Cyrl" ref="0 5992" comment="Base Cyrillic" />
+    <char cp="0440" tag="sc:Cyrl" ref="0 5992" comment="Base Cyrillic" />
+    <char cp="0441" tag="sc:Cyrl" ref="0 5992" comment="Base Cyrillic" />
+    <char cp="0442" tag="sc:Cyrl" ref="0 5992" comment="Base Cyrillic" />
+    <char cp="0443" tag="sc:Cyrl" ref="0 5992" comment="Base Cyrillic">
       <var cp="04AF" type="blocked" comment="Required if LGR is used with Common LGR" />
     </char>
-    <char cp="0444" tag="sc:Cyrl" ref="0 100" comment="Base Cyrillic" />
-    <char cp="0445" tag="sc:Cyrl" ref="0 100" comment="Base Cyrillic" />
-    <char cp="0446" tag="sc:Cyrl" ref="0 100" comment="Base Cyrillic" />
-    <char cp="0447" tag="sc:Cyrl" ref="0 100" comment="Base Cyrillic" />
-    <char cp="0448" tag="sc:Cyrl" ref="0 100" comment="Base Cyrillic" />
+    <char cp="0444" tag="sc:Cyrl" ref="0 5992" comment="Base Cyrillic" />
+    <char cp="0445" tag="sc:Cyrl" ref="0 5992" comment="Base Cyrillic" />
+    <char cp="0446" tag="sc:Cyrl" ref="0 5992" comment="Base Cyrillic" />
+    <char cp="0447" tag="sc:Cyrl" ref="0 5992" comment="Base Cyrillic" />
+    <char cp="0448" tag="sc:Cyrl" ref="0 5992" comment="Base Cyrillic" />
     <char cp="0449" tag="sc:Cyrl" ref="0 106" comment="Russian (1)" />
     <char cp="044A" tag="sc:Cyrl" ref="0 106" comment="Russian (1)" />
     <char cp="044B" tag="sc:Cyrl" ref="0 106" comment="Russian (1)" />
@@ -420,14 +427,14 @@
   <rules>
     <!--Character class definitions go here-->
     <!--Whole label evaluation and context rules go here-->
-    <rule name="leading-combining-mark" ref="150" comment="RFC 5891 restrictions on placement of combining marks &#x235F;">
+    <rule name="leading-combining-mark" ref="5891" comment="RFC 5891 restrictions on placement of combining marks &#x235F;">
       <start />
       <union>
         <class property="gc:Mn" />
         <class property="gc:Mc" />
       </union>
     </rule>
-    <rule name="hyphen-minus-disallowed" ref="150" comment="RFC 5891 restrictions on placement of U+002D HYPHEN-MINUS &#x235F;">
+    <rule name="hyphen-minus-disallowed" ref="5891" comment="RFC 5891 restrictions on placement of U+002D HYPHEN-MINUS &#x235F;">
       <choice>
         <rule comment="no leading hyphen">
           <look-behind>
@@ -453,7 +460,7 @@
       </choice>
     </rule>
     <!--Action elements go here - order defines precedence-->
-    <action disp="invalid" match="leading-combining-mark" comment="labels with leading combining marks are invalid &#x235F;" />
+    <action disp="invalid" match="leading-combining-mark" ref="5891" comment="labels with leading combining marks are invalid &#x235F;" />
     <action disp="invalid" any-variant="out-of-repertoire-var" comment="any variant label with a code point out of repertoire is invalid &#x235F;" />
     <action disp="blocked" any-variant="blocked" comment="any variant label containing blocked variants is blocked &#x235F;" />
     <action disp="allocatable" all-variants="allocatable" comment="variant labels with all variants allocatable are allocatable &#x235F;" />

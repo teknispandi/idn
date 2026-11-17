@@ -2,7 +2,7 @@
 <lgr xmlns="urn:ietf:params:xml:ns:lgr-1.0">
   <meta>
     <version comment="Second Level Reference LGR">2</version>
-    <date>2024-10-25</date>
+    <date>2026-08-13</date>
     <language>und-Sinh</language>
     <unicode-version>11.0.0</unicode-version>
     <description type="text/html"><![CDATA[
@@ -11,7 +11,7 @@
   <ul>
     <li>These instructions cover how to adopt an LGR based on this reference LGR for a given
     zone and how to prepare the file for deposit in the IANA Repository of IDN Practices.</li>
-    <li>As described  the IANA procedure (https://www.iana.org/help/idn-repository-procedure) an 
+    <li>As described in the IANA procedure (https://www.iana.org/help/idn-repository-procedure) an 
     LGR MUST contain the following elements in its header:
       <ul style="list-style-type:square;">
         <li>Script or Language Designator (see below for guidance) </li>
@@ -37,13 +37,13 @@
   <p><code>&lt;version comment=&quot;</code>[Please replace (or delete) the optional comment]<code>&quot;&gt;</code>[Please fill in version number, starting at 1]<code>&lt;/version&gt;</code></p>
   <p><code>&lt;date&gt;</code>[Please fill in with publication date, in YYYY-MM-DD format]<code>&lt;/date&gt;</code></p>
   <p><code>&lt;validity-start&gt;</code>[Please fill in effective date, in YYYY-MM-DD format]<code>&lt;/validity-start&gt;</code></p>
-  <p>Note: the scope element may be repeated, so that the same document can serve for multiple domains.</p>
+  <p>Note: the scope element may be repeated, so that the same document can serve multiple domains.</p>
   <p><code>&lt;scope type=&quot;domain&quot;&gt;</code>[Please provide, in &quot;.domain&quot; format]<code>&lt;/scope&gt;</code></p>
 <p><strong>Registry Contact Information:</strong></p>
   <p>Please fill in the <a href="#registry_contact_details">Registry Contact Details</a>.</p>
 <p><strong>Change History</strong></p>
   <p>If you made technical modifications to the LGR, please summarize them in the <a href="#change_history">Change History</a> (and also note the details in the appropriate section of the description).</p>
-<p>PLEASE DELETE THESE INSTRUCTIONS BEFORE DEPOSITING THE DOCUMENT</p></div>
+<p>PLEASE DELETE THESE INSTRUCTIONS BEFORE DEPOSITING THE DOCUMENT.</p></div>
        
        <section id="registry_contact_details">
 <h2>Registry Contact Details</h2>
@@ -61,7 +61,7 @@
     <p>This document specifies a set of Label Generation Rules (LGR) for the Sinhala script for the second level domain or domains identified above. 
     The starting point for the development of this LGR can be found in the related Root Zone LGR [RZ-LGR-Sinh]. 
     The format of this file follows [RFC 7940].
-    This LGR is adapted from the “Reference LGR for the Second Level for the Sinhala Script” [Ref-LGR-und-Sinh], for details, see <a href="#change_history">Change History</a> below.</p>
+    This LGR is adapted from the “Reference LGR for the Second Level for the Sinhala Script” [Ref-LGR-und-Sinh]; for details, see <a href="#change_history">Change History</a> below.</p>
 
     <p>For details and additional background on the Sinhala script, see “Proposal for a 
     Sinhala Script Root Zone Label Generation Rules-Set  (LGR)" [Proposal-Sinhala].</p>
@@ -92,8 +92,8 @@
     <p><b>Digit Variants:</b> The Sinhala reference LGR does not include native digits, so there are no semantic variants defined.</p>
 
     <p>The LGR defines certain allocatable fallback variants as
-    described in Section 4.5.5 “Allocatable Fallback Variants” in [Level-2-Overview]. A fallback variant is a variant label that uses 
-    substitute code points for code points or sequences not available (or not allowed) in some contexts, that would 
+    described in Section 4.5.5, “Allocatable Fallback Variants” in [Level-2-Overview]. A fallback variant is a variant label that uses 
+    substitute code points for code points or sequences not available (or not allowed) in some contexts that would 
     otherwise be required for a linguistically accurate rendering of some label.</p>
 
     <p>When “fallback” variants are defined, two labels may be allocated: a single label with the spelling preferred by the 
@@ -110,7 +110,7 @@
     “fallback”, while the variant type for the other direction is “blocked”. In addition, the first element of each pair uses the
     reflexive mapping “r-original”.
      (By convention, the prefix “r-” marks a type used in a reflexive variant mapping, that is, it represents an instance 
-     of the original code point at that location in a variant label, see Section 5.3.4 in [RFC 7940].)</p>
+     of the original code point at that location in a variant label. See Section 5.3.4 in [RFC 7940].)</p>
 
     <p><b>Variant Disposition:</b> Except for limited exceptions for the fallback variants defined above, variants defined here result
     in a variant label disposition of “blocked”.</p>
@@ -156,7 +156,8 @@
   be followed by halanta. More details in Section 3.3.6, “Sannjakas” in [Proposal-Sinhala]. </p>
 
   <p><b>Zero Width Joiner:</b> This character is used in the formation of certain conjuncts in Sinhala.
-  In this LGR, ZWJ (U+200D) is not listed by itself but available as part of many defined sequences.</p>
+  In this LGR, ZWJ (U+200D) is not listed by itself but available as part of many defined sequences.
+  This implicitly satisfies the protocol required CONTEXTJ restrictions on ZWJ from RFC 5892 [5892].</p>
       
     <h2>Whole Label Evaluation (WLE) and Context Rules</h2>
   <h3>Common Rules</h3>
@@ -164,10 +165,10 @@
     <p>By default, the LGR includes the rules and actions to implement the following restrictions mandated by the IDNA protocol. They are marked with &#x235F;.</p>
        <ul>
        <li><b>Hyphen Restrictions</b> &mdash; restrictions on the allowable placement of hyphens (no leading/ending hyphen
-             and no hyphen in positions 3 and 4). These restrictions are described in Section 4.2.3.1 of RFC 5891 [150]. 
-             They are implemented here as context rule on U+002D (-) HYPHEN-MINUS.</li>
+             and no hyphen in positions 3 and 4). These restrictions are described in Section 4.2.3.1 of RFC 5891 [5891]. 
+             They are implemented here as a context rule on U+002D (-) HYPHEN-MINUS.</li>
           <li><b>Leading Combining Marks</b>   &mdash;  restrictions on the allowable placement of combining marks
-             (no leading combining mark). This rule is described in Section 4.2.3.2 of RFC 5891 [150].</li>
+             (no leading combining mark). This rule is described in Section 4.2.3.2 of RFC 5891 [5891].</li>
        </ul>
 
    <h3>Sinhala-specific Rules</h3>
@@ -201,11 +202,11 @@
 
     <h3>Default Actions</h3>
 
-    <p>This LGR includes the default actions for LGRs as well as the action needed to
+    <p>This LGR includes the default actions for LGRs, as well as the action needed to
         invalidate labels with misplaced combining marks. They are marked with &#x235F;.
         For a description see [RFC 7940].</p>
 
-    <p>Because this LGR defines allocatable fallback variants the following default actions are applicable.</p>
+    <p>Because this LGR defines allocatable fallback variants, the following default actions are applicable.</p>
 
     <ul>
     <li><b>blocked</b> &mdash;  a variant label containing a blocked variant will receive a disposition of “blocked”.</li>
@@ -232,7 +233,7 @@
      as in the original applied-for label.</p>
     
     <p>Note that the mapping types for variants are not symmetric: they depend on which code point is considered
-     the source or the target in a given mapping. As specified in [RFC 7940], when mapping types are evaluated
+     the source or the target in a given mapping. As specified in [RFC 7940], when mapping types are evaluated,
      code points in a label that are unchanged use the type of their “reflexive” mapping. 
      Per [RFC 7940] the actions are always applied one after the other, and the evaluation stops at the first 
      action that assigns a disposition to a given label.</p>
@@ -250,8 +251,9 @@
     <p>Fallback variants have been added to sequences including ZWJ. These fallback variants do not contain ZWJ to
     provide compatibility with IDNA:2003 compliant labels.</p>
 
-    <h3>Changes from Version Dated 25 October 2024</h3>
-        <p>Adopted from the Second Level Reference LGR for the Sinhala Script [Ref-LGR-und-Sinh] without normative changes.</p>
+    <h3>Changes from Version Dated 13 August 2026</h3>
+        <p>This is a placeholder to document any changes applied by the registry operator when adopting the reference LGR. If no change has been noted, the LGR is the same as the Second Level Reference LGR for the Sinhala Script [Ref-LGR-und-Sinh] without normative changes.
+    </p>
     </section>
 
     <h2>References</h2> 
@@ -262,7 +264,7 @@
 
      <dt>[Level-2-Overview]</dt>
      <dd>Internet Corporation for Assigned Names and Numbers, (ICANN),“Reference Label Generation Rules (LGR) for the Second Level: Overview and Summary” (PDF), 
-     (Los Angeles, California: ICANN, 25 October 2024), https://www.icann.org/en/system/files/files/level2-lgr-overview-summary-25oct24-en.pdf
+     (Los Angeles, California: ICANN, 13 August 2026), https://www.icann.org/en/system/files/files/level2-lgr-overview-summary-13aug26-en.pdf
       </dd>
 
       <dt>[Proposal-Sinhala]</dt> 
@@ -277,19 +279,24 @@
     https://www.rfc-editor.org/info/rfc8228</dd>
       
       <dt>[RZ-LGR-Overview]</dt>
-       <dd>Integration Panel, “Root Zone Label Generation Rules (RZ LGR-5): Overview and Summary”, 26 May 2022 (PDF), https://www.icann.org/sites/default/files/lgr/rz-lgr-5-overview-26may22-en.pdf</dd>
+       <dd>Integration Panel, “Root Zone Label Generation Rules (RZ LGR-6): Overview and Summary”, 23 September 2025 (PDF), https://www.icann.org/sites/default/files/packages/lgr/rz-lgr-6-overview-23sep25-en.pdf</dd>
 
       <dt>[RZ-LGR-Sinh]</dt>
-      <dd>ICANN, Root Zone Label Generation Rules for the Sinhala Script (und-Sinh), 26 May 2022 (XML)
-      https://www.icann.org/sites/default/files/lgr/rz-lgr-5-sinhala-script-26may22-en.xml</dd>
+      <dd>ICANN, Root Zone Label Generation Rules for the Sinhala Script (und-Sinh), 23 September 2025 (XML)
+      https://www.icann.org/sites/default/files/lgr/rz-lgr-6-sinhala-script-23sep25-en.xml<br />
+      <i>
+        non-normative HTML presentation at:
+        https://www.icann.org/sites/default/files/lgr/rz-lgr-6-sinhala-script-23sep25-en.html
+      </i>
+  </dd>
 
      <dt>[Ref-LGR-und-Sinh]</dt>
-     <dd>ICANN, Second Level Reference Label Generation Rules for the Sinhala Script (und-Sinh), 25 October 2024 (XML)
-      https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-sinhala-script-25oct24-en.xml
-      non-normative HTML presentation: https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-sinhala-script-25oct24-en.html</dd>
+     <dd>ICANN, Second Level Reference Label Generation Rules for the Sinhala Script (und-Sinh), 13 August 2026 (XML)
+      https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-sinhala-script-13aug26-en.xml
+      non-normative HTML presentation: https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-sinhala-script-13aug26-en.html</dd>
  
       <dt>[Unicode 11.0.0]</dt>
-      <dd>The Unicode Consortium. The Unicode Standard, Version 11.0.0, (Mountain View, CA: The Unicode Consortium, 2018. ISBN 978-1-936213-19-1) 
+      <dd>The Unicode Consortium. The Unicode Standard, Version 11.0.0 (Mountain View, CA: The Unicode Consortium, 2018. ISBN 978-1-936213-19-1) 
      https://www.unicode.org/versions/Unicode11.0.0/</dd>
    </dl>
 
@@ -302,7 +309,7 @@
       Entries in the table may have
         multiple source reference values. 
         In the listing of <a href="#whole_label_evaluation_and_context_rules">whole label evaluation and context rules</a>,
-        reference [150] indicates the source for common rules.</p>
+        reference [5891] indicates the source for common rules.</p>
 
 ]]></description>
     <references>
@@ -310,12 +317,13 @@
       <reference id="102">Disanayaka, JB. 2006. Sinhala Akshara Vicharaya (Sinhala Graphology), Sumitha Publishers, Kalubovila. ISBN: 955-1146-44-1</reference>
       <reference id="103">Sections 5.8 through 5.10, and 6.4 “Conjunct Letters” in SRI LANKA STANDARD 1134 : 2011  https://www.language.lk/wp-content/uploads/2018/03/SLS-1134-2011.pdf [language.lk]</reference>
       <reference id="201">Omniglot: The on-line encyclopedia of writing system and Languages, “Sinhala”  https://www.omniglot.com/writing/sinhala.htm</reference>
-      <reference id="150">RFC 5891, Internationalized Domain Names in Applications (IDNA): Protocol https://tools.ietf.org/html/rfc5891</reference>
-      <reference id="3" comment="Any code point originally encoded in Unicode 3.0">The Unicode Standard 3.0</reference>
+      <reference id="5891">RFC 5891, Internationalized Domain Names in Applications (IDNA): Protocol https://tools.ietf.org/html/rfc5891</reference>
+      <reference id="5892">RFC 5982, Faltstrom, P., Ed., “The Unicode Code Points and Internationalized Domain Names for Applications (IDNA)”, https://tools.ietf.org/html/rfc5892</reference>
+      <reference id="3" comment="Any code point originally encoded in Unicode Version 3.0">The Unicode Standard, Version 3.0</reference>
     </references>
   </meta>
   <data>
-    <char cp="002D" not-when="hyphen-minus-disallowed" tag="sc:Zyyy" ref="0" comment="HYPHEN-MINUS; &#x235F;" />
+    <char cp="002D" not-when="hyphen-minus-disallowed" tag="Hyphen sc:Zyyy" ref="0" comment="HYPHEN-MINUS; &#x235F;" />
     <char cp="0030" tag="Common-digit sc:Zyyy" ref="0" comment="DIGIT ZERO; &#x235F;" />
     <char cp="0031" tag="Common-digit sc:Zyyy" ref="0" comment="DIGIT ONE; &#x235F;" />
     <char cp="0032" tag="Common-digit sc:Zyyy" ref="0" comment="DIGIT TWO; &#x235F;" />
@@ -1219,14 +1227,14 @@
     <class name="B" from-tag="Anusvara" comment="The Sinhala Anusvara" />
     <class name="X" from-tag="Visarga" comment="The Sinhala Visarga" />
     <!--Whole label evaluation and context rules go here-->
-    <rule name="leading-combining-mark" ref="150" comment="RFC 5891 restrictions on placement of combining marks &#x235F;">
+    <rule name="leading-combining-mark" ref="5891" comment="RFC 5891 restrictions on placement of combining marks &#x235F;">
       <start />
       <union>
         <class property="gc:Mn" />
         <class property="gc:Mc" />
       </union>
     </rule>
-    <rule name="hyphen-minus-disallowed" ref="150" comment="RFC 5891 restrictions on placement of U+002D HYPHEN-MINUS &#x235F;">
+    <rule name="hyphen-minus-disallowed" ref="5891" comment="RFC 5891 restrictions on placement of U+002D HYPHEN-MINUS &#x235F;">
       <choice>
         <rule comment="no leading hyphen">
           <look-behind>
@@ -1314,7 +1322,7 @@
       </look-ahead>
     </rule>
     <!--Action elements go here - order defines precedence-->
-    <action disp="invalid" match="leading-combining-mark" ref="150" comment="labels with leading combining marks are invalid &#x235F;" />
+    <action disp="invalid" match="leading-combining-mark" ref="5891" comment="labels with leading combining marks are invalid &#x235F;" />
     <action disp="invalid" any-variant="out-of-repertoire-var" comment="any variant label with a code point out of repertoire is invalid &#x235F;" />
     <action disp="blocked" any-variant="blocked" comment="any variant label containing blocked variants is blocked &#x235F;" />
     <action disp="allocatable" all-variants="allocatable" comment="variant labels with all variants allocatable are allocatable &#x235F;" />

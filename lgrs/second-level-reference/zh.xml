@@ -2,7 +2,7 @@
 <lgr xmlns="urn:ietf:params:xml:ns:lgr-1.0">
   <meta>
     <version comment="Second Level Reference LGR">3</version>
-    <date>2024-10-25</date>
+    <date>2026-08-13</date>
     <language>zh</language>
     <unicode-version>11.0.0</unicode-version>
     <description type="text/html"><![CDATA[
@@ -11,7 +11,7 @@
   <ul>
     <li>These instructions cover how to adopt an LGR based on this reference LGR for a given
     zone and how to prepare the file for deposit in the IANA Repository of IDN Practices.</li>
-    <li>As described  the IANA procedure (https://www.iana.org/help/idn-repository-procedure) an 
+    <li>As described in the IANA procedure (https://www.iana.org/help/idn-repository-procedure) an 
     LGR MUST contain the following elements in its header:
       <ul style="list-style-type:square;">
         <li>Script or Language Designator (see below for guidance) </li>
@@ -37,13 +37,13 @@
   <p><code>&lt;version comment=&quot;</code>[Please replace (or delete) the optional comment]<code>&quot;&gt;</code>[Please fill in version number, starting at 1]<code>&lt;/version&gt;</code></p>
   <p><code>&lt;date&gt;</code>[Please fill in with publication date, in YYYY-MM-DD format]<code>&lt;/date&gt;</code></p>
   <p><code>&lt;validity-start&gt;</code>[Please fill in effective date, in YYYY-MM-DD format]<code>&lt;/validity-start&gt;</code></p>
-  <p>Note: the scope element may be repeated, so that the same document can serve for multiple domains.</p>
+  <p>Note: the scope element may be repeated, so that the same document can serve multiple domains.</p>
   <p><code>&lt;scope type=&quot;domain&quot;&gt;</code>[Please provide, in &quot;.domain&quot; format]<code>&lt;/scope&gt;</code></p>
 <p><strong>Registry Contact Information:</strong></p>
   <p>Please fill in the <a href="#registry_contact_details">Registry Contact Details</a>.</p>
 <p><strong>Change History</strong></p>
   <p>If you made technical modifications to the LGR, please summarize them in the <a href="#change_history">Change History</a> (and also note the details in the appropriate section of the description).</p>
-<p>PLEASE DELETE THESE INSTRUCTIONS BEFORE DEPOSITING THE DOCUMENT</p></div>
+<p>PLEASE DELETE THESE INSTRUCTIONS BEFORE DEPOSITING THE DOCUMENT.</p></div>
        
        <section id="registry_contact_details">
 <h2>Registry Contact Details</h2>
@@ -62,14 +62,14 @@
      The ultimate starting point for the development of this LGR can be found in the related Root Zone LGR [RZ-LGR-Hani]. 
      Note that while it is the Chinese Script Root Zone LGR that forms the starting point, the LGR defined here covers the Chinese Language.
      The format of this file follows [RFC 7940].
-     This LGR is adapted from the “Reference LGR for the Second Level for the Chinese Language” [Ref-LGR-zh-Hani], for details, see <a href="#change_history">Change History</a> below.</p>
+     This LGR is adapted from the “Reference LGR for the Second Level for the Chinese Language” [Ref-LGR-zh-Hani]; for details, see <a href="#change_history">Change History</a> below.</p>
 
      <p>For details and additional background on the Chinese script, see “Proposal for a Chinese Script Root Zone LGR” [Proposal-Chinese] including the appendices [Proposal-Chinese-Appendices].</p>
 
      <p><b>Standalone LGR:</b> This LGR is designed to be used in a zone that does not cater to IDNs 
-    other than those valid under this LGR. 
-    Following existing practice, this LGR also supports ASCII letters and where applicable accounts for any interaction with the 
-    remainder of the repertoire.</p>
+     other than those valid under this LGR. 
+     Following existing practice, this LGR also supports ASCII letters and where applicable accounts for any interaction with the 
+     remainder of the repertoire.</p>
 
      <h2>Repertoire</h2>
 
@@ -197,10 +197,10 @@
     <p>By default, the LGR includes the rules and actions to implement the following restrictions mandated by the IDNA protocol. They are marked with &#x235F;.</p>
        <ul>
        <li><b>Hyphen Restrictions</b> &mdash; restrictions on the allowable placement of hyphens (no leading/ending hyphen
-             and no hyphen in positions 3 and 4). These restrictions are described in Section 4.2.3.1 of RFC 5891 [150]. 
-             They are implemented here as context rule on U+002D (-) HYPHEN-MINUS.</li>
+             and no hyphen in positions 3 and 4). These restrictions are described in Section 4.2.3.1 of RFC 5891 [5891]. 
+             They are implemented here as a context rule on U+002D (-) HYPHEN-MINUS.</li>
           <li><b>Leading Combining Marks</b>   &mdash;  restrictions on the allowable placement of combining marks
-             (no leading combining mark). This rule is described in Section 4.2.3.2 of RFC 5891 [150].</li>
+             (no leading combining mark). This rule is described in Section 4.2.3.2 of RFC 5891 [5891].</li>
        </ul>
 
     <h3>Chinese-specific Rules</h3>
@@ -213,7 +213,7 @@
 
     <h3>Default Actions</h3>
 
-    <p>This LGR includes the default actions for LGRs as well as the action needed to
+    <p>This LGR includes the default actions for LGRs, as well as the action needed to
         invalidate labels with misplaced combining marks. They are marked with &#x235F;.
         For a description see [RFC 7940].</p>
 
@@ -262,8 +262,9 @@
      <p>Unicode Version has been updated.</p>
      <p>Description better aligned with [RZ-LGR-Hani] description.</p>
 
-     <h3>Changes from Version Dated 25 October 2024</h3>
-        <p>Adopted from the Second Level Reference LGR for the Chinese Language [Ref-LGR-zh-Hani] without normative changes.</p>
+     <h3>Changes from Version Dated 13 August 2026</h3>
+        <p>This is a placeholder to document any changes applied by the registry operator when adopting the reference LGR. If no change has been noted, the LGR is the same as the Second Level Reference LGR for the Chinese Language [Ref-LGR-zh-Hani] without normative changes.
+    </p>
     </section>
         
      <h2>References</h2>
@@ -275,7 +276,7 @@
       Entries in the table may have
         multiple source reference values. 
         In the listing of <a href="#whole_label_evaluation_and_context_rules">whole label evaluation and context rules</a>,
-        reference [150] indicates the source for common rules.
+        reference [5891] indicates the source for common rules.
     </p>
 
     <p>In addition, the following general references are cited in this document:</p>
@@ -286,12 +287,12 @@
 
      <dt>[Level-2-Overview]</dt>
      <dd>Internet Corporation for Assigned Names and Numbers, (ICANN),“Reference Label Generation Rules (LGR) for the Second Level: Overview and Summary” (PDF), 
-     (Los Angeles, California: ICANN, 25 October 2024), https://www.icann.org/en/system/files/files/level2-lgr-overview-summary-25oct24-en.pdf
+     (Los Angeles, California: ICANN, 13 August 2026), https://www.icann.org/en/system/files/files/level2-lgr-overview-summary-13aug26-en.pdf
       </dd>
 
-     <dt>[MSR-5]</dt>
-     <dd>Integration Panel, “Maximal Starting Repertoire — MSR-5 Overview and Rationale”, 24 June 2021,
-     https://www.icann.org/en/system/files/files/msr-5-overview-24jun21-en.pdf</dd>
+     <dt>[MSR-6]</dt>
+     <dd>Integration Panel, “Maximal Starting Repertoire — MSR-6 Overview and Rationale”, 23 September 2025,
+     https://www.icann.org/en/system/files/files/msr-6-overview-23sep25-en.pdf</dd>
 
      <dt>[Proposal-Chinese]</dt> 
      <dd>Chinese Script Generation Panel (CGP), “Proposal for a Chinese Script Root Zone LGR”,
@@ -302,14 +303,14 @@
       26 May 2020 (ZIP), https://www.icann.org/en/system/files/files/proposal-chinese-lgr-appdendices-26may20-en.zip </dd>
 
      <dt>[Ref-LGR-zh-Hani]</dt>
-     <dd>ICANN, Second Level Reference Label Generation Rules for the Chinese Language (zh-Hani), 25 October 2024 (XML)
-      https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-chinese-language-25oct24-en.xml
-      non-normative HTML presentation: https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-chinese-language-25oct24-en.html</dd>
+     <dd>ICANN, Second Level Reference Label Generation Rules for the Chinese Language (zh-Hani), 13 August 2026 (XML)
+      https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-chinese-language-13aug26-en.xml
+      non-normative HTML presentation: https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-chinese-language-13aug26-en.html</dd>
 
      <dt>[Ref-LGR-Chinese-Full-Variant-Script]</dt>
-     <dd>ICANN, Second Level Reference Label Generation Rules for the Chinese Script (und-Hani), 25 October 2024 (XML)
-      https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-chinese-full-variant-script-25oct24-en.xml
-      non-normative HTML presentation: https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-chinese-full-variant-script-25oct24-en.html</dd>
+     <dd>ICANN, Second Level Reference Label Generation Rules for the Chinese Script (und-Hani), 13 August 2026 (XML)
+      https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-chinese-full-variant-script-13aug26-en.xml
+      non-normative HTML presentation: https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-chinese-full-variant-script-13aug26-en.html</dd>
      
      <dt>[RFC 3743]</dt>
      <dd>Konishi, K., Huang, K., Qian, H., and Y. Ko, “Joint Engineering Team (JET) Guidelines for Internationalized Domain
@@ -328,14 +329,19 @@
     https://www.rfc-editor.org/info/rfc8228</dd>
 
      <dt>[RZ-LGR-Hani]</dt>
-     <dd>ICANN, Root Zone Label Generation Rules for the Chinese Script (und-Hani), 26 May 2022 (XML)
-      https://www.icann.org/sites/default/files/lgr/rz-lgr-5-chinese-script-26may22-en.xml</dd>
+     <dd>ICANN, Root Zone Label Generation Rules for the Chinese Script (und-Hani), 23 September 2025 (XML)
+      https://www.icann.org/sites/default/files/lgr/rz-lgr-6-chinese-script-23sep25-en.xml<br />
+      <i>
+        non-normative HTML presentation at:
+        https://www.icann.org/sites/default/files/lgr/rz-lgr-6-chinese-script-23sep25-en.html
+      </i>
+  </dd>
 
      <dt>[RZ-LGR-Overview]</dt>
-     <dd>Integration Panel, “Root Zone Label Generation Rules (RZ LGR-5): Overview and Summary”, 26 May 2022 (PDF), https://www.icann.org/sites/default/files/lgr/rz-lgr-5-overview-26may22-en.pdf</dd>
+     <dd>Integration Panel, “Root Zone Label Generation Rules (RZ LGR-6): Overview and Summary”, 23 September 2025 (PDF), https://www.icann.org/sites/default/files/packages/lgr/rz-lgr-6-overview-23sep25-en.pdf</dd>
 
      <dt>[Unicode 11.0.0]</dt>
-     <dd>The Unicode Consortium. The Unicode Standard, Version 11.0.0, (Mountain View, CA: The Unicode Consortium, 2018. ISBN 978-1-936213-19-1) 
+     <dd>The Unicode Consortium. The Unicode Standard, Version 11.0.0 (Mountain View, CA: The Unicode Consortium, 2018. ISBN 978-1-936213-19-1) 
      https://www.unicode.org/versions/Unicode11.0.0/</dd>
     </dl>
 
@@ -344,8 +350,8 @@
         Other references (starting from [100]) document usage of code points. Entries in the table may have
         multiple source reference values. 
         In the listing of <a href="#whole_label_evaluation_and_context_rules">whole label evaluation and context rules</a>,
-        reference [150] indicates the source for common rules.
-        For more details, see the      <a href="#table_of_references">Table of References</a> below.</p>
+        reference [5891] indicates the source for common rules.
+        For more details, see the <a href="#table_of_references">Table of References</a> below.</p>
           
       <p>Where stable links to certain references are not publicly available, the data may be archived in [Proposal-Chinese-Appendices].</p> 
   ]]></description>
@@ -354,7 +360,6 @@
       <reference id="3" comment="Any code point originally encoded in Unicode Version 3.0">The Unicode Standard, Version 3.0</reference>
       <reference id="4" comment="Any code point originally encoded in Unicode Version 3.1">The Unicode Standard, Version 3.1</reference>
       <reference id="100" comment="Also documented in Appendices G.1 and G.2">CDNC Chinese Characters and Variants Table https://www.cdnc.asia/file/unicode-1-2.txt</reference>
-      <reference id="150">RFC 5891, Internationalized Domain Names in Applications (IDNA): Protocol https://tools.ietf.org/html/rfc5891</reference>
       <reference id="200" comment="Also documented in Appendices M.1 and M.2">DotAsia, .ASIA ZH IDN Language Table https://www.iana.org/domains/idn-tables/tables/asia_zh_1.1.txt</reference>
       <reference id="300">Table of General Standard Chinese Characters by China’s State Council https://www.gov.cn/zwgk/2013-08/19/content_2469793.htm</reference>
       <reference id="400">JGP Repertoire 201703, as documented in Appendix B</reference>
@@ -369,10 +374,11 @@
       <reference id="301" comment="Variants that match in both CGP Internal Review code point and variant type">CGP Internal Review, as documented in Appendix N</reference>
       <reference id="501" comment="Variants that match only in KGP variant groups">KLGP Proposal</reference>
       <reference id="701" comment="Variants that match suggestions by the Integration Panel">IP Communication May 2019, as documented in Appendix F</reference>
+      <reference id="5891">RFC 5891, Internationalized Domain Names in Applications (IDNA): Protocol https://tools.ietf.org/html/rfc5891</reference>
     </references>
   </meta>
   <data>
-    <char cp="002D" not-when="hyphen-minus-disallowed" tag="sc:Zyyy" ref="0" comment="HYPHEN-MINUS; &#x235F;">
+    <char cp="002D" not-when="hyphen-minus-disallowed" tag="Hyphen sc:Zyyy" ref="0" comment="HYPHEN-MINUS; &#x235F;">
       <var cp="002D" type="r-both" comment="identity" />
     </char>
     <char cp="0030" tag="Common-digit sc:Zyyy" ref="0" comment="DIGIT ZERO; &#x235F;">
@@ -71271,14 +71277,14 @@
   <rules>
     <!--Character class definitions go here-->
     <!--Whole label evaluation and context rules go here-->
-    <rule name="leading-combining-mark" ref="150" comment="RFC 5891 restrictions on placement of combining marks &#x235F;">
+    <rule name="leading-combining-mark" ref="5891" comment="RFC 5891 restrictions on placement of combining marks &#x235F;">
       <start />
       <union>
         <class property="gc:Mn" />
         <class property="gc:Mc" />
       </union>
     </rule>
-    <rule name="hyphen-minus-disallowed" ref="150" comment="RFC 5891 restrictions on placement of U+002D HYPHEN-MINUS &#x235F;">
+    <rule name="hyphen-minus-disallowed" ref="5891" comment="RFC 5891 restrictions on placement of U+002D HYPHEN-MINUS &#x235F;">
       <choice>
         <rule comment="no leading hyphen">
           <look-behind>
@@ -71304,7 +71310,7 @@
       </choice>
     </rule>
     <!--Action elements go here - order defines precedence-->
-    <action disp="invalid" match="leading-combining-mark" ref="150" comment="labels with leading combining marks are invalid &#x235F;" />
+    <action disp="invalid" match="leading-combining-mark" ref="5891" comment="labels with leading combining marks are invalid &#x235F;" />
     <action disp="invalid" any-variant="out-of-repertoire-var" comment="any variant label with a code point out of repertoire is invalid &#x235F;" />
     <action disp="blocked" any-variant="blocked" comment="any variant label containing blocked variants is blocked &#x235F;" />
     <action disp="valid" all-variants="r-neither r-trad r-simp r-both" comment="any remaining label containing only original code points is valid" />

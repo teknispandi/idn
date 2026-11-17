@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <lgr xmlns="urn:ietf:params:xml:ns:lgr-1.0">
   <meta>
-    <version comment="Second Level Reference LGR">3</version>
-    <date>2024-10-25</date>
+    <version comment="Second Level Reference LGR">4</version>
+    <date>2026-08-13</date>
     <language>ar</language>
     <unicode-version>11.0.0</unicode-version>
     <description type="text/html"><![CDATA[
@@ -11,7 +11,7 @@
   <ul>
     <li>These instructions cover how to adopt an LGR based on this reference LGR for a given
     zone and how to prepare the file for deposit in the IANA Repository of IDN Practices.</li>
-    <li>As described  the IANA procedure (https://www.iana.org/help/idn-repository-procedure) an 
+    <li>As described in the IANA procedure (https://www.iana.org/help/idn-repository-procedure) an 
     LGR MUST contain the following elements in its header:
       <ul style="list-style-type:square;">
         <li>Script or Language Designator (see below for guidance) </li>
@@ -37,13 +37,13 @@
   <p><code>&lt;version comment=&quot;</code>[Please replace (or delete) the optional comment]<code>&quot;&gt;</code>[Please fill in version number, starting at 1]<code>&lt;/version&gt;</code></p>
   <p><code>&lt;date&gt;</code>[Please fill in with publication date, in YYYY-MM-DD format]<code>&lt;/date&gt;</code></p>
   <p><code>&lt;validity-start&gt;</code>[Please fill in effective date, in YYYY-MM-DD format]<code>&lt;/validity-start&gt;</code></p>
-  <p>Note: the scope element may be repeated, so that the same document can serve for multiple domains.</p>
+  <p>Note: the scope element may be repeated, so that the same document can serve multiple domains.</p>
   <p><code>&lt;scope type=&quot;domain&quot;&gt;</code>[Please provide, in &quot;.domain&quot; format]<code>&lt;/scope&gt;</code></p>
 <p><strong>Registry Contact Information:</strong></p>
   <p>Please fill in the <a href="#registry_contact_details">Registry Contact Details</a>.</p>
 <p><strong>Change History</strong></p>
   <p>If you made technical modifications to the LGR, please summarize them in the <a href="#change_history">Change History</a> (and also note the details in the appropriate section of the description).</p>
-<p>PLEASE DELETE THESE INSTRUCTIONS BEFORE DEPOSITING THE DOCUMENT</p></div>
+<p>PLEASE DELETE THESE INSTRUCTIONS BEFORE DEPOSITING THE DOCUMENT.</p></div>
        
        <section id="registry_contact_details">
 <h2>Registry Contact Details</h2>
@@ -62,7 +62,7 @@
      The ultimate starting point for the development of this LGR can be found in the related Root Zone LGR [RZ-LGR-Arab]. 
      Note that while it is the Arabic Script Root Zone LGR that forms the starting point, the LGR defined here covers the Arabic Language.
      The format of this file follows [RFC 7940].
-     This LGR is adapted from the “Reference LGR for the Second Level for the Arabic Language” [Ref-LGR-ar-Arab], for details, see <a href="#change_history">Change History</a> below.</p>
+     This LGR is adapted from the “Reference LGR for the Second Level for the Arabic Language” [Ref-LGR-ar-Arab]; for details, see <a href="#change_history">Change History</a> below.</p>
 
        <p>For details and additional background on the Arabic script, see “Proposal for Arabic Script Root Zone LGR”, Version 3.4, 18 November 2015 [Proposal-Arabic].
        Additional work was done by a TF-AIDN group to create extensions appropriate to the second level and these are incorporated in this LGR. (See “Methodology” below).</p> 
@@ -76,7 +76,7 @@
 
     <h2>Repertoire</h2> 
     <p>The repertoire is a subset of the one described  in Section 3.2 of [Proposal-Arabic] and 
-      only includes the 36 code points for letters in active everyday general use in the Arabic language.
+      only includes the 36 code points for letters in active everyday general use in the Arabic language as defined in RFC 5564 [5564].
 
      The repertoire is a subset of [Unicode 11.0.0]. For details, see Section 3.2 in [Proposal-Arabic].
         (The proposal cited has been adopted for the Arabic script portion of the Root Zone LGR.)</p>
@@ -97,18 +97,18 @@
         <li>Third, this also circumvents the issue regarding duplication between some precomposed code points and combining sequences raised by [IAB].</li>
    </ul>
 
-    <p>Any code points outside the Arabic Language repertoire that are targets for
+      <p>Any code points outside the Arabic Language repertoire that are targets for
      out-of-repertoire variants would be included here only if the variant is listed 
      in this file. In this case they are identified as a reflexive (identity) variant
      of type “out-of-repertoire-var”. Whether or not they are listed, they do not 
      form part of the repertoire.</p>
 
-    <p><b>Repertoire Listing:</b> Each code point or range is tagged with the script or scripts with which the code point is used and one or more other character categories. For each repertoire element,
+      <p><b>Repertoire Listing:</b> Each code point or range is tagged with the script or scripts with which the code point is used and one or more other character categories. For each repertoire element,
       one or more references document sufficient justification for inclusion in the repertoire; see the <a href="#ref_desc_sec_References">“References”</a> below.
      For code points in the repertoire, comments identify the language using the code point.</p>
 
     <h3>Correlation Between Repertoire and Bidi Rules</h3>
-    <p>Because this LGR contains only a subset of PVALID code points, the Bidi rules expressed in Section 2 of RFC 5893 [160] (Bidi Rule) can be simplified to two constraints:</p>
+    <p>Because this LGR contains only a subset of PVALID code points, the Bidi rules expressed in Section 2 of RFC 5893 [5893] (Bidi Rule) can be simplified to two constraints:</p>
     <ul>
         <li>Prevent digits (whether European, Arabic-Indic, or Extended-Arabic-Indic) from starting a label.</li>
         <li>In any label, allow only digits from one the sets (whether European, Arabic-Indic, or Extended-Arabic-Indic).</li>
@@ -241,24 +241,24 @@
     <p>By default, the LGR includes the rules and actions to implement the following restrictions mandated by the IDNA protocol. They are marked with &#x235F;.</p>
        <ul>
        <li><b>Hyphen Restrictions</b> &mdash; restrictions on the allowable placement of hyphens (no leading/ending hyphen
-             and no hyphen in positions 3 and 4). These restrictions are described in Section 4.2.3.1 of RFC 5891 [150]. 
-             They are implemented here as context rule on U+002D (-) HYPHEN-MINUS.</li>
+             and no hyphen in positions 3 and 4). These restrictions are described in Section 4.2.3.1 of RFC 5891 [5891]. 
+             They are implemented here as a context rule on U+002D (-) HYPHEN-MINUS.</li>
           <li><b>Leading Combining Marks</b>   &mdash;  restrictions on the allowable placement of combining marks
-             (no leading combining mark). This rule is described in Section 4.2.3.2 of RFC 5891 [150].</li>
+             (no leading combining mark). This rule is described in Section 4.2.3.2 of RFC 5891 [5891].</li>
        </ul>
 
     <h3>Right-to-Left Rules</h3>
 
     <ul>
-        <li><b>leading-digit</b> &mdash;  restrictions on the allowable placement of digits in a right-to-left context (no leading digit), (see section 2.1 of RFC 5893 [160]); 
+        <li><b>leading-digit</b> &mdash;  restrictions on the allowable placement of digits in a right-to-left context (no leading digit), (see section 2.1 of RFC 5893 [5893]); 
             implemented here as a context rule on each digit.</li>
         </body>
     <li><b>digit-mixing</b> &mdash; no mixing between different digit sets (European, Arabic-Indic, and Extended-Arabic-Indic digits)
-        is allowed (see section 2.4 of RFC 5893 [160]); implemented here as a WLE rule with associated action.</li>
+        is allowed (see section 2.4 of RFC 5893 [5893]); implemented here as a WLE rule with associated action.</li>
     </ul>
       
     <h3>Default Actions</h3> 
-    <p>This LGR includes the default actions for LGRs as well as the action needed to
+    <p>This LGR includes the default actions for LGRs, as well as the action needed to
         invalidate labels with misplaced combining marks. They are marked with &#x235F;.
         For a description see [RFC 7940].</p>
 
@@ -276,22 +276,26 @@
     <p>The LGR includes several actions that invalidate a label violating the constraints expressed by the Arabic-specific rules.
     In addition, the three non-default variant mapping types used in this LGR trigger actions that result in variant label dispositions as follows:</p>
     <ul>
-    <li>if at least one variant is in {activated}, force delegation,</li>
-    <li>if at least one variant is in {optionally-activated}, by default the label is allocatable, but the LGR 
-        can be  customized to force delegation for these variant labels by selecting a different disposition in the corresponding action,</li>
-    <li>if at least one variant is in {optionally-allocatable}, by default the label is blocked, but the LGR 
+     <li>if at least one variant is in {optionally-allocatable}, by default the label is blocked, but the LGR 
         can be  customized to make the variant label allocatable instead, by selecting a different disposition in the corresponding action.</li>
+     <li>if ay least one variant is in {allocatable}, the label is allocatable.</li>
+     <li>if at least one variant is in {optionally-activated}, by default the label is allocatable, but the LGR 
+        can be  customized to make delegation for these variant labels subject to registry operator's policy by selecting a different disposition in the corresponding action,</li>
+     <li>if at least one variant is in {activated}, delegate per registry operator's policy,</li>
     </ul>
-    <p>Variant mappings of type “activated” lead to a disposition of “activated”, which means the variant label should be delegated. 
+    <p>Each condition bypasses all following conditions, in other words, there's an implied “else” preceding it. A label triggering the “allocatable” disposition thus may have variants of type“allocatable”, “optionally-activated” or “activated”, but not “blocked” because those would have triggered an earlier action. The type “allocatable” thus becomes the one determining the outcome, and only labels without it, will be scanned for the following conditions.</p>
+
+    <p>Variant mappings of type “activated” lead to a disposition of “activated”, which means the variant label should be delegated subject to registry operator's policy. 
      This variant type is used here for the variant mappings between European and Arabic-Indic digits, to guarantee that labels differing
      only by the digit set used will all be delegated.
-     Activated variants are handled by the first action above, and are not affected by the optional customizations described below.</p>
+     Activated variants are handled by the last action above, and are not affected by the optional customizations described below. 
+     Note that all actions are applied in a first-come, first-served order so that none of these actions are evaluated for invalid or blocked labels. Change of disposition may necessitate reordering.</p>
     
     <h3>Customizing Actions for International Reachability</h3>
     <p>As described above, this LGR is designed so that full “international reachability” is optionally available. It can easily be enabled
       with a small customization.</p>
 
-    <p>The disposition for the second of the actions listed above is by default set to “allocatable” which makes the variant available to registrants 
+    <p>The disposition for the third of the actions listed above is by default set to “allocatable” which makes the variant available to registrants 
     that would like to support international reachability. Some registry operators may desire to make support for such variants
     mandatory, in which case the disposition (disp="allocatable" in the XML) for the relevant action could be changed from “allocatable” to “activated” 
     without further changes to the LGR.</p>
@@ -306,7 +310,7 @@
 
     <p>Most of the code points involved in labels resulting in “activated” or “allocatable” actions are subject to a “single-language-label” rule
      to decrease the number of activated or allocatable variants. This is especially a concern for the “activated” action which results
-     in forced delegation.</p>
+     in activation per the registry operator's policy.</p>
 
     <p>If optional variant labels are all made allocatable, a significantly large number of allocatable variant labels
      can potentially be created. Keeping the allocatable variant labels manageable is advised by SSAC in their [SAC060] report.
@@ -331,13 +335,17 @@
     <p>For more information on methodology and contributors to the underlying Root Zone LGR, see Section 2 and Appendix H in [Proposal-Arabic], as well as [RZ-LGR-Overview].</p>
 
     <section id="change_history">
-    <h3>Changes from Version Dated 13 January 2021</h3><p>Language tag has been updated.</p>
+      <h3>Changes from Version Dated 13 January 2021</h3><p>Language tag has been updated.</p>
     
-    <h3>Changes from Version Dated 18 May 2021</h3><p>Unicode Version has been updated.</p>
+      <h3>Changes from Version Dated 18 May 2021</h3><p>Unicode Version has been updated.</p>
 
     <h3>Changes from Version Dated 25 October 2024</h3>
-        <p>Adopted from the Second Level Reference LGR for the Arabic Language [Ref-LGR-ar-Arab] without normative changes.</p>
-    </section>
+    <p>The actions that process variant dispositions incorrectly implemented the intent of the proposal document. As a result, labels with a mix of both “allocatable” and “activated” variants were given the disposition “activated”, where the intent had been to apply this to only labels with only variants of type “activated”. This has been corrected in this version. This correction only affects the disposition of some subset of allocatable labels, not whether a label is valid or blocked.</p>
+
+      <h3>Changes from Version Dated 13 August 2026</h3>
+        <p>This is a placeholder to document any changes applied by the registry operator when adopting the reference LGR. If no change has been noted, the LGR is the same as the Second Level Reference LGR for the Arabic Language [Ref-LGR-ar-Arab] without normative changes.
+    </p>
+      </section>
         
     <h2>References</h2>
     <h3>General references for the language</h3>
@@ -353,18 +361,18 @@
       <dt>[Guidelines]</dt>
         <dd>ICANN, “Guidelines for Developing Reference LGRs for the Second Level”, (Los Angeles, California: ICANN, 27 May 2020), https://www.icann.org/en/system/files/files/lgr-guidelines-second-level-27may20-en.pdf</dd>
       <dt>[IAB]</dt>
-        <dd>Internet Architecture Board (IAB), “IAB Statement on Identifiers and Unicode 7.0.0"
+        <dd>Internet Architecture Board (IAB), “IAB Statement on Identifiers and Unicode 7.0.0”
            https://www.iab.org/documents/correspondence-reports-documents/2015-2/iab-statement-on-identifiers-and-unicode-7-0-0/</dd>
       <dt>[IDN-GUIDE]</dt>
         <dd>Saudi Network Information Center, “Guidelines Rules for writing Arabic IDNs under the IDN ccTLD (السعودية.)” 
            https://nic.net.sa/docs/Guidelines_for_writing_Arabic_IDNs_under_the_IDN_ccTLD_V1.2-en.pdf</dd>
       <dt>[Level-2-Overview]</dt>
          <dd>Internet Corporation for Assigned Names and Numbers, (ICANN),“Reference Label Generation Rules (LGR) for the Second Level: Overview and Summary” (PDF), 
-     (Los Angeles, California: ICANN, 25 October 2024), https://www.icann.org/en/system/files/files/level2-lgr-overview-summary-25oct24-en.pdf
+     (Los Angeles, California: ICANN, 13 August 2026), https://www.icann.org/en/system/files/files/level2-lgr-overview-summary-13aug26-en.pdf
       </dd>
-      <dt>[MSR-5]</dt>
-        <dd>Integration Panel, “Maximal Starting Repertoire — MSR-5 Overview and Rationale”, 24 June 2021,
-     https://www.icann.org/en/system/files/files/msr-5-overview-24jun21-en.pdf</dd>
+      <dt>[MSR-6]</dt>
+        <dd>Integration Panel, “Maximal Starting Repertoire — MSR-6 Overview and Rationale”, 23 September 2025,
+     https://www.icann.org/en/system/files/files/msr-6-overview-23sep25-en.pdf</dd>
       <dt>[Proposal-Arabic]</dt>
         <dd>TF-AIDN, “Proposal for Arabic Script Root Zone LGR”, Version 3.4, 18 November 2015 
         https://www.icann.org/en/system/files/files/arabic-lgr-proposal-18nov15-en.pdf</dd>
@@ -379,21 +387,21 @@
         <dd>A. Freytag, “Guidance on Designing Label Generation Rulesets (LGRs) Supporting Variant Labels”, RFC 8228, August 2017,
     https://www.rfc-editor.org/info/rfc8228</dd>
       <dt>[RZ-LGR-Overview]</dt>
-       <dd>Integration Panel, “Root Zone Label Generation Rules (RZ LGR-5): Overview and Summary”, 26 May 2022 (PDF), https://www.icann.org/sites/default/files/lgr/rz-lgr-5-overview-26may22-en.pdf</dd>
+       <dd>Integration Panel, “Root Zone Label Generation Rules (RZ LGR-6): Overview and Summary”, 23 September 2025 (PDF), https://www.icann.org/sites/default/files/packages/lgr/rz-lgr-6-overview-23sep25-en.pdf</dd>
       <dt>[RZ-LGR-Arab]</dt>
-        <dd>ICANN,, “Root Zone Label Generation Rules for the Arabic Script”, (Last published as part of RZ-LGR-5, see
-            https://www.icann.org/sites/default/files/lgr/rz-lgr-5-overview-26may22-en.pdf)</dd>
+        <dd>ICANN,, “Root Zone Label Generation Rules for the Arabic Script”, (Last published as part of RZ-LGR-6, see
+            https://www.icann.org/sites/default/files/lgr/rz-lgr-6-overview-23sep25-en.pdf)</dd>
       <dt>[SAC060]</dt>
         <dd>ICANN Security and Stability Advisory Committee (SSAC), “SSAC Comment on Examining the User Experience Implications of Active Variant TLDs Report”,
             23 July 2013, https://www.icann.org/en/system/files/files/sac-060-en.pdf</dd>
       <dt>[TF-AIDN]</dt>
         <dd>Fahd Batayneh, Blog, “Task Force for Arabic Script IDNs”, 23 May 2014, https://community.icann.org/display/MES/Task+Force+on+Arabic+Script+IDNs workspace: https://community.icann.org/display/MES/TF-AIDN+Work+Space</dd>
           <dt>[Ref-LGR-ar-Arab]</dt>
-              <dd>ICANN, Second Level Reference Label Generation Rules for the Arabic Language (ar-Arab), 25 October 2024 (XML)
-      https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-arabic-language-25oct24-en.xml
-      non-normative HTML presentation: https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-arabic-language-25oct24-en.html</dd>
+              <dd>ICANN, Second Level Reference Label Generation Rules for the Arabic Language (ar-Arab), 13 August 2026 (XML)
+      https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-arabic-language-13aug26-en.xml
+      non-normative HTML presentation: https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-arabic-language-13aug26-en.html</dd>
                 <dt>[Unicode 11.0.0]</dt>
-         <dd>The Unicode Consortium. The Unicode Standard, Version 11.0.0, (Mountain View, CA: The Unicode Consortium, 2018. ISBN 978-1-936213-19-1) 
+         <dd>The Unicode Consortium. The Unicode Standard, Version 11.0.0 (Mountain View, CA: The Unicode Consortium, 2018. ISBN 978-1-936213-19-1) 
      https://www.unicode.org/versions/Unicode11.0.0/</dd>
       <dt>[VIP]</dt>
         <dd>Internationalized Domain Names Variant Issues Project, “Arabic Case Study Team Issues Report”, 7 October 2011,
@@ -403,11 +411,11 @@
     <p>For references consulted particularly in designing the repertoire for the Arabic language LGR for the second level,
       please see details in the <a href="#table_of_references">Table of References</a> below. 
       Reference [0]  refers to Unicode Standard version in which the
-      corresponding code points were initially encoded. References [100] and above correspond to sources
+      corresponding code points were initially encoded. References [108] and above correspond to sources
       justifying the inclusion of the corresponding code points. Entries in the table may have
         multiple source reference values. 
         In the listing of <a href="#whole_label_evaluation_and_context_rules">whole label evaluation and context rules</a>,
-        references [150] and [160] indicate the source for common rules.
+        references [5891] and [5893] indicate the source for common rules.
     </p> 
 
         ]]></description>
@@ -416,21 +424,21 @@
        Reading, MA, Addison-Wesley Developers Press, 1991. ISBN 0-201-56788-1 and  The Unicode Standard, Version 1.0, Volume 2
        Reading, MA, Addison-Wesley Developers Press, 1992. ISBN 0-201-60845-6, as amended by Davis, Mark, Unicode Technical Report #4: The Unicode Standard, Version 1.1
        Cupertino, CA, The Unicode Consortium, 1993</reference>
-      <reference id="100">RFC 5564 Linguistic Guidelines for the Use of the Arabic Language in Internet Domains https://tools.ietf.org/html/rfc5564</reference>
       <reference id="108">Omniglot Pashto https://omniglot.com/writing/pashto.htm</reference>
       <reference id="109">Omniglot Persian(Farsi) https://omniglot.com/writing/persian.htm</reference>
       <reference id="112">Omniglot Urdu https://omniglot.com/writing/urdu.htm</reference>
       <reference id="126">Urdu, Teh marbuta goal, Code point UZT 76 of Urdu Zabta Takhti 1.01, the official code page standard for Govt. of Pakistan, approved in 2001; see https://cle.org.pk/Publication/papers/2001/uzt1.01.pdf</reference>
-      <reference id="150">RFC 5891, Internationalized Domain Names in Applications (IDNA): Protocol https://tools.ietf.org/html/rfc5891</reference>
-      <reference id="160">RFC 5893, Right-to-Left Scripts for Internationalized Domain Names for Applications (IDNA) https://tools.ietf.org/html/rfc5893</reference>
       <reference id="201">Omniglot Arabic https://www.omniglot.com/writing/arabic.htm</reference>
-      <reference id="401" comment="Code points cited are from the set of Main Letters">The Unicode Consortium, Common Locale Data Repository.- CLDR Version 28 (2015-09-16)- Locale Data Summary for Arabic (ar)- https://www.unicode.org/cldr/charts/28/summary/ar.html</reference>
+      <reference id="401" comment="Code points cited are from the set of Main Letters">The Unicode Consortium, Common Locale Data Repository.- CLDR Version 28 (2015-09-5891)- Locale Data Summary for Arabic (ar)- https://www.unicode.org/cldr/charts/28/summary/ar.html</reference>
       <reference id="600" comment="Code points cited are from the set of Basic letters">Wikipedia Arabic alphabet https://en.wikipedia.org/wiki/Arabic_alphabet accessed 2015-10-31</reference>
       <reference id="700">Saudi Network Information Center (.sa, Saudi Arabia ccTLD) https://www.iana.org/domains/idn-tables/tables/sa_ar_2.0.pdf</reference>
+      <reference id="5564">RFC 5564 Linguistic Guidelines for the Use of the Arabic Language in Internet Domains https://tools.ietf.org/html/rfc5564</reference>
+      <reference id="5891">RFC 5891, Internationalized Domain Names in Applications (IDNA): Protocol https://tools.ietf.org/html/rfc5891</reference>
+      <reference id="5893">RFC 5893, Right-to-Left Scripts for Internationalized Domain Names for Applications (IDNA) https://tools.ietf.org/html/rfc5893</reference>
     </references>
   </meta>
   <data>
-    <char cp="002D" not-when="hyphen-minus-disallowed" tag="sc:Zyyy" ref="0" comment="HYPHEN-MINUS; &#x235F;" />
+    <char cp="002D" not-when="hyphen-minus-disallowed" tag="Hyphen sc:Zyyy" ref="0" comment="HYPHEN-MINUS; &#x235F;" />
     <char cp="0030" not-when="leading-digit" tag="Common-digit sc:Zyyy" ref="0" comment="DIGIT ZERO; &#x235F;">
       <var cp="0660" type="activated" comment="Arabic digit variant" />
       <var cp="06F0" type="optionally-activated" comment="Extended digit variant" />
@@ -471,26 +479,26 @@
       <var cp="0669" type="activated" comment="Arabic digit variant" />
       <var cp="06F9" type="optionally-activated" comment="Extended digit variant" />
     </char>
-    <char cp="0621" tag="sc:Arab" ref="0 100" comment="Arabic" />
-    <char cp="0622" tag="sc:Arab" ref="0 100" comment="Arabic">
+    <char cp="0621" tag="sc:Arab" ref="0 5564" comment="Arabic" />
+    <char cp="0622" tag="sc:Arab" ref="0 5564" comment="Arabic">
       <var cp="0623" type="optionally-allocatable" comment="Arabic language variant" />
       <var cp="0625" type="optionally-allocatable" comment="Arabic language variant" />
       <var cp="0627" type="allocatable" comment="U+0622 ALEF WITH MADDA ABOVE is simplified to U+0627 ALEF in the Arabic language" />
     </char>
-    <char cp="0623" tag="sc:Arab" ref="0 100" comment="Arabic">
+    <char cp="0623" tag="sc:Arab" ref="0 5564" comment="Arabic">
       <var cp="0622" type="optionally-allocatable" comment="Arabic language variant" />
       <var cp="0625" type="optionally-allocatable" comment="Arabic language variant" />
       <var cp="0627" type="allocatable" comment="U+0623 ALEF WITH HAMZA ABOVE is simplified to U+0627 ALEF in the Arabic language" />
     </char>
-    <char cp="0624" tag="sc:Arab" ref="0 100" comment="Arabic">
+    <char cp="0624" tag="sc:Arab" ref="0 5564" comment="Arabic">
       <var cp="0648" type="allocatable" comment="U+0624 WAV WITH HAMZA ABOVE is simplified to U+0648 WAV in the Arabic language" />
     </char>
-    <char cp="0625" tag="sc:Arab" ref="0 100" comment="Arabic">
+    <char cp="0625" tag="sc:Arab" ref="0 5564" comment="Arabic">
       <var cp="0622" type="optionally-allocatable" comment="Arabic language variant" />
       <var cp="0623" type="optionally-allocatable" comment="Arabic language variant" />
       <var cp="0627" type="allocatable" comment="U+0625 ALEF WITH HAMZA BELOW is simplified to U+0627 ALEF in the Arabic language" />
     </char>
-    <char cp="0626" tag="sc:Arab" ref="0 100" comment="Arabic">
+    <char cp="0626" tag="sc:Arab" ref="0 5564" comment="Arabic">
       <var cp="0649" type="blocked" comment="Arabic language variant" />
       <var cp="064A" type="blocked" comment="Arabic language variant" />
       <var cp="06CC" type="blocked" comment="Cross-repertoire variant" />
@@ -498,55 +506,55 @@
       <var cp="06D0" type="blocked" comment="Cross-repertoire variant" />
       <var cp="06D2" type="blocked" comment="Cross-repertoire variant" />
     </char>
-    <char cp="0627" tag="sc:Arab" ref="0 100" comment="Arabic">
+    <char cp="0627" tag="sc:Arab" ref="0 5564" comment="Arabic">
       <var cp="0622" type="optionally-allocatable" comment="Arabic language variant" />
       <var cp="0623" type="optionally-allocatable" comment="Arabic language variant" />
       <var cp="0625" type="optionally-allocatable" comment="Arabic language variant" />
     </char>
-    <char cp="0628" tag="sc:Arab" ref="0 100" comment="Arabic" />
-    <char cp="0629" tag="sc:Arab" ref="0 100" comment="Arabic">
+    <char cp="0628" tag="sc:Arab" ref="0 5564" comment="Arabic" />
+    <char cp="0629" tag="sc:Arab" ref="0 5564" comment="Arabic">
       <var cp="0647" type="allocatable" comment="In the Arabic language, U+0647 HEH may be substituted for U+0629 TEH MARBUTA. [RFC 6365]" />
       <var cp="06BE" type="blocked" comment="Cross-repertoire variant" />
       <var cp="06C1" type="blocked" comment="Cross-repertoire variant" />
       <var cp="06C3" type="optionally-activated" comment="The two are visually identical and the same label could be typed using one or the other based on the set language settings and keyboard layout of a user. Labels in the Arabic language using U+0629 TEH MARBUTA in the final and isolated positions will be typed in other languages using U+06C3 TEH MARBUTA GOAL (Urdu, etc.) which is identical in isolated and has a variant glyph or identical glyph form in final position" />
     </char>
-    <char cp="062A" tag="sc:Arab" ref="0 100" comment="Arabic" />
-    <char cp="062B" tag="sc:Arab" ref="0 100" comment="Arabic" />
-    <char cp="062C" tag="sc:Arab" ref="0 100" comment="Arabic" />
-    <char cp="062D" tag="sc:Arab" ref="0 100" comment="Arabic" />
-    <char cp="062E" tag="sc:Arab" ref="0 100" comment="Arabic" />
-    <char cp="062F" tag="sc:Arab" ref="0 100" comment="Arabic" />
-    <char cp="0630" tag="sc:Arab" ref="0 100" comment="Arabic" />
-    <char cp="0631" tag="sc:Arab" ref="0 100" comment="Arabic" />
-    <char cp="0632" tag="sc:Arab" ref="0 100" comment="Arabic" />
-    <char cp="0633" tag="sc:Arab" ref="0 100" comment="Arabic" />
-    <char cp="0634" tag="sc:Arab" ref="0 100" comment="Arabic" />
-    <char cp="0635" tag="sc:Arab" ref="0 100" comment="Arabic" />
-    <char cp="0636" tag="sc:Arab" ref="0 100" comment="Arabic" />
-    <char cp="0637" tag="sc:Arab" ref="0 100" comment="Arabic" />
-    <char cp="0638" tag="sc:Arab" ref="0 100" comment="Arabic" />
-    <char cp="0639" tag="sc:Arab" ref="0 100" comment="Arabic" />
-    <char cp="063A" tag="sc:Arab" ref="0 100" comment="Arabic" />
-    <char cp="0641" tag="sc:Arab" ref="0 100" comment="Arabic" />
-    <char cp="0642" tag="sc:Arab" ref="0 100" comment="Arabic" />
-    <char cp="0643" tag="sc:Arab" ref="0 100" comment="Arabic">
+    <char cp="062A" tag="sc:Arab" ref="0 5564" comment="Arabic" />
+    <char cp="062B" tag="sc:Arab" ref="0 5564" comment="Arabic" />
+    <char cp="062C" tag="sc:Arab" ref="0 5564" comment="Arabic" />
+    <char cp="062D" tag="sc:Arab" ref="0 5564" comment="Arabic" />
+    <char cp="062E" tag="sc:Arab" ref="0 5564" comment="Arabic" />
+    <char cp="062F" tag="sc:Arab" ref="0 5564" comment="Arabic" />
+    <char cp="0630" tag="sc:Arab" ref="0 5564" comment="Arabic" />
+    <char cp="0631" tag="sc:Arab" ref="0 5564" comment="Arabic" />
+    <char cp="0632" tag="sc:Arab" ref="0 5564" comment="Arabic" />
+    <char cp="0633" tag="sc:Arab" ref="0 5564" comment="Arabic" />
+    <char cp="0634" tag="sc:Arab" ref="0 5564" comment="Arabic" />
+    <char cp="0635" tag="sc:Arab" ref="0 5564" comment="Arabic" />
+    <char cp="0636" tag="sc:Arab" ref="0 5564" comment="Arabic" />
+    <char cp="0637" tag="sc:Arab" ref="0 5564" comment="Arabic" />
+    <char cp="0638" tag="sc:Arab" ref="0 5564" comment="Arabic" />
+    <char cp="0639" tag="sc:Arab" ref="0 5564" comment="Arabic" />
+    <char cp="063A" tag="sc:Arab" ref="0 5564" comment="Arabic" />
+    <char cp="0641" tag="sc:Arab" ref="0 5564" comment="Arabic" />
+    <char cp="0642" tag="sc:Arab" ref="0 5564" comment="Arabic" />
+    <char cp="0643" tag="sc:Arab" ref="0 5564" comment="Arabic">
       <var cp="06A9" type="optionally-activated" comment="The two have identical shapes in initial and medial positions and are used by different language communities to refer to the same letter" />
     </char>
-    <char cp="0644" tag="sc:Arab" ref="0 100" comment="Arabic" />
-    <char cp="0645" tag="sc:Arab" ref="0 100" comment="Arabic" />
-    <char cp="0646" tag="sc:Arab" ref="0 100" comment="Arabic">
+    <char cp="0644" tag="sc:Arab" ref="0 5564" comment="Arabic" />
+    <char cp="0645" tag="sc:Arab" ref="0 5564" comment="Arabic" />
+    <char cp="0646" tag="sc:Arab" ref="0 5564" comment="Arabic">
       <var cp="06BA" type="blocked" comment="Cross-repertoire variant" />
     </char>
-    <char cp="0647" tag="sc:Arab" ref="0 100" comment="Arabic">
+    <char cp="0647" tag="sc:Arab" ref="0 5564" comment="Arabic">
       <var cp="0629" type="blocked" comment="Arabic language variant" />
       <var cp="06BE" type="optionally-activated" comment="Labels in the Arabic language using U+0647 HEH in the initial and medial positions will be visually similar in Urdu language to U+06BE LETTER HEH DOACHASHMEE" />
       <var cp="06C1" type="optionally-activated" comment="Labels in the Arabic language using U+0647 HEH in the final and isolated positions will be typed in other languages using U+06C1 HEH GOAL (Urdu, Pashto, Saraiki, etc.) which is identical in isolated and has a variant glyph or identical glyph form in final position" />
       <var cp="06C3" type="blocked" comment="Cross-repertoire variant" />
     </char>
-    <char cp="0648" tag="sc:Arab" ref="0 100" comment="Arabic">
+    <char cp="0648" tag="sc:Arab" ref="0 5564" comment="Arabic">
       <var cp="0624" type="blocked" comment="Arabic language variant" />
     </char>
-    <char cp="0649" not-when="initial-or-medial-position" tag="sc:Arab" ref="0 100" comment="Arabic">
+    <char cp="0649" not-when="initial-or-medial-position" tag="sc:Arab" ref="0 5564" comment="Arabic">
       <var cp="0626" type="blocked" comment="Arabic language variant" />
       <var cp="064A" type="blocked" comment="Arabic language variant" />
       <var cp="06CC" type="optionally-activated" comment="The two are visually identical and the same label could be typed using one or the other based on the set language settings and keyboard layout of a user" />
@@ -554,7 +562,7 @@
       <var cp="06D0" type="blocked" comment="Cross-repertoire variant" />
       <var cp="06D2" type="blocked" comment="Cross-repertoire variant" />
     </char>
-    <char cp="064A" tag="sc:Arab" ref="0 100" comment="Arabic">
+    <char cp="064A" tag="sc:Arab" ref="0 5564" comment="Arabic">
       <var cp="0626" type="blocked" comment="Arabic language variant" />
       <var cp="0649" type="blocked" comment="Arabic language variant" />
       <var cp="06CC" type="optionally-activated" comment="The two are visually identical and the same label could be typed using one or the other based on the set language settings and keyboard layout of a user" />
@@ -562,43 +570,43 @@
       <var cp="06D0" type="blocked" comment="Cross-repertoire variant" />
       <var cp="06D2" type="blocked" comment="Cross-repertoire variant" />
     </char>
-    <char cp="0660" not-when="leading-digit" tag="Arabic-indic-digit sc:Arab" ref="0 100 201 401 600 700" comment="ARABIC-INDIC DIGIT ZERO; &#x235F;">
+    <char cp="0660" not-when="leading-digit" tag="Arabic-indic-digit sc:Arab" ref="0 201 401 600 700 5564" comment="ARABIC-INDIC DIGIT ZERO; &#x235F;">
       <var cp="0030" type="activated" comment="ASCII digit variant" />
       <var cp="06F0" type="optionally-activated" comment="Extended digit variant" />
     </char>
-    <char cp="0661" not-when="leading-digit" tag="Arabic-indic-digit sc:Arab" ref="0 100 201 401 600 700" comment="ARABIC-INDIC DIGIT ONE; &#x235F;">
+    <char cp="0661" not-when="leading-digit" tag="Arabic-indic-digit sc:Arab" ref="0 201 401 600 700 5564" comment="ARABIC-INDIC DIGIT ONE; &#x235F;">
       <var cp="0031" type="activated" comment="ASCII digit variant" />
       <var cp="06F1" type="optionally-activated" comment="Extended digit variant" />
     </char>
-    <char cp="0662" not-when="leading-digit" tag="Arabic-indic-digit sc:Arab" ref="0 100 201 401 600 700" comment="ARABIC-INDIC DIGIT TWO; &#x235F;">
+    <char cp="0662" not-when="leading-digit" tag="Arabic-indic-digit sc:Arab" ref="0 201 401 600 700 5564" comment="ARABIC-INDIC DIGIT TWO; &#x235F;">
       <var cp="0032" type="activated" comment="ASCII digit variant" />
       <var cp="06F2" type="optionally-activated" comment="Extended digit variant" />
     </char>
-    <char cp="0663" not-when="leading-digit" tag="Arabic-indic-digit sc:Arab" ref="0 100 201 401 600 700" comment="ARABIC-INDIC DIGIT THREE; &#x235F;">
+    <char cp="0663" not-when="leading-digit" tag="Arabic-indic-digit sc:Arab" ref="0 201 401 600 700 5564" comment="ARABIC-INDIC DIGIT THREE; &#x235F;">
       <var cp="0033" type="activated" comment="ASCII digit variant" />
       <var cp="06F3" type="optionally-activated" comment="Extended digit variant" />
     </char>
-    <char cp="0664" not-when="leading-digit" tag="Arabic-indic-digit sc:Arab" ref="0 100 201 401 600 700" comment="ARABIC-INDIC DIGIT FOUR; &#x235F;">
+    <char cp="0664" not-when="leading-digit" tag="Arabic-indic-digit sc:Arab" ref="0 201 401 600 700 5564" comment="ARABIC-INDIC DIGIT FOUR; &#x235F;">
       <var cp="0034" type="activated" comment="ASCII digit variant" />
       <var cp="06F4" type="optionally-activated" comment="Extended digit variant" />
     </char>
-    <char cp="0665" not-when="leading-digit" tag="Arabic-indic-digit sc:Arab" ref="0 100 201 401 600 700" comment="ARABIC-INDIC DIGIT FIVE; &#x235F;">
+    <char cp="0665" not-when="leading-digit" tag="Arabic-indic-digit sc:Arab" ref="0 201 401 600 700 5564" comment="ARABIC-INDIC DIGIT FIVE; &#x235F;">
       <var cp="0035" type="activated" comment="ASCII digit variant" />
       <var cp="06F5" type="optionally-activated" comment="Extended digit variant" />
     </char>
-    <char cp="0666" not-when="leading-digit" tag="Arabic-indic-digit sc:Arab" ref="0 100 201 401 600 700" comment="ARABIC-INDIC DIGIT SIX; &#x235F;">
+    <char cp="0666" not-when="leading-digit" tag="Arabic-indic-digit sc:Arab" ref="0 201 401 600 700 5564" comment="ARABIC-INDIC DIGIT SIX; &#x235F;">
       <var cp="0036" type="activated" comment="ASCII digit variant" />
       <var cp="06F6" type="optionally-activated" comment="Extended digit variant" />
     </char>
-    <char cp="0667" not-when="leading-digit" tag="Arabic-indic-digit sc:Arab" ref="0 100 201 401 600 700" comment="ARABIC-INDIC DIGIT SEVEN; &#x235F;">
+    <char cp="0667" not-when="leading-digit" tag="Arabic-indic-digit sc:Arab" ref="0 201 401 600 700 5564" comment="ARABIC-INDIC DIGIT SEVEN; &#x235F;">
       <var cp="0037" type="activated" comment="ASCII digit variant" />
       <var cp="06F7" type="optionally-activated" comment="Extended digit variant" />
     </char>
-    <char cp="0668" not-when="leading-digit" tag="Arabic-indic-digit sc:Arab" ref="0 100 201 401 600 700" comment="ARABIC-INDIC DIGIT EIGHT; &#x235F;">
+    <char cp="0668" not-when="leading-digit" tag="Arabic-indic-digit sc:Arab" ref="0 201 401 600 700 5564" comment="ARABIC-INDIC DIGIT EIGHT; &#x235F;">
       <var cp="0038" type="activated" comment="ASCII digit variant" />
       <var cp="06F8" type="optionally-activated" comment="Extended digit variant" />
     </char>
-    <char cp="0669" not-when="leading-digit" tag="Arabic-indic-digit sc:Arab" ref="0 100 201 401 600 700" comment="ARABIC-INDIC DIGIT NINE; &#x235F;">
+    <char cp="0669" not-when="leading-digit" tag="Arabic-indic-digit sc:Arab" ref="0 201 401 600 700 5564" comment="ARABIC-INDIC DIGIT NINE; &#x235F;">
       <var cp="0039" type="activated" comment="ASCII digit variant" />
       <var cp="06F9" type="optionally-activated" comment="Extended digit variant" />
     </char>
@@ -735,14 +743,14 @@
     <class name="arabic-indic-digits" from-tag="Arabic-indic-digit" comment="Arabic-Indic digits; &#x235F;" />
     <class name="extended-arabic-indic-digits" from-tag="Extended-arabic-indic-digit" comment="Extended Arabic-Indic digits" />
     <!--Whole label evaluation and context rules go here-->
-    <rule name="leading-combining-mark" ref="150" comment="RFC 5891 restrictions on placement of combining marks &#x235F;">
+    <rule name="leading-combining-mark" ref="5891" comment="RFC 5891 restrictions on placement of combining marks &#x235F;">
       <start />
       <union>
         <class property="gc:Mn" />
         <class property="gc:Mc" />
       </union>
     </rule>
-    <rule name="hyphen-minus-disallowed" ref="150" comment="RFC 5891 restrictions on placement of U+002D HYPHEN-MINUS &#x235F;">
+    <rule name="hyphen-minus-disallowed" ref="5891" comment="RFC 5891 restrictions on placement of U+002D HYPHEN-MINUS &#x235F;">
       <choice>
         <rule comment="no leading hyphen">
           <look-behind>
@@ -785,13 +793,13 @@
       </choice>
       <end />
     </rule>
-    <rule name="leading-digit" ref="160" comment="RFC 5893 RTL labels cannot start with a digit &#x235F;">
+    <rule name="leading-digit" ref="5893" comment="RFC 5893 RTL labels cannot start with a digit &#x235F;">
       <look-behind>
         <start />
       </look-behind>
       <anchor />
     </rule>
-    <rule name="digit-mixing" ref="160" comment="RFC 5892 and RFC 5893 restrictions on mixing digits; extended to all three sets">
+    <rule name="digit-mixing" ref="5564" comment="RFC 5892 and RFC 5893 restrictions on mixing digits; extended to all three sets">
       <choice>
         <rule>
           <class by-ref="common-digits" />
@@ -828,13 +836,13 @@
     <!--Action elements go here - order defines precedence-->
     <action disp="invalid" not-match="single-language-label" comment="all labels (including variants) must be entirely within one of four languages" />
     <action disp="invalid" match="digit-mixing" comment="a label matching the RFC 5892 and RFC 5893 restriction on digit mixing is invalid" />
-    <action disp="invalid" match="leading-combining-mark" comment="RFC 5892: labels with leading combining marks are invalid  &#x235F;" />
+    <action disp="invalid" match="leading-combining-mark" ref="5891" comment="RFC 5892: labels with leading combining marks are invalid  &#x235F;" />
     <action disp="invalid" any-variant="out-of-repertoire-var" comment="disallow code points that are out of repertoire" />
     <action disp="blocked" any-variant="blocked" comment="any variant label containing blocked variants is blocked &#x235F;" />
     <action disp="blocked" any-variant="optionally-allocatable" comment="optional allocation for certain within-repertoire variants; to make allocation possible, change (blocked) to (allocatable)" />
+    <action disp="allocatable" any-variant="allocatable" comment="variant labels with any variants allocatable are allocatable" />
     <action disp="allocatable" any-variant="optionally-activated" comment="optional delegation for certain cross-repertoire variants; to make delegation mandatory, change (allocatable) to (activated)" />
-    <action disp="activated" any-variant="activated" comment="forced delegation for certain in-repertoire variants" />
-    <action disp="allocatable" all-variants="allocatable" comment="variant labels with all variants allocatable are allocatable" />
+    <action disp="activated" any-variant="activated" comment="certain in-repertoire variants delegated per registry operator's policy" />
     <action disp="valid" comment="catch all (default action)" />
   </rules>
 </lgr>

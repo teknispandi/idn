@@ -222,6 +222,7 @@ Semua penolakan berupa `*ValidationError`; bedakan dengan `errors.Is`:
 | `ErrInvalidALabel` | punycode rusak, tidak kanonik, atau dekode ke ASCII saja |
 | `ErrNotNFC`, `ErrLeadingCombiningMark`, `ErrDisallowedCodepoint`, `ErrContextRule`, `ErrBidiRule` | IDNA2008 |
 | `ErrCodepointNotInTable`, `ErrLanguageRule`, `ErrNoIdnTable` | kebijakan tabel IDN TLD |
+| `ErrMixedScript` | campuran aksara di zona `SingleScript` |
 | `ErrUnknownTld`, `ErrTldDisabled`, `ErrNotRegistrable` | zona tidak terdaftar / nonaktif / bukan nama yang bisa didaftarkan |
 
 Jika beberapa tabel menolak, yang dilaporkan adalah tabel yang menolak paling
@@ -236,6 +237,11 @@ belakang dalam label (alasan yang paling relevan bagi pengguna).
   mis. `ß` ↔ `ss`).
 - `RdeTableRefs` tidak pernah mengarang URL: tabel tanpa referensi membuatnya
   mengembalikan error.
+- Campuran aksara (ICANN Guideline 15) diatur oleh tabel: tabel Jepang,
+  Chinese dan Korea sengaja memuat a–z, jadi `東京abc` sah menurut tabelnya.
+  Zona yang ingin lebih ketat memasang `SingleScript: true`; yang lolos hanya
+  satu script (ditambah Common/Inherited) atau kombinasi CJK
+  Han+Hiragana+Katakana, Han+Hangul, Han+Bopomofo.
 
 ## File Structure
 
@@ -287,7 +293,7 @@ U+0627  # ARABIC LETTER ALEF
 U+0061..U+007A  # a..z
 ```
 
-Baris yang memuat beberapa entri `U+XXXX # …` (seperti beberapa baris di
+Baris yang memuat beberapa entri `U+XXXX # …` (seperti salinan lama
 `Greek-IDN.txt`) dibaca semua entrinya.
 
 ## Performance
@@ -499,6 +505,19 @@ Based on `/idn` folder content:
 - Latin, Malayalam, Myanmar, Oriya, Sinhala
 - Tamil, Telugu, Thai, Tibetan, Traditional-Chinese
 - und-Bali (Balinese, dari LGR second-level ICANN)
+
+Tabel tersemat untuk `IdnLabelValidator` (port Nomulus): `extended_latin`,
+`unconfusable_latin`, `augmented_latin` (google_latn_3.0) dan `ja`.
+
+Semua tabel di `idn/` dan `v3/*.txt` identik dengan Nomulus `master`
+(`core/src/main/java/google/registry/idn` dan `tldconfig/idn`, diperiksa
+17 November 2026; `Greek-IDN.txt` hanya berbeda format baris).
+
+Catatan data: `Japanese-IDN.txt` v2.0 adalah subset `japanese.txt` v1.0
+(953 code point dibuang, sebagian besar homoglyph seperti kana kecil dan
+`ヘベペ`), tetapi juga tidak memuat kanji umum `本` (U+672C) sementara varian
+langkanya `夲` ada. Salinan Nomulus sama persis, jadi ini keadaan tabel di
+hulu; URL tabel di header-nya 404 di IANA.
 
 
 ## Contributing

@@ -1,21 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <lgr xmlns="urn:ietf:params:xml:ns:lgr-1.0">
   <meta>
-    <version comment="Root Zone LGR for the Myanmar Script">5</version>
-    <date>2022-05-26</date>
+    <version comment="Root Zone LGR for the Myanmar Script">6</version>
+    <date>2025-09-23</date>
     <language>und-Mymr</language>
     <scope type="domain">.</scope>
-    <unicode-version>11.0.0</unicode-version>
+    <unicode-version>16.0.0</unicode-version>
     <description type="text/html"><![CDATA[
 
     <h1>Root Zone Label Generation Rules for the Myanmar script</h1>
-    
+
 <h2>Overview</h2>
-    <p>This file contains Label Generation Rules (LGR) for the Myanmar script for the Root Zone. 
+    <p>This file contains a set of Label Generation Rules (LGR) for the Myanmar script for the Root Zone. 
      For more details on this LGR and additional background on the script, see “Proposal for a Myanmar Script Root Zone Label Generation 
      Rule-Set (LGR)”; [Proposal-Myanmar]. 
-     This file is one of a set of LGR files that together form an integrated LGR for the DNS Root Zone [RZ-LGR-5].
-     The format of this file follows [RFC 7940].</p>
+     This file is one of a set of LGR files that together form an integrated LGR for the DNS Root Zone [RZ-LGR-6]. 
+    The format of this file follows [RFC 7940].</p>
 
 <h2>Repertoire</h2>
     <p>The Root Zone LGR for the Myanmar script lists 163 entries in total; 
@@ -33,21 +33,22 @@
     
     <p>Note: In this document, to avoid confusion, the term ‘Myanmar’ is used for the Myanmar script
     and the term ‘Burmese’ is used for the Myanmar language. </p>
-    
-    <p>The repertoire is based on [MSR-5], which is a subset of [Unicode 11.0].</p>
 
-    <p>Code points outside the Myanmar script that are listed in this file are targets
-    for out-of-script variants and are identified by a reflexive (identity)
-    variant of type “out-of-repertoire-var”. They do not form part of the
-    repertoire.</p>
-    
-     <p>As part of the Root Zone, this LGR includes neither digits nor the HYPHEN-MINUS.</p>
-     
-     <p>Each code point is tagged with the script or scripts with which the code point is used, one or more other character categories, 
-     and one or more references documenting sufficient justification for inclusion in the repertoire; see “References” below.
-     For code points that are part of the repertoire, comments identify the languages using the code point along with their [EGIDS] level.</p>
-     
-     <h2>Variants</h2>
+    <p>The repertoire is contained in [MSR-6], which is a subset of [Unicode 16.0.0].</p>
+
+  <p>As part of the Root Zone, this LGR includes neither decimal digits nor the HYPHEN-MINUS.</p>
+
+    <p><b>Repertoire Listing:</b> Each code point or range is tagged with the script or scripts with which the code point is used and one or more other character categories. For each repertoire element, 
+  one or more references document sufficient justification for inclusion in the repertoire; see the <a href="#ref_desc_sec_References">“References”</a> below. 
+    For code points that are part of the repertoire, comments identify the languages using the code point along with their [EGIDS] level.
+    For some sequences, a sequence designator is given.</p>
+
+  <p>Code points outside the Myanmar script repertoire that are listed in this file are targets
+      for out-of-repertoire variants and are identified by a reflexive (identity)
+      variant of type “out-of-repertoire-var”. They do not form part of the
+      repertoire.</p>
+
+<h2>Variants</h2>
     <p>According to Section 6, “Variants”, in [Proposal-Myanmar], this LGR defines following variants:</p>
     <p><b>In-script variants:</b> Variants are defined based on identical appearance or because
        they are language-based or otherwise analogues of the same code point or sequence (semantic variants).</p> 
@@ -69,14 +70,13 @@
       <p><b>Cross-script variants:</b>; Some Myanmar characters look the same as characters 
        in Malayalam, Oriya and Georgian scripts. See Section 6.2 in [Proposal-Myanmar]. </p>
 
-       <p><b>Additional Variants:</b> This LGR inherits additional cross-script variants by integration; they may not be listed here unless they result in
-       in-script variants.    For consistency with other RZ-LGRs, cross-script variants to ASCII code points are listed explicitly as well. For the Malayalam
-       See the merged, Common LGR [RZ-LGR-5] for details of all applicable cross-script variants,
-       including any not listed here; always use the Common LGR for determining cross-script collisions of labels.</p>
+       <p><b>Additional Variants:</b>This LGR inherits additional blocked cross-script variants by integration; they may not be listed here unless they result in
+    in-script variants. However, for consistency, the variant mappings to ASCII code points are listed in full. See the merged, Common LGR [RZ-LGR-6]
+    for details of all applicable cross-script variants, including any not listed here; always use the Common LGR for determining cross-script collisions of labels.</p>
 
     <p>The specification of variants in the Root Zone LGR follows the guidelines in [RFC 8228].</p>
 
- <h2>Character Classes</h2>
+    <h2>Character Classes</h2>
     <p>The syllable principle is at the heart of the Myanmar script writing system. 
     The general order of elements in a syllable is Consonant &gt; (Medials) &gt; Vowels &gt; (Consonant) &gt; Tone. 
     Overall, the  Myanmar script is composed of:</p>
@@ -141,7 +141,7 @@
     of [Proposal-Myanmar].</p>
     
     <p><b>Virama:</b> U+1039 MYANMAR SIGN VIRAMA is used in Burmese and Mon. 
-    Virama has two properties, as killer (devoweliser) and joiner of syllable chaining. 
+    Virama has two properties, as killer (devowelizer) and joiner of syllable chaining. 
     This virama brings the consonant after it to be rendered below the consonant before. 
     Pattern of syllable chaining : Consonant + Virama + Consonant. 
     However. a repetition of Consonant + Virama + Consonant is not allowed to prevent rendering issues.  
@@ -176,14 +176,15 @@
     </ul>
 
     <h2>Whole Label Evaluation (WLE) and Context Rules</h2>
-    
-   <h3>Default Whole Label Evaluation Rules and Actions</h3>
-   <p>The LGR includes the set of required default WLE rules and actions applicable to 
-    the Root Zone and defined in [MSR-5]. They are marked with &#x235F;. The 
-    default prohibition on leading combining marks is equivalent to ensuring that 
-    a label only starts with a consonant or independent vowel.</p>
 
-    <h3>Myanmar-specific Rules</h3>
+      <h3>Default Whole Label Evaluation Rules and Actions</h3>
+    <p>The LGR includes the set of required default WLE rules and actions applicable to 
+        the Root Zone and defined in [MSR-6]. They are marked with &#x235F;. 
+    The default prohibition on leading combining marks is equivalent to ensuring that 
+    a label only starts with a consonant or independent-vowel.
+    The actions compute a label disposition based on WLE rules or variant mapping types.</p>
+
+   <h3>Myanmar-specific Rules</h3>
     <p>There are constraints on the context for many of the character classes in Myanmar. 
     These constraints enforce the syllable structure to the degree needed for stability of rendering 
     (which affects both security and usability) without enforcing other linguistic constraints or spellings.
@@ -310,12 +311,12 @@
     </ul>
     <p>See Section 6.1 “In-script Variants” and Section 7, “Whole Label Evaluation (WLE) Rules” in [Proposal-Myanmar].</p>
 
-<h2>Methodology and Contributors</h2>
-    <p>The Root Zone LGR for the Myanmar script was developed by the Myanmar Generation Panel. 
-     For additional detail on methodology and contributors see Sections 4 and 8 in [Proposal-Myanmar], as well as [RZ-LGR-5-Overview].
-     </p>
+    <h2>Methodology and Contributors</h2>
 
-<h2>References</h2>
+    <p>The Root Zone LGR for the Myanmar Script was developed by the Myanmar Generation Panel. For details on methodology and 
+       contributors, see Sections 4 and 8 in [Proposal-Myanmar], as well as [RZ-LGR-6-Overview].</p>
+
+    <h2>References</h2>
     <dl class="references">
 
      <dt>[EGIDS]</dt>
@@ -326,9 +327,9 @@
      <dt>[Ethnologue]</dt>
      <dd>Ethnologue, Myanmar, (Accessed 6 October 2019) https://www.ethnologue.com/country/MM</dd>
 
-    <dt>[MSR-5]</dt>
-    <dd>Integration Panel, “Maximal Starting Repertoire — MSR-5 Overview and Rationale”, 24 June 2021,
-    https://www.icann.org/en/system/files/files/msr-5-overview-24jun21-en.pdf</dd>
+    <dt>[MSR-6]</dt>
+    <dd>Integration Panel, “Maximal Starting Repertoire — MSR-6 Overview and Rationale”, 23 September 2025,
+  https://www.icann.org/en/system/files/files/msr-6-overview-23sep25-en.pdf</dd>
 
      <dt>[Proposal-Myanmar]</dt> 
      <dd>Myanmar Generation Panel, “Proposal for a Myanmar Script Root Zone Label 
@@ -336,37 +337,45 @@
 
      <dt>[RFC 7940]</dt>
      <dd>Davies, K. and A. Freytag, “Representing Label Generation Rulesets Using XML”, 
-     RFC 7940, August 2016, https://www.rfc-editor.org/info/rfc7940. </dd> 
+     RFC 7940, August 2016, https://www.rfc-editor.org/info/rfc7940</dd> 
 
     <dt>[RFC 8228]</dt>
     <dd>A. Freytag, “Guidance on Designing Label Generation Rulesets (LGRs) Supporting Variant Labels”, RFC 8228, August 2017,
     https://www.rfc-editor.org/info/rfc8228</dd>
 
-    <dt>[RZ-LGR-5-Overview]</dt>
-    <dd>Integration Panel, “Root Zone Label Generation Rules (RZ LGR-5): Overview and Summary”, 26 May 2022, https://www.icann.org/sites/default/files/lgr/rz-lgr-5-overview-26may22-en.pdf</dd>
+    <dt>[RZ-LGR-6-Overview]</dt>
+    <dd>Integration Panel, “Root Zone Label Generation Rules (RZ LGR-6): Overview and Summary”, 23 September 2025, https://www.icann.org/sites/default/files/lgr/rz-lgr-6-overview-23sep25-en.pdf</dd>
 
-    <dt>[RZ-LGR-5]</dt>
-    <dd>Integration Panel, “Root Zone Label Generation Rules (RZ-LGR-5)”, 26 May 2022 (XML), https://www.icann.org/sites/default/files/lgr/rz-lgr-5-common-26may22-en.xml <br/>
-     <i>non-normative HTML presentation: https://www.icann.org/sites/default/files/lgr/rz-lgr-5-common-26may22-en.html</i></dd>
+    <dt>[RZ-LGR-6]</dt>
+    <dd>Integration Panel, “Root Zone Label Generation Rules (RZ-LGR-6)”, 23 September 2025 (XML), https://www.icann.org/sites/default/files/lgr/rz-lgr-6-common-23sep25-en.xml <br/>
+     <i>non-normative HTML presentation: https://www.icann.org/sites/default/files/lgr/rz-lgr-6-common-23sep25-en.html</i></dd>
 
      <dt>[SIL-Ethnologue]</dt>
      <dd>David M. Eberhard, Gary F. Simons &amp; Charles D. Fennig (eds.). 2021.
      Ethnologue: Languages of the World, Twenty fourth edition. Dallas, Texas: SIL
      International. Online version available as https://www.ethnologue.com</dd>
 
-     <dt>[Unicode 11.0]</dt>
-     <dd>The Unicode Consortium. The Unicode Standard, Version 11.0.0, (Mountain View, CA: The Unicode Consortium, 2018. ISBN 978-1-936213-19-1) 
-     https://www.unicode.org/versions/Unicode11.0.0/</dd>
+     <dt>[Unicode 16.0.0]</dt>
+     <dd>
+     The Unicode Consortium. The Unicode Standard, Version 16.0.0, (South San Francisco: The Unicode Consortium, 2024. ISBN 978-1-936213-34-4)
+     https://www.unicode.org/versions/Unicode16.0.0/
+     </dd>
     </dl>
     
+   <p>For references consulted, particularly in designing the repertoire for the Myanmar script for the Root Zone, 
+  please see details in the <a href="#table_of_references">Table of References</a> below.
+    References [0] and above refer to the Unicode Standard version in which corresponding code points 
+    were initially encoded. References [101] and above correspond to a source given in [Proposal-Myanmar] for justifying 
+    the inclusion of the corresponding code points. Entries in the table may have multiple source reference values.</p>
+
     <p>For more details for references [101] and up refer to the <a href="#table_of_references">Table of References</a> below.</p>
 
 ]]></description>
     <references>
-      <reference id="0" comment="Any code point originally encoded in Unicode 1.1">The Unicode Standard 1.1</reference>
-      <reference id="3" comment="Any code point originally encoded in Unicode 3.0">The Unicode Standard 3.0</reference>
-      <reference id="9" comment="Any code point originally encoded in Unicode 5.1">The Unicode Standard 5.1</reference>
-      <reference id="10" comment="Any code point originally encoded in Unicode 5.2">The Unicode Standard 5.2</reference>
+      <reference id="0" comment="Any code point originally encoded in Unicode Version 1.1">The Unicode Standard, Version 1.1</reference>
+      <reference id="3" comment="Any code point originally encoded in Unicode Version 3.0">The Unicode Standard, Version 3.0</reference>
+      <reference id="9" comment="Any code point originally encoded in Unicode Version 5.1">The Unicode Standard, Version 5.1</reference>
+      <reference id="10" comment="Any code point originally encoded in Unicode Version 5.2">The Unicode Standard, Version 5.2</reference>
       <reference id="101" comment="code points used for Burmese and languages using the same subset">Section “;Burmese”, 
       p. 21ff in “Representing Myanmar in Unicode”, UTN#11, Details and Examples, Version 4,  
       https://www.unicode.org/notes/tn11/UTN11_4.pdf</reference>

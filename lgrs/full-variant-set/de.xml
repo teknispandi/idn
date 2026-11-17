@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <lgr xmlns="urn:ietf:params:xml:ns:lgr-1.0">
   <meta>
-    <version comment="Second Level Reference LGR">3</version>
+    <version comment="Second Level Reference LGR">3.1</version>
     <date>2024-10-25</date>
     <language>de</language>
     <unicode-version>11.0.0</unicode-version>
@@ -237,6 +237,9 @@
 
     <h3>Changes from Version Dated 25 October 2024</h3>
 		<p>This version modifies the Second Level Reference LGR for the German Language [Ref-LGR-de-Latn] by injecting the complete (maximal) set of cross-repertoire variants, including any imposed by transitivity. Injected variants are marked by special comments. Any character classes, context and WLE rules required for testing are also imported. In all other respects, description or annotations have not been updated to reflect the injected variants. Any LGR elements that might pose a possible conflict when the LGR is used with the Common LGR for cross-repertoire variant resolution are clearly marked. All modifications are carried out mechanically; there may be an occasional context rule or similar that is injected because its definition relates to some repertoire element even though it can never be triggered by any label valid under the modified LGR.
+    </p>
+    <h3>Changes from RSP Full Variant LGR Dated 25 October 2024</h3>
+		<p>Bug Fix: Duplicated variant mapping between U+0073 U+0073 (ss) and U+00DF (ß) has been removed to allow allocatable variant when mapping from U+00DF (ß) to U+0073 U+0073 (ss).
     </p>
     </section>
 
@@ -538,7 +541,6 @@
       <var cp="0455" type="blocked" comment="(injected)" />
     </char>
     <char cp="0073 0073" when="enabled" comment="Sequence added for variant mapping (context not found in &quot;Common&quot;)">
-      <var cp="00DF" type="blocked" comment="(injected)" />
       <var cp="00DF" when="enabled" type="blocked" comment="IDNA2003 Compatibility" />
       <var cp="03B2" type="blocked" comment="(injected)" />
     </char>
@@ -574,7 +576,6 @@
       <var cp="00B7" type="out-of-repertoire-var" comment="Out-of-repertoire (injected)" />
     </char>
     <char cp="00DF" tag="sc:Latn" ref="0 100 200 301 401 603 604 700" comment="LATIN SMALL LETTER SHARP S">
-      <var cp="0073 0073" type="blocked" comment="(injected)" />
       <var cp="0073 0073" when="enabled" type="fallback" comment="IDNA2003 Compatibility" />
       <var cp="00DF" when="enabled" type="r-original" comment="Eszett" />
       <var cp="03B2" type="blocked" comment="(injected)" />

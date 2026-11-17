@@ -2,15 +2,16 @@
 <lgr xmlns="urn:ietf:params:xml:ns:lgr-1.0">
   <meta>
     <version comment="Second Level Reference LGR">1</version>
-    <date>2024-10-25</date>
+    <date>2026-08-13</date>
     <language>und-Thaa</language>
     <unicode-version>11.0.0</unicode-version>
-    <description type="text/html"><![CDATA[<div class="instructions">
+    <description type="text/html"><![CDATA[
+     <div class="instructions">
 <h2>INSTRUCTIONS</h2>
   <ul>
     <li>These instructions cover how to adopt an LGR based on this reference LGR for a given
     zone and how to prepare the file for deposit in the IANA Repository of IDN Practices.</li>
-    <li>As described  the IANA procedure (https://www.iana.org/help/idn-repository-procedure) an 
+    <li>As described in the IANA procedure (https://www.iana.org/help/idn-repository-procedure) an 
     LGR MUST contain the following elements in its header:
       <ul style="list-style-type:square;">
         <li>Script or Language Designator (see below for guidance) </li>
@@ -36,13 +37,13 @@
   <p><code>&lt;version comment=&quot;</code>[Please replace (or delete) the optional comment]<code>&quot;&gt;</code>[Please fill in version number, starting at 1]<code>&lt;/version&gt;</code></p>
   <p><code>&lt;date&gt;</code>[Please fill in with publication date, in YYYY-MM-DD format]<code>&lt;/date&gt;</code></p>
   <p><code>&lt;validity-start&gt;</code>[Please fill in effective date, in YYYY-MM-DD format]<code>&lt;/validity-start&gt;</code></p>
-  <p>Note: the scope element may be repeated, so that the same document can serve for multiple domains.</p>
+  <p>Note: the scope element may be repeated, so that the same document can serve multiple domains.</p>
   <p><code>&lt;scope type=&quot;domain&quot;&gt;</code>[Please provide, in &quot;.domain&quot; format]<code>&lt;/scope&gt;</code></p>
 <p><strong>Registry Contact Information:</strong></p>
   <p>Please fill in the <a href="#registry_contact_details">Registry Contact Details</a>.</p>
 <p><strong>Change History</strong></p>
   <p>If you made technical modifications to the LGR, please summarize them in the <a href="#change_history">Change History</a> (and also note the details in the appropriate section of the description).</p>
-<p>PLEASE DELETE THESE INSTRUCTIONS BEFORE DEPOSITING THE DOCUMENT</p></div>
+<p>PLEASE DELETE THESE INSTRUCTIONS BEFORE DEPOSITING THE DOCUMENT.</p></div>
 <section id="registry_contact_details">
 <h2>Registry Contact Details</h2>
 <ul style="list-style:none;">
@@ -58,7 +59,7 @@
     <p>This document specifies a set of Label Generation Rules (LGR) for the Thaana script
     using a script-specific repertoire for the second level domain or domains identified above.
     The format of this file follows [RFC 7940].
-    This LGR is adapted from the “Reference LGR for the Second Level for the Thaana Script” [Ref-LGR-und-Thaa], for details, see <a href="#change_history">Change History</a> below.</p>
+    This LGR is adapted from the “Reference LGR for the Second Level for the Thaana Script” [Ref-LGR-und-Thaa]; for details, see <a href="#change_history">Change History</a> below.</p>
     <p><b>Standalone LGR:</b> This LGR is designed to be used in a zone that does not cater to IDNs 
     other than those valid under this LGR. 
     This LGR lacks features that would allow its use in the context
@@ -68,7 +69,7 @@
   </section>
   <section id="sec_desc_repertoire">
     <h2 id="desc_repertoire">Repertoire</h2>
-    <p>The repertoire includes the 49 letters and diacritics of the Thaana script in everyday use as defined in Section 5.1 “Included Code Points” in [Proposal-Thaana].</p>
+    <p>The repertoire includes the 49 letters and diacritics of the Thaana script in everyday use as defined in Section 5.1, “Included Code Points” in [Proposal-Thaana].</p>
     <p>U+07B1 THAANA LETTER NAA  (baru nūnu)  is a dialect specific consonant. Given the resurgence of the use of the consonant in online writing and social media, a decision was made to include it in the repertoire at this time, despite it not being officially recognized as part of the base consonants.</p>
     <p>For the second level, the repertoire has been augmented with the ASCII digits, U+0030 to U+0039, plus U+002D HYPHEN-MINUS, for a total of 61 repertoire elements.</p>
     <p><b>Repertoire Listing:</b> Each code point or range is tagged with the script or scripts with which the code point is used and one or more other character categories. For each repertoire element,
@@ -76,7 +77,7 @@
     
     <section id="sec_desc_variants">
       <h2 id="desc_variants">Variants</h2>
-      <p>This LGR defines a number of in-script variants as described in Section 6.1  “In-script Variants”of [Proposal-Thaana]. No cross-script variants have been identified based on any discernable similarity with another script or otherwise required for the security of the Thaana LGR. However, if used in the context of an LGR for any other zone, variants may be required for the digits.</p>
+      <p>This LGR defines a number of in-script variants as described in Section 6.1,  “In-script Variants” of [Proposal-Thaana]. No cross-script variants have been identified based on any discernable similarity with another script or otherwise required for the security of the Thaana LGR. However, if used in the context of an LGR for any other zone, variants may be required for the digits.</p>
       <p><b>Variant Disposition:</b> All variants are of type “blocked”, making labels that 
     differ only by these variants mutually exclusive: whichever label containing either of 
     these variants is chosen earlier would be delegated, while any other equivalent labels should be blocked.
@@ -104,29 +105,29 @@
       <h2 id="desc_whole_label_evaluation_wle_and_context_rules">Whole Label Evaluation (WLE) and Context Rules</h2>
       <section id="sec_desc_common_rules">
         <h3 id="desc_common_rules">Common Rules</h3>
-        <p></p>
+        <div></div>
         <p>By default, the LGR includes the rules and actions to implement the following restrictions mandated by the IDNA protocol. They are marked with &#x235F;.</p>
        <ul>
        <li><b>Hyphen Restrictions</b> &mdash; restrictions on the allowable placement of hyphens (no leading/ending hyphen
-             and no hyphen in positions 3 and 4). These restrictions are described in Section 4.2.3.1 of RFC 5891 [150]. 
-             They are implemented here as context rule on U+002D (-) HYPHEN-MINUS.</li>
+             and no hyphen in positions 3 and 4). These restrictions are described in Section 4.2.3.1 of RFC 5891 [5891]. 
+             They are implemented here as a context rule on U+002D (-) HYPHEN-MINUS.</li>
           <li><b>Leading Combining Marks</b>   &mdash;  restrictions on the allowable placement of combining marks
-             (no leading combining mark). This rule is described in Section 4.2.3.2 of RFC 5891 [150].</li>
+             (no leading combining mark). This rule is described in Section 4.2.3.2 of RFC 5891 [5891].</li>
        </ul>
-        <p>Script-specific rules in this LGR already prevent combining marks in leading position making the "leading-combining-mark" rule technically redundant. It is retained here for consistency.</p>
+        <p>Script-specific rules in this LGR already prevent combining marks in leading position, making the “leading-combining-mark” rule technically redundant. It is retained here for consistency.</p>
       </section>
       <section id="sec_desc_right-to-left_rules">
         <h3 id="desc_right-to-left_rules">Right-to-Left Rules</h3>
-        <p></p>
+        <div></div>
         <ul>
-        <li><b>leading-digit</b> &mdash;  restrictions on the allowable placement of digits in a right-to-left context (no leading digit), (see section 2.1 of RFC 5893 [160]); 
+        <li><b>leading-digit</b> &mdash;  restrictions on the allowable placement of digits in a right-to-left context (no leading digit), (see section 2.1 of RFC 5893 [5893]); 
             implemented here as a context rule on each digit.</li>
     </ul>
       </section>
       <section id="sec_desc_default_actions">
         <h3 id="desc_default_actions">Default Actions</h3>
-        <p>This LGR includes the complete set default actions for LGRs as well as the action needed to invalidate labels with misplaced combining marks. They are marked with &#x235F;.
-        For a description see [RFC 7940] and [150].
+        <p>This LGR includes the complete set of default actions for LGRs, as well as the action needed to invalidate labels with misplaced combining marks. They are marked with &#x235F;.
+        For a description see [RFC 7940] and [5891].
         An additional action is triggered by mixed digit labels.
     </p>
       </section>
@@ -141,16 +142,17 @@
           <li>
             <b>start-of-word-followed-by-C</b> — WLE 3: N followed by C cannot start a word, that is, it cannot be the start of a label, or follow a hyphen or digit.</li>
           <li>
-            <b>followed-by-NC-or-NN=</b> — WLE 4: N cannot be follwoed by NC or NN.</li>
+            <b>followed-by-NC-or-NN=</b> — WLE 4: N cannot be followed by NC or NN.</li>
         </ul>
       </section>
       <section id="sec_desc_methodology">
         <h2 id="desc_methodology">Methodology</h2>
-        <p>This Second Level Reference LGR for the Thaana Script was developed by the Thaana community and edited by Asmus Freytag and Michel Suignard, based on community feedback and public review.</p>
+        <p>This Second Level Reference LGR for the Thaana Script was developed by the Thaana community and edited by Asmus Freytag and Michel Suignard, based on community feedback and public review. See [Proposal-Thaana] for methodology and contributors.</p>
       </section>
       <section id="sec_desc_change_history">
-        <h3>Changes from Version Dated 25 October 2024</h3>
-        <p>Adopted from the Second Level Reference LGR for the Thaana Script [Ref-LGR-und-Thaa] without normative changes.</p>
+        <h3>Changes from Version Dated 13 August 2026</h3>
+        <p>This is a placeholder to document any changes applied by the registry operator when adopting the reference LGR. If no change has been noted, the LGR is the same as the Second Level Reference LGR for the Thaana Script [Ref-LGR-und-Thaa] without normative changes.
+    </p>
       </section>
       <section id="sec_desc_references">
         <h2 id="desc_references">References</h2>
@@ -160,53 +162,54 @@
           <dd>ICANN, “Guidelines for Developing Reference LGRs for the Second Level”, (Los Angeles, California: ICANN, 27 May 2020), https://www.icann.org/en/system/files/files/lgr-guidelines-second-level-27may20-en.pdf</dd>
           <dt>[Level-2-Overview]</dt>
           <dd>Internet Corporation for Assigned Names and Numbers, (ICANN),“Reference Label Generation Rules (LGR) for the Second Level: Overview and Summary” (PDF), 
-     (Los Angeles, California: ICANN, 25 October 2024), https://www.icann.org/en/system/files/files/level2-lgr-overview-summary-25oct24-en.pdf
+     (Los Angeles, California: ICANN, 13 August 2026), https://www.icann.org/en/system/files/files/level2-lgr-overview-summary-13aug26-en.pdf
       </dd>
           <dt>[Proposal-Thaana]</dt>
-          <dd>"Thaana Script Reference Label Generation Rules for Second-Level Domain Names", 12 September 2024, https://www.icann.org/en/system/files/files/proposal-thaana-second-level-12Sep24-en.pdf</dd>
+          <dd>"Thaana Script Reference Label Generation Rules for Second-Level Domain Names", 12 September 2024, https://www.icann.org/en/system/files/files/proposal-thaana-second-level-12sep24-en.pdf</dd>
           <dt>[Ref-LGR-und-Thaa]</dt>
-          <dd>ICANN, Second Level Reference Label Generation Rules for the Thaana Script (und-Thaa), 25 October 2024 (XML)
-      https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-thaana-script-25oct24-en.xml
-      non-normative HTML presentation: https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-thaana-script-25oct24-en.html</dd>
+          <dd>ICANN, Second Level Reference Label Generation Rules for the Thaana Script (und-Thaa), 13 August 2026 (XML)
+      https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-thaana-script-13aug26-en.xml
+      non-normative HTML presentation: https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-thaana-script-13aug26-en.html</dd>
           <dt>[RFC 7940]</dt>
           <dd>Davies, K. and A. Freytag, “Representing Label Generation Rulesets Using XML”, 
      RFC 7940, August 2016, https://www.rfc-editor.org/info/rfc7940</dd>
           <dt>[RFC 8228]</dt>
           <dd>A. Freytag, “Guidance on Designing Label Generation Rulesets (LGRs) Supporting Variant Labels”, RFC 8228, August 2017,
     https://www.rfc-editor.org/info/rfc8228</dd>
-          <dt>[UNICODE 11.0.0]</dt>
-          <dd>The Unicode Consortium. The Unicode Standard, Version 11.0.0, (Mountain View, CA: The Unicode Consortium, 2018. ISBN 978-1-936213-19-1) 
+          <dt>[Unicode 11.0.0]</dt>
+          <dd>The Unicode Consortium. The Unicode Standard, Version 11.0.0 (Mountain View, CA: The Unicode Consortium, 2018. ISBN 978-1-936213-19-1) 
      https://www.unicode.org/versions/Unicode11.0.0/</dd>
         </dl>
         <p>References [0] to [3] refer to the Unicode Standard versions in which the corresponding code points were initially encoded. References [401] and above correspond to sources given in [Proposal-Thaana] justifying the inclusion of the corresponding cod5 points. Entries in the table may have
         multiple source reference values. 
         In the listing of <a href="#whole_label_evaluation_and_context_rules">whole label evaluation and context rules</a>,
-        references [150] and [160] indicate the source for common rules.</p>
+        references [5891] and [5893] indicate the source for common rules.</p>
       </section>
     </section>
   </section>
-</section>]]></description>
+</section>
+]]></description>
     <references>
       <reference id="0" comment="Code points cited were originally encoded in Unicode Version 1.1">The Unicode Standard, Version 1.1</reference>
       <reference id="3" comment="Code points cited were originally encoded in Unicode Version 3.0">The Unicode Standard, Version 3.0</reference>
       <reference id="5" comment="Code points cited were originally encoded in Unicode Version 3.2">The Unicode Standard, Version 3.2</reference>
-      <reference id="150">RFC 5891, Internationalized Domain Names in Applications(IDNA): Protocol https://tools.ietf.org/html/rfc5891</reference>
-      <reference id="160">RFC 5893, Right - to - Left Scripts for Internationalized Domain Names for Applications (IDNA) https://tools.ietf.org/html/rfc5893</reference>
       <reference id="401">Dhivehi Writing Systems by Naseema Mohamed, page 7-8, NCLHR, 1999.</reference>
+      <reference id="5891">RFC 5891, Internationalized Domain Names in Applications(IDNA): Protocol https://tools.ietf.org/html/rfc5891</reference>
+      <reference id="5893">RFC 5893, Right - to - Left Scripts for Internationalized Domain Names for Applications (IDNA) https://tools.ietf.org/html/rfc5893</reference>
     </references>
   </meta>
   <data>
-    <char cp="002D" not-when="hyphen-minus-disallowed" tag="sc:Zyyy" ref="0" />
-    <char cp="0030" not-when="leading-digit" tag="Common-digit sc:Zyyy" ref="0" />
-    <char cp="0031" not-when="leading-digit" tag="Common-digit sc:Zyyy" ref="0" />
-    <char cp="0032" not-when="leading-digit" tag="Common-digit sc:Zyyy" ref="0" />
-    <char cp="0033" not-when="leading-digit" tag="Common-digit sc:Zyyy" ref="0" />
-    <char cp="0034" not-when="leading-digit" tag="Common-digit sc:Zyyy" ref="0" />
-    <char cp="0035" not-when="leading-digit" tag="Common-digit sc:Zyyy" ref="0" />
-    <char cp="0036" not-when="leading-digit" tag="Common-digit sc:Zyyy" ref="0" />
-    <char cp="0037" not-when="leading-digit" tag="Common-digit sc:Zyyy" ref="0" />
-    <char cp="0038" not-when="leading-digit" tag="Common-digit sc:Zyyy" ref="0" />
-    <char cp="0039" not-when="leading-digit" tag="Common-digit sc:Zyyy" ref="0" />
+    <char cp="002D" not-when="hyphen-minus-disallowed" tag="Hyphen sc:Zyyy" ref="0" />
+    <char cp="0030" not-when="leading-digit" tag="Common-digit sc:Zyyy" ref="0" comment="&#x235F;" />
+    <char cp="0031" not-when="leading-digit" tag="Common-digit sc:Zyyy" ref="0" comment="&#x235F;" />
+    <char cp="0032" not-when="leading-digit" tag="Common-digit sc:Zyyy" ref="0" comment="&#x235F;" />
+    <char cp="0033" not-when="leading-digit" tag="Common-digit sc:Zyyy" ref="0" comment="&#x235F;" />
+    <char cp="0034" not-when="leading-digit" tag="Common-digit sc:Zyyy" ref="0" comment="&#x235F;" />
+    <char cp="0035" not-when="leading-digit" tag="Common-digit sc:Zyyy" ref="0" comment="&#x235F;" />
+    <char cp="0036" not-when="leading-digit" tag="Common-digit sc:Zyyy" ref="0" comment="&#x235F;" />
+    <char cp="0037" not-when="leading-digit" tag="Common-digit sc:Zyyy" ref="0" comment="&#x235F;" />
+    <char cp="0038" not-when="leading-digit" tag="Common-digit sc:Zyyy" ref="0" comment="&#x235F;" />
+    <char cp="0039" not-when="leading-digit" tag="Common-digit sc:Zyyy" ref="0" comment="&#x235F;" />
     <char cp="0780" when="followed-by-V" tag="consonant sc:Thaa" ref="3 401">
       <var cp="0799" type="blocked" />
       <var cp="079A" type="blocked" />
@@ -361,12 +364,12 @@
         </rule>
       </choice>
     </rule>
-    <rule name="leading-combining-mark" ref="150" comment="RFC 5891 restrictions on placement of combining marks &#x235F;">
+    <rule name="leading-combining-mark" ref="5891" comment="RFC 5891 restrictions on placement of combining marks &#x235F;">
       <start />
       <class property="gc:Mn" />
       <class property="gc:Mc" />
     </rule>
-    <rule name="leading-digit" ref="160" comment="RFC 5893 RTL labels cannot start with a digit &#x235F;">
+    <rule name="leading-digit" ref="5893" comment="RFC 5893 RTL labels cannot start with a digit &#x235F;">
       <look-behind>
         <start />
       </look-behind>
@@ -422,6 +425,6 @@
     <!--Action elements go here - order defines precedence-->
     <action disp="invalid" match="leading-combining-mark" comment="RFC 5891 restrictions on placement of combining marks &#x235F;" />
     <action disp="blocked" any-variant="blocked" comment="any variant label containing blocked variants is blocked &#x235F;" />
-    <action disp="valid" comment="catch all; default action &#x235F;" />
+    <action disp="valid" comment="catch all (default action) &#x235F;" />
   </rules>
 </lgr>

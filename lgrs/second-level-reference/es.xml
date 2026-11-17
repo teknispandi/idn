@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <lgr xmlns="urn:ietf:params:xml:ns:lgr-1.0">
   <meta>
-    <version comment="Second Level Reference LGR">3</version>
-    <date>2024-10-25</date>
+    <version comment="Second Level Reference LGR">4</version>
+    <date>2026-08-13</date>
     <language>es</language>
-    <unicode-version>11.0.0</unicode-version>
+    <unicode-version>16.0.0</unicode-version>
     <description type="text/html"><![CDATA[
        <div class="instructions">
 <h2>INSTRUCTIONS</h2>
   <ul>
     <li>These instructions cover how to adopt an LGR based on this reference LGR for a given
     zone and how to prepare the file for deposit in the IANA Repository of IDN Practices.</li>
-    <li>As described  the IANA procedure (https://www.iana.org/help/idn-repository-procedure) an 
+    <li>As described in the IANA procedure (https://www.iana.org/help/idn-repository-procedure) an 
     LGR MUST contain the following elements in its header:
       <ul style="list-style-type:square;">
         <li>Script or Language Designator (see below for guidance) </li>
@@ -37,13 +37,13 @@
   <p><code>&lt;version comment=&quot;</code>[Please replace (or delete) the optional comment]<code>&quot;&gt;</code>[Please fill in version number, starting at 1]<code>&lt;/version&gt;</code></p>
   <p><code>&lt;date&gt;</code>[Please fill in with publication date, in YYYY-MM-DD format]<code>&lt;/date&gt;</code></p>
   <p><code>&lt;validity-start&gt;</code>[Please fill in effective date, in YYYY-MM-DD format]<code>&lt;/validity-start&gt;</code></p>
-  <p>Note: the scope element may be repeated, so that the same document can serve for multiple domains.</p>
+  <p>Note: the scope element may be repeated, so that the same document can serve multiple domains.</p>
   <p><code>&lt;scope type=&quot;domain&quot;&gt;</code>[Please provide, in &quot;.domain&quot; format]<code>&lt;/scope&gt;</code></p>
 <p><strong>Registry Contact Information:</strong></p>
   <p>Please fill in the <a href="#registry_contact_details">Registry Contact Details</a>.</p>
 <p><strong>Change History</strong></p>
   <p>If you made technical modifications to the LGR, please summarize them in the <a href="#change_history">Change History</a> (and also note the details in the appropriate section of the description).</p>
-<p>PLEASE DELETE THESE INSTRUCTIONS BEFORE DEPOSITING THE DOCUMENT</p></div>
+<p>PLEASE DELETE THESE INSTRUCTIONS BEFORE DEPOSITING THE DOCUMENT.</p></div>
        
        <section id="registry_contact_details">
 <h2>Registry Contact Details</h2>
@@ -59,7 +59,7 @@
         <p>This document specifies a set of Label Generation Rules (LGR) for the Spanish language
     using a language-specific repertoire for the second level domain or domains identified above.
     The format of this file follows [RFC 7940].
-    This LGR is adapted from the “Reference LGR for the Second Level for the Spanish Language” [Ref-LGR-es-Latn], for details, see <a href="#change_history">Change History</a> below.</p>
+    This LGR is adapted from the “Reference LGR for the Second Level for the Spanish Language” [Ref-LGR-es-Latn]; for details, see <a href="#change_history">Change History</a> below.</p>
 
         <p><b>Standalone LGR:</b> This LGR is designed to be used in a zone that does not cater to IDNs 
     other than those valid under this LGR. 
@@ -112,14 +112,14 @@
 
         <p>The extensions for Catalan include U+00B7 MIDDLE DOT for use in the sequence “l&#xB7;l” for the Ela Geminada in Catalan. 
         The LGR adds a context rule to satisfy the CONTEXTO
-        constraint on U+00B7 MIDDLE DOT from RFC 5892 [122].
+        constraint on U+00B7 MIDDLE DOT from RFC 5892 [5892].
         Note that the precomposed U+0140 LATIN LETTER SMALL L WITH MIDDLE DOT
         is DISALLOWED under IDNA 2008 [IDNAREG].</p>
 
         <h2>Variants</h2>
         <p>The LGR defines certain allocatable fallback variants as
-    described in Section 4.5.5 “Allocatable Fallback Variants” in [Level-2-Overview]. A fallback variant is a variant label that uses 
-    substitute code points for code points or sequences not available (or not allowed) in some contexts, that would 
+    described in Section 4.5.5, “Allocatable Fallback Variants” in [Level-2-Overview]. A fallback variant is a variant label that uses 
+    substitute code points for code points or sequences not available (or not allowed) in some contexts that would 
     otherwise be required for a linguistically accurate rendering of some label.</p>
 
     <p>When “fallback” variants are defined, two labels may be allocated: a single label with the spelling preferred by the 
@@ -133,7 +133,7 @@
         <ul>
           
           <li><p><b>U+00B7 MIDDLE DOT and U+002D HYPHEN-MINUS</b> &mdash; 
-        the use of the hyphen as fallback for the middle dot in the Catalan Ela Geminada follows registry practice, see [704]. 
+        the use of the hyphen as fallback for the middle dot in the Catalan Ela Geminada follows registry practice; see [704]. 
         The variant is limited to an Ela Geminada context.</p></li>
         </ul>
         
@@ -142,7 +142,7 @@
     “fallback”, while the variant type for the other direction is “blocked”. In addition, the first element of each pair uses the
     reflexive mapping “r-original”.
      (By convention, the prefix “r-” marks a type used in a reflexive variant mapping, that is, it represents an instance 
-     of the original code point at that location in a variant label, see Section 5.3.4 in [RFC 7940].)</p>
+     of the original code point at that location in a variant label. See Section 5.3.4 in [RFC 7940].)</p>
 
         <p><b>Variant Disposition:</b> Except for limited exceptions for the fallback variants defined above, variants defined here result
     in a variant label disposition of “blocked”.</p>
@@ -151,13 +151,13 @@
 
         <p><b>Variants Limited to Standalone Use</b> This LGR is not intended for use with LGRs for other 
     languages or scripts in the same zone. 
-    The LGR does not define any “blocked” variants with code points in other languages or script that would 
+    The LGR does not define any “blocked” variants with code points in other languages or scripts that would 
     prevent malicious registration of duplicate labels perceived as the same by users. As a result of transitivity, 
     the scheme of internal variants defined here would have to be imposed on other LGRs 
     that contain copies or variants of the affected code points.</p>
 
     <p>If it is desired to support multiple languages in the same zone, the preferred method would be to support 
-    the corresponding script LGRs, which cater to the use of multiple languages, and are designed with 
+    the corresponding script LGRs, which cater to the use of multiple languages and are designed with 
     the possibility of concurrent use in mind.</p>
         
         <p>The specification of variants in this LGR follows the guidelines in [RFC 8228].</p>
@@ -172,16 +172,16 @@
         <p>By default, the LGR includes the rules and actions to implement the following restrictions mandated by the IDNA protocol. They are marked with &#x235F;.</p>
        <ul>
        <li><b>Hyphen Restrictions</b> &mdash; restrictions on the allowable placement of hyphens (no leading/ending hyphen
-             and no hyphen in positions 3 and 4). These restrictions are described in Section 4.2.3.1 of RFC 5891 [150]. 
-             They are implemented here as context rule on U+002D (-) HYPHEN-MINUS.</li>
+             and no hyphen in positions 3 and 4). These restrictions are described in Section 4.2.3.1 of RFC 5891 [5891]. 
+             They are implemented here as a context rule on U+002D (-) HYPHEN-MINUS.</li>
           <li><b>Leading Combining Marks</b>   &mdash;  restrictions on the allowable placement of combining marks
-             (no leading combining mark). This rule is described in Section 4.2.3.2 of RFC 5891 [150].</li>
+             (no leading combining mark). This rule is described in Section 4.2.3.2 of RFC 5891 [5891].</li>
        </ul>
 
         <h3>Language-specific Rules</h3>
 
         <p>The following context rule applies to U+00B7 MIDDLE DOT and its variants. 
-    It ensures that the middle dot is part of an Ela Geminada sequence and variants between it and HYPHEN-MINUS are only defined in that context.</p>
+    It ensures that the middle dot is part of an Ela Geminada, sequence and variants between it and HYPHEN-MINUS are only defined in that context.</p>
     <ul>
     <li><b>surrounded-by-L</b> &mdash; code points are invalid and variants undefined when not surrounded by “l”</li>
     </ul>
@@ -193,11 +193,11 @@
 
         <h2>Actions</h2>
 
-        <p>This LGR includes the default actions for LGRs as well as the action needed to
+        <p>This LGR includes the default actions for LGRs, as well as the action needed to
         invalidate labels with misplaced combining marks. They are marked with &#x235F;.
         For a description see [RFC 7940].</p>
 
-        <p>Because this LGR defines allocatable fallback variants the following default actions are applicable.</p>
+        <p>Because this LGR defines allocatable fallback variants, the following default actions are applicable.</p>
 
     <ul>
     <li><b>blocked</b> &mdash;  a variant label containing a blocked variant will receive a disposition of “blocked”.</li>
@@ -220,7 +220,7 @@
 
         <h3>Language-specific Actions</h3>
    
-        <p>An action has been defined to invalidate labels containing the sequence U+00B7 U+006C U+00B7 which could otherwise result in two Ela Geminada sequences overlapping.</p>
+        <p>An action has been defined to invalidate labels containing the sequence U+00B7 U+006C U+00B7, which could otherwise result in two Ela Geminada sequences overlapping.</p>
 
         <h2>Methodology and Contributors</h2>
 
@@ -234,11 +234,16 @@
         
         <h3>Changes from Version Dated 18 May 2021</h3><p>Unicode Version has been updated.</p>
 
-        <h3>Changes from Version Dated 24 January 2024</h3><p>The treatment of U+00B7 MIDDLE DOT has been changed to match that of the Latin script LGR.
+        <h3>Changes from Version Dated 24 January 2024</h3>
+        <p>The treatment of U+00B7 MIDDLE DOT has been changed to match that of the Latin script LGR.
         This adds a fallback variant between "l·l" and "l-l".</p>
 
-            <h3>Changes from Version Dated 25 October 2024</h3>
-        <p>Adopted from the Second Level Reference LGR for the Spanish Language [Ref-LGR-es-Latn] without normative changes.</p>
+        <h3>Changes from Version Dated 25 October 2024</h3>
+        <p>Unicode Version has been updated.</p>
+
+            <h3>Changes from Version Dated 13 August 2026</h3>
+        <p>This is a placeholder to document any changes applied by the registry operator when adopting the reference LGR. If no change has been noted, the LGR is the same as the Second Level Reference LGR for the Spanish Language [Ref-LGR-es-Latn] without normative changes.
+    </p>
             </section>
 
         <h2>References</h2>
@@ -259,20 +264,20 @@
           <dd>IANA Registry: “IDNA Parameters”. For Unicode 11.0 available at: https://www.iana.org/assignments/idna-tables-11.0.0/idna-tables-11.0.0.xml accessed on 2015-11-24</dd>
           <dt>[Level-2-Overview]</dt>
           <dd>Internet Corporation for Assigned Names and Numbers, (ICANN),“Reference Label Generation Rules (LGR) for the Second Level: Overview and Summary” (PDF), 
-     (Los Angeles, California: ICANN, 25 October 2024), https://www.icann.org/en/system/files/files/level2-lgr-overview-summary-25oct24-en.pdf
+     (Los Angeles, California: ICANN, 13 August 2026), https://www.icann.org/en/system/files/files/level2-lgr-overview-summary-13aug26-en.pdf
       </dd>
           <dt>[Ref-LGR-es-Latn]</dt>
-          <dd>ICANN, Second Level Reference Label Generation Rules for the Spanish Language (es-Latn), 25 October 2024 (XML)
-      https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-spanish-language-25oct24-en.xml
-      non-normative HTML presentation: https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-spanish-language-25oct24-en.html</dd>
+          <dd>ICANN, Second Level Reference Label Generation Rules for the Spanish Language (es-Latn), 13 August 2026 (XML)
+      https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-spanish-language-13aug26-en.xml
+      non-normative HTML presentation: https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-spanish-language-13aug26-en.html</dd>
           <dt>[RFC 7940]</dt>
            <dd> Davies, K. and A. Freytag, “Representing Label Generation Rulesets Using XML”, 
      RFC 7940, August 2016, https://www.rfc-editor.org/info/rfc7940</dd>
           <dt>[RFC 8228]</dt>
           <dd>A. Freytag, “Guidance on Designing Label Generation Rulesets (LGRs) Supporting Variant Labels”, RFC 8228, August 2017,
     https://www.rfc-editor.org/info/rfc8228</dd>
-         <dt>[Unicode 11.0.0]</dt>
-         <dd>The Unicode Consortium. The Unicode Standard, Version 11.0.0, (Mountain View, CA: The Unicode Consortium, 2018. ISBN 978-1-936213-19-1) 
+         <dt>[Unicode 16.0.0]</dt>
+         <dd>The Unicode Consortium. The Unicode Standard, Version 11.0.0 (Mountain View, CA: The Unicode Consortium, 2018. ISBN 978-1-936213-19-1) 
      https://www.unicode.org/versions/Unicode11.0.0/</dd>
         </dl>
 
@@ -281,16 +286,14 @@
         Other references (starting from [100]) document usage of code points. Entries in the table may have
         multiple source reference values. 
         In the listing of <a href="#whole_label_evaluation_and_context_rules">whole label evaluation and context rules</a>,
-        reference [150] indicates the source for common rules.
-        For more details, see the      <a href="#table_of_references">Table of References</a> below.</p>
+        reference [5891] indicates the source for common rules.
+        For more details, see the <a href="#table_of_references">Table of References</a> below.</p>
 
 ]]></description>
     <references>
       <reference id="0" comment="Code points cited were originally encoded in Unicode Version 1.1">The Unicode Standard, Version 1.1</reference>
       <reference id="100">Internetstiftelsen i Sverige (IIS), “IDN Reference table for Spanish language” 
          https://github.com/dotse/IDN-ref-tables/blob/master/language-tables/spanish-lang-ref-table.txt accessed on 2016-10-16</reference>
-      <reference id="122">RFC 5982, Faltstrom, P., Ed., “The Unicode Code Points and Internationalized Domain Names for Applications (IDNA)”, https://tools.ietf.org/html/rfc5892</reference>
-      <reference id="150">RFC 5891, Internationalized Domain Names in Applications (IDNA): Protocol https://tools.ietf.org/html/rfc5891</reference>
       <reference id="200" comment="This table lists only the characters outside the set a-z">ISO/IEC 6937 Third Ed. 2001-12-17- Information 
 	     technology — Coded graphic character set for text communication — Latin alphabet: Table D.1 (p 35) Use of Latin alphabetic characters.</reference>
       <reference id="301" comment="Code points cited form the standard set">Everson, Michael. The Alphabets of Europe: “Spanish” https://www.evertype.com/alphabets/spanish.pdf</reference>
@@ -315,11 +318,13 @@
       https://www.iana.org/domains/idn-tables/tables/cat_ca_1.0.html</reference>
       <reference id="704">Fundacio PuntCAT registry (.CAT), Rules of the .cat domain, 
       https://domini.cat/en/rules-of-the-cat-domain/</reference>
+      <reference id="5891">RFC 5891, Internationalized Domain Names in Applications (IDNA): Protocol https://tools.ietf.org/html/rfc5891</reference>
+      <reference id="5892">RFC 5982, Faltstrom, P., Ed., “The Unicode Code Points and Internationalized Domain Names for Applications (IDNA)”, https://tools.ietf.org/html/rfc5892</reference>
     </references>
   </meta>
   <data>
-    <char cp="002D" not-when="hyphen-minus-disallowed" tag="sc:Zyyy" ref="0 100 301 401 601" comment="HYPHEN-MINUS">
-      <var cp="00B7" when="surrounded-by-L" type="blocked" ref="704" comment="Middle dot in Ela Geminada" />
+    <char cp="002D" not-when="hyphen-minus-disallowed" tag="Hyphen sc:Zyyy" ref="0 100 301 401 601" comment="HYPHEN-MINUS">
+      <var cp="00B7" when="surrounded-by-L" type="blocked" ref="704" comment="Middle Dot in Ela Geminada" />
     </char>
     <char cp="0030" tag="Common-digit sc:Zyyy" ref="0 100 301 401 601" comment="DIGIT ZERO; &#x235F;" />
     <char cp="0031" tag="Common-digit sc:Zyyy" ref="0 100 301 401 601" comment="DIGIT ONE; &#x235F;" />
@@ -357,7 +362,7 @@
     <char cp="0078" tag="sc:Latn" ref="0 100 301 401 601" comment="LATIN SMALL LETTER X" />
     <char cp="0079" tag="sc:Latn" ref="0 100 301 401 601" comment="LATIN SMALL LETTER Y" />
     <char cp="007A" tag="sc:Latn" ref="0 100 301 401 601" comment="LATIN SMALL LETTER Z" />
-    <char cp="00B7" when="surrounded-by-L" tag="sc:Zyyy" ref="0 100 122 702 703" comment="Catalan L·L - CONTEXTO for MIDDLE DOT in RFC 5892">
+    <char cp="00B7" when="surrounded-by-L" tag="sc:Latn" ref="0 100 702 703 5892" comment="Catalan L·L - CONTEXTO for MIDDLE DOT in RFC 5892">
       <var cp="002D" when="surrounded-by-L" type="fallback" comment="Fallback" />
       <var cp="00B7" when="surrounded-by-L" type="r-original" comment="Middle Dot in the original label" />
     </char>
@@ -384,14 +389,14 @@
   <rules>
     <!--Character class definitions go here-->
     <!--Whole label evaluation and context rules go here-->
-    <rule name="leading-combining-mark" ref="150" comment="RFC 5891 restrictions on placement of combining marks &#x235F;">
+    <rule name="leading-combining-mark" ref="5891" comment="RFC 5891 restrictions on placement of combining marks &#x235F;">
       <start />
       <union>
         <class property="gc:Mn" />
         <class property="gc:Mc" />
       </union>
     </rule>
-    <rule name="hyphen-minus-disallowed" ref="150" comment="RFC 5891 restrictions on placement of U+002D HYPHEN-MINUS &#x235F;">
+    <rule name="hyphen-minus-disallowed" ref="5891" comment="RFC 5891 restrictions on placement of U+002D HYPHEN-MINUS &#x235F;">
       <choice>
         <rule comment="no leading hyphen">
           <look-behind>
@@ -433,7 +438,7 @@
       <char cp="00B7 006C 00B7" />
     </rule>
     <!--Action elements go here - order defines precedence-->
-    <action disp="invalid" match="leading-combining-mark" comment="by default, labels with leading combining marks are invalid" />
+    <action disp="invalid" match="leading-combining-mark" ref="5891" comment="by default, labels with leading combining marks are invalid" />
     <action disp="invalid" match="dot-L-dot" comment="labels with one L sharing two middle dots are invalid &#x235F;" />
     <action disp="blocked" any-variant="blocked" comment="any variant label containing blocked variants is blocked &#x235F;" />
     <action disp="allocatable" all-variants="fallback" comment="any label with all variants of type fallback is allocatable &#x235F;" />

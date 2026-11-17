@@ -1,52 +1,57 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <lgr xmlns="urn:ietf:params:xml:ns:lgr-1.0">
   <meta>
-    <version comment="Root Zone LGR for the Kannada Script">5</version>
-    <date>2022-05-26</date>
+    <version comment="Root Zone LGR for the Kannada Script">6</version>
+    <date>2025-09-23</date>
     <language>und-Knda</language>
     <scope type="domain">.</scope>
-    <unicode-version>11.0.0</unicode-version>
+    <unicode-version>16.0.0</unicode-version>
     <description type="text/html"><![CDATA[
     <h1>Root Zone Label Generation Rules for the Kannada Script</h1>
-    
+
     <h2>Overview</h2>
-    <p>This file contains Label Generation Rules (LGR) for the Kannada script for the Root Zone.
-    For more details on this LGR and additional background on the script, see “Proposal for a 
+    <p>This file contains a set of Label Generation Rules (LGR) for the Kannada script for the Root Zone. 
+     For more details on this LGR and additional background on the script, see “Proposal for a 
     Kannada Script Root Zone Label Generation Ruleset (LGR)” [Proposal-Kannada]. 
-    This file is one of a set of LGR files that together form an integrated LGR for the DNS Root Zone [RZ-LGR-5]. The format of this file follows [RFC 7940].</p>
+    This file is one of a set of LGR files that together form an integrated LGR for the DNS Root Zone [RZ-LGR-6]. 
+    The format of this file follows [RFC 7940].</p>
 
 <h2>Repertoire</h2>
     <p>According to Section 5, “Repertoire” in [Proposal-Kannada], the Kannada LGR contains 62 single code points.</p>
      <p>This LGR caters to Kannada, Tulu, Beary, Konkani, Havyaka, Kodava, among other languages written 
       using the Kannada script.</p>
-    <p>The repertoire is based on [MSR-5], which is a subset of [Unicode 11.0].</p>
 
-      <p>As part of the Root Zone, this LGR includes neither decimal digits nor the HYPHEN-MINUS.</p>
+    <p>The repertoire is contained in [MSR-6], which is a subset of [Unicode 16.0.0].</p>
 
-    <p>Code points outside the Kannada script that are listed in this file are targets
-        for out-of-script variants and are identified by a reflexive (identity)
-        variant of type “out-of-repertoire-var”. They do not form part of the
-        repertoire.</p>
+    <p>As part of the Root Zone, this LGR includes neither decimal digits nor the HYPHEN-MINUS.</p>
 
-    <p>Each code point is tagged with the script or scripts with which the code point is used, one or more other character categories, 
-    and one or more references documenting sufficient justification for inclusion in the repertoire; see “References” below.
-    Comments provide alternate names of some code points.</p>
-      
-    <h2>Variants</h2>
+    <p><b>Repertoire Listing:</b> Each code point or range is tagged with the script or scripts with which the code point is used and one or more other character categories. For each repertoire element, 
+  one or more references document sufficient justification for inclusion in the repertoire; see the <a href="#ref_desc_sec_References">“References”</a> below.
+    Comments provide alternate names for some code points.</p>
+
+  <p>Code points outside the Kannada script repertoire that are listed in this file are targets
+      for out-of-repertoire variants and are identified by a reflexive (identity)
+      variant of type “out-of-repertoire-var”. They do not form part of the
+      repertoire.</p>
+
+<h2>Variants</h2>
     <p>According to Section 6, “Variants”, in [Proposal-Kannada], this LGR defines cross-script variants 
-    which are “Confusing due to deviation from normally perceived character formations by larger linguistic 
+    based on being “Confusing due to deviation from normally perceived character formations by larger linguistic 
     community”. These cases are not of mere visual similarity; they can cause confusion even to a
     careful observer and hence have been defined as variants. There are no in-script variants defined for Kannada.</p>
 
-    <p><b>Variant Disposition:</b> All variants are of type “blocked” making labels that differ only 
-    by these variants mutually exclusive:  whichever label containing either of these variants is chosen earlier 
-    would be delegated, while any other equivalent variant label should be blocked. There is no preference among these variants.</p>
+    <p><b>Variant Disposition:</b> All variants are of type “blocked”, making labels that 
+    differ only by these variants mutually exclusive: whichever label containing either of 
+    these variants is chosen earlier would be delegated, while any other equivalent labels should be blocked.
+    There is no preference among these labels.</p>
+
     <p>This LGR does not define allocatable variants.</p>
+
     <p>The specification of variants in the Root Zone LGR follows the guidelines in [RFC 8228].</p>
-      
+
     <h2>Character Classes</h2>
      <p>The structure of the Kannada script is similar to that of 
-      other Indian scripts; it is particularly closely related to Telugu. The heart of the writing system is the Akshar. 
+      other Indian scripts; it is particularly closely related to Telugu. The heart of the writing system is the <em>akshar</em>. 
       The basic characters are classified into three main categories:
       swara (vowels), vyanjana (consonants) and yogavahas (semiconsonants). </p>
     
@@ -73,12 +78,14 @@
     details in Section 3.4.4, “Implicit vowel ಅ (a) in consonants” in [Proposal-Kannada].</p>
       
     <h2>Whole Label Evaluation (WLE) and Context Rules</h2>
+
     <h3>Default Whole Label Evaluation Rules and Actions</h3>
     <p>The LGR includes the set of required default WLE rules and actions applicable to 
-        the Root Zone and defined in [MSR-5]. They are marked with &#x235F;. The 
-          default prohibition on leading combining marks is equivalent to ensuring that 
-          a label only starts with a consonant or vowel.</p> 
-        
+        the Root Zone and defined in [MSR-6]. They are marked with &#x235F;. 
+      The default prohibition on leading combining marks is equivalent to ensuring that 
+      a label only starts with a consonant or vowel. 
+      The actions compute a label disposition based on WLE rules or variant mapping types.</p>
+
     <h3>Kannada-specific Rules</h3>
     <p>These rules have been formulated so that they can be adopted for  LGR specification.</p>
     <p>The following symbols are used in the WLE rules: 
@@ -102,52 +109,53 @@
      <p>More details in Section 7, “Whole Label Evaluation Rules (WLE)” of [Proposal-Kannada].</p>
     
     <h2>Methodology and Contributors</h2>
-    <p>The Root Zone LGR for the Kannada script was developed by the Neo-Brahmi Generation Panel (NBGP) the members 
+
+    <p>The Root Zone LGR for the Kannada Script was developed by the Neo-Brahmi Generation Panel (NBGP), the members 
      of which have experience in linguistics and computational linguistics in a wide variety of languages
      written with Neo-Brahmi scripts. Under the Neo-Brahmi Generation Panel, there are 
     nine scripts belonging to separate Unicode blocks. Each of these scripts has been assigned a 
     separate LGR, with the Neo-Brahmi GP ensuring that the fundamental philosophy behind building 
-    each LGR is in sync with all other Brahmi-derived scripts. For further details on methodology and
-    contributors, see Sections 4 and 8 in [Proposal-Kannada], as well as [RZ-LGR-5-Overview].</p>
+    each LGR is in sync with all other Brahmi-derived scripts. For further details on methodology and contributors, 
+     see Sections 4 and 8 in [Proposal-Kannada], as well as [RZ-LGR-6-Overview].</p>
 
     <h2>References</h2> 
     <p>The following general references are cited in this document:</p>
     <dl class="references">
 
-    <dt>[MSR-5]</dt>
-    <dd>Integration Panel, “Maximal Starting Repertoire — MSR-5 Overview and Rationale”, 24 June 2021,
-    https://www.icann.org/en/system/files/files/msr-5-overview-24jun21-en.pdf    </dd>
+    <dt>[MSR-6]</dt>
+    <dd>Integration Panel, “Maximal Starting Repertoire — MSR-6 Overview and Rationale”, 23 September 2025,
+  https://www.icann.org/en/system/files/files/msr-6-overview-23sep25-en.pdf</dd>
 
     <dt>[Proposal-Kannada]</dt> 
     <dd>Neo-Brahmi Generation Panel, “Proposal for a Kannada Script Root Zone Label Generation Ruleset (LGR)”, 6 March 2019, https://www.icann.org/en/system/files/files/proposal-kannada-lgr-06mar19-en.pdf</dd>
 
     <dt>[RFC 7940]</dt>
-     <dd>Davies, K. and A. Freytag, “Representing Label Generation Rulesets Using XML”, RFC 7940, August 2016, https://www.rfc-editor.org/info/rfc7940</dd> 
+     <dd>Davies, K. and A. Freytag, “Representing Label Generation Rulesets Using XML”, 
+     RFC 7940, August 2016, https://www.rfc-editor.org/info/rfc7940</dd> 
      
     <dt>[RFC 8228]</dt>
     <dd>A. Freytag, “Guidance on Designing Label Generation Rulesets (LGRs) Supporting Variant Labels”, RFC 8228, August 2017,
     https://www.rfc-editor.org/info/rfc8228</dd>
     
-      <dt>[RZ-LGR-5-Overview]</dt>
-       <dd>Integration Panel, “Root Zone Label Generation Rules (RZ LGR-5): Overview and Summary”, 26 May 2022, https://www.icann.org/sites/default/files/lgr/rz-lgr-5-overview-26may22-en.pdf</dd>
+      <dt>[RZ-LGR-6-Overview]</dt>
+       <dd>Integration Panel, “Root Zone Label Generation Rules (RZ LGR-6): Overview and Summary”, 23 September 2025, https://www.icann.org/sites/default/files/lgr/rz-lgr-6-overview-23sep25-en.pdf</dd>
 
-     <dt>[RZ-LGR-5]</dt>
-     <dd>Integration Panel, “Root Zone Label Generation Rules (RZ-LGR-5)”, 26 May 2022 (XML), https://www.icann.org/sites/default/files/lgr/rz-lgr-5-common-26may22-en.xml <br/>
-     <i>non-normative HTML presentation: https://www.icann.org/sites/default/files/lgr/rz-lgr-5-common-26may22-en.html</i></dd>
-     <dt>[Unicode 11.0]</dt>
-     <dd>The Unicode Consortium. The Unicode Standard, Version 11.0.0, (Mountain View, CA: The Unicode Consortium, 2018. ISBN 978-1-936213-19-1) 
-     https://www.unicode.org/versions/Unicode11.0.0/</dd>
+     <dt>[RZ-LGR-6]</dt>
+     <dd>Integration Panel, “Root Zone Label Generation Rules (RZ-LGR-6)”, 23 September 2025 (XML), https://www.icann.org/sites/default/files/lgr/rz-lgr-6-common-23sep25-en.xml <br/>
+     <i>non-normative HTML presentation: https://www.icann.org/sites/default/files/lgr/rz-lgr-6-common-23sep25-en.html</i></dd>
+     <dt>[Unicode 16.0.0]</dt>
+     <dd>
+     The Unicode Consortium. The Unicode Standard, Version 16.0.0, (South San Francisco: The Unicode Consortium, 2024. ISBN 978-1-936213-34-4)
+     https://www.unicode.org/versions/Unicode16.0.0/
+     </dd>
      </dl>
-     <p>For references consulted particularly in designing the repertoire for the Kannada script for the Root Zone 
-     please see details in the <a href="#table_of_references">Table of References</a> below. 
-     Reference [0] refers to the Unicode Standard version in which the
+     <p>For references consulted, particularly in designing the repertoire for the Kannada script for the Root Zone, 
+  please see details in the <a href="#table_of_references">Table of References</a> below. Reference [0] refers to the Unicode Standard version in which the
      corresponding code points were initially encoded. References [110] and above correspond to sources
-     given in {Proposal-Kannada] justifying the inclusion of the corresponding code points. Entries in the table may have
-     multiple source reference values.</p>
-
+     given in {Proposal-Kannada] justifying the inclusion of the corresponding code points. Entries in the table may have multiple source reference values.</p>
 ]]></description>
     <references>
-      <reference id="0" comment="Any code point originally encoded in Unicode 1.1">The Unicode Standard 1.1</reference>
+      <reference id="0" comment="Any code point originally encoded in Unicode Version 1.1">The Unicode Standard, Version 1.1</reference>
       <reference id="110">ಕನ್ನಡ ಮಧ್ಯಮ ವ್ಯಾಕರಣ, ತೀ.ನಂ. ಶ್ರೀಕಂಠಯ್ಯ, ಗೀತಾ ಬುಕ್ ಹೌಸ್, ಮೈಸೂರು, ೨೦೦೧ /Kannada Madhyama Vyakarana/ (An Intermediate Kannada Grammar), T. N. Sreekantaiya, Geetha Book House, Mysore, 2001. </reference>
       <reference id="111">Omniglot, Kannada (ಕನ್ನಡ), https://www.omniglot.com/writing/kannada.htm</reference>
     </references>

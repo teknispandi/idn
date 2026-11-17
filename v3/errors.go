@@ -31,6 +31,7 @@ var (
 	ErrCodepointNotInTable = errors.New("code point is not in the IDN table")
 	ErrLanguageRule        = errors.New("label violates the IDN table's language rules")
 	ErrNoIdnTable          = errors.New("no IDN table of this TLD accepts the label")
+	ErrMixedScript         = errors.New("label mixes code points from different scripts")
 
 	// Konfigurasi TLD / bentuk nama domain
 	ErrUnknownTld     = errors.New("TLD is not registered")

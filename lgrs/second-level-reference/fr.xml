@@ -2,7 +2,7 @@
 <lgr xmlns="urn:ietf:params:xml:ns:lgr-1.0">
   <meta>
     <version comment="Second Level Reference LGR">3</version>
-    <date>2024-10-25</date>
+    <date>2026-08-13</date>
     <language>fr</language>
     <unicode-version>11.0.0</unicode-version>
     <description type="text/html"><![CDATA[
@@ -11,7 +11,7 @@
   <ul>
     <li>These instructions cover how to adopt an LGR based on this reference LGR for a given
     zone and how to prepare the file for deposit in the IANA Repository of IDN Practices.</li>
-    <li>As described  the IANA procedure (https://www.iana.org/help/idn-repository-procedure) an 
+    <li>As described in the IANA procedure (https://www.iana.org/help/idn-repository-procedure) an 
     LGR MUST contain the following elements in its header:
       <ul style="list-style-type:square;">
         <li>Script or Language Designator (see below for guidance) </li>
@@ -37,13 +37,13 @@
   <p><code>&lt;version comment=&quot;</code>[Please replace (or delete) the optional comment]<code>&quot;&gt;</code>[Please fill in version number, starting at 1]<code>&lt;/version&gt;</code></p>
   <p><code>&lt;date&gt;</code>[Please fill in with publication date, in YYYY-MM-DD format]<code>&lt;/date&gt;</code></p>
   <p><code>&lt;validity-start&gt;</code>[Please fill in effective date, in YYYY-MM-DD format]<code>&lt;/validity-start&gt;</code></p>
-  <p>Note: the scope element may be repeated, so that the same document can serve for multiple domains.</p>
+  <p>Note: the scope element may be repeated, so that the same document can serve multiple domains.</p>
   <p><code>&lt;scope type=&quot;domain&quot;&gt;</code>[Please provide, in &quot;.domain&quot; format]<code>&lt;/scope&gt;</code></p>
 <p><strong>Registry Contact Information:</strong></p>
   <p>Please fill in the <a href="#registry_contact_details">Registry Contact Details</a>.</p>
 <p><strong>Change History</strong></p>
   <p>If you made technical modifications to the LGR, please summarize them in the <a href="#change_history">Change History</a> (and also note the details in the appropriate section of the description).</p>
-<p>PLEASE DELETE THESE INSTRUCTIONS BEFORE DEPOSITING THE DOCUMENT</p></div>
+<p>PLEASE DELETE THESE INSTRUCTIONS BEFORE DEPOSITING THE DOCUMENT.</p></div>
        
        <section id="registry_contact_details">
 <h2>Registry Contact Details</h2>
@@ -59,7 +59,7 @@
         <p>This document specifies a set of Label Generation Rules (LGR) for the French language
     using a language-specific repertoire for the second level domain or domains identified above.
     The format of this file follows [RFC 7940].
-    This LGR is adapted from the “Reference LGR for the Second Level for the French Language” [Ref-LGR-fr-Latn], for details, see <a href="#change_history">Change History</a> below.</p>
+    This LGR is adapted from the “Reference LGR for the Second Level for the French Language” [Ref-LGR-fr-Latn]; for details, see <a href="#change_history">Change History</a> below.</p>
 
         <p><b>Standalone LGR:</b> This LGR is designed to be used in a zone that does not cater to IDNs 
     other than those valid under this LGR. 
@@ -113,7 +113,7 @@
         label as well as the pure ASCII fallback to the same entity, while disallowing the registration of the
         two labels to unrelated entities (See [CIRA]).</p>
 
-        <p>By default, this LGR treats all accented forms as <a href="#optionally_enabled_variants">optionally-enabled</a> variants of the non-accented form of a label 
+        <p>By default, this LGR treats all accented forms as <a href="#optionally_enabled_variants">optionally enabled</a> variants of the non-accented form of a label 
         which would prevent them from being delegated to two different entities simultaneously. In order to restrict the number of
         allocatable variants, only one accented form can be allocated alongside the non-accented form. If the desired
         accented form has been applied for, the non-accented form would then be a variant that is allocatable
@@ -121,22 +121,22 @@
         non-accented “fallback”.</p>
 
         <p>This extension to in-language variants is not compatible with using this LGR in a zone with another LGR and 
-        using the Common LGR to process conflicts between labels from multiple LGRs as described in Section 3 “Use of Multiple Reference LGRs in the Same Zone” in [Level-2-Overview].</p>
+        using the Common LGR to process conflicts between labels from multiple LGRs as described in Section 3, “Use of Multiple Reference LGRs in the Same Zone” in [Level-2-Overview].</p>
 
         <p>No other variants are applicable when using the LGR in a standalone fashion.</p>
 
         <p><b>Variants Limited to Standalone Use</b> This LGR is not intended for use with LGRs for other 
     languages or scripts in the same zone. 
-    The LGR does not define any “blocked” variants with code points in other languages or script that would 
+    The LGR does not define any “blocked” variants with code points in other languages or scripts that would 
     prevent malicious registration of duplicate labels perceived as the same by users. As a result of transitivity, 
     the scheme of internal variants defined here would have to be imposed on other LGRs 
     that contain copies or variants of the affected code points.</p>
 
     <p>If it is desired to support multiple languages in the same zone, the preferred method would be to support 
-    the corresponding script LGRs, which cater to the use of multiple languages, and are designed with 
+    the corresponding script LGRs, which cater to the use of multiple languages and are designed with 
     the possibility of concurrent use in mind.</p>
 
-        <h3 id="optionally_enabled_variants">Optionally-enabled Variants</h3>
+        <h3 id="optionally_enabled_variants">Optionally Enabled Variants</h3>
 
         <p>Certain variants in this LGR are defined as optionally enabled. They are using the context rule “enabled”.
          This context rule matches any label (it always succeeds). Any variant marked with when=“enabled” (in the XML file) 
@@ -161,21 +161,21 @@
          protocol. They are marked with &#x235F; and included here by default. A special context rule enables optional variants by default.</p>
        <ul>
        <li><b>Hyphen Restrictions</b> &mdash; restrictions on the allowable placement of hyphens (no leading/ending hyphen
-             and no hyphen in positions 3 and 4). These restrictions are described in Section 4.2.3.1 of RFC 5891 [150]. 
-             They are implemented here as context rule on U+002D (-) HYPHEN-MINUS.</li>
+             and no hyphen in positions 3 and 4). These restrictions are described in Section 4.2.3.1 of RFC 5891 [5891]. 
+             They are implemented here as a context rule on U+002D (-) HYPHEN-MINUS.</li>
           <li><b>Leading Combining Marks</b>   &mdash;  restrictions on the allowable placement of combining marks
-             (no leading combining mark). This rule is described in Section 4.2.3.2 of RFC 5891 [150].</li>
+             (no leading combining mark). This rule is described in Section 4.2.3.2 of RFC 5891 [5891].</li>
        <li><b>Enabled</b> &mdash; matches any label. Used as variant context rule; any variant with 
-               <code>when="enabled"</code> in the xml will be active, while any with <code>not-when="enabled"</code> will be inactive.</li>
+               <code>when="enabled"</code> in the XML file will be active, while any with <code>not-when="enabled"</code> will be inactive.</li>
        </ul>
 
         <h2>Actions</h2>
 
-        <p>This LGR includes the default actions for LGRs as well as the action needed to
+        <p>This LGR includes the default actions for LGRs, as well as the action needed to
         invalidate labels with misplaced combining marks. They are marked with &#x235F;.
         For a description see [RFC 7940].</p>
 
-          <p>Because this LGR defines allocatable fallback variants the following default actions are applicable.</p>
+          <p>Because this LGR defines allocatable fallback variants, the following default actions are applicable.</p>
 
     <ul>
     <li><b>blocked</b> &mdash;  a variant label containing a blocked variant will receive a disposition of “blocked”.</li>
@@ -202,7 +202,7 @@
         in this LGR.</p>
 
         <p>Note that the mapping types for variants are not symmetric: they depend on which code point is considered
-     the source or the target in a given mapping. As specified in [RFC 7940], when mapping types are evaluated
+     the source or the target in a given mapping. As specified in [RFC 7940], when mapping types are evaluated,
      code points in a label that are unchanged use the type of their “reflexive” mapping. 
      Per [RFC 7940] the actions are always applied one after the other, and the evaluation stops at the first 
      action that assigns a disposition to a given label.</p>
@@ -229,8 +229,9 @@
         ASCII base letters. These variants are enabled here by default, but are marked as “enabled” to 
         allow registries to deactivate them if required.</p>
 
-        <h3>Changes from Version Dated 25 October 2024</h3>
-        <p>Adopted from the Second Level Reference LGR for the French Language [Ref-LGR-fr-Latn] without normative changes.</p>
+        <h3>Changes from Version Dated 13 August 2026</h3>
+        <p>This is a placeholder to document any changes applied by the registry operator when adopting the reference LGR. If no change has been noted, the LGR is the same as the Second Level Reference LGR for the French Language [Ref-LGR-fr-Latn] without normative changes.
+    </p>
         </section>
         
         <h2>References</h2>
@@ -248,16 +249,16 @@
 
          <dt>[Level-2-Overview]</dt>
          <dd>Internet Corporation for Assigned Names and Numbers, (ICANN),“Reference Label Generation Rules (LGR) for the Second Level: Overview and Summary” (PDF), 
-     (Los Angeles, California: ICANN, 25 October 2024), https://www.icann.org/en/system/files/files/level2-lgr-overview-summary-25oct24-en.pdf
+     (Los Angeles, California: ICANN, 13 August 2026), https://www.icann.org/en/system/files/files/level2-lgr-overview-summary-13aug26-en.pdf
       </dd>
 
         <dt>[PointQuebec]</dt>
-        <dd>PointQuébec, Section 8 “Permissible Characters” in General Registration Policies https://registry.quebec/legal/</dd>
+        <dd>PointQuébec, Section 8, “Permissible Characters” in General Registration Policies https://registry.quebec/legal/</dd>
 
         <dt>[Ref-LGR-fr-Latn]</dt>
-        <dd>ICANN, Second Level Reference Label Generation Rules for the French Language (fr-Latn), 25 October 2024 (XML)
-      https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-french-language-25oct24-en.xml
-      non-normative HTML presentation: https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-french-language-25oct24-en.html</dd>
+        <dd>ICANN, Second Level Reference Label Generation Rules for the French Language (fr-Latn), 13 August 2026 (XML)
+      https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-french-language-13aug26-en.xml
+      non-normative HTML presentation: https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-french-language-13aug26-en.html</dd>
 
          <dt>[RFC 7940]</dt>
          <dd>Davies, K. and A. Freytag, “Representing Label Generation Rulesets Using XML”, 
@@ -268,7 +269,7 @@
     https://www.rfc-editor.org/info/rfc8228</dd>
          
         <dt>[Unicode 11.0.0]</dt>
-         <dd>The Unicode Consortium. The Unicode Standard, Version 11.0.0, (Mountain View, CA: The Unicode Consortium, 2018. ISBN 978-1-936213-19-1) 
+         <dd>The Unicode Consortium. The Unicode Standard, Version 11.0.0 (Mountain View, CA: The Unicode Consortium, 2018. ISBN 978-1-936213-19-1) 
      https://www.unicode.org/versions/Unicode11.0.0/</dd>
         </dl>
 
@@ -277,15 +278,14 @@
         Other references (starting from [100]) document usage of code points. Entries in the table may have
         multiple source reference values. 
         In the listing of <a href="#whole_label_evaluation_and_context_rules">whole label evaluation and context rules</a>,
-        reference [150] indicates the source for common rules.
-        For more details, see the      <a href="#table_of_references">Table of References</a> below.</p>
+        reference [5891] indicates the source for common rules.
+        For more details, see the <a href="#table_of_references">Table of References</a> below.</p>
 
 ]]></description>
     <references>
       <reference id="0" comment="Code points cited were originally encoded in Unicode Version 1.1">The Unicode Standard, Version 1.1</reference>
       <reference id="100">Internetstiftelsen i Sverige (IIS), “IDN Reference table for French language”  
 	     https://github.com/dotse/IDN-ref-tables/blob/master/language-tables/french-lang-ref-table.txt accessed on 2016-10-16</reference>
-      <reference id="150">RFC 5891, Internationalized Domain Names in Applications (IDNA): Protocol https://tools.ietf.org/html/rfc5891</reference>
       <reference id="200" comment="This table lists only the characters outside the set a-z">ISO/IEC 6937 Third Ed. 2001-12-17- Information 
 	     technology — Coded graphic character set for text communication — Latin alphabet: Table D.1 (p 35) Use of Latin alphabetic characters.</reference>
       <reference id="301" comment="Code points cited form the standard set">Everson, Michael. The Alphabets of Europe: “French” https://www.evertype.com/alphabets/french.pdf</reference>
@@ -304,12 +304,13 @@
       <reference id="605" comment="Code points cited are listed as in occasional use for loan words or foreign names">Wikipedia: “French Orthography” https://en.wikipedia.org/wiki/French_orthography accessed 2015-11-15</reference>
       <reference id="700">Association Française pour le Nommage Internet en Coopération (AFNIC), “Naming Policy for the French Network Information Centre” 
 	  	https://www.afnic.fr/wp-media/uploads/2021/01/afnic-naming-policy-2014-12-08.pdf</reference>
-      <reference id="701">PointQuébec, Section 8 “Permissible Characters” in General Registration Policies, https://registry.quebec/legal/ - accessed 2022-05-16 and
+      <reference id="701">PointQuébec, Section 8, “Permissible Characters” in General Registration Policies, https://registry.quebec/legal/ - accessed 2022-05-16 and
 	  	https://www.iana.org/domains/idn-tables/tables/quebec_fr_1.0.txt</reference>
+      <reference id="5891">RFC 5891, Internationalized Domain Names in Applications (IDNA): Protocol https://tools.ietf.org/html/rfc5891</reference>
     </references>
   </meta>
   <data>
-    <char cp="002D" not-when="hyphen-minus-disallowed" tag="sc:Zyyy" ref="0 100 301 401 601 700 701" comment="HYPHEN-MINUS" />
+    <char cp="002D" not-when="hyphen-minus-disallowed" tag="Hyphen sc:Zyyy" ref="0 100 301 401 601 700 701" comment="HYPHEN-MINUS" />
     <char cp="0030" tag="Common-digit sc:Zyyy" ref="0 100 301 401 601 700 701" comment="DIGIT ZERO; &#x235F;" />
     <char cp="0031" tag="Common-digit sc:Zyyy" ref="0 100 301 401 601 700 701" comment="DIGIT ONE; &#x235F;" />
     <char cp="0032" tag="Common-digit sc:Zyyy" ref="0 100 301 401 601 700 701" comment="DIGIT TWO; &#x235F;" />
@@ -458,14 +459,14 @@
   <rules>
     <!--Character class definitions go here-->
     <!--Whole label evaluation and context rules go here-->
-    <rule name="leading-combining-mark" ref="150" comment="RFC 5891 restrictions on placement of combining marks &#x235F;">
+    <rule name="leading-combining-mark" ref="5891" comment="RFC 5891 restrictions on placement of combining marks &#x235F;">
       <start />
       <union>
         <class property="gc:Mn" />
         <class property="gc:Mc" />
       </union>
     </rule>
-    <rule name="hyphen-minus-disallowed" ref="150" comment="RFC 5891 restrictions on placement of U+002D HYPHEN-MINUS &#x235F;">
+    <rule name="hyphen-minus-disallowed" ref="5891" comment="RFC 5891 restrictions on placement of U+002D HYPHEN-MINUS &#x235F;">
       <choice>
         <rule comment="no leading hyphen">
           <look-behind>
@@ -500,7 +501,7 @@
       <end />
     </rule>
     <!--Action elements go here - order defines precedence-->
-    <action disp="invalid" match="leading-combining-mark" comment="labels with leading combining marks are invalid &#x235F;" />
+    <action disp="invalid" match="leading-combining-mark" ref="5891" comment="labels with leading combining marks are invalid &#x235F;" />
     <action disp="blocked" any-variant="blocked" comment="any variant label containing blocked variants is blocked &#x235F;" />
     <action disp="allocatable" all-variants="fallback" comment="any label with all variants of type fallback is allocatable &#x235F;" />
     <action disp="blocked" any-variant="fallback" comment="any variant label with a mix of variant forms is blocked &#x235F;" />

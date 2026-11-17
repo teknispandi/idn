@@ -1,31 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <lgr xmlns="urn:ietf:params:xml:ns:lgr-1.0">
   <meta>
-    <version comment="Root Zone LGR for the Gujarati Script">5</version>
-    <date>2022-05-26</date>
+    <version comment="Root Zone LGR for the Gujarati Script">6</version>
+    <date>2025-09-23</date>
     <language>und-Gujr</language>
     <scope type="domain">.</scope>
-    <unicode-version>11.0.0</unicode-version>
+    <unicode-version>16.0.0</unicode-version>
     <description type="text/html"><![CDATA[
     <h1>Root Zone Label Generation Rules for the Gujarati Script</h1>
-    
+
     <h2>Overview</h2>
-    <p>This file contains Label Generation Rules (LGR) for the Gujarati script for the Root Zone.
-    For more details on this LGR and additional background on the script, see “Proposal for a
+    <p>This file contains a set of Label Generation Rules (LGR) for the Gujarati script for the Root Zone. 
+     For more details on this LGR and additional background on the script, see “Proposal for a
     Gujarati Script Label Generation Ruleset for the Root Zone” [Proposal-Gujarati]. 
-    This file is one of a set of LGR files that together form an integrated LGR for the DNS Root Zone [RZ-LGR-5]. 
+    This file is one of a set of LGR files that together form an integrated LGR for the DNS Root Zone [RZ-LGR-6]. 
     The format of this file follows [RFC 7940].</p>
 
-<h2>Repertoire</h2>
+    <h2>Repertoire</h2>
     <p>According to Section 5, “Repertoire” in [Proposal-Gujarati], the Gujarati LGR contains 65 single code points. 
     This repertoire covers multiple languages written using the Gujarati script and ranging from 1 to 4 on the [EGIDS] scale.</p>
 
-    <p>The repertoire is based on [MSR-5], which is a subset of [Unicode 11.0].</p>
+      <p>The repertoire is contained in [MSR-6], which is a subset of [Unicode 16.0.0].</p>
 
     <p>As part of the Root Zone, this LGR includes neither decimal digits nor the HYPHEN-MINUS.</p>
-    
-    <p>Each code point is tagged with the script or scripts with which the code points is used, one or more other character categories,
-    and one or more references documenting sufficient justification for inclusion in the repertoire; see “References” below.</p>
+
+    <p><b>Repertoire Listing:</b> Each code point or range is tagged with the script or scripts with which the code point is used and one or more other character categories. For each repertoire element, 
+  one or more references document sufficient justification for inclusion in the repertoire; see the <a href="#ref_desc_sec_References">“References”</a> below.</p>
 
     <h2>Variants</h2>
     <p>According to Section 6, “Variants”, in [Proposal-Gujarati], there are no characters or character sequences 
@@ -36,14 +36,14 @@
     
     <h2>Character Classes</h2>
     <p>Gujarati is an alphasyllabary and the heart of the writing system is 
-    the Akshar. This is the unit which is instinctively recognized by users of the script.
+    the <em>akshar</em>. This is the unit which is instinctively recognized by users of the script.
     The writing system of Gujarati could be summed up as composed of Consonants, 
     the Implicit Vowel Killer: Halant, Vowels, Anusvara, Candrabindu, Nukta, Visarga
     and Avagraha.</p>
     
     <p><b>Consonants:</b> Gujarati consonants contain an implicit vowel schwa /ə/. The 
      traditional classification categorizes them according to their phonetic 
-    properties. There are 5 Varga groups (classes) and one non-Varga group. Each varga, 
+    properties. There are 5 <em>varga</em> groups (classes) and one <em>non-varga</em> group. Each varga, 
     which corresponds to a particular stop, contains five consonants classified as per their properties. 
     The first four consonants are classified on the basis of Voicing and Aspiration and the 
     last is the corresponding nasal. More details in Section 3.4.1, “The Consonants” of the 
@@ -51,20 +51,20 @@
     
     <p><b>Halant:</b> All consonants contain the implicit vowel (schwa). A special
     sign is needed to denote that this implicit vowel is stripped off. This is known as the 
-    Halant (્). The Halant thus joins two consonants and creates conjuncts, which 
+    Halant, U+0ACD. The Halant thus joins two consonants and creates conjuncts, which 
     generally combine 2 to 4 consonants. In rare cases the Halant can join up to 5 consonants. 
     More details in Section 3.4.2, “The Implicit Vowel Killer: Halant” in [Proposal-Gujarati].</p>
 
-    <p><b>Vowels and Matras:</b> Separate symbols exist for all Vowels, which are either pronounced independently 
+    <p><b>Vowels and Matras:</b> Separate symbols exist for all vowels, which are either pronounced independently 
     at the beginning or attached to a consonant. To indicate the latter (other than the implicit one), 
     a Vowel modifier (matra) is attached to the consonant. Since the consonant has a built-in schwa, 
-    there are equivalent Matras for all vowels excepting the અ (U+0A85).  More details in Section 
+    there are equivalent matras for all vowels excepting U+0A85.  More details in Section 
     3.4.3, “Vowels” in [Proposal-Gujarati].</p>
 
-    <p><b>Anusvara:</b> In Gujarati, the Anusvara has a dual function. On the one hand, it acts as 
+    <p><b>Anusvara:</b> In Gujarati, the Anusvara U+0A82 has a dual function. On the one hand, it acts as 
     homorganic nasal, that is, it replaces a conjunct group of a Nasal Consonant+Halant+Consonant 
     belonging to that particular varga. On the other hand, before a non-varga consonant the 
-    anusvara represents a nasal sound. Gujarati and its dialects prefer the anusvara to the 
+    Anusvara represents a nasal sound. Gujarati and its dialects prefer the Anusvara to the 
     corresponding half-nasal. More details in Section 3.4.4, “The Anusvara” in [Proposal-Gujarati].</p>
 
     <p><b>Nukta:</b> Traditionally Gujarati does not admit the Nukta. Gujarati grammarians 
@@ -73,32 +73,34 @@
     transliterated. It follows specific consonants listed in set C1.
      More details in Section 3.4.6, “Nukta” in [Proposal-Gujarati].</p>
 
-    <p><b>Visarga and Avagraha:</b> The Visarga is frequently used in Sanskrit and represents 
+    <p><b>Visarga and Avagraha:</b> The Visarga U+0A83 is frequently used in Sanskrit and represents 
     a sound very close to /h/, as in દુઃખ /du:kh/ sorrow, unhappiness. It is used sparingly 
     in Gujarati with a few words borrowed from Sanskrit. The Avagraha is rarely used and 
     excluded from the LGR. More details in Section 3.4.7, 
     “Visarga and Avagraha” in [Proposal-Gujarati].</p>
       
     <h2>Whole Label Evaluation (WLE) and Context Rules</h2>
-    <h3>Default Whole Label Evaluation Rules and Actions</h3>
+
+      <h3>Default Whole Label Evaluation Rules and Actions</h3>
     <p>The LGR includes the set of required default WLE rules and actions applicable to 
-     the Root Zone and defined in [MSR-5]. They are marked with &#x235F;. The 
-     default prohibition on leading combining marks is equivalent to ensuring that 
-     a label only starts with a consonant or vowel.</p> 
-        
+        the Root Zone and defined in [MSR-6]. They are marked with &#x235F;. 
+      The default prohibition on leading combining marks is equivalent to ensuring that 
+      a label only starts with a consonant or vowel. 
+      The actions compute a label disposition based on WLE rules or variant mapping types.</p>
+
     <h3>Gujarati-specific Rules</h3>
     <p>These rules have been drafted to ensure that the prospective Gujarati label conforms
     to akshar formation norms as desired in Gujarati script.  These norms are exclusively 
     presented as context rules.    </p>
     <p>The following symbols are used in the WLE rules: 
     <br/>C    →    Consonant
-    <br/>M     →    Matra
+    <br/>M    →    Matra
     <br/>V    →    Vowel
     <br/>B    →    Anusvara
     <br/>X    →    Visarga
     <br/>H    →    Halant/Virama
     <br/>N    →    Nukta
-    <br/>C1   →   Consonants used with Nukta
+    <br/>C1   →    Consonants used with Nukta
     </p>
     
     <p>The rules are: </p>
@@ -113,21 +115,22 @@
      <p>More details in Section 7, “Whole Label Evaluation Rules (WLE)” in [Proposal-Gujarati].</p>
     
     <h2>Methodology and Contributors</h2>
-    <p>The Root Zone LGR for the Gujarati script was developed by the Neo-Brahmi Generation Panel (NBGP) the members 
-    of which have experience in linguistics and computational linguistics in a wide variety of languages
-    written with Neo-Brahmi scripts. Under the Neo-Brahmi Generation Panel, there are 
+
+    <p>The Root Zone LGR for the Gujarati Script was developed by the Neo-Brahmi Generation Panel (NBGP), the members 
+     of which have experience in linguistics and computational linguistics in a wide variety of languages
+     written with Neo-Brahmi scripts. Under the Neo-Brahmi Generation Panel, there are 
     nine scripts belonging to separate Unicode blocks. Each of these scripts has been assigned a 
     separate LGR, with the Neo-Brahmi GP ensuring that the fundamental philosophy behind building 
     each LGR is in sync with all other Brahmi-derived scripts. For further details on methodology and contributors, 
-    see Sections 4 and 8 in [Proposal-Gujarati], as well as [RZ-LGR-5-Overview].</p>
+     see Sections 4 and 8 in [Proposal-Gujarati], as well as [RZ-LGR-6-Overview].</p>
 
     <h2>References</h2> 
     <p>The following general references are cited in this document:</p>
     <dl class="references">
 
-    <dt>[MSR-5]</dt>
-    <dd>Integration Panel, “Maximal Starting Repertoire — MSR-5 Overview and Rationale”, 24 June 2021,
-    https://www.icann.org/en/system/files/files/msr-5-overview-24jun21-en.pdf    </dd>
+    <dt>[MSR-6]</dt>
+    <dd>Integration Panel, “Maximal Starting Repertoire — MSR-6 Overview and Rationale”, 23 September 2025,
+  https://www.icann.org/en/system/files/files/msr-6-overview-23sep25-en.pdf</dd>
 
     <dt>[EGIDS]</dt>
      <dd>Lewis and Simons, “EGIDS: Expanded Graded Intergenerational Disruption Scale,”
@@ -138,35 +141,36 @@
      <dd>Neo-Brahmi Generation Panel, “Proposal for a Gujarati Script Root Zone Label Generation Ruleset (LGR)”, 6 March 2019, https://www.icann.org/en/system/files/files/proposal-gujarati-lgr-06mar19-en.pdf</dd>
 
     <dt>[RFC 7940]</dt>
-     <dd>Davies, K. and A. Freytag, “Representing Label Generation Rulesets Using XML”, RFC 7940, August 2016, https://www.rfc-editor.org/info/rfc7940</dd> 
+     <dd>Davies, K. and A. Freytag, “Representing Label Generation Rulesets Using XML”, 
+     RFC 7940, August 2016, https://www.rfc-editor.org/info/rfc7940</dd> 
 
-    <dt>[RZ-LGR-5-Overview]</dt>
-     <dd>Integration Panel, “Root Zone Label Generation Rules (RZ LGR-5): Overview and Summary”, 26 May 2022, https://www.icann.org/sites/default/files/lgr/rz-lgr-5-overview-26may22-en.pdf</dd>
+    <dt>[RZ-LGR-6-Overview]</dt>
+     <dd>Integration Panel, “Root Zone Label Generation Rules (RZ LGR-6): Overview and Summary”, 23 September 2025, https://www.icann.org/sites/default/files/lgr/rz-lgr-6-overview-23sep25-en.pdf</dd>
 
-     <dt>[RZ-LGR-5]</dt>
-      <dd>Integration Panel, “Root Zone Label Generation Rules (RZ-LGR-5)”, 26 May 2022 (XML), https://www.icann.org/sites/default/files/lgr/rz-lgr-5-common-26may22-en.xml <br/>
-      <i>non-normative HTML presentation: https://www.icann.org/sites/default/files/lgr/rz-lgr-5-common-26may22-en.html</i></dd>
+     <dt>[RZ-LGR-6]</dt>
+      <dd>Integration Panel, “Root Zone Label Generation Rules (RZ-LGR-6)”, 23 September 2025 (XML), https://www.icann.org/sites/default/files/lgr/rz-lgr-6-common-23sep25-en.xml <br/>
+     <i>non-normative HTML presentation: https://www.icann.org/sites/default/files/lgr/rz-lgr-6-common-23sep25-en.html</i></dd>
 
      <dt>[SIL-Ethnologue]</dt>
      <dd>David M. Eberhard, Gary F. Simons &amp; Charles D. Fennig (eds.). 2021.
      Ethnologue: Languages of the World, Twenty fourth edition. Dallas, Texas: SIL
      International. Online version available as https://www.ethnologue.com</dd>
 
-     <dt>[Unicode 11.0]</dt>
-      <dd>The Unicode Consortium. The Unicode Standard, Version 11.0.0, (Mountain View, CA: The Unicode Consortium, 2018. ISBN 978-1-936213-19-1) 
-      https://www.unicode.org/versions/Unicode11.0.0/</dd>
+     <dt>[Unicode 16.0.0]</dt>
+      <dd>
+     The Unicode Consortium. The Unicode Standard, Version 16.0.0, (South San Francisco: The Unicode Consortium, 2024. ISBN 978-1-936213-34-4)
+     https://www.unicode.org/versions/Unicode16.0.0/
+     </dd>
      </dl>
-     <p>For references consulted particularly in designing the repertoire for the Gujarati script for the Root Zone 
-     please see details in the <a href="#table_of_references">Table of References</a> below. 
-     Reference [0] refers to the Unicode Standard version in which the
+     <p>For references consulted, particularly in designing the repertoire for the Gujarati script for the Root Zone, 
+  please see details in the <a href="#table_of_references">Table of References</a> below. Reference [0] refers to the Unicode Standard version in which the
      corresponding code points were initially encoded. Reference [101] corresponds to a source
-     given in [Proposal-Gujarati] justifying the inclusion of the corresponding code points. Entries in the table may have
-     multiple source reference values.</p>
+     given in [Proposal-Gujarati] justifying the inclusion of the corresponding code points. Entries in the table may have multiple source reference values.</p>
 
 ]]></description>
     <references>
-      <reference id="0" comment="Any code point originally encoded in Unicode 1.1">The Unicode Standard 1.1</reference>
-      <reference id="6" comment="Any code point originally encoded in Unicode 4.0">The Unicode Standard 4.0</reference>
+      <reference id="0" comment="Any code point originally encoded in Unicode Version 1.1">The Unicode Standard, Version 1.1</reference>
+      <reference id="6" comment="Any code point originally encoded in Unicode Version 4.0">The Unicode Standard, Version 4.0</reference>
       <reference id="101">Omniglot, “Gujarati” https://www.omniglot.com/writing/gujarati.htm (Accessed on 6 Jan. 2018)</reference>
     </references>
   </meta>

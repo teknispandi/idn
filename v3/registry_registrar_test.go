@@ -520,3 +520,82 @@ func TestIDNA2008AgainstIANA(t *testing.T) {
 		}
 	}
 }
+
+// scriptOf (pencarian biner) harus sama dengan tabel unicode.Scripts.
+func TestScriptOfMatchesUnicodeTables(t *testing.T) {
+	for i := 1; i < len(scriptRanges); i++ {
+		if scriptRanges[i].lo <= scriptRanges[i-1].hi {
+			t.Fatalf("overlapping script ranges %+v and %+v", scriptRanges[i-1], scriptRanges[i])
+		}
+	}
+	for name, table := range unicode.Scripts {
+		check := func(lo, hi, stride rune) {
+			for r := lo; r <= hi; r += stride {
+				if got := scriptOf(r); got != name {
+					t.Fatalf("scriptOf(%U) = %q, want %q", r, got, name)
+				}
+			}
+		}
+		for _, r := range table.R16 {
+			check(rune(r.Lo), rune(r.Hi), rune(r.Stride))
+		}
+		for _, r := range table.R32 {
+			check(rune(r.Lo), rune(r.Hi), rune(r.Stride))
+		}
+	}
+	if got := scriptOf(0x0378); got != "" { // tidak ditetapkan
+		t.Errorf("scriptOf(U+0378) = %q, want \"\"", got)
+	}
+}
+
+// Guideline 15 ICANN: opsi SingleScript menolak campuran script yang
+// diizinkan tabel (tabel Jepang memuat a–z), kecuali kombinasi CJK.
+func TestSingleScriptPolicy(t *testing.T) {
+	m := NewIdnManagerFS(idn.Tables())
+	if err := m.RegisterTld("jp", []string{"japanese"}); err != nil {
+		t.Fatal(err)
+	}
+	if err := m.RegisterTldConfig(TldIdnConfig{TldName: "jp-ketat", Languages: []string{"japanese"}, Enabled: true, AllowASCII: true, SingleScript: true}); err != nil {
+		t.Fatal(err)
+	}
+
+	if _, err := m.CheckDomain("東京abc.jp"); err != nil {
+		t.Errorf("default zone: %v (tabel Jepang mengizinkan a–z)", err)
+	}
+	_, err := m.CheckDomain("東京abc.jp-ketat")
+	var ve *ValidationError
+	if !errors.Is(err, ErrMixedScript) || !errors.As(err, &ve) || ve.Pos != 2 || ve.Rune != 'a' {
+		t.Errorf("strict zone error = %v, want ErrMixedScript at 'a' position 2", err)
+	}
+	for _, name := range []string{"ひらがなカタカナ漢字.jp-ketat", "contoh.jp-ketat", "東京1-2.jp-ketat"} {
+		if _, err := m.CheckDomain(name); err != nil {
+			t.Errorf("%s: %v", name, err)
+		}
+	}
+	if ok, _, err := m.ValidateLabel("jp-ketat", "東京abc"); ok || err != nil {
+		t.Errorf("ValidateLabel(東京abc) = %v, %v; want false, nil", ok, err)
+	}
+}
+
+// augmented_latin.txt (google_latn_3.0) sama dengan AUGMENTED_LATIN di Nomulus.
+func TestAugmentedLatinTable(t *testing.T) {
+	if got, err := ParseIdnTableType("augmented_latin"); err != nil || got != AugmentedLatin || got.String() != "augmented_latin" {
+		t.Fatalf("ParseIdnTableType = %v, %v", got, err)
+	}
+	if Japanese != 2 || AugmentedLatin != 3 {
+		t.Errorf("nilai numerik IdnTableType berubah: Japanese=%d AugmentedLatin=%d", Japanese, AugmentedLatin)
+	}
+
+	v := NewIdnLabelValidator()
+	augmented := &MockTld{idnTables: []IdnTableType{AugmentedLatin}}
+	unconfusable := &MockTld{idnTables: []IdnTableType{UnconfusableLatin}}
+	if name, ok := v.FindValidIdnTableForTld("ĉapelo", augmented); !ok || name != "augmented_latin" {
+		t.Errorf("augmented_latin menolak ĉapelo: %q, %v", name, ok)
+	}
+	if _, ok := v.FindValidIdnTableForTld("ĉapelo", unconfusable); ok {
+		t.Error("unconfusable_latin tidak memuat ĉ")
+	}
+	if info, err := v.GetTableInfo(AugmentedLatin); err != nil || info.URL.String() != "https://www.iana.org/domains/idn-tables/tables/google_latn_3.0.txt" {
+		t.Errorf("GetTableInfo = %v, %v", info, err)
+	}
+}

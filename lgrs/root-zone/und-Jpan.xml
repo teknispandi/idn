@@ -1,61 +1,56 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <lgr xmlns="urn:ietf:params:xml:ns:lgr-1.0">
   <meta>
-    <version comment="Root Zone LGR for the Japanese Script">5</version>
-    <date>2022-05-26</date>
+    <version comment="Root Zone LGR for the Japanese Script">6</version>
+    <date>2025-09-23</date>
     <language>und-Jpan</language>
     <scope type="domain">.</scope>
-    <unicode-version>11.0.0</unicode-version>
+    <unicode-version>16.0.0</unicode-version>
     <description type="text/html"><![CDATA[
       <h1>Root Zone Label Generation Rules for the Japanese Script</h1>
 
         <h2>Overview</h2>
-          <p>This file contains a set of Label Generation Rules for the Japanese script (JLGR) for the Root Zone.
-          The Repertoire for the Japanese script combines elements from three Unicode scripts: Han (Kanji), Hiragana and Katakana.
-          For more details on this LGR and additional background on the script, see “Proposal for a Japanese Script Root Zone LGR” [Proposal-Japanese], 
+          <p>This file contains a set of Label Generation Rules (LGR) for the Japanese script for the Root Zone. 
+     For more details on this LGR and additional background on the script, see “Proposal for a Japanese Script Root Zone LGR” [Proposal-Japanese], 
           including the appendices [Proposal-Japanese-Appendices]. 
-          This file is one of a set of LGR files that together form an integrated LGR for the DNS Root Zone [RZ-LGR-5].
-          The format of this file follows [RFC 7940].</p>
+          The Repertoire for the Japanese script combines elements from three Unicode scripts: Han (Kanji), Hiragana and Katakana.
+          This file is one of a set of LGR files that together form an integrated LGR for the DNS Root Zone [RZ-LGR-6]. 
+    The format of this file follows [RFC 7940].</p>
 
         <h2>Repertoire</h2>
           <p>The repertoire includes 6,356 Han characters, 85 Hiragana characters, 89 Katakana characters, and 2 Common (quasi-Kanji) characters for a total of 
-          6,532 repertoire elements. One of the common characters is shared between Han, Hiragana, and Katakana while the other one is shared between 
+          6,532 repertoire elements. One of the common characters is shared between Han, Hiragana, and Katakana, while the other one is shared between 
           Hiragana and Katakana. For more details, see Section 5, “Repertoire” in [Proposal-Japanese].</p>
 
-          <p>The repertoire contains code points used in writing the Japanese language using a limited repertoire as would be appropriate for the Root Zone. The repertoire is contained in [MSR-5], which is a subset of [Unicode 11.0].</p>
+          <p>The repertoire contains code points used in writing the Japanese language using a limited repertoire as would be appropriate for the Root Zone. Each code point in the repertoire is part of JIS X 0208:1997 [100], which is also the basis for Japanese IDNs on the second level.</p>
 
-         <p>Each code point in the repertoire is part of JIS X 0208:1997 [100], which is also the basis for Japanese IDNs on the second level.</p>
+          <p>The repertoire is contained in [MSR-6], which is a subset of [Unicode 16.0.0].</p> 
+          
+          <p>As part of the Root Zone, this LGR includes neither decimal digits nor the HYPHEN-MINUS.</p>
 
-       <p>As part of the Root Zone, this LGR includes neither decimal digits nor the HYPHEN-MINUS.</p>
-
-       <p>Each code point is tagged with the script or scripts with which the code point is used,
-       and one or more references documenting sufficient justification for inclusion in the repertoire; see “References” below.</p>
+          <p><b>Repertoire Listing:</b> Each code point or range is tagged with the script or scripts with which the code point is used. For each repertoire element, 
+    one or more references document sufficient justification for inclusion in the repertoire; see the <a href="#ref_desc_sec_References">“References”</a> below.</p>
 
         <h2>Character Classes</h2>
           <p>This LGR defines no named character classes.</p>
 
-       <h2>Variants</h2>
+        <h2>Variants</h2>
 
-       <p>According to Sections 6 and 7 of [Proposal-Japanese] the LGR defines visually identical variants within 
-       the Japanese script and accepts all variants acquired through integration with the Chinese RZ-LGR [CLGR] and Korean RZ-LGR [KLGR].</p>
-     
-       <p>Of the imported variants, only those that result in an in-script variant for the Japanese script are explicitly listed in this LGR. However, 
-       all cross-repertoire mappings will be applied as part of integration into the Root Zone LGR.</p>
+        <p>According to Sections 6 and 7 of [Proposal-Japanese] the LGR defines visually identical variants within 
+        the Japanese script.</p>
 
-       <p><b>Additional Variants:</b> In addition to the variants listed in this LGR, integration into the Root Zone LGR will result in many additional
-        variants to out-of-repertoire code points as result of variants defined in other LGRs, including the effects of
-        transitivity. However, the list of in-repertoire variants in this LGR is exhaustive.</p>
+        <p><b>Additional Variants:</b> This LGR inherits additional blocked cross-script variants by integration; they may not be listed here unless they result in
+    in-script variants. See the merged, Common LGR [RZ-LGR-6] for details of all applicable cross-script variants,
+    including any not listed here; always use the Common LGR for determining cross-script collisions of labels. For example, this LGR includes all in-script variants acquired through integration with the Chinese RZ-LGR [CLGR] and Korean RZ-LGR [KLGR].</p>
 
-        <p>See the merged, Common LGR [RZ-LGR-5] for details of all applicable cross-repertoire variants, 
-        including any not listed here; always use the Common LGR for determining cross-script collisions of labels. </p>
+        <p><b>Variant Disposition:</b> All variants are of type “blocked”, making labels that 
+    differ only by these variants mutually exclusive: whichever label containing either of 
+    these variants is chosen earlier would be delegated, while any other equivalent labels should be blocked.
+    There is no preference among these labels.</p>
 
-        <h3>Variant Mapping Types</h3>
-        <p>All variants are of type “blocked”, making labels that 
-         differ only by these variants mutually exclusive: whichever label containing either of 
-         these variants is chosen earlier would be delegated, while any other equivalent labels 
-         should be blocked (See Section 8 in [Proposal-Japanese]).</p>
+    <p>This LGR does not define allocatable variants.</p>
 
-         <p>This LGR does not define allocatable variants.</p>
+    <p>The specification of variants in the Root Zone LGR follows the guidelines in [RFC 8228].</p>
 
         <h3>Source References for Variants</h3>
         <p>The following source references are used for variant entries in this LGR:</p>
@@ -65,25 +60,43 @@
           </ul>
 
         <h2>Whole Label Evaluation (WLE) and Context Rules</h2>
-          <h3>Default Whole Label Evaluation Rules</h3>
-            <p>The LGR includes the set of required default WLE rules and actions applicable to the Root Zone and defined in [MSR-5]. They are marked with &#x235F;.</p>
 
-          <h3>Japanese-specific Context Rules</h3>
-          <p>As described in Section 8 in [Proposal-Japanese], the Japanese LGR defines a single context rule.</p>
-            <ul>
-              <li><b>at-start-of-label</b> &mdash; No small kana, iteration mark or prolonged sound mark may start a label.</li>
-            </ul>
-            
-          <h3>Default Actions</h3>
-            <p>The LGR includes the set of required default actions applicable to the Root Zone and defined in [MSR-5]. They are marked with &#x235F;.
-            The actions compute a label disposition based on WLE rules or variant mapping types.</p>
+          <h3>Default Whole Label Evaluation Rules and Actions</h3>
+    <p>The LGR includes the set of required default WLE rules and actions applicable to 
+    the Root Zone and defined in [MSR-6]. They are marked with &#x235F;.
+    The actions compute a label disposition based on WLE rules or variant mapping types.</p>
 
-         <h3>Japanese-specific Actions</h3>
-          <p>The LGR defines no Japanese-specific actions.</p>
+         <h3>Japanese-specific Context Rules</h3>
+          <p>As described in Section 8 in [Proposal-Japanese], the Japanese LGR defines a single context rule for marks that cannot start a label.</p>
+          <ul>
+            <li><b>at-start-of-label</b> &mdash; No small kana, iteration mark or prolonged sound mark may start a label.</li>
+          </ul>
+          
+          <p><b>Iteration marks:</b> The iteration marks, U+309D, U+309E, U+30FD, and U+30FE, 
+          are used to reiterate the pronunciation the preceding character, while the U+3005 IDEOGRAPHIC
+          ITERATION MARK repeats the meaning of the preceding character. As such,
+          these characters have neither particular pronunciation nor meanings by themselves. 
+          They also should not be applied to a closing mark U+3006, except that U+3005 IDEOGRAPHIC ITERATION MARK  may follow U+3006 IDEOGRAPHIC CLOSING MARK in the popular combination &#x3006;&#x3005; "shimeshime".</p>
+
+          <p>Similar considerations apply to U+30FC KATAKANA-HIRAGANA PROLONGED SOUND MARK. Accordingly, 
+          any sequence consisting of any combination of two or more iteration marks and/or the prolonged sound mark 
+          has no meaning and is disallowed by the following WLE rule and corresponding action:</p>
+          <ul>
+            <li><b>repeated-mark</b> &mdash; repeated iteration or prolonged sound marks, or such marks following a closing mark are disallowed, except U+3006 IDEOGRAPHIC CLOSING MARK may be repeated and follow any of the other marks, and U+3005 IDEOGRAPHIC ITERATION MARK may follow a closing mark.</li>
+          </ul>
+          <p>
 
         <h2>Methodology and Contributors</h2>
-          <p>The Root Zone LGR for the Japanese script was developed by the Japanese Script Generation Panel (JGP). 
-          For further details on methodology and contributors, see Sections 4 and 9 in [Proposal-Japanese], as well as [RZ-LGR-5-Overview].</p>
+
+        <p>The Root Zone LGR for the Japanese Script was developed by the Japanese Generation Panel. For details on methodology and 
+       contributors, see Sections 4 and 9 in [Proposal-Japanese], as well as [RZ-LGR-6-Overview].</p>
+
+        <section id="change_history">
+        <h3>Changes from RZ LGR-5</h3> 
+        <p>A WLE rule and action were added in RZ LGR-6 to ensure that iteration marks and the prolonged sound mark are not repeated and do not follow U+3006. 
+        This may affect the validity of labels if they erroneously contain more than one of these symbols in an invalid combination.
+        For the prior version see [RZ-LGR-5-Jpan].</p>
+        </section>
 
         <h2>References</h2>
           <p>References [0] and up refer to the Unicode Standard versions in which corresponding code points were initially encoded. For example, a reference value of 
@@ -94,39 +107,51 @@
             <dd>Root Zone Label Generation Rules for Chinese, 26 May 2020, https://www.icann.org/en/system/files/files/proposal-chinese-lgr-26may20-en.xml</dd>
           <dt>[KLGR]</dt>
             <dd>Root Zone Label Generation Rules for Korean, 1 May 2021, https://www.icann.org/en/system/files/files/proposal-korean-lgr-01may21-en.xml</dd>
-          <dt>[MSR-5]</dt>
-            <dd>Integration Panel, “Maximal Starting Repertoire — MSR-5 Overview and Rationale”, 24 June 2021,
-            https://www.icann.org/en/system/files/files/msr-5-overview-24jun21-en.pdf</dd>
+          <dt>[MSR-6]</dt>
+            <dd>Integration Panel, “Maximal Starting Repertoire — MSR-6 Overview and Rationale”, 23 September 2025,
+  https://www.icann.org/en/system/files/files/msr-6-overview-23sep25-en.pdf</dd>
           <dt>[Proposal-Japanese]</dt>
             <dd>Japanese Script Generation Panel (JGP), “Proposal for a Japanese Script Root Zone LGR”, 20 December 2021, https://www.icann.org/en/system/files/files/proposal-japanese-lgr-20dec21-en.pdf</dd>
           <dt>[Proposal-Japanese-Appendices] </dt>
            <dd>Appendices to “Proposal for a Japanese Script Root Zone LGR”, 
            20 December 2021 (ZIP), https://www.icann.org/en/system/files/files/proposal-japanese-lgr-appendices-20dec21-en.zip</dd>
           <dt>[RFC 7940]</dt>
-            <dd>Davies, K. and A. Freytag, “Representing Label Generation Rulesets Using XML”, RFC 7940, August 2016, https://www.rfc-editor.org/info/rfc7940</dd>
+            <dd>Davies, K. and A. Freytag, “Representing Label Generation Rulesets Using XML”, 
+     RFC 7940, August 2016, https://www.rfc-editor.org/info/rfc7940</dd>
           <dt>[RFC 8228]</dt>
-            <dd>A. Freytag, “Guidance on Designing Label Generation Rulesets (LGRs) Supporting Variant Labels”, RFC 8228, August 2017, https://www.rfc-editor.org/info/rfc8228</dd>
-          <dt>[RZ-LGR-5-Overview]</dt>
-            <dd>Integration Panel, “Root Zone Label Generation Rules (RZ LGR-5): Overview and Summary”,26 May 2022             , https://www.icann.org/sites/default/files/lgr/rz-lgr-5-overview-26may22-en.pdf</dd>
-          <dt>[RZ-LGR-5]</dt>
-           <dd>Integration Panel, “Root Zone Label Generation Rules (RZ-LGR-5)”, 26 May 2022 (XML), https://www.icann.org/sites/default/files/lgr/rz-lgr-5-common-26may22-en.xml <br/>
-           <i>non-normative HTML presentation: https://www.icann.org/sites/default/files/lgr/rz-lgr-5-common-26may22-en.html</i></dd>
-          <dt>[Unicode 11.0]</dt>
-             <dd>The Unicode Consortium. The Unicode Standard, Version 11.0.0, (Mountain View, CA: The Unicode Consortium, 2018. ISBN 978-1-936213-19-1) https://www.unicode.org/versions/Unicode11.0.0/</dd>
+            <dd>A. Freytag, “Guidance on Designing Label Generation Rulesets (LGRs) Supporting Variant Labels”, RFC 8228, August 2017,
+    https://www.rfc-editor.org/info/rfc8228</dd>
+          <dt>[RZ-LGR-5-Jpan]</dt>
+            <dd>ICANN, Root Zone Label Generation Rules for the Japanese Script (und-Jpan), Version 5, 26 May 2022 (XML)
+            https://www.icann.org/sites/default/files/lgr/rz-lgr-5-japanese-script-26may22-en.xml <br/>
+            <i>non-normative HTML presentation: https://www.icann.org/sites/default/files/lgr/rz-lgr-5-japanese-script-26may22-en.html</i></dd>
+          <dt>[RZ-LGR-6-Overview]</dt>
+            <dd>Integration Panel, “Root Zone Label Generation Rules (RZ LGR-6): Overview and Summary”, 23 September 2025, https://www.icann.org/sites/default/files/lgr/rz-lgr-6-overview-23sep25-en.pdf</dd>
+          <dt>[RZ-LGR-6]</dt>
+           <dd>Integration Panel, “Root Zone Label Generation Rules (RZ-LGR-6)”, 23 September 2025 (XML), https://www.icann.org/sites/default/files/lgr/rz-lgr-6-common-23sep25-en.xml <br/>
+     <i>non-normative HTML presentation: https://www.icann.org/sites/default/files/lgr/rz-lgr-6-common-23sep25-en.html</i></dd>
+          <dt>[Unicode 16.0.0]</dt>
+             <dd>
+     The Unicode Consortium. The Unicode Standard, Version 16.0.0, (South San Francisco: The Unicode Consortium, 2024. ISBN 978-1-936213-34-4)
+     https://www.unicode.org/versions/Unicode16.0.0/
+     </dd>
           </dl>
-          <p>For additional detail on references cited in the remainder of the document refer to the Table of References below.</p>
-          <p>Where links to certain references are not available, the data may be archived as part of [Proposal-Japanese].</p>
+   <p>For references consulted, particularly in designing the repertoire for the Japanese script for the Root Zone, 
+  please see details in the <a href="#table_of_references">Table of References</a> below. Reference [0] refers to the Unicode Standard version in which corresponding code points 
+    were initially encoded. References [100] and above corresponds to a source given in [Proposal-Japanese] for justifying 
+    the inclusion of the corresponding code points and variants. Entries in the table may have 
+    multiple source reference values. If links to certain references are not available, the data may be archived as part of [Proposal-Japanese].</p>
     ]]></description>
     <references>
-      <reference id="0" comment="Any code point originally encoded in Unicode 1.1">The Unicode Standard 1.1</reference>
+      <reference id="0" comment="Any code point originally encoded in Unicode Version 1.1">The Unicode Standard, Version 1.1</reference>
       <reference id="100">JIS X 0208:1997, Japanese Industrial Standard, 7-bit and 8-bit double byte coded KANJI sets for information interchange, https://www.jisc.go.jp/, see also https://en.wikipedia.org/wiki/JIS_X_0208</reference>
       <reference id="101">Research paper: Survey on the User Perception of the Homographic Character Set Specified by JGP, Appendix B to [Proposal-Japanese], https://www.icann.org/en/system/files/files/proposal-japanese-lgr-appendices-20dec21-en.zipf</reference>
-      <reference id="300" comment="non-normative HTML presentation: https://www.icann.org/sites/default/files/lgr/rz-lgr-5-chinese-script-26may22-en.html">Root Zone Label Generation Rules for Chinese, 26 May 2022, https://www.icann.org/sites/default/files/lgr/rz-lgr-5-chinese-script-26may22-en.xml</reference>
+      <reference id="300" comment="non-normative HTML presentation: https://www.icann.org/sites/default/files/lgr/rz-lgr-6-chinese-script-23sep25-en.html">Root Zone Label Generation Rules for Chinese, 23 September 2025, https://www.icann.org/sites/default/files/lgr/rz-lgr-6-chinese-script-23sep25-en.xml</reference>
     </references>
   </meta>
   <data>
-    <char cp="3005" not-when="at-start-of-label" tag="sc:Hani" ref="0 100" />
-    <char cp="3006" tag="sc:Hani sc:Hira sc:Kana" ref="0 100" />
+    <char cp="3005" not-when="at-start-of-label" tag="ideographic-iteration sc:Hani" ref="0 100" />
+    <char cp="3006" tag="closing-mark sc:Hani sc:Hira sc:Kana" ref="0 100" />
     <char cp="3041" not-when="at-start-of-label" tag="sc:Hira" ref="0 100" />
     <char cp="3042" tag="sc:Hira" ref="0 100" />
     <char cp="3043" not-when="at-start-of-label" tag="sc:Hira" ref="0 100" />
@@ -216,8 +241,8 @@
     <char cp="3091" tag="sc:Hira" ref="0 100" />
     <char cp="3092" tag="sc:Hira" ref="0 100" />
     <char cp="3093" tag="sc:Hira" ref="0 100" />
-    <char cp="309D" not-when="at-start-of-label" tag="sc:Hira" ref="0 100" />
-    <char cp="309E" not-when="at-start-of-label" tag="sc:Hira" ref="0 100" />
+    <char cp="309D" not-when="at-start-of-label" tag="iteration-mark sc:Hira" ref="0 100" />
+    <char cp="309E" not-when="at-start-of-label" tag="iteration-mark sc:Hira" ref="0 100" />
     <char cp="30A1" not-when="at-start-of-label" tag="sc:Kana" ref="0 100" />
     <char cp="30A2" tag="sc:Kana" ref="0 100" />
     <char cp="30A3" not-when="at-start-of-label" tag="sc:Kana" ref="0 100" />
@@ -329,16 +354,16 @@
     <char cp="30F4" tag="sc:Kana" ref="0 100" />
     <char cp="30F5" not-when="at-start-of-label" tag="sc:Kana" ref="0 100" />
     <char cp="30F6" not-when="at-start-of-label" tag="sc:Kana" ref="0 100" />
-    <char cp="30FC" not-when="at-start-of-label" tag="sc:Hira sc:Kana" ref="0 100">
+    <char cp="30FC" not-when="at-start-of-label" tag="prolonged-sound sc:Hira sc:Kana" ref="0 100">
       <var cp="4E00" type="blocked" ref="101" />
       <var cp="58F1" type="blocked" ref="300" />
       <var cp="58F9" type="blocked" ref="300" />
       <var cp="5F0C" type="blocked" ref="300" />
     </char>
-    <char cp="30FD" not-when="at-start-of-label" tag="sc:Kana" ref="0 100">
+    <char cp="30FD" not-when="at-start-of-label" tag="iteration-mark sc:Kana" ref="0 100">
       <var cp="4E36" type="blocked" ref="101" />
     </char>
-    <char cp="30FE" not-when="at-start-of-label" tag="sc:Kana" ref="0 100" />
+    <char cp="30FE" not-when="at-start-of-label" tag="iteration-mark sc:Kana" ref="0 100" />
     <char cp="4E00" tag="sc:Hani" ref="0 100">
       <var cp="30FC" type="blocked" ref="101" />
       <var cp="58F1" type="blocked" ref="300" />
@@ -10576,9 +10601,26 @@
       </look-behind>
       <anchor />
     </rule>
+    <rule name="repeated-mark" comment="Iteration marks or prolonged sound marks may not be repeated, follow each other or, except for the ideographic iteration mark, follow a closing mark">
+      <choice>
+        <rule>
+          <class from-tag="closing-mark" />
+          <choice>
+            <class from-tag="iteration-mark" />
+            <class from-tag="prolonged-sound" />
+          </choice>
+        </rule>
+        <choice count="2+">
+          <class from-tag="ideographic-iteration" />
+          <class from-tag="iteration-mark" />
+          <class from-tag="prolonged-sound" />
+        </choice>
+      </choice>
+    </rule>
     <!--Action elements go here - order defines precedence-->
     <action disp="invalid" match="leading-combining-mark" comment="labels with leading combining marks are invalid &#x235F;" />
     <action disp="invalid" any-variant="out-of-repertoire-var" comment="any variant label with a code point out of repertoire is invalid &#x235F;" />
+    <action disp="invalid" match="repeated-mark" comment="iteration marks or prolonged sound mark may not be repeated, or follow closing mark" />
     <action disp="blocked" any-variant="blocked" comment="any variant label containing blocked variants is blocked &#x235F;" />
     <action disp="allocatable" all-variants="allocatable" comment="variant labels with all variants allocatable are allocatable &#x235F;" />
     <action disp="valid" comment="catch all (default action) &#x235F;" />

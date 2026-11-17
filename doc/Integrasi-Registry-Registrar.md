@@ -156,7 +156,7 @@ Pemetaan kesalahan yang disarankan:
 | Kesalahan | gRPC | EPP (lewat `flow/create.go`) |
 |---|---|---|
 | struktur/IDNA2008 (`ErrEmptyLabel`, `ErrHyphen34`, `ErrInvalidALabel`, `ErrDisallowedCodepoint`, `ErrBidiRule`, …) | `InvalidArgument` | 2005 |
-| kebijakan tabel (`ErrCodepointNotInTable`, `ErrLanguageRule`, `ErrNoIdnTable`), `ErrUnknownTld`, `ErrTldDisabled`, `ErrNotRegistrable` | `InvalidArgument` atau `FailedPrecondition` | 2005 / 2306 — putuskan, lalu samakan dengan registrar |
+| kebijakan tabel (`ErrCodepointNotInTable`, `ErrLanguageRule`, `ErrNoIdnTable`, `ErrMixedScript`), `ErrUnknownTld`, `ErrTldDisabled`, `ErrNotRegistrable` | `InvalidArgument` atau `FailedPrecondition` | 2005 / 2306 — putuskan, lalu samakan dengan registrar |
 | bentrok nama atau varian | `AlreadyExists` | 2302 |
 
 Teks `err.Error()` sudah menyebut code point, posisi, tabel, dan nama aturan
@@ -359,7 +359,8 @@ non-Latin.
 
 | Keputusan | Pilihan |
 |---|---|
-| Tabel per zona `.id`, `co.id`, dst. dan urutannya | mis. `latin` + `und-bali` (LGR) untuk `.id` |
+| Tabel per zona `.id`, `co.id`, dst. dan urutannya | mis. `latin` + `und-bali` (LGR), dan `und-java` (LGR Jawa, rilis ICANN 13 Agustus 2026) bila aksara Jawa akan dibuka |
+| Campuran aksara per zona (`SingleScript`) | ikuti tabel (default), atau satu script saja |
 | Varian `allocatable` | boleh dialokasikan ke pendaftar yang sama, atau semua varian diblokir |
 | Result code EPP untuk penolakan kebijakan tabel | 2005 atau 2306 |
 | URL tabel dan kebijakan PANDI di IANA untuk RDE | wajib sebelum deposit memuat `rdeIDN` |

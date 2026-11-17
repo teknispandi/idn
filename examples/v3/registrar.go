@@ -69,6 +69,8 @@ func pesanUntukPengguna(err error) string {
 		return "nama domain memuat karakter yang tidak diizinkan" + posisi
 	case errors.Is(err, v3.ErrLanguageRule):
 		return "susunan aksara tidak sesuai aturan penulisan" + posisi
+	case errors.Is(err, v3.ErrMixedScript):
+		return "nama domain mencampur aksara yang berbeda" + posisi
 	case errors.Is(err, v3.ErrNotRegistrable):
 		return "hanya nama tingkat dua yang bisa didaftarkan, mis. contoh.id"
 	case errors.Is(err, v3.ErrUnknownTld), errors.Is(err, v3.ErrTldDisabled):

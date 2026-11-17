@@ -1,52 +1,53 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <lgr xmlns="urn:ietf:params:xml:ns:lgr-1.0">
   <meta>
-    <version comment="Root Zone LGR for the Telugu Script">5</version>
-    <date>2022-05-26</date>
+    <version comment="Root Zone LGR for the Telugu Script">6</version>
+    <date>2025-09-23</date>
     <language>und-Telu</language>
     <scope type="domain">.</scope>
-    <unicode-version>11.0.0</unicode-version>
+    <unicode-version>16.0.0</unicode-version>
     <description type="text/html"><![CDATA[
     <h1>Root Zone Label Generation Rules for the Telugu Script</h1>
-    
+
     <h2>Overview</h2>
-    <p>This file contains Label Generation Rules (LGR) for the Telugu script for the Root Zone.
-    For more details on this LGR and additional background on the script, see “Proposal for a Telugu Script Root Zone Label Generation Ruleset (LGR)” [Proposal-Telugu]. 
-    This file is one of a set of LGR files that together form an integrated LGR for the DNS Root Zone [RZ-LGR-5]. 
+    <p>This file contains a set of Label Generation Rules (LGR) for the Telugu script for the Root Zone. 
+     For more details on this LGR and additional background on the script, see “Proposal for a Telugu Script Root Zone Label Generation Ruleset (LGR)” [Proposal-Telugu]. 
+    This file is one of a set of LGR files that together form an integrated LGR for the DNS Root Zone [RZ-LGR-6]. 
     The format of this file follows [RFC 7940].</p>
 
-<h2>Repertoire</h2>
+    <h2>Repertoire</h2>
     <p>According to Section 5, “Repertoire” in [Proposal-Telugu], the Telugu LGR contains 63 single code points.
     This LGR primarily caters to the Telugu language written using the Telugu script. Several other languages 
      with [EGIDS] level above 4 were also considered in the analysis.</p>
-        
-    <p>The repertoire is based on [MSR-5], which is a subset of [Unicode 11.0].</p>
 
-      <p>As part of the Root Zone, this LGR includes neither decimal digits nor the HYPHEN-MINUS.</p>
+      <p>The repertoire is contained in [MSR-6], which is a subset of [Unicode 16.0.0].</p>
 
-    <p>Code points outside the Telugu script that are listed in this file are targets
-        for out-of-script variants and are identified by a reflexive (identity)
-        variant of type “out-of-repertoire-var”. They do not form part of the
-        repertoire.</p>
-    
-    <p>Each code point is tagged with the script or scripts with which the code point is used, one or more other character categories,
-    and one or more references documenting sufficient justification for inclusion in the repertoire; see “References” below.
-    Comments provide alternate names of some code points.</p>
+    <p>As part of the Root Zone, this LGR includes neither decimal digits nor the HYPHEN-MINUS.</p>
 
-    <h2>Variants</h2>
+      <p><b>Repertoire Listing:</b> Each code point or range is tagged with the script or scripts with which the code point is used and one or more other character categories. For each repertoire element, 
+  one or more references document sufficient justification for inclusion in the repertoire; see the <a href="#ref_desc_sec_References">“References”</a> below.
+    Comments provide alternate names for some code points.</p>
+
+    <p>Code points outside the Telugu script repertoire that are listed in this file are targets
+      for out-of-repertoire variants and are identified by a reflexive (identity)
+      variant of type “out-of-repertoire-var”. They do not form part of the
+      repertoire.</p>
+
+   <h2>Variants</h2>
     <p>According to Section 6, “Variants”, in [Proposal-Telugu], this LGR defines cross-script variants 
-    which are “Confusing due to deviation from normally perceived character formations by larger linguistic 
+    based on being “Confusing due to deviation from normally perceived character formations by larger linguistic 
     community”. These cases are not of mere visual similarity; they can cause confusion even to a
     careful observer and hence have been defined as variants. There are no in-script variants defined for Telugu.</p>
 
-    <p><b>Variant Disposition:</b> All variants are of type “blocked”, making labels that differ only 
-    by these variants mutually exclusive: whichever label containing either of these variants is chosen earlier would be delegated 
-    any other equivalent label should be blocked. There is no preference among these variants.</p>
+      <p><b>Variant Disposition:</b> All variants are of type “blocked”, making labels that 
+    differ only by these variants mutually exclusive: whichever label containing either of 
+    these variants is chosen earlier would be delegated, while any other equivalent labels should be blocked.
+    There is no preference among these labels.</p>
 
-  <p>This LGR does not define allocatable variants.</p>
+    <p>This LGR does not define allocatable variants.</p>
 
     <p>The specification of variants in the Root Zone LGR follows the guidelines in [RFC 8228].</p>
-      
+
     <h2>Character Classes</h2>
     <p>The Telugu orthography superficially resembles a series of circles and semi-circles. 
     Most consonants carry a tick mark called ‘talakattu’. The writing system is classified 
@@ -77,12 +78,14 @@
     details in Section 3.5.1, “The vowels and vowel modifiers” in [Proposal-Telugu].</p>
       
     <h2>Whole Label Evaluation (WLE) and Context Rules</h2>
+
     <h3>Default Whole Label Evaluation Rules and Actions</h3>
     <p>The LGR includes the set of required default WLE rules and actions applicable to 
-        the Root Zone and defined in [MSR-5]. They are marked with &#x235F;. The 
-          default prohibition on leading combining marks is equivalent to ensuring that 
-          a label only starts with a consonant or vowel.</p> 
-        
+        the Root Zone and defined in [MSR-6]. They are marked with &#x235F;. 
+      The default prohibition on leading combining marks is equivalent to ensuring that 
+      a label only starts with a consonant or vowel. 
+      The actions compute a label disposition based on WLE rules or variant mapping types.</p>
+
     <h3>Telugu-specific Rules</h3>
     <p>These rules have been formulated so that they can be adopted for  LGR specification.</p>
     <p>The following symbols are used in the WLE rules: 
@@ -107,13 +110,13 @@
     
     <h2>Methodology and Contributors</h2>
 
-     <p>The Root Zone LGR for the Telugu script was developed by the Neo-Brahmi Generation Panel (NBGP) the members 
+    <p>The Root Zone LGR for the Telugu Script was developed by the Neo-Brahmi Generation Panel (NBGP), the members 
      of which have experience in linguistics and computational linguistics in a wide variety of languages
      written with Neo-Brahmi scripts. Under the Neo-Brahmi Generation Panel, there are 
-     nine scripts belonging to separate Unicode blocks. Each of these scripts has been assigned a 
-     separate LGR, with the Neo-Brahmi GP ensuring that the fundamental philosophy behind building 
-     each LGR is in sync with all other Brahmi-derived scripts. For further details on methodology and
-     contributors, see Sections 4 and 8 in [Proposal-Telugu], as well as [RZ-LGR-5-Overview].</p>
+    nine scripts belonging to separate Unicode blocks. Each of these scripts has been assigned a 
+    separate LGR, with the Neo-Brahmi GP ensuring that the fundamental philosophy behind building 
+    each LGR is in sync with all other Brahmi-derived scripts. For further details on methodology and contributors, 
+     see Sections 4 and 8 in [Proposal-Telugu], as well as [RZ-LGR-6-Overview].</p>
 
     <h2>References</h2> 
     <p>The following general references are cited in this document:</p>
@@ -123,45 +126,47 @@
       documented in [SIL-Ethnologue] and summarized here:
       https://en.wikipedia.org/wiki/Expanded_Graded_Intergenerational_Disruption_Scale_(EGIDS)</dd>
 
-    <dt>[MSR-5]</dt>
-    <dd>Integration Panel, “Maximal Starting Repertoire — MSR-5 Overview and Rationale”, 24 June 2021,
-    https://www.icann.org/en/system/files/files/msr-5-overview-24jun21-en.pdf     </dd>
+    <dt>[MSR-6]</dt>
+    <dd>Integration Panel, “Maximal Starting Repertoire — MSR-6 Overview and Rationale”, 23 September 2025,
+  https://www.icann.org/en/system/files/files/msr-6-overview-23sep25-en.pdf</dd>
 
     <dt>[Proposal-Telugu]</dt>
      <dd>Neo-Brahmi Generation Panel, “Proposal for a Telugu Script Root Zone Label Generation Ruleset (LGR)”, 7 June 2019, https://www.icann.org/en/system/files/files/proposal-telugu-lgr-07Jun19-en.pdf</dd>
 
-    <dt>[RFC 7940]</dt>
-     <dd>Davies, K. and A. Freytag, “Representing Label Generation Rulesets Using XML”, RFC 7940, August 2016, https://www.rfc-editor.org/info/rfc7940</dd> 
+     <dt>[RFC 7940]</dt>
+     <dd>Davies, K. and A. Freytag, “Representing Label Generation Rulesets Using XML”, 
+     RFC 7940, August 2016, https://www.rfc-editor.org/info/rfc7940</dd> 
 
-    <dt>[RFC 8228]</dt>
-    <dd>A. Freytag, “Guidance on Designing Label Generation Rulesets (LGRs) Supporting Variant Labels”, RFC 8228, August 2017,
+       <dt>[RFC 8228]</dt>
+       <dd>A. Freytag, “Guidance on Designing Label Generation Rulesets (LGRs) Supporting Variant Labels”, RFC 8228, August 2017,
     https://www.rfc-editor.org/info/rfc8228</dd>
-      <dt>[RZ-LGR-5-Overview]</dt>
-       <dd>Integration Panel, “Root Zone Label Generation Rules (RZ LGR-5): Overview and Summary”, 26 May 2022, https://www.icann.org/sites/default/files/lgr/rz-lgr-5-overview-26may22-en.pdf</dd>
+     
+     <dt>[RZ-LGR-6-Overview]</dt>
+     <dd>Integration Panel, “Root Zone Label Generation Rules (RZ LGR-6): Overview and Summary”, 23 September 2025, https://www.icann.org/sites/default/files/lgr/rz-lgr-6-overview-23sep25-en.pdf</dd>
 
-     <dt>[RZ-LGR-5]</dt>
-     <dd>Integration Panel, “Root Zone Label Generation Rules (RZ-LGR-5)”, 26 May 2022 (XML), https://www.icann.org/sites/default/files/lgr/rz-lgr-5-common-26may22-en.xml <br/>
-     <i>non-normative HTML presentation: https://www.icann.org/sites/default/files/lgr/rz-lgr-5-common-26may22-en.html</i></dd>
+     <dt>[RZ-LGR-6]</dt>
+     <dd>Integration Panel, “Root Zone Label Generation Rules (RZ-LGR-6)”, 23 September 2025 (XML), https://www.icann.org/sites/default/files/lgr/rz-lgr-6-common-23sep25-en.xml <br/>
+     <i>non-normative HTML presentation: https://www.icann.org/sites/default/files/lgr/rz-lgr-6-common-23sep25-en.html</i></dd>
 
      <dt>[SIL-Ethnologue]</dt>
      <dd>David M. Eberhard, Gary F. Simons &amp; Charles D. Fennig (eds.). 2021.
      Ethnologue: Languages of the World, Twenty fourth edition. Dallas, Texas: SIL
      International. Online version available as https://www.ethnologue.com</dd>
 
-     <dt>[Unicode 11.0]</dt>
-     <dd>The Unicode Consortium. The Unicode Standard, Version 11.0.0, (Mountain View, CA: The Unicode Consortium, 2018. ISBN 978-1-936213-19-1) 
-     https://www.unicode.org/versions/Unicode11.0.0/</dd>
+     <dt>[Unicode 16.0.0]</dt>
+     <dd>
+     The Unicode Consortium. The Unicode Standard, Version 16.0.0, (South San Francisco: The Unicode Consortium, 2024. ISBN 978-1-936213-34-4)
+     https://www.unicode.org/versions/Unicode16.0.0/
+     </dd>
      </dl>
-     <p>For references consulted particularly in designing the repertoire for the Telugu script for the Root Zone 
-     please see details in the <a href="#table_of_references">Table of References</a> below. 
+     <p>For references consulted, particularly in designing the repertoire for the Telugu script for the Root Zone, 
+  please see details in the <a href="#table_of_references">Table of References</a> below.
      Reference [0] refers to the Unicode Standard version in which the
      corresponding code points were initially encoded. References [102] and above correspond to sources
-     given in [Proposal-Telugu] justifying the inclusion of the corresponding code points. Entries in the table may have
-     multiple source reference values.</p>
-
+     given in [Proposal-Telugu] justifying the inclusion of the corresponding code points. Entries in the table may have multiple source reference values.</p>
 ]]></description>
     <references>
-      <reference id="0" comment="Any code point originally encoded in Unicode 1.1">The Unicode Standard 1.1</reference>
+      <reference id="0" comment="Any code point originally encoded in Unicode Version 1.1">The Unicode Standard, Version 1.1</reference>
       <reference id="102">Krishnamurti, Bhadriraju (Ed.). 2000. Telugu bhaashaa charitra. Hyderabad: P.S. Telugu University. (first edition 1974) </reference>
       <reference id="103">Krishnamurti, Bhadriraju and J P L Gwynn. 1985.  A Grammar of Modern Telugu. New Delhi: Oxford University Press. ISBN 978-0-19-561664-4 </reference>
     </references>

@@ -41,10 +41,13 @@ de.VariantIndex("strasse") == de.VariantIndex("straße") // true
 Nama tabel = nama file tanpa ekstensi (huruf kecil); ganti dengan `WithName`
 bila LGR dan tabel `.txt` untuk aksara yang sama dipasang berdampingan.
 
-LGR yang `<unicode-version>`-nya lebih baru dari `v4.SupportedUnicodeVersion()`
-(versi terendah di antara pustaka standar Go, `x/net/idna`, dan `x/text`;
-saat ini 15.0.0) ditolak saat dimuat — properti dan status PVALID code point
-baru tidak bisa dievaluasi dengan benar. Perbarui Go dan dependensi itu dulu.
+`v4.SupportedUnicodeVersion()` adalah versi terendah di antara pustaka standar
+Go, `x/net/idna`, dan `x/text` (saat ini 15.0.0). LGR yang `<unicode-version>`-nya
+lebih baru (rilis ICANN 2025–2026 menyatakan 15.1/16.0) tetap dimuat selama
+setiap code point di repertoire dan target variannya sudah dikenal runtime;
+LGR yang memakai code point yang belum dikenal ditolak saat dimuat, karena
+properti dan status PVALID-nya tidak bisa dievaluasi. Perbarui Go dan
+dependensi itu untuk LGR seperti itu.
 
 ## Semantik yang diterapkan
 
@@ -74,7 +77,10 @@ Keputusan di luar teks RFC:
 
 ## Verifikasi
 
-- Ke-143 LGR di `lgrs/` dimuat tanpa error (`TestLoadAllLGRs`).
+- Ke-146 LGR di `lgrs/` (rilis ICANN terbaru, lihat [lgrs/README.md](../lgrs/README.md))
+  dimuat tanpa error (`TestLoadAllLGRs`).
+- LGR aksara Jawa (`und-Java`, 13 Agustus 2026) diuji terhadap aturan yang
+  dijelaskan di file-nya (`TestJavaneseLGR`).
 - LGR `und-Bali.xml` dibandingkan dengan `v3.BalineseLanguageValidator` yang
   ditulis tangan — dua implementasi independen — untuk semua label 1–3
   karakter dari repertoire ditambah 100.000 label acak (391.918 label,

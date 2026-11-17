@@ -2,7 +2,7 @@
 <lgr xmlns="urn:ietf:params:xml:ns:lgr-1.0">
   <meta>
     <version comment="Second Level Reference LGR">3</version>
-    <date>2024-10-25</date>
+    <date>2026-08-13</date>
     <language>no</language>
     <unicode-version>11.0.0</unicode-version>
     <description type="text/html"><![CDATA[
@@ -11,7 +11,7 @@
   <ul>
     <li>These instructions cover how to adopt an LGR based on this reference LGR for a given
     zone and how to prepare the file for deposit in the IANA Repository of IDN Practices.</li>
-    <li>As described  the IANA procedure (https://www.iana.org/help/idn-repository-procedure) an 
+    <li>As described in the IANA procedure (https://www.iana.org/help/idn-repository-procedure) an 
     LGR MUST contain the following elements in its header:
       <ul style="list-style-type:square;">
         <li>Script or Language Designator (see below for guidance) </li>
@@ -37,13 +37,13 @@
   <p><code>&lt;version comment=&quot;</code>[Please replace (or delete) the optional comment]<code>&quot;&gt;</code>[Please fill in version number, starting at 1]<code>&lt;/version&gt;</code></p>
   <p><code>&lt;date&gt;</code>[Please fill in with publication date, in YYYY-MM-DD format]<code>&lt;/date&gt;</code></p>
   <p><code>&lt;validity-start&gt;</code>[Please fill in effective date, in YYYY-MM-DD format]<code>&lt;/validity-start&gt;</code></p>
-  <p>Note: the scope element may be repeated, so that the same document can serve for multiple domains.</p>
+  <p>Note: the scope element may be repeated, so that the same document can serve multiple domains.</p>
   <p><code>&lt;scope type=&quot;domain&quot;&gt;</code>[Please provide, in &quot;.domain&quot; format]<code>&lt;/scope&gt;</code></p>
 <p><strong>Registry Contact Information:</strong></p>
   <p>Please fill in the <a href="#registry_contact_details">Registry Contact Details</a>.</p>
 <p><strong>Change History</strong></p>
   <p>If you made technical modifications to the LGR, please summarize them in the <a href="#change_history">Change History</a> (and also note the details in the appropriate section of the description).</p>
-<p>PLEASE DELETE THESE INSTRUCTIONS BEFORE DEPOSITING THE DOCUMENT</p></div>
+<p>PLEASE DELETE THESE INSTRUCTIONS BEFORE DEPOSITING THE DOCUMENT.</p></div>
        
        <section id="registry_contact_details">
 <h2>Registry Contact Details</h2>
@@ -59,7 +59,7 @@
         <p>This document specifies a set of Label Generation Rules (LGR) for the Norwegian language
     using a language-specific repertoire for the second level domain or domains identified above.
     The format of this file follows [RFC 7940].
-    This LGR is adapted from the “Reference LGR for the Second Level for the Norwegian Language” [Ref-LGR-no-Latn], for details, see <a href="#change_history">Change History</a> below.</p>
+    This LGR is adapted from the “Reference LGR for the Second Level for the Norwegian Language” [Ref-LGR-no-Latn]; for details, see <a href="#change_history">Change History</a> below.</p>
 
         <p><b>Standalone LGR:</b> This LGR is designed to be used in a zone that does not cater to IDNs 
     other than those valid under this LGR. 
@@ -117,15 +117,15 @@
         <p>By default, the LGR includes the rules and actions to implement the following restrictions mandated by the IDNA protocol. They are marked with &#x235F;.</p>
        <ul>
        <li><b>Hyphen Restrictions</b> &mdash; restrictions on the allowable placement of hyphens (no leading/ending hyphen
-             and no hyphen in positions 3 and 4). These restrictions are described in Section 4.2.3.1 of RFC 5891 [150]. 
-             They are implemented here as context rule on U+002D (-) HYPHEN-MINUS.</li>
+             and no hyphen in positions 3 and 4). These restrictions are described in Section 4.2.3.1 of RFC 5891 [5891]. 
+             They are implemented here as a context rule on U+002D (-) HYPHEN-MINUS.</li>
           <li><b>Leading Combining Marks</b>   &mdash;  restrictions on the allowable placement of combining marks
-             (no leading combining mark). This rule is described in Section 4.2.3.2 of RFC 5891 [150].</li>
+             (no leading combining mark). This rule is described in Section 4.2.3.2 of RFC 5891 [5891].</li>
        </ul>
 
         <h2>Actions</h2>
  
-        <p>This LGR includes the default actions for LGRs as well as the action needed to
+        <p>This LGR includes the default actions for LGRs, as well as the action needed to
         invalidate labels with misplaced combining marks. They are marked with &#x235F;.
         For a description see [RFC 7940].</p>
 
@@ -141,8 +141,9 @@
 
         <h3>Changes from Version Dated 18 May 2021</h3><p>Unicode Version has been updated.</p>
 
-        <h3>Changes from Version Dated 25 October 2024</h3>
-        <p>Adopted from the Second Level Reference LGR for the Norwegian Language [Ref-LGR-no-Latn] without normative changes.</p>
+        <h3>Changes from Version Dated 13 August 2026</h3>
+        <p>This is a placeholder to document any changes applied by the registry operator when adopting the reference LGR. If no change has been noted, the LGR is the same as the Second Level Reference LGR for the Norwegian Language [Ref-LGR-no-Latn] without normative changes.
+    </p>
         </section>
 
         <h2>References</h2>
@@ -162,11 +163,11 @@
          <dd> Davies, K. and A. Freytag, “Representing Label Generation Rulesets Using XML”, 
      RFC 7940, August 2016, https://www.rfc-editor.org/info/rfc7940</dd>
          <dt>[Ref-LGR-no-Latn]</dt>
-              <dd>ICANN, Second Level Reference Label Generation Rules for the Norwegian Language (no-Latn), 25 October 2024 (XML)
-      https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-norwegian-language-25oct24-en.xml
-      non-normative HTML presentation: https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-norwegian-language-25oct24-en.html</dd>
+              <dd>ICANN, Second Level Reference Label Generation Rules for the Norwegian Language (no-Latn), 13 August 2026 (XML)
+      https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-norwegian-language-13aug26-en.xml
+      non-normative HTML presentation: https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-norwegian-language-13aug26-en.html</dd>
                 <dt>[Unicode 11.0.0]</dt>
-         <dd>The Unicode Consortium. The Unicode Standard, Version 11.0.0, (Mountain View, CA: The Unicode Consortium, 2018. ISBN 978-1-936213-19-1) 
+         <dd>The Unicode Consortium. The Unicode Standard, Version 11.0.0 (Mountain View, CA: The Unicode Consortium, 2018. ISBN 978-1-936213-19-1) 
      https://www.unicode.org/versions/Unicode11.0.0/</dd>
         </dl>
 
@@ -175,15 +176,14 @@
         Other references (starting from [100]) document usage of code points. Entries in the table may have
         multiple source reference values. 
         In the listing of <a href="#whole_label_evaluation_and_context_rules">whole label evaluation and context rules</a>,
-        reference [150] indicates the source for common rules.
-        For more details, see the      <a href="#table_of_references">Table of References</a> below.</p>
+        reference [5891] indicates the source for common rules.
+        For more details, see the <a href="#table_of_references">Table of References</a> below.</p>
 
 ]]></description>
     <references>
       <reference id="0" comment="Code points cited were originally encoded in Unicode Version 1.1">The Unicode Standard, Version 1.1</reference>
       <reference id="100">Internetstiftelsen i Sverige (IIS), “IDN Reference table for Norwegian language”  
 	     https://github.com/dotse/IDN-ref-tables/blob/master/language-tables/norwegian-lang-ref-table.txt accessed on 2016-10-16</reference>
-      <reference id="150">RFC 5891, Internationalized Domain Names in Applications (IDNA): Protocol https://tools.ietf.org/html/rfc5891</reference>
       <reference id="200" comment="This table lists only the characters outside the set a-z. Some obvious typographical errors have been corrected">ISO/IEC 6937 Third Ed. 2001-12-17- Information 
 	   technology — Coded graphic character set for text communication — Latin alphabet: Table D.1 (p 35) Use of Latin alphabetic characters.</reference>
       <reference id="301" comment="Code points cited form the standard set">Everson, Michael. The Alphabets of Europe: “Bokmål-Norwegian” https://www.evertype.com/alphabets/bokmaal-norwegian.pdf</reference>
@@ -217,10 +217,11 @@
 		  https://www.forskning.no/sprak-standardisering/2009/12/hvor-enkelt-er-alfabetet</reference>
       <reference id="702" comment="Code points cited are extensions needed for writing Sami languages written in Norway">Standard Norge, in Forskning.no, December 2009 “Hvor enkelt er alphabetet&quot;
 	  https://www.forskning.no/sprak-standardisering/2009/12/hvor-enkelt-er-alfabetet</reference>
+      <reference id="5891">RFC 5891, Internationalized Domain Names in Applications (IDNA): Protocol https://tools.ietf.org/html/rfc5891</reference>
     </references>
   </meta>
   <data>
-    <char cp="002D" not-when="hyphen-minus-disallowed" tag="sc:Zyyy" ref="0 100 301 401 501 601" comment="HYPHEN-MINUS" />
+    <char cp="002D" not-when="hyphen-minus-disallowed" tag="Hyphen sc:Zyyy" ref="0 100 301 401 501 601" comment="HYPHEN-MINUS" />
     <char cp="0030" tag="Common-digit sc:Zyyy" ref="0 100 301 401 501 601" comment="DIGIT ZERO; &#x235F;" />
     <char cp="0031" tag="Common-digit sc:Zyyy" ref="0 100 301 401 501 601" comment="DIGIT ONE; &#x235F;" />
     <char cp="0032" tag="Common-digit sc:Zyyy" ref="0 100 301 401 501 601" comment="DIGIT TWO; &#x235F;" />
@@ -289,14 +290,14 @@
   <rules>
     <!--Character class definitions go here-->
     <!--Whole label evaluation and context rules go here-->
-    <rule name="leading-combining-mark" ref="150" comment="RFC 5891 restrictions on placement of combining marks &#x235F;">
+    <rule name="leading-combining-mark" ref="5891" comment="RFC 5891 restrictions on placement of combining marks &#x235F;">
       <start />
       <union>
         <class property="gc:Mn" />
         <class property="gc:Mc" />
       </union>
     </rule>
-    <rule name="hyphen-minus-disallowed" ref="150" comment="RFC 5891 restrictions on placement of U+002D HYPHEN-MINUS &#x235F;">
+    <rule name="hyphen-minus-disallowed" ref="5891" comment="RFC 5891 restrictions on placement of U+002D HYPHEN-MINUS &#x235F;">
       <choice>
         <rule comment="no leading hyphen">
           <look-behind>
@@ -326,7 +327,7 @@
       <end />
     </rule>
     <!--Action elements go here - order defines precedence-->
-    <action disp="invalid" match="leading-combining-mark" comment="by default, labels with leading combining marks are invalid" />
+    <action disp="invalid" match="leading-combining-mark" ref="5891" comment="by default, labels with leading combining marks are invalid" />
     <action disp="valid" comment="catch all" />
   </rules>
 </lgr>

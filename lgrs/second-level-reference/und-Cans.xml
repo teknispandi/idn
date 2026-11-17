@@ -1,0 +1,850 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<lgr xmlns="urn:ietf:params:xml:ns:lgr-1.0">
+  <meta>
+    <version comment="Second Level Reference LGR">1</version>
+    <date>2026-08-13</date>
+    <language>und-Cans</language>
+    <unicode-version>15.1.0</unicode-version>
+    <description type="text/html"><![CDATA[
+<div class="instructions">
+<h2>INSTRUCTIONS</h2>
+  <ul>
+    <li>These instructions cover how to adopt an LGR based on this reference LGR for a given
+    zone and how to prepare the file for deposit in the IANA Repository of IDN Practices.</li>
+    <li>As described in the IANA procedure (https://www.iana.org/help/idn-repository-procedure) an 
+    LGR MUST contain the following elements in its header:
+      <ul style="list-style-type:square;">
+        <li>Script or Language Designator (see below for guidance) </li>
+        <li>Version Number (this must increase with each amendment to the LGR, even if the updates 
+            are limited to the header itself) </li>
+        <li>Effective Date (the date at which the policy becomes applicable in operational use) </li>
+        <li>Registry Contact Details (contact name, email address, and/or phone number)</li>
+      </ul>
+    </li>
+    <li>The following information is optional:
+    <ul style="list-style-type:square;">
+    <li>Document creation date</li>
+    <li>Applicable Domain(s)</li>
+    <li>Changes made to the Reference LGR before adopting</li>
+    </ul>
+    </li>
+  </ul>
+  <p>Please add or modify the following items in the <b>XML source code for this file</b> before 
+  depositing the document in the IANA Repository. (https://www.iana.org/domains/idn-tables)</p>
+<h3>Meta Data</h3>
+<p>Note: version numbers start at 1. RFC 7940 recommends using simple integers. The version comment is optional, 
+   please replace or delete the default comment. Version comments may be used by some tools as part of the page header.</p>
+  <p><code>&lt;version comment=&quot;</code>[Please replace (or delete) the optional comment]<code>&quot;&gt;</code>[Please fill in version number, starting at 1]<code>&lt;/version&gt;</code></p>
+  <p><code>&lt;date&gt;</code>[Please fill in with publication date, in YYYY-MM-DD format]<code>&lt;/date&gt;</code></p>
+  <p><code>&lt;validity-start&gt;</code>[Please fill in effective date, in YYYY-MM-DD format]<code>&lt;/validity-start&gt;</code></p>
+  <p>Note: the scope element may be repeated, so that the same document can serve multiple domains.</p>
+  <p><code>&lt;scope type=&quot;domain&quot;&gt;</code>[Please provide, in &quot;.domain&quot; format]<code>&lt;/scope&gt;</code></p>
+<p><strong>Registry Contact Information:</strong></p>
+  <p>Please fill in the <a href="#registry_contact_details">Registry Contact Details</a>.</p>
+<p><strong>Change History</strong></p>
+  <p>If you made technical modifications to the LGR, please summarize them in the <a href="#change_history">Change History</a> (and also note the details in the appropriate section of the description).</p>
+<p>PLEASE DELETE THESE INSTRUCTIONS BEFORE DEPOSITING THE DOCUMENT.</p></div>
+<section id="registry_contact_details">
+<h2>Registry Contact Details</h2>
+<ul style="list-style:none;">
+<li><b>Contact Name:</b> [Please fill in Contact Name]</li>
+<li><b>Email address:</b> [Please fill in Email address]</li>
+<li><b>Phone Number:</b> [Please fill in optional Phone Number]</li>
+</ul>
+</section>
+<section id="sec_description">
+  <h1 id="reference_label_generation_rules_for_canadian_unified_aboriginal_syllabics">Reference Label Generation Rules for the Unified Canadian Aboriginal Syllabics <Script:src></Script:src></h1>
+  <section id="sec_desc_overview">
+    <h2 id="desc_overview">Overview</h2>
+    <p>This document specifies a set of Label Generation Rules (LGR) for Inuktitut and Algonquian languages in Canada using a Syllabic Script known as CANS or UCAS (Unified Canadian Aboriginal Syllabics) for the second level domain. The format of this file follows [RFC 7940].</p>
+    <p>This LGR is designed to be used in a zone that does cater to French IDNs. This LGR includes features that support its use in context of a French LGR in the same zone.</p>
+    <p>For details and additional background on the Canadian Aboriginal script, see “Proposal for Unified Canadian Aboriginal Syllabics (UCAS) Script Reference LGR” [Proposal-Canadian Aboriginal].</p>
+    <p></p>
+  </section>
+  <section id="sec_desc_repertoire">
+    <h2 id="desc_repertoire">Repertoire</h2>
+    <p>The repertoire for the Unified Canadian Unified Syllabics Script contains 293 syllabics characters in contemporary use for Inuktitut and 12 other languages, including associated marks as defined in Section 5.1, “Included Code Points” in [Proposal-Canadian Aboriginal].
+    </p>
+    <section id="sec_desc_principal_languages_covered">
+    <h3 id="desc_principal_languages_covered">Principal Languages Covered</h3>
+    <p>The UCAS script is a script primarily used by First Nations and Inuit in Canada. It is a unique writing system structured around representing syllables.</p>
+    <p>In addition to Inuktitut, the following Algonquian languages using syllabic script are supported in the repertoire:</p>
+    <ul>
+      <li>Naskapi, Northern Eastern Cree and Southern Eastern Cree used in the Eastern part of Canada.</li>
+      <li>Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Woods Cree, Plains Cree, Oji-Cree, Ojibway, and Saulteaux used in the Western part of Canada.</li>
+    </ul>
+    </section>
+
+    <p>For the second level, the repertoire has been augmented with the ASCII digits, U+0030 to U+0039, plus U+002D HYPHEN-MINUS, for a total of 304 repertoire elements.</p>
+    <p>Any code points outside the Canadian Aboriginal Script repertoire that are targets for
+     out-of-repertoire variants would be included here only if the variant is listed 
+     in this file. In this case they are identified as a reflexive (identity) variant
+     of type “out-of-repertoire-var”. Whether or not they are listed, they do not 
+     form part of the repertoire.</p>
+    <p><b>Repertoire Listing:</b> Each code point or range is tagged with the script or scripts with which the code point is used and one or more other character categories. For each repertoire element,
+      one or more references document sufficient justification for inclusion in the repertoire; see the <a href="#ref_desc_sec_References">“References”</a> below.
+     For code points in the repertoire, comments identify the language using the code point.</p>
+    <section id="sec_desc_excluded_characters">
+      <h3 id="desc_excluded_characters">Excluded Characters</h3>
+      <p>The following code points from the UCAS block in [Unicode 15.1.0] have been excluded in the Reference LGR repertoire due to the fact that those code points have never been used, or have not been used in recent times.</p>
+      <ul class="cp-list">
+      <li>U+1402 CANADIAN SYLLABICS AAI</li>
+      <li>U+141D CANADIAN SYLLABICS Y-CREE W</li>
+      <li>U+1430 CANADIAN SYLLABICS PAAI </li>
+      <li>U+143F CANADIAN SYLLABICS WEST-CREE PWII</li>
+      <li>U+144D CANADIAN SYLLABICS TAAI</li>
+      <li>U+145C CANADIAN SYLLABICS WEST-CREE TWII</li>
+      <li>U+146C CANADIAN SYLLABICS KAAI</li>
+      <li>U+148A CANADIAN SYLLABICS CAAI</li>
+      <li>U+1497 CANADIAN SYLLABICS WEST-CREE CWII</li>
+      <li>U+14A4 CANADIAN SYLLABICS MAAI</li>
+      <li>U+14B1 CANADIAN SYLLABICS NAAI</li>
+      <li>U+14C1 CANADIAN SYLLABICS WEST-CREE MWII</li>
+      <li>U+14D4 CANADIAN SYLLABICS LAAI</li>
+      <li>U+14EE CANADIAN SYLLABICS SAAI</li>
+      <li>U+14FB CANADIAN SYLLABICS WEST-CREE SWII</li>
+      <li>U+150B CANADIAN SYLLABICS NASKAPI S-W</li>
+      <li>U+1527 CANADIAN SYLLABICS YAAI</li>
+      <li>U+1534 CANADIAN SYLLABICS WEST-CREE YWII</li>
+      <li>U+1545 CANADIAN SYLLABICS RAAI</li>
+      <li>U+1554 CANADIAN SYLLABICS FAAI</li>
+      <li>U+1574 CANADIAN SYLLABICS NUNAVIK HE</li>
+      <li>U+1575 CANADIAN SYLLABICS NUNAVIK HI</li>
+      <li>U+1576 CANADIAN SYLLABICS NUNAVIK HII</li>
+      <li>U+1577 CANADIAN SYLLABICS NUNAVIK HO</li>
+      <li>U+1578 CANADIAN SYLLABICS NUNAVIK HOO</li>
+      <li>U+1579 CANADIAN SYLLABICS NUNAVIK HA</li>
+      <li>U+157A CANADIAN SYLLABICS NUNAVIK HAA</li>
+      <li>U+157B CANADIAN SYLLABICS NUNAVIK H</li>
+      <li>U+157E CANADIAN SYLLABICS QAAI</li>
+      <li>U+158E CANADIAN SYLLABICS NGAAI</li>
+      <li>U+159B CANADIAN SYLLABICS WOODS-CREE THE</li>
+      <li>U+159C CANADIAN SYLLABICS WOODS-CREE THI</li>
+      <li>U+159D CANADIAN SYLLABICS WOODS-CREE THO</li>
+      <li>U+159E CANADIAN SYLLABICS WOODS-CREE THA</li>
+      <li>U+159F CANADIAN SYLLABICS WOODS-CREE TH</li>
+      <li>U+15AF CANADIAN SYLLABICS AIVILIK B</li>
+      <li>U+1678 CANADIAN SYLLABICS WOODS-CREE THWI</li>
+      <li>U+167A CANADIAN SYLLABICS WOODS-CREE THWO</li>
+      <li>U+167B CANADIAN SYLLABICS WOODS-CREE THWOO</li>
+      <li>U+18B0 CANADIAN SYLLABICS OY</li>
+      <li>U+18B1 CANADIAN SYLLABICS AY</li>
+      <li>U+18B2 CANADIAN SYLLABICS AAY</li>
+      <li>U+18B3 CANADIAN SYLLABICS WAY</li>
+      <li>U+18B4 CANADIAN SYLLABICS POY</li>
+      <li>U+18B5 CANADIAN SYLLABICS PAY</li>
+      <li>U+18B6 CANADIAN SYLLABICS PWOY</li>
+      <li>U+18B7 CANADIAN SYLLABICS TAY</li>
+      <li>U+18B8 CANADIAN SYLLABICS KAY</li>
+      <li>U+18B9 CANADIAN SYLLABICS KWAY</li>
+      <li>U+18BA CANADIAN SYLLABICS MAY</li>
+      <li>U+18BB CANADIAN SYLLABICS NOY</li>
+      <li>U+18BC CANADIAN SYLLABICS NAY</li>
+      <li>U+18BD CANADIAN SYLLABICS LAY</li>
+      <li>U+18BE CANADIAN SYLLABICS SOY</li>
+      <li>U+18BF CANADIAN SYLLABICS SAY</li>
+      <li>U+18C0 CANADIAN SYLLABICS SHOY</li>
+      <li>U+18C1 CANADIAN SYLLABICS SHAY</li>
+      <li>U+18C2 CANADIAN SYLLABICS SHWOY</li>
+      <li>U+18C3 CANADIAN SYLLABICS YOY</li>
+      <li>U+18C4 CANADIAN SYLLABICS YAY</li>
+      <li>U+18C5 CANADIAN SYLLABICS RAY</li>
+      <li>U+18C9 CANADIAN SYLLABICS OJIBWAY NWII</li>
+      </ul>
+
+      <p>See Section 5.2, “Excluded Code Points” in [Proposal-Canadian Aboriginal].</p>
+    </section>
+    <section id="sec_desc_variants">
+      <h2 id="desc_variants">Variants</h2>
+      <p>A number of in-script variants have been defined, in some cases based on regional alternation of the same letter.</p>
+      <p>A number of letters bear strong similarity to Latin letters, these have been given cross-script variant mappings.</p>
+      <p><b>Digit Variants:</b> The Canadian Aboriginal reference LGR does not include native digits, so there are no semantic variants defined.</p>
+      <p>The specification of variants in this LGR follows the guidelines in [RFC 8228].</p>
+      <p>This LGR does not define allocatable variants.</p>
+    </section>
+    <section id="sec_desc_character_classes">
+      <h2 id="desc_character_classes">Character Classes</h2>
+      <p>The LGR defines the following character classes.</p>
+      <ul>
+        <li>
+          <b>final-marks</b> — final marks. Note that U+1505 CANADIAN SYLLABICS S is not considered a final mark based on its usage in Naskapi.</li>
+        <li>
+          <b>Common-digits</b> — the set of ASCII digits.</li>
+      </ul>
+    </section>
+    <section id="sec_desc_whole_label_evaluation_(wle)_and_context_rules">
+      <h2 id="desc_whole_label_evaluation_wle_and_context_rules">Whole Label Evaluation (WLE) and Context Rules</h2>
+      <section id="sec_desc_common_rules">
+        <h3 id="desc_common_rules">Common Rules</h3>
+        <div></div>
+        <p>By default, the LGR includes the rules and actions to implement the following restrictions mandated by the IDNA protocol. They are marked with &#x235F;.</p>
+       <ul>
+       <li><b>Hyphen Restrictions</b> &mdash; restrictions on the allowable placement of hyphens (no leading/ending hyphen
+             and no hyphen in positions 3 and 4). These restrictions are described in Section 4.2.3.1 of RFC 5891 [5891]. 
+             They are implemented here as a context rule on U+002D (-) HYPHEN-MINUS.</li>
+          <li><b>Leading Combining Marks</b>   &mdash;  restrictions on the allowable placement of combining marks
+             (no leading combining mark). This rule is described in Section 4.2.3.2 of RFC 5891 [5891].</li>
+       </ul>
+        <p>Script-specific rules in this LGR already prevent combining marks in leading position, making the “leading-combining-mark” rule technically redundant. It is retained here for consistency.</p>
+      </section>
+      
+      <section id="sec_desc_default_actions">
+        <h3 id="desc_default_actions">Default Actions</h3>
+        <p>This LGR includes the complete set of default actions for LGRs, as well as the action needed to invalidate labels with misplaced combining marks. They are marked with &#x235F;.
+        For a description see [RFC 7940] and [5891].
+        An additional action is triggered by mixed digit labels.
+    </p>
+      </section>
+      <section id="sec_desc_script-specific_rules">
+        <h3 id="desc_script-specific_rules">Script-specific Rules</h3>
+        <p>The LGR defines the following script-specific rules concerning the placement of final marks and preventing some combinations.</p>
+        <ul>
+          <li>
+            <b>leading-final-mark</b> — A context rule on <i>final mark</i> characters that prohibits labels with a final mark at the start of the label or following a hyphen or digit. Final marks may not follow another final mark: only clusters composed into a single character, like U+1585, are allowed.</li>
+          <li>
+            <b>following-1550</b> — A context rule that prohibits the character following U+1550 CANADIAN SYLLABICS R.</li>
+          <li>
+            <b>following-1595</b> — A context rule that prohibits the character following U+1595 CANADIAN SYLLABICS NG.</li>
+          <li>
+            <b>following-1595-or-1596</b> — A context rule that prohibits the character from following U+1595 CANADIAN SYLLABICS NG or U+1596 CANADIAN SYLLABICS NNG.</li>
+          <li>
+            <b>followed-by-1483-1484-1553-or-155E</b> — Restriction for code point U+1427 CANADIAN SYLLABICS FINAL MIDDLE DOT</li>
+          <li>
+            <b>restrictions-for-1505</b> — Restrictions for code point U+1505 CANADIAN SYLLABICS S. The character can be at any position in the label, but can only follow a character that is not a final mark or the following  subset of final marks: U+1449, U+1466, U+1483, U+14D0, or U+153E. It can only be followed by the end of the label or the following subset of final marks U+1466, U+1483, U+1484 or U+14A1. It cannot be repeated. The treatment of U+1505 covers usage of this character in the Naskapi language.</li>
+        </ul>
+      </section>
+      <section id="sec_desc_methodology">
+        <h2 id="desc_methodology">Methodology</h2>
+        <p>This Second Level Reference LGR for the Canadian Aboriginal Script was developed based on the proposal from the Unified Canadian Aboriginal Syllabics Script Reference LGR Generation Panel (UCAS WG) and edited by Asmus Freytag based on community feedback and public review. See [Proposal-Canadian Aboriginal] for methodology and contributors.</p>
+      </section>
+      <section id="sec_desc_change_history">
+        <h3>Changes from Version Dated 13 August 2026</h3>
+        <p>This is a placeholder to document any changes applied by the registry operator when adopting the reference LGR. If no change has been noted, the LGR is the same as the Second Level Reference LGR for the Canadian Aboriginal Script [Ref-LGR-und-Cans] without normative changes.
+    </p>
+      </section>
+      <section id="sec_desc_references">
+        <h2 id="desc_references">References</h2>
+        <p>This document cites the following general references.</p>
+        <dl class="references">
+          <dt>[Guidelines]</dt>
+          <dd>ICANN, “Guidelines for Developing Reference LGRs for the Second Level”, (Los Angeles, California: ICANN, 27 May 2020), https://www.icann.org/en/system/files/files/lgr-guidelines-second-level-27may20-en.pdf</dd>
+          <dt>[Level-2-Overview]</dt>
+          <dd>Internet Corporation for Assigned Names and Numbers, (ICANN),“Reference Label Generation Rules (LGR) for the Second Level: Overview and Summary” (PDF), 
+     (Los Angeles, California: ICANN, 13 August 2026), https://www.icann.org/en/system/files/files/level2-lgr-overview-summary-13aug26-en.pdf
+      </dd>
+          <dt>[Proposal-Canadian Aboriginal]</dt>
+          <dd>“Proposal for Unified Canadian Aboriginal Syllabics (UCAS) Script Reference LGR”, 13 August 2026,  https://www.icann.org/sites/default/files/packages/lgr/proposal-ucas-second-level-13aug26-en.pdf</dd>
+          <dt>[Ref-LGR-und-Cans]</dt>
+          <dd>ICANN, Second Level Reference Label Generation Rules for the Canadian Aboriginal Script (und-Cans), 13 August 2026 (XML)
+      https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-canadian aboriginal-script-13aug26-en.xml
+      non-normative HTML presentation: https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-canadian aboriginal-script-13aug26-en.html</dd>
+          <dt>[RFC 7940]</dt>
+          <dd>Davies, K. and A. Freytag, “Representing Label Generation Rulesets Using XML”, 
+     RFC 7940, August 2016, https://www.rfc-editor.org/info/rfc7940</dd>
+          <dt>[RFC 8228]</dt>
+          <dd>A. Freytag, “Guidance on Designing Label Generation Rulesets (LGRs) Supporting Variant Labels”, RFC 8228, August 2017,
+    https://www.rfc-editor.org/info/rfc8228</dd>
+          <dt>[SIL-Ethnologue]</dt>
+          <dd>David M. Eberhard, Gary F. Simons &amp; Charles D. Fennig (eds.). 2021.
+     Ethnologue: Languages of the World, twenty-fourth edition. Dallas, Texas: SIL
+     International. Online version available as https://www.ethnologue.com</dd>
+          <dt>[Unicode 15.1.0]</dt>
+          <dd>The Unicode Consortium. The Unicode Standard, Version 15.1.0 
+    (South San Francisco, CA: The Unicode Consortium, 2023. ISBN 978-1-936213-33-7)
+    https://www.unicode.org/versions/Unicode15.1.0/</dd>
+        </dl>
+        <p>References [0] to [23] refer to the Unicode Standard versions in which the corresponding code points were initially encoded. References [601] and above correspond to sources given in [Proposal-Canadian Aboriginal] justifying the inclusion of the corresponding code points. Entries in the table may have
+        multiple source reference values. 
+        In the listing of <a href="#whole_label_evaluation_and_context_rules">whole label evaluation and context rules</a>,
+        reference [5891] indicates the source for common rules.</p>
+      </section>
+    </section>
+  </section>
+</section>
+]]></description>
+    <references>
+      <reference id="0" comment="Code points cited were originally encoded in Unicode Version 1.1">The Unicode Standard, Version 1.1</reference>
+      <reference id="3" comment="Code points cited were originally encoded in Unicode Version 3.0">The Unicode Standard, Version 3.0</reference>
+      <reference id="10" comment="Code points cited were originally encoded in Unicode 5.2">The Unicode Standard, Version 5.2</reference>
+      <reference id="23" comment="Code points cited were originally encoded in Unicode Version 14.0">The Unicode Standard, Version 14.0</reference>
+      <reference id="101">Section 7.2, “UCAS-specific rules” in “Proposal for Unified Canadian Aboriginal Syllabics (UCAS) Script Reference LGR”, 13 August 2026, https://www.icann.org/en/system/files/files/proposal-ucas-second-level-13aug26-en.pdf</reference>
+      <reference id="400">The Unicode Standard, Unified Canadian Aboriginal Syllabics. Range: 1400-167F Version 15.1</reference>
+      <reference id="401">The Unicode Standard, Unified Canadian Aboriginal Syllabics Extended. Range: 18B0-18FF Version 15.1</reference>
+      <reference id="402">The Unicode Standard, Unified Canadian Aboriginal Syllabic Extended-A. Range: 11AB0-11ABF Version 15.1</reference>
+      <reference id="601">Wikipedia: “Canadian Aboriginal Syllabics” 		https://en.wikipedia.org/wiki/Canadian_Aboriginal_syllabics  Accessed 2024-02-24</reference>
+      <reference id="602" comment="2002-01-14">Legislative Assembly of Nunavut, Nesbitt Gavin, Inuktitut Keyboard Specification</reference>
+      <reference id="603">Kativik Ilisarniliriniq, Inuttitut Syllabics 		https://nunavik-ice.com/en/c/inuktitut-en/inuktitut-syllabics/#  Accessed 2024-02-24</reference>
+      <reference id="604">North West Territories Government, Qaniujaaqpait Syllabics. 		https://www.ece.gov.nt.ca/en/inuktitut  Accessed 2024-02-24</reference>
+      <reference id="605">Omniglot: Inuktitut numbers 		https://www.omniglot.com/language/numbers/inuktitut.htm Accessed 2024-02-24</reference>
+      <reference id="606">Typotheque, Kevin King, Typotheque North American Syllabics. Proposal to encode 16 additional characters to the Unified Canadian Aboriginal Syllabics (2020-09-30) 		https://www.unicode.org/L2/L2020/20255-ucas-adds.pdf 		accessed 2026-03-26</reference>
+      <reference id="607">Omniglot: Naskapis numbers https://www.omniglot.com/language/numbers/naskapi.htm, accessed 2024-04-16.</reference>
+      <reference id="608">Omniglot: Naskapi,  https://www.omniglot.com/writing/naskapi.php, accessed 2024-04-16.</reference>
+      <reference id="609">Algonquian Linguistic Atlas: Downloadable Syllabic Charts with Unicode Numbers: Naskapi 	 www.algonquianlanguages.ca/fonts/?lang+en 	  accessed 2025-11-20</reference>
+      <reference id="610">Naskapi Orthography Mackenzie, Marguerite 1994 Naskapi Development    	Corporation 	https://archive.org/details/rosettaproject_nsk_ortho-1/mode/2up 		accessed 2025-03-18.</reference>
+      <reference id="611">University of North Dakota, William Joseph Jancewicz 2013 Grammar enhanced biliteracy: Naskapi language structures for facilitating reading in Naskapi. Naskapi Syllabic Chart &amp; Keyboard Layout: Page 61, https://commons.und.edu/theses/1440/,</reference>
+      <reference id="612">Naskapi Lexicon Second edition, Volume 1 Naskapi-English ᓇᔅᑲᐱ - ᐊ ᑲᑭᔭᓴᐅᔅᑕᒡ Mackenzie Marguerite, Janciewicz Bill. Naskapi Syllabic Chart p. vi  Naskapi Development Corporation Kawawachikamakh 2024.</reference>
+      <reference id="613">Cree School Board, Marie-Odile Junker et al. East Cree Language resources https://www.eastcree.org/syl-keyboard.html            	 	accessed 2024-05-27</reference>
+      <reference id="614">Wikipedia: Eastern Cree Syllabics https://en.wikipedia.org/wiki/Eastern_Cree_syllabics 		accessed 2024-05-27</reference>
+      <reference id="615">Omniglot: East Cree (ᐄᔨᔫ ᐊᔨᒨᓐ / Îyiyû Ayimûn) https://www.omniglot.com/writing/eastcree.htm  		accessed 2024-05-27</reference>
+      <reference id="616">Algonquian Linguistic Atlas: Downloadable Syllabic Charts with Unicode Numbers 	: East Cree 		www.algonquianlanguages.ca/fonts/?lang+en              		accessed 2025-11-20</reference>
+      <reference id="617">Omniglot: Moose Cree syllabics           		https://www.omniglot.com/images/writing/moosecree_sylla.gif           		accessed 2024-07-01</reference>
+      <reference id="618">Algonquian Linguistic Atlas: Downloadable Syllabic Charts with Unicode Numbers: Moose Cree            		www.algonquianlanguages.ca/fonts/?lang+en 		accessed 2025-11-20</reference>
+      <reference id="619">An Illustrated Dictionary of Flora and Fauna. Southern East Cree. Dr. Kevin Brousseau. Aanischaaukamikw Cree Cultural Institute 2023 page xiv-xvii</reference>
+      <reference id="620">Cree Orthography Conversion Chart. Dr Kevin Brousseau 2019 Moose Cree First Nation https://moosecree.ca/portfolio-item/cree-orthography-conversion-chart/            		accessed 2024-09-18</reference>
+      <reference id="621">Omushkego Font Guide: Omushkego Education, Typodermic Fonts Inc. June 2024</reference>
+      <reference id="622">Algonquian Linguistic Atlas: Downloadable Syllabic Charts with Unicode Numbers: Swampy Cree (Eastern, for Ontario dialects)  		https://syllabics.atlas-ling.ca/syllabic_charts/syllabic-chart-audio-swampy.html           		accessed 2025-11-20</reference>
+      <reference id="623">Omniglot: Eastern Swampy Cree syllabics          		https://www.omniglot.com/writing/swampycree.htm          		accessed 2024-09-16</reference>
+      <reference id="624">Cree Syllabarium          		https://www.languagegeek.com/algon/cree/cre_syllabarium.html          		accessed 2024-09-16</reference>
+      <reference id="628">Style Manual for Syllabics. Charles Fiero. Indian and Northern Affairs Ottawa 1975</reference>
+      <reference id="629">Wikipedia: ¨ Western Cree Syllabics ¨  		https://en.wikipedia.org/wiki/Western_Cree_syllabics	 		accessed 2024-11-21</reference>
+      <reference id="630">Ininīmowin (Cree) Syllabics with Standard Roman Orthography 		Manitoba First Nations Education Resource Centre 				  https://swampycreend.manitobafirstnations.ca/ininimowin-cree-syllabics-with-standard-roman-orthography/ 		accessed 2024-11-21</reference>
+      <reference id="631">Western Cree and Saulteaux Syllabics Inventory ᒐᐦᑭᐯᐦᐃᑲᐣ cahkīpehikana. Department of Indian Languages, and Linguistics. First Nations University of Canada 2007           		https://www.unicode.org/L2/L2008/08132r-n3427r-syllabics.pdf 		accessed 2025-11-20</reference>
+      <reference id="632">Saskatchewan Plains Cree Syllabics Table ᒐᐦᑭᐯᐦᐃᑲᓇ/cahkipēhikana. Online 		Cree Dictionary           		https://www.creedictionary.com/syllabics/saskatchewan.php           		accessed 2024-11-29</reference>
+      <reference id="633">Maskwacis Plains Cree Syllabics Table with SRO Equivalents. Online Cree Dictionary           		https://www.creedictionary.com/syllabics/maskwacis.php           		accessed 2024-11-29  [634]		Itwêwina Plains Cree Dictionary. Alberta Language Technology Lab.           		https://itwewina.altlab.app/           		accessed 2024-11-29</reference>
+      <reference id="635">Omniglot: Plains Cree (ᓀᐦᐃᔭᐍᐏᐣ / nēhiyawēwin)         		https://www.omniglot.com/writing/plainscree.htm          		accessed 2024-12-01  [636] 		Algonquian Linguistic Atlas: Downloadable Syllabic Charts: Plains Cree 	Nations University of Canada 2016 		www.algonquianlanguages.ca/fonts/?lang+en  		accessed 2025-11-20</reference>
+      <reference id="637">Woods Cree Syllabics. Indigenous Languages and Linguistics First Nations 	University of Canada 2016      		https://www.algonquianlanguages.ca/fonts/?lang=         		accessed 2025-01-10</reference>
+      <reference id="638">Woods Cree Conversation App. Minnie McKenzie, Arok Wolvengrey, Marie-Odile Junker Algonquian Dictionnaries and Language Resources Project 2024</reference>
+      <reference id="639">Woods Cree Dictionary. Alberta Language Technology Lab      		https://itwiwina.altlab.dev/      		accessed 2025-01-10</reference>
+      <reference id="640">Cree SRO Syllabics nīhithawīwin/ᓃᐦᐃᖬᐑᐏᐣ/Cree Th-dialect  Eddie Antonio 2021, National Research Council Canada	https://github.com/eddieantonio/cree-sro-syllabics/blob/master/cree_sro_syllabics.py         		accessed 2025-01-10</reference>
+      <reference id="641">Woods Cree Dictionary Table Miyo Wahkohtowin Education Authority      		https://www.creedictionary.com/syllabics/woodland.php      		accessed 2025-01-10</reference>
+      <reference id="642">Omniglot: Oji-Cree (Anishininiimowin /ᐊᓂᔑᓂᓂᒧᐏᐣ              		https://www.omniglot.com/writing/ojicree.htm      		accessed 2025-02-03</reference>
+      <reference id="643">Little Lost Caribou Norma Jean &amp; Elizabeth Jancewicz Edited L Mamakwa, J. 	Atlookan, M. Windsor ISBN Indigenous Spiritual Ministry of Mishamikoweesh Kingfisher Lake Ontario  Oji-Cree Syllabic p.8</reference>
+      <reference id="644">Oji-Cree Syllabics (Western Finals) Kwayaciiwin Education Resource Center  https://www.kercstore.com/product-page/large-oji-cree-syllabic-chart-eastern-finals-with-english-phoneti      		accessed 2025-02-03</reference>
+      <reference id="645">Omniglot, Ojibwe ᐊᓂᔑᓈᐯᒧᐎ 		https://www.omniglot.com/writing/ojibwe.htm 		accessed 2025-02-09</reference>
+      <reference id="646">Ojibwe Grammar, Rand Valentine Wisc edu     		https://ojibwegrammar.langsci.wisc.edu/Grammar/Phonology/Writing004.html  		accessed 2025-02-09</reference>
+      <reference id="647">Language Geek: Ojibway Syballarium         		https://www.languagegeek.com/algon/ojibway/anb_syllabarium.html         		accessed 2025-02-13</reference>
+      <reference id="648">Anishinaabemowin Grammar. Rand Valentine. University of Wisconsin     	https://ojibwegrammar.langsci.wisc.edu/Grammar/Phonology/Writing004.html         		accessed 2025-02-14</reference>
+      <reference id="649">A Common Conference to find a Common Anishinaabemowin Writing System. Naasaab Izhi0anishinaabebii’igeng. Pat Ningewance (syllabic chart p.7)	https://web.archive.org/web/20210514204931/http://weshki.atwebpages.com/naasaab_both.html               	accessed 2025-02-14</reference>
+      <reference id="650">Nahkawēwopihikēwin Saulteaux (Ojibewe) Syllabics. First Nations University of Canada. Saskatchewan 2022 https://resources.atlas-ling.ca/media//Saulteaux-Syllabic-Chart-Basic.pdf accessed 2025-02-17</reference>
+      <reference id="651">Mācī-Anihšināpēmowin – Beginning Saulteaux L.Lynn Cote, Margaret R. Cote. University of Regina Press 2020</reference>
+      <reference id="652">Ojibwe writing systems. https://en.wikipedia.org/wiki/Ojibwe_writing_systems 		accessed 2025-12-07</reference>
+      <reference id="653">Ontario Renal Network. https://www.ontariorenalnetwork.ca/sites/renalnetwork/files/assets/fnimfactsheet-phosphorus-fn-ojicree.pdf accessed on 2026-03-02</reference>
+      <reference id="701">PointQuébec, Section 8 “Permissible Characters” in General Registration Policies, https://registry.quebec/legal/ and https://www.iana.org/domains/idn-tables/tables/quebec_fr_1.0.txt  accessed 2024-02-24</reference>
+      <reference id="801">Point Québec, Oji-Cree Syllabic Chart &amp; Unicode Ref, see Appendix, Figure 1</reference>
+      <reference id="802">Point Québec, Western Swampy Cree, see Appendix, Figure 4</reference>
+      <reference id="803">Western Swampy Cree (W) Conversation Application (Android, iOS), Reference for U+14F7(ᓷ), see Appendix, Figure 5</reference>
+      <reference id="804">Western Swampy Cree (W) Conversation Application (Android, iOS), Reference for U+1464 (ᑤ), see Appendix, Figure 6</reference>
+      <reference id="805">Western Swampy Cree (W) Conversation Application (Android, iOS), Reference for U+14B9 (ᒹ), see Appendix, Figure 7</reference>
+      <reference id="5891">RFC 5891, Internationalized Domain Names in Applications(IDNA): Protocol https://tools.ietf.org/html/rfc5891</reference>
+    </references>
+  </meta>
+  <data>
+    <char cp="002D" not-when="hyphen-minus-disallowed" tag="Hyphen sc:Zyyy" ref="0" />
+    <char cp="0030" tag="Common-digit sc:Zyyy" ref="0" comment="DIGIT ZERO; &#x235F;" />
+    <char cp="0031" tag="Common-digit sc:Zyyy" ref="0" comment="DIGIT ONE; &#x235F;" />
+    <char cp="0032" tag="Common-digit sc:Zyyy" ref="0" comment="DIGIT TWO; &#x235F;" />
+    <char cp="0033" tag="Common-digit sc:Zyyy" ref="0" comment="DIGIT THREE; &#x235F;" />
+    <char cp="0034" tag="Common-digit sc:Zyyy" ref="0" comment="DIGIT FOUR; &#x235F;" />
+    <char cp="0035" tag="Common-digit sc:Zyyy" ref="0" comment="DIGIT FIVE; &#x235F;" />
+    <char cp="0036" tag="Common-digit sc:Zyyy" ref="0" comment="DIGIT SIX; &#x235F;" />
+    <char cp="0037" tag="Common-digit sc:Zyyy" ref="0" comment="DIGIT SEVEN; &#x235F;" />
+    <char cp="0038" tag="Common-digit sc:Zyyy" ref="0" comment="DIGIT EIGHT; &#x235F;" />
+    <char cp="0039" tag="Common-digit sc:Zyyy" ref="0" comment="DIGIT NINE; &#x235F;" />
+    <char cp="0062" tag="sc:Latn" ref="0" comment="Not part of repertoire">
+      <var cp="0062" type="out-of-repertoire-var" comment="Out-of-repertoire" />
+      <var cp="1472" type="blocked" />
+    </char>
+    <char cp="0063" tag="sc:Latn" ref="0" comment="Not part of repertoire">
+      <var cp="0063" type="out-of-repertoire-var" comment="Out-of-repertoire" />
+      <var cp="1455" type="blocked" />
+    </char>
+    <char cp="0064" tag="sc:Latn" ref="0" comment="Not part of repertoire">
+      <var cp="0064" type="out-of-repertoire-var" comment="Out-of-repertoire" />
+      <var cp="146F" type="blocked" />
+    </char>
+    <char cp="0068" tag="sc:Latn" ref="0" comment="Not part of repertoire">
+      <var cp="0068" type="out-of-repertoire-var" comment="Out-of-repertoire" />
+      <var cp="157C" type="blocked" />
+    </char>
+    <char cp="006A" tag="sc:Latn" ref="0" comment="Not part of repertoire">
+      <var cp="006A" type="out-of-repertoire-var" comment="Out-of-repertoire" />
+      <var cp="148E" type="blocked" />
+    </char>
+    <char cp="006C" tag="sc:Latn" ref="0" comment="Not part of repertoire">
+      <var cp="006C" type="out-of-repertoire-var" comment="Out-of-repertoire" />
+      <var cp="14AA" type="blocked" />
+    </char>
+    <char cp="0070" tag="sc:Latn" ref="0" comment="Not part of repertoire">
+      <var cp="0070" type="out-of-repertoire-var" comment="Out-of-repertoire" />
+      <var cp="146D" type="blocked" />
+    </char>
+    <char cp="0071" tag="sc:Latn" ref="0" comment="Not part of repertoire">
+      <var cp="0071" type="out-of-repertoire-var" comment="Out-of-repertoire" />
+      <var cp="146B" type="blocked" />
+    </char>
+    <char cp="0073" tag="sc:Latn" ref="0" comment="Not part of repertoire">
+      <var cp="0073" type="out-of-repertoire-var" comment="Out-of-repertoire" />
+      <var cp="1511" type="blocked" />
+    </char>
+    <char cp="0075" tag="sc:Latn" ref="0" comment="Not part of repertoire">
+      <var cp="0075" type="out-of-repertoire-var" comment="Out-of-repertoire" />
+      <var cp="144C" type="blocked" />
+    </char>
+    <char cp="0076" tag="sc:Latn" ref="0" comment="Not part of repertoire">
+      <var cp="0076" type="out-of-repertoire-var" comment="Out-of-repertoire" />
+      <var cp="142F" type="blocked" />
+    </char>
+    <char cp="028C" tag="sc:Latn" ref="0" comment="Not part of repertoire">
+      <var cp="028C" type="out-of-repertoire-var" comment="Out-of-repertoire" />
+      <var cp="1431" type="blocked" />
+    </char>
+    <char cp="1401" tag="sc:Cans" ref="3 604 615 617 623 629 635 641 642 645" comment="CANADIAN SYLLABICS E; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe" />
+    <char cp="1403" tag="sc:Cans" ref="3 604 608 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS I; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="1404" tag="sc:Cans" ref="3 604 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS II; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="1405" tag="sc:Cans" ref="3 604 608 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS O; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="1406" tag="sc:Cans" ref="3 604 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS OO; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="140A" tag="sc:Cans" ref="3 604 608 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS A; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="140B" tag="sc:Cans" ref="3 604 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS AA; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="140C" tag="sc:Cans" ref="3 615 617 623 642 645 650" comment="CANADIAN SYLLABICS WE; NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="140D" tag="sc:Cans" ref="3 629 635 641 642 645 650" comment="CANADIAN SYLLABICS WEST-CREE WE; Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="140E" tag="sc:Cans" ref="3 608 615 617 623 642 645 650" comment="CANADIAN SYLLABICS WI; Naskapi, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="140F" tag="sc:Cans" ref="3 629 635 641 642 645 650" comment="CANADIAN SYLLABICS WEST-CREE WI; Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="1410" tag="sc:Cans" ref="3 615 617 623 643 645 650" comment="CANADIAN SYLLABICS WII; NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="1411" tag="sc:Cans" ref="3 629 635 641 643 645 650" comment="CANADIAN SYLLABICS WEST-CREE WII; Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="1412" tag="sc:Cans" ref="3 615 617 623 642 645 650" comment="CANADIAN SYLLABICS WO; NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="1413" tag="sc:Cans" ref="3 629 635 641 642 645 650" comment="CANADIAN SYLLABICS WEST-CREE WO; Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="1414" tag="sc:Cans" ref="3 615 617 623 643 645 650" comment="CANADIAN SYLLABICS WOO; NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="1415" tag="sc:Cans" ref="3 629 635 641 642 645 650" comment="CANADIAN SYLLABICS WEST-CREE WOO; Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="1417" tag="sc:Cans" ref="3 615 617 623 642 645 650" comment="CANADIAN SYLLABICS WA; NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="1418" tag="sc:Cans" ref="3 629 635 641 642 645 650" comment="CANADIAN SYLLABICS WEST-CREE WA; Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="1419" tag="sc:Cans" ref="3 615 617 623 643 645 650" comment="CANADIAN SYLLABICS WAA; NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="141A" tag="sc:Cans" ref="3 629 635 641 642 645 650" comment="CANADIAN SYLLABICS WEST-CREE WAA; Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="141B" tag="sc:Cans" ref="3 608" comment="CANADIAN SYLLABICS NASKAPI WAA; Naskapi" />
+    <char cp="141E" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="3 645" comment="CANADIAN SYLLABICS GLOTTAL STOP; Ojibwe">
+      <var cp="18DC" type="blocked" />
+      <var cp="18DD" type="blocked" />
+    </char>
+    <char cp="141F" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="3 608 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS FINAL ACUTE; Naskapi, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)">
+      <var cp="153E" type="blocked" />
+    </char>
+    <char cp="1420" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="3 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS FINAL GRAVE; Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="1421" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="3 623 642 645 650" comment="CANADIAN SYLLABICS FINAL BOTTOM HALF RING; Eastern Swampy Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="1422" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="3 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS FINAL TOP HALF RING; Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)">
+      <var cp="18D5" type="blocked" />
+    </char>
+    <char cp="1423" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="3 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS FINAL RIGHT HALF RING; Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="1424" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="3 608 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS FINAL RING; Naskapi, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)">
+      <var cp="18DE" type="blocked" />
+    </char>
+    <char cp="1426" tag="sc:Cans" ref="3 608 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS FINAL DOUBLE SHORT VERTICAL STROKES; Naskapi, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="1427" when="followed-by-1483-1484-1553-or-155E" tag="sc:Cans" ref="3 608 615 617" comment="CANADIAN SYLLABICS FINAL MIDDLE DOT; Naskapi, NE Cree, SE Cree, Moose Cree" />
+    <char cp="1428" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="3 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS FINAL SHORT HORIZONTAL STROKE; Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="1429" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="3 629 635 641 801" comment="CANADIAN SYLLABICS FINAL PLUS; Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree" />
+    <char cp="142A" tag="sc:Cans" ref="3 623" comment="CANADIAN SYLLABICS FINAL DOWN TACK; Eastern Swampy Cree" />
+    <char cp="142F" tag="sc:Cans" ref="3 604 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS PE; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)">
+      <var cp="0076" type="blocked" />
+    </char>
+    <char cp="1431" tag="sc:Cans" ref="3 604 608 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS PI; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)">
+      <var cp="028C" type="blocked" />
+    </char>
+    <char cp="1432" tag="sc:Cans" ref="3 604 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS PII; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="1433" tag="sc:Cans" ref="3 604 608 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS PO; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="1434" tag="sc:Cans" ref="3 604 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS POO; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="1438" tag="sc:Cans" ref="3 604 608 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS PA; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="1439" tag="sc:Cans" ref="3 604 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS PAA; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="143A" tag="sc:Cans" ref="3 615 617 623" comment="CANADIAN SYLLABICS PWE; NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree" />
+    <char cp="143B" tag="sc:Cans" ref="3 635 641 650 802" comment="CANADIAN SYLLABICS WEST-CREE PWE; Western Swampy Cree, Plains Cree, Woods Cree, Western Ojibwe (Saulteaux)" />
+    <char cp="1444" tag="sc:Cans" ref="3 617 623 643" comment="CANADIAN SYLLABICS PWA; Moose Cree, Eastern Swampy Cree, Oji-Cree" />
+    <char cp="1445" tag="sc:Cans" ref="3 623 635 641 642 650" comment="CANADIAN SYLLABICS WEST-CREE PWA; Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Western Ojibwe (Saulteaux)" />
+    <char cp="1446" tag="sc:Cans" ref="3 615 617 623" comment="CANADIAN SYLLABICS PWAA; NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree" />
+    <char cp="1447" tag="sc:Cans" ref="3 635 641 642 650 802" comment="CANADIAN SYLLABICS WEST-CREE PWAA; Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Western Ojibwe (Saulteaux)" />
+    <char cp="1448" tag="sc:Cans" ref="3 608" comment="CANADIAN SYLLABICS Y-CREE PWAA; Naskapi" />
+    <char cp="1449" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="3 604 608 615 617 645" comment="CANADIAN SYLLABICS P; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Ojibwe" />
+    <char cp="144A" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="3 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS WEST-CREE P; Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="144C" tag="sc:Cans" ref="3 604 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS TE; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)">
+      <var cp="0075" type="blocked" />
+    </char>
+    <char cp="144E" tag="sc:Cans" ref="3 604 608 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS TI; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="144F" tag="sc:Cans" ref="3 604 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS TII; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="1450" tag="sc:Cans" ref="3 604 608 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS TO; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="1451" tag="sc:Cans" ref="3 604 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS TOO; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="1455" tag="sc:Cans" ref="3 604 608 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS TA; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)">
+      <var cp="0063" type="blocked" />
+    </char>
+    <char cp="1456" tag="sc:Cans" ref="3 604 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS TAA; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="1457" tag="sc:Cans" ref="3 615 617 623" comment="CANADIAN SYLLABICS TWE; NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree" />
+    <char cp="1458" tag="sc:Cans" ref="3 635 641 650 802" comment="CANADIAN SYLLABICS WEST-CREE TWE; Western Swampy Cree, Plains Cree, Woods Cree, Western Ojibwe (Saulteaux)" />
+    <char cp="1461" tag="sc:Cans" ref="3 617 623" comment="CANADIAN SYLLABICS TWA; Moose Cree, Eastern Swampy Cree" />
+    <char cp="1462" tag="sc:Cans" ref="3 635 641 642 650 802" comment="CANADIAN SYLLABICS WEST-CREE TWA; Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Western Ojibwe (Saulteaux)" />
+    <char cp="1463" tag="sc:Cans" ref="3 615 617 623" comment="CANADIAN SYLLABICS TWAA; NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree" />
+    <char cp="1464" tag="sc:Cans" ref="3 635 641 642 650 804" comment="CANADIAN SYLLABICS WEST-CREE TWAA; Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Western Ojibwe (Saulteaux)" />
+    <char cp="1465" tag="sc:Cans" ref="3 608" comment="CANADIAN SYLLABICS NASKAPI TWAA; Naskapi" />
+    <char cp="1466" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="3 604 608 615 617 645" comment="CANADIAN SYLLABICS T; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Ojibwe" />
+    <char cp="146B" not-when="following-1550" tag="sc:Cans" ref="3 604 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS KE; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)">
+      <var cp="0071" type="blocked" />
+    </char>
+    <char cp="146D" not-when="following-1550" tag="sc:Cans" ref="3 604 608 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS KI; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)">
+      <var cp="0070" type="blocked" />
+    </char>
+    <char cp="146E" not-when="following-1550" tag="sc:Cans" ref="3 604 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS KII; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="146F" not-when="following-1550" tag="sc:Cans" ref="3 604 608 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS KO; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)">
+      <var cp="0064" type="blocked" />
+    </char>
+    <char cp="1470" not-when="following-1550" tag="sc:Cans" ref="3 604 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS KOO; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="1472" not-when="following-1550" tag="sc:Cans" ref="3 604 608 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS KA; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)">
+      <var cp="0062" type="blocked" />
+    </char>
+    <char cp="1473" not-when="following-1550" tag="sc:Cans" ref="3 604 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS KAA; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="1474" tag="sc:Cans" ref="3 615 617 623 642" comment="CANADIAN SYLLABICS KWE; NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree" />
+    <char cp="1475" tag="sc:Cans" ref="3 635 641 650 802" comment="CANADIAN SYLLABICS WEST-CREE KWE; Western Swampy Cree, Plains Cree, Woods Cree, Western Ojibwe (Saulteaux)" />
+    <char cp="1478" tag="sc:Cans" ref="3 615" comment="CANADIAN SYLLABICS KWII; NE Cree, SE Cree" />
+    <char cp="1479" tag="sc:Cans" ref="3 641" comment="CANADIAN SYLLABICS WEST-CREE KWII; Woods Cree" />
+    <char cp="147A" tag="sc:Cans" ref="3 612" comment="CANADIAN SYLLABICS KWO; Naskapi" />
+    <char cp="147E" tag="sc:Cans" ref="3 612 615 617 623" comment="CANADIAN SYLLABICS KWA; NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree" />
+    <char cp="147F" tag="sc:Cans" ref="3 635 641 642 650 802" comment="CANADIAN SYLLABICS WEST-CREE KWA; Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Western Ojibwe (Saulteaux)" />
+    <char cp="1480" tag="sc:Cans" ref="3 615 617 623" comment="CANADIAN SYLLABICS KWAA; NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree" />
+    <char cp="1481" tag="sc:Cans" ref="3 635 641 642 650 802" comment="CANADIAN SYLLABICS WEST-CREE KWAA; Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Western Ojibwe (Saulteaux)" />
+    <char cp="1482" tag="sc:Cans" ref="3 608" comment="CANADIAN SYLLABICS NASKAPI KWAA; Naskapi" />
+    <char cp="1483" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="3 604 608 615 617 645" comment="CANADIAN SYLLABICS K; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Ojibwe" />
+    <char cp="1484" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="3 608 615 617" comment="CANADIAN SYLLABICS KW; Naskapi, NE Cree, SE Cree, Moose Cree" />
+    <char cp="1489" not-when="following-1595" tag="sc:Cans" ref="3 604 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS CE; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="148B" not-when="following-1595-or-1596" tag="sc:Cans" ref="3 604 608 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS CI; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="148C" not-when="following-1595-or-1596" tag="sc:Cans" ref="3 604 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS CII; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="148D" not-when="following-1595-or-1596" tag="sc:Cans" ref="3 604 608 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS CO; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="148E" not-when="following-1595-or-1596" tag="sc:Cans" ref="3 604 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS COO; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)">
+      <var cp="006A" type="blocked" />
+    </char>
+    <char cp="1490" not-when="following-1595-or-1596" tag="sc:Cans" ref="3 604 608 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS CA; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="1491" not-when="following-1595-or-1596" tag="sc:Cans" ref="3 604 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS CAA; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="1492" tag="sc:Cans" ref="3 615 617 623" comment="CANADIAN SYLLABICS CWE; NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree" />
+    <char cp="1493" tag="sc:Cans" ref="3 635 641 650 802" comment="CANADIAN SYLLABICS WEST-CREE CWE; Western Swampy Cree, Plains Cree, Woods Cree, Western Ojibwe (Saulteaux)" />
+    <char cp="149C" tag="sc:Cans" ref="3 617 623" comment="CANADIAN SYLLABICS CWA; Moose Cree, Eastern Swampy Cree" />
+    <char cp="149D" tag="sc:Cans" ref="3 635 641 642 650 802" comment="CANADIAN SYLLABICS WEST-CREE CWA; Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Western Ojibwe (Saulteaux)" />
+    <char cp="149E" tag="sc:Cans" ref="3 615 617 623" comment="CANADIAN SYLLABICS CWAA; NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree" />
+    <char cp="149F" tag="sc:Cans" ref="3 635 641 642 650 802" comment="CANADIAN SYLLABICS WEST-CREE CWAA; Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Western Ojibwe (Saulteaux)" />
+    <char cp="14A0" tag="sc:Cans" ref="3 608" comment="CANADIAN SYLLABICS NASKAPI CWAA; Naskapi" />
+    <char cp="14A1" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="3 604 608 615 617 645" comment="CANADIAN SYLLABICS C; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Ojibwe" />
+    <char cp="14A3" tag="sc:Cans" ref="3 604 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS ME; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="14A5" tag="sc:Cans" ref="3 604 608 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS MI; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="14A6" tag="sc:Cans" ref="3 604 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS MII; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="14A7" tag="sc:Cans" ref="3 604 608 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS MO; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="14A8" tag="sc:Cans" ref="3 604 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS MOO; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="14AA" tag="sc:Cans" ref="3 604 608 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS MA; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)">
+      <var cp="006C" type="blocked" />
+    </char>
+    <char cp="14AB" tag="sc:Cans" ref="3 604 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS MAA; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="14AC" tag="sc:Cans" ref="3 615 617 623" comment="CANADIAN SYLLABICS MWE; NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree" />
+    <char cp="14AD" tag="sc:Cans" ref="3 635 641 650 802" comment="CANADIAN SYLLABICS WEST-CREE MWE; Western Swampy Cree, Plains Cree, Woods Cree, Western Ojibwe (Saulteaux)" />
+    <char cp="14B6" tag="sc:Cans" ref="3 615 617 623" comment="CANADIAN SYLLABICS MWA; NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree" />
+    <char cp="14B7" tag="sc:Cans" ref="3 635 641 642 650 802" comment="CANADIAN SYLLABICS WEST-CREE MWA; Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Western Ojibwe (Saulteaux)" />
+    <char cp="14B8" tag="sc:Cans" ref="3 615 617 623" comment="CANADIAN SYLLABICS MWAA; NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree" />
+    <char cp="14B9" tag="sc:Cans" ref="3 635 641 642 650 805" comment="CANADIAN SYLLABICS WEST-CREE MWAA; Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Western Ojibwe (Saulteaux)" />
+    <char cp="14BA" tag="sc:Cans" ref="3 608" comment="CANADIAN SYLLABICS NASKAPI MWAA; Naskapi" />
+    <char cp="14BB" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="3 604 608 615 617 645" comment="CANADIAN SYLLABICS M; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Ojibwe" />
+    <char cp="14BC" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="3 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS WEST-CREE M; Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="14BD" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="3 615" comment="CANADIAN SYLLABICS MH; NE Cree, SE Cree" />
+    <char cp="14C0" tag="sc:Cans" ref="3 604 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS NE; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="14C2" tag="sc:Cans" ref="3 604 608 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS NI; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="14C3" tag="sc:Cans" ref="3 604 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS NII; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="14C4" tag="sc:Cans" ref="3 604 608 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS NO; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="14C5" tag="sc:Cans" ref="3 604 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS NOO; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="14C7" tag="sc:Cans" ref="3 604 608 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS NA; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="14C8" tag="sc:Cans" ref="3 604 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS NAA; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="14C9" tag="sc:Cans" ref="3 615 617 623" comment="CANADIAN SYLLABICS NWE; NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree" />
+    <char cp="14CA" tag="sc:Cans" ref="3 635 641 642 650 802" comment="CANADIAN SYLLABICS WEST-CREE NWE; Western Swampy Cree, Plains Cree, Woods Cree, Western Ojibwe (Saulteaux)" />
+    <char cp="14CB" tag="sc:Cans" ref="3 617 623" comment="CANADIAN SYLLABICS NWA; Moose Cree, Eastern Swampy Cree" />
+    <char cp="14CC" tag="sc:Cans" ref="3 635 641 642 650 802" comment="CANADIAN SYLLABICS WEST-CREE NWA; Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Western Ojibwe (Saulteaux)" />
+    <char cp="14CD" tag="sc:Cans" ref="3 615 617 623" comment="CANADIAN SYLLABICS NWAA; NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree" />
+    <char cp="14CE" tag="sc:Cans" ref="3 635 641 642 650 802" comment="CANADIAN SYLLABICS WEST-CREE NWAA; Plains Cree, Woods Cree, Oji-Cree, Western Ojibwe (Saulteaux)" />
+    <char cp="14CF" tag="sc:Cans" ref="3 608" comment="CANADIAN SYLLABICS NASKAPI NWAA; Naskapi" />
+    <char cp="14D0" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="3 604 608 615 617 645" comment="CANADIAN SYLLABICS N; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Ojibwe" />
+    <char cp="14D3" tag="sc:Cans" ref="3 604 615 617 623" comment="CANADIAN SYLLABICS LE; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree" />
+    <char cp="14D5" tag="sc:Cans" ref="3 604 608 615 617 623" comment="CANADIAN SYLLABICS LI; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree" />
+    <char cp="14D6" tag="sc:Cans" ref="3 604 615 617 623" comment="CANADIAN SYLLABICS LII; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree" />
+    <char cp="14D7" tag="sc:Cans" ref="3 604 608 615 617 623" comment="CANADIAN SYLLABICS LO; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree" />
+    <char cp="14D8" tag="sc:Cans" ref="3 604 615 617 623" comment="CANADIAN SYLLABICS LOO; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree" />
+    <char cp="14DA" tag="sc:Cans" ref="3 604 608 615 617 623" comment="CANADIAN SYLLABICS LA; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree" />
+    <char cp="14DB" tag="sc:Cans" ref="3 604 615 617 623" comment="CANADIAN SYLLABICS LAA; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree" />
+    <char cp="14DC" tag="sc:Cans" ref="3 615 617 623" comment="CANADIAN SYLLABICS LWE; NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree" />
+    <char cp="14E6" tag="sc:Cans" ref="3 617 623" comment="CANADIAN SYLLABICS LWA; Moose Cree, Eastern Swampy Cree" />
+    <char cp="14E8" tag="sc:Cans" ref="3 615 617 623" comment="CANADIAN SYLLABICS LWAA; NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree" />
+    <char cp="14EA" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="3 604 608 615 617 622" comment="CANADIAN SYLLABICS L; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree" />
+    <char cp="14EB" tag="sc:Cans" ref="3 645 802" comment="CANADIAN SYLLABICS WEST-CREE L; Western Swampy Cree, Ojibwe">
+      <var cp="14EC" type="blocked" />
+    </char>
+    <char cp="14EC" tag="sc:Cans" ref="3 629 635 641 642 645 650" comment="CANADIAN SYLLABICS MEDIAL L; Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)">
+      <var cp="14EB" type="blocked" />
+    </char>
+    <char cp="14ED" tag="sc:Cans" ref="3 604 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS SE; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="14EF" tag="sc:Cans" ref="3 604 608 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS SI; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="14F0" tag="sc:Cans" ref="3 604 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS SII; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="14F1" tag="sc:Cans" ref="3 604 608 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS SO; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="14F2" tag="sc:Cans" ref="3 604 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS SOO; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="14F4" tag="sc:Cans" ref="3 604 608 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS SA; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="14F5" tag="sc:Cans" ref="3 604 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS SAA; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="14F6" tag="sc:Cans" ref="3 615 617 623" comment="CANADIAN SYLLABICS SWE; NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree" />
+    <char cp="14F7" tag="sc:Cans" ref="3 635 641 650 803" comment="CANADIAN SYLLABICS WEST-CREE SWE; Western Swampy Cree, Plains Cree, Woods Cree, Western Ojibwe (Saulteaux)" />
+    <char cp="1500" tag="sc:Cans" ref="3 615 617 623" comment="CANADIAN SYLLABICS SWA; NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree" />
+    <char cp="1501" tag="sc:Cans" ref="3 635 641 642 650 802" comment="CANADIAN SYLLABICS WEST-CREE SWA; Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Western Ojibwe (Saulteaux)" />
+    <char cp="1502" tag="sc:Cans" ref="3 615 617 623" comment="CANADIAN SYLLABICS SWAA; NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree" />
+    <char cp="1503" tag="sc:Cans" ref="3 635 641 642 650 802" comment="CANADIAN SYLLABICS WEST-CREE SWAA; Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Western Ojibwe (Saulteaux)" />
+    <char cp="1504" tag="sc:Cans" ref="3 608" comment="CANADIAN SYLLABICS NASKAPI SWAA; Naskapi" />
+    <char cp="1505" when="restrictions-for-1505" tag="sc:Cans" ref="3 604 608 615 617 645" comment="CANADIAN SYLLABICS S; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Ojibwe" />
+    <char cp="1509" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="3 618" comment="CANADIAN SYLLABICS MOOSE-CREE SK; Moose Cree" />
+    <char cp="150C" tag="sc:Cans" ref="3 608" comment="CANADIAN SYLLABICS NASKAPI SPWA; Naskapi" />
+    <char cp="150D" tag="sc:Cans" ref="3 608" comment="CANADIAN SYLLABICS NASKAPI STWA; Naskapi" />
+    <char cp="150E" tag="sc:Cans" ref="3 608" comment="CANADIAN SYLLABICS NASKAPI SKWA; Naskapi" />
+    <char cp="150F" tag="sc:Cans" ref="3 608" comment="CANADIAN SYLLABICS NASKAPI SCWA; Naskapi" />
+    <char cp="1510" tag="sc:Cans" ref="3 615 617 623 642 645 650" comment="CANADIAN SYLLABICS SHE; NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="1511" tag="sc:Cans" ref="3 615 617 623 642 645 650" comment="CANADIAN SYLLABICS SHI; NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)">
+      <var cp="0073" type="blocked" />
+    </char>
+    <char cp="1512" tag="sc:Cans" ref="3 615 617 623 642 645 650" comment="CANADIAN SYLLABICS SHII; NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="1513" tag="sc:Cans" ref="3 615 617 623 642 645 650" comment="CANADIAN SYLLABICS SHO; NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="1514" tag="sc:Cans" ref="3 615 617 623 642 645 650" comment="CANADIAN SYLLABICS SHOO; NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="1515" tag="sc:Cans" ref="3 615 617 623 642 645 650" comment="CANADIAN SYLLABICS SHA; NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="1516" tag="sc:Cans" ref="3 615 617 623 642 645 650" comment="CANADIAN SYLLABICS SHAA; NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="1517" tag="sc:Cans" ref="3 615 617 623" comment="CANADIAN SYLLABICS SHWE; NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree" />
+    <char cp="1518" tag="sc:Cans" ref="3 650" comment="CANADIAN SYLLABICS WEST-CREE SHWE; Western Ojibwe (Saulteaux)" />
+    <char cp="1521" tag="sc:Cans" ref="3 615 617 623" comment="CANADIAN SYLLABICS SHWA; NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree" />
+    <char cp="1522" tag="sc:Cans" ref="3 642 650" comment="CANADIAN SYLLABICS WEST-CREE SHWA; Oji-Cree, Western Ojibwe (Saulteaux)" />
+    <char cp="1523" tag="sc:Cans" ref="3 615 617 623" comment="CANADIAN SYLLABICS SHWAA; NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree" />
+    <char cp="1524" tag="sc:Cans" ref="3 642 650" comment="CANADIAN SYLLABICS WEST-CREE SHWAA; Oji-Cree, Western Ojibwe (Saulteaux)" />
+    <char cp="1525" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="3 615 617 645" comment="CANADIAN SYLLABICS SH; NE Cree, SE Cree, Moose Cree, Ojibwe" />
+    <char cp="1526" tag="sc:Cans" ref="3 604 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS YE; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="1528" tag="sc:Cans" ref="3 604 608 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS YI; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="1529" tag="sc:Cans" ref="3 604 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS YII; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="152A" tag="sc:Cans" ref="3 604 608 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS YO; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="152B" tag="sc:Cans" ref="3 604 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS YOO; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="152D" tag="sc:Cans" ref="3 604 608 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS YA; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="152E" tag="sc:Cans" ref="3 604 615 617 623 629 635 641 642 645 650" comment="CANADIAN SYLLABICS YAA; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)" />
+    <char cp="152F" tag="sc:Cans" ref="3 615 617 623" comment="CANADIAN SYLLABICS YWE; NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree" />
+    <char cp="1530" tag="sc:Cans" ref="3 635 641 650 802" comment="CANADIAN SYLLABICS WEST-CREE YWE; Western Swampy Cree, Plains Cree, Woods Cree, Western Ojibwe (Saulteaux)" />
+    <char cp="1533" tag="sc:Cans" ref="3 615" comment="CANADIAN SYLLABICS YWII; NE Cree, SE Cree" />
+    <char cp="1539" tag="sc:Cans" ref="3 617 623" comment="CANADIAN SYLLABICS YWA; Moose Cree, Eastern Swampy Cree" />
+    <char cp="153A" tag="sc:Cans" ref="3 635 641 642 650 802" comment="CANADIAN SYLLABICS WEST-CREE YWA; Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Western Ojibwe (Saulteaux)" />
+    <char cp="153B" tag="sc:Cans" ref="3 616 617 623" comment="CANADIAN SYLLABICS YWAA; NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree" />
+    <char cp="153C" tag="sc:Cans" ref="3 635 641 642 650 802" comment="CANADIAN SYLLABICS WEST-CREE YWAA; Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Western Ojibwe (Saulteaux)" />
+    <char cp="153D" tag="sc:Cans" ref="3 608" comment="CANADIAN SYLLABICS NASKAPI YWAA; Naskapi" />
+    <char cp="153E" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="3 604 608 615 617 623 642 645" comment="CANADIAN SYLLABICS Y; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree, Oji-Cree, Ojibwe">
+      <var cp="141F" type="blocked" />
+    </char>
+    <char cp="1540" tag="sc:Cans" ref="3 650" comment="CANADIAN SYLLABICS WEST-CREE Y; Western Ojibwe (Saulteaux)" />
+    <char cp="1543" tag="sc:Cans" ref="3 604 615 617 623" comment="CANADIAN SYLLABICS R-CREE RE; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree" />
+    <char cp="1546" tag="sc:Cans" ref="3 604 608 615 617 623" comment="CANADIAN SYLLABICS RI; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree" />
+    <char cp="1547" tag="sc:Cans" ref="3 604 615 617 623" comment="CANADIAN SYLLABICS RII; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree" />
+    <char cp="1548" tag="sc:Cans" ref="3 604 608 615 617 623" comment="CANADIAN SYLLABICS RO; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree" />
+    <char cp="1549" tag="sc:Cans" ref="3 604 615 617 623" comment="CANADIAN SYLLABICS ROO; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree" />
+    <char cp="154B" tag="sc:Cans" ref="3 604 608 615 617 623" comment="CANADIAN SYLLABICS RA; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree" />
+    <char cp="154C" tag="sc:Cans" ref="3 604 615 617 623" comment="CANADIAN SYLLABICS RAA; Inuktitut, NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree" />
+    <char cp="154E" tag="sc:Cans" ref="3 615 617 623" comment="CANADIAN SYLLABICS RWAA; NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree" />
+    <char cp="1550" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="3 604 608 615 617" comment="CANADIAN SYLLABICS R; Inuktitut, Naskapi, NE Cree, SE Cree, Moose Cree" />
+    <char cp="1551" tag="sc:Cans" ref="3 645 653 802" comment="CANADIAN SYLLABICS WEST-CREE R; Western Swampy Cree, Oji-Cree, Ojibwe">
+      <var cp="1552" type="blocked" />
+    </char>
+    <char cp="1552" tag="sc:Cans" ref="3 622 629 635 641 642 645 650" comment="CANADIAN SYLLABICS MEDIAL R; Eastern Swampy Cree, Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Ojibwe, Western Ojibwe (Saulteaux)">
+      <var cp="1551" type="blocked" />
+    </char>
+    <char cp="1553" tag="sc:Cans" ref="3 604 615 617 645" comment="CANADIAN SYLLABICS FE; Inuktitut, NE Cree, SE Cree, Moose Cree, Ojibwe" />
+    <char cp="1555" tag="sc:Cans" ref="3 604 615 617 645" comment="CANADIAN SYLLABICS FI; Inuktitut, NE Cree, SE Cree, Moose Cree, Ojibwe" />
+    <char cp="1556" tag="sc:Cans" ref="3 604 615 617 645" comment="CANADIAN SYLLABICS FII; Inuktitut, NE Cree, SE Cree, Moose Cree, Ojibwe" />
+    <char cp="1557" tag="sc:Cans" ref="3 604 615 617 645" comment="CANADIAN SYLLABICS FO; Inuktitut, NE Cree, SE Cree, Moose Cree, Ojibwe" />
+    <char cp="1558" tag="sc:Cans" ref="3 604 615 617 645" comment="CANADIAN SYLLABICS FOO; Inuktitut, NE Cree, SE Cree, Moose Cree, Ojibwe" />
+    <char cp="1559" tag="sc:Cans" ref="3 604 615 617 645" comment="CANADIAN SYLLABICS FA; Inuktitut, NE Cree, SE Cree, Moose Cree, Ojibwe" />
+    <char cp="155A" tag="sc:Cans" ref="3 604 615 617 645" comment="CANADIAN SYLLABICS FAA; Inuktitut, NE Cree, SE Cree, Moose Cree, Ojibwe" />
+    <char cp="155B" tag="sc:Cans" ref="3 615 617" comment="CANADIAN SYLLABICS FWAA; NE Cree, SE Cree, Moose Cree" />
+    <char cp="155D" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="3 604 615 617" comment="CANADIAN SYLLABICS F; Inuktitut, NE Cree, SE Cree, Moose Cree" />
+    <char cp="155E" tag="sc:Cans" ref="3 615 617 645" comment="CANADIAN SYLLABICS THE; NE Cree, SE Cree, Moose Cree, Ojibwe" />
+    <char cp="1560" tag="sc:Cans" ref="3 604 615 617 645" comment="CANADIAN SYLLABICS THI; Inuktitut, NE Cree, SE Cree, Moose Cree, Ojibwe" />
+    <char cp="1562" tag="sc:Cans" ref="3 604 615 617 645" comment="CANADIAN SYLLABICS THII; Inuktitut, NE Cree, SE Cree, Moose Cree, Ojibwe" />
+    <char cp="1564" tag="sc:Cans" ref="3 604 615 617 645" comment="CANADIAN SYLLABICS THO; Inuktitut, NE Cree, SE Cree, Moose Cree, Ojibwe" />
+    <char cp="1565" tag="sc:Cans" ref="3 604 615 617 645" comment="CANADIAN SYLLABICS THOO; Inuktitut, NE Cree, SE Cree, Moose Cree, Ojibwe" />
+    <char cp="1566" tag="sc:Cans" ref="3 604 615 617 645" comment="CANADIAN SYLLABICS THA; Inuktitut, NE Cree, SE Cree, Moose Cree, Ojibwe" />
+    <char cp="1567" tag="sc:Cans" ref="3 604 615 617 645" comment="CANADIAN SYLLABICS THAA; Inuktitut, NE Cree, SE Cree, Moose Cree, Ojibwe" />
+    <char cp="1568" tag="sc:Cans" ref="3 615 617" comment="CANADIAN SYLLABICS THWAA; NE Cree, SE Cree, Moose Cree" />
+    <char cp="156A" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="3 615 617 645" comment="CANADIAN SYLLABICS TH; NE Cree, SE Cree, Moose Cree, Ojibwe" />
+    <char cp="157C" tag="sc:Cans" ref="3 604" comment="CANADIAN SYLLABICS NUNAVUT H; Inuktitut">
+      <var cp="0068" type="blocked" />
+    </char>
+    <char cp="157D" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="3 629 635 641 642 650" comment="CANADIAN SYLLABICS HK; Western Swampy Cree, Plains Cree, Woods Cree, Oji-Cree, Western Ojibwe (Saulteaux)" />
+    <char cp="157F" tag="sc:Cans" ref="3 604" comment="CANADIAN SYLLABICS QI; Inuktitut" />
+    <char cp="1580" tag="sc:Cans" ref="3 604" comment="CANADIAN SYLLABICS QII; Inuktitut" />
+    <char cp="1581" tag="sc:Cans" ref="3 604" comment="CANADIAN SYLLABICS QO; Inuktitut" />
+    <char cp="1582" tag="sc:Cans" ref="3 604" comment="CANADIAN SYLLABICS QOO; Inuktitut" />
+    <char cp="1583" tag="sc:Cans" ref="3 604" comment="CANADIAN SYLLABICS QA; Inuktitut" />
+    <char cp="1584" tag="sc:Cans" ref="3 604" comment="CANADIAN SYLLABICS QAA; Inuktitut" />
+    <char cp="1585" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="3 604" comment="CANADIAN SYLLABICS Q; Inuktitut" />
+    <char cp="158F" tag="sc:Cans" ref="3 604" comment="CANADIAN SYLLABICS NGI; Inuktitut" />
+    <char cp="1590" tag="sc:Cans" ref="3 604" comment="CANADIAN SYLLABICS NGII; Inuktitut" />
+    <char cp="1591" tag="sc:Cans" ref="3 604" comment="CANADIAN SYLLABICS NGO; Inuktitut" />
+    <char cp="1592" tag="sc:Cans" ref="3 604" comment="CANADIAN SYLLABICS NGOO; Inuktitut" />
+    <char cp="1593" tag="sc:Cans" ref="3 604" comment="CANADIAN SYLLABICS NGA; Inuktitut" />
+    <char cp="1594" tag="sc:Cans" ref="3 604" comment="CANADIAN SYLLABICS NGAA; Inuktitut" />
+    <char cp="1595" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="3 604" comment="CANADIAN SYLLABICS NG; Inuktitut" />
+    <char cp="1596" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="3 604" comment="CANADIAN SYLLABICS NNG; Inuktitut" />
+    <char cp="15A0" tag="sc:Cans" ref="3 604" comment="CANADIAN SYLLABICS LHI; Inuktitut" />
+    <char cp="15A1" tag="sc:Cans" ref="3 604" comment="CANADIAN SYLLABICS LHII; Inuktitut" />
+    <char cp="15A2" tag="sc:Cans" ref="3 604" comment="CANADIAN SYLLABICS LHO; Inuktitut" />
+    <char cp="15A3" tag="sc:Cans" ref="3 604" comment="CANADIAN SYLLABICS LHOO; Inuktitut" />
+    <char cp="15A4" tag="sc:Cans" ref="3 604" comment="CANADIAN SYLLABICS LHA; Inuktitut" />
+    <char cp="15A5" tag="sc:Cans" ref="3 604" comment="CANADIAN SYLLABICS LHAA; Inuktitut" />
+    <char cp="15A6" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="3 604" comment="CANADIAN SYLLABICS LH; Inuktitut" />
+    <char cp="15A7" tag="sc:Cans" ref="3 641" comment="CANADIAN SYLLABICS TH-CREE THE; Woods Cree" />
+    <char cp="15A8" tag="sc:Cans" ref="3 604 641" comment="CANADIAN SYLLABICS TH-CREE THI; Inuktitut, Woods Cree" />
+    <char cp="15A9" tag="sc:Cans" ref="3 604 641" comment="CANADIAN SYLLABICS TH-CREE THII; Inuktitut, Woods Cree" />
+    <char cp="15AA" tag="sc:Cans" ref="3 604 641" comment="CANADIAN SYLLABICS TH-CREE THO; Inuktitut, Woods Cree" />
+    <char cp="15AB" tag="sc:Cans" ref="3 604 641" comment="CANADIAN SYLLABICS TH-CREE THOO; Inuktitut, Woods Cree" />
+    <char cp="15AC" tag="sc:Cans" ref="3 604 641" comment="CANADIAN SYLLABICS TH-CREE THA; Inuktitut, Woods Cree" />
+    <char cp="15AD" tag="sc:Cans" ref="3 604 641" comment="CANADIAN SYLLABICS TH-CREE THAA; Inuktitut, Woods Cree" />
+    <char cp="15AE" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="3 604" comment="CANADIAN SYLLABICS TH-CREE TH; Inuktitut" />
+    <char cp="166F" tag="sc:Cans" ref="3 604" comment="CANADIAN SYLLABICS QAI; Inuktitut" />
+    <char cp="1670" tag="sc:Cans" ref="3 604" comment="CANADIAN SYLLABICS NGAI; Inuktitut" />
+    <char cp="1671" tag="sc:Cans" ref="3 604" comment="CANADIAN SYLLABICS NNGI; Inuktitut" />
+    <char cp="1672" tag="sc:Cans" ref="3 604" comment="CANADIAN SYLLABICS NNGII; Inuktitut" />
+    <char cp="1673" tag="sc:Cans" ref="3 604" comment="CANADIAN SYLLABICS NNGO; Inuktitut" />
+    <char cp="1674" tag="sc:Cans" ref="3 604" comment="CANADIAN SYLLABICS NNGOO; Inuktitut" />
+    <char cp="1675" tag="sc:Cans" ref="3 604" comment="CANADIAN SYLLABICS NNGA; Inuktitut" />
+    <char cp="1676" tag="sc:Cans" ref="3 604" comment="CANADIAN SYLLABICS NNGAA; Inuktitut" />
+    <char cp="1677" tag="sc:Cans" ref="10 641" comment="CANADIAN SYLLABICS WOODS-CREE THWEE; Woods Cree" />
+    <char cp="1679" tag="sc:Cans" ref="10 641" comment="CANADIAN SYLLABICS WOODS-CREE THWII; Woods Cree" />
+    <char cp="167C" tag="sc:Cans" ref="10 641" comment="CANADIAN SYLLABICS WOODS-CREE THWA; Woods Cree" />
+    <char cp="167D" tag="sc:Cans" ref="10 641" comment="CANADIAN SYLLABICS WOODS-CREE THWAA; Woods Cree" />
+    <char cp="167E" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="10 641" comment="CANADIAN SYLLABICS WOODS-CREE FINAL TH; Woods Cree" />
+    <char cp="18CE" tag="sc:Cans" ref="10 615 617 623" comment="CANADIAN SYLLABICS RWEE; NE Cree, SE Cree, Moose Cree, Eastern Swampy Cree" />
+    <char cp="18D4" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="10 645" comment="CANADIAN SYLLABICS OJIBWAY P; Ojibwe" />
+    <char cp="18D5" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="10 645" comment="CANADIAN SYLLABICS OJIBWAY T; Ojibwe">
+      <var cp="1422" type="blocked" />
+    </char>
+    <char cp="18D6" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="10 645" comment="CANADIAN SYLLABICS OJIBWAY K; Ojibwe" />
+    <char cp="18D7" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="10 645" comment="CANADIAN SYLLABICS OJIBWAY C; Ojibwe" />
+    <char cp="18D8" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="10 645" comment="CANADIAN SYLLABICS OJIBWAY M; Ojibwe" />
+    <char cp="18D9" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="10 645" comment="CANADIAN SYLLABICS OJIBWAY N; Ojibwe" />
+    <char cp="18DA" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="10 645" comment="CANADIAN SYLLABICS OJIBWAY S; Ojibwe" />
+    <char cp="18DB" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="10 645" comment="CANADIAN SYLLABICS OJIBWAY SH; Ojibwe" />
+    <char cp="18DC" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="10 645" comment="CANADIAN SYLLABICS EASTERN W; Ojibwe">
+      <var cp="141E" type="blocked" />
+      <var cp="18DD" type="blocked" />
+    </char>
+    <char cp="18DD" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="10 645" comment="CANADIAN SYLLABICS WESTERN W; Ojibwe">
+      <var cp="141E" type="blocked" />
+      <var cp="18DC" type="blocked" />
+    </char>
+    <char cp="18DE" not-when="leading-final-mark" tag="final-mark sc:Cans" ref="10 645" comment="CANADIAN SYLLABICS FINAL SMALL RING; Ojibwe">
+      <var cp="1424" type="blocked" />
+    </char>
+    <char cp="11AB0" tag="sc:Cans" ref="23 604" comment="CANADIAN SYLLABICS NATTILIK HI; Inuktitut" />
+    <char cp="11AB1" tag="sc:Cans" ref="23 604" comment="CANADIAN SYLLABICS NATTILIK HII; Inuktitut" />
+    <char cp="11AB2" tag="sc:Cans" ref="23 604" comment="CANADIAN SYLLABICS NATTILIK HO; Inuktitut" />
+    <char cp="11AB3" tag="sc:Cans" ref="23 604" comment="CANADIAN SYLLABICS NATTILIK HOO; Inuktitut" />
+    <char cp="11AB4" tag="sc:Cans" ref="23 604" comment="CANADIAN SYLLABICS NATTILIK HA; Inuktitut" />
+    <char cp="11AB5" tag="sc:Cans" ref="23 604" comment="CANADIAN SYLLABICS NATTILIK HAA; Inuktitut" />
+    <char cp="11AB6" tag="sc:Cans" ref="23 604" comment="CANADIAN SYLLABICS NATTILIK SHRI; Inuktitut" />
+    <char cp="11AB7" tag="sc:Cans" ref="23 604" comment="CANADIAN SYLLABICS NATTILIK SHRII; Inuktitut" />
+    <char cp="11AB8" tag="sc:Cans" ref="23 604" comment="CANADIAN SYLLABICS NATTILIK SHRO; Inuktitut" />
+    <char cp="11AB9" tag="sc:Cans" ref="23 604" comment="CANADIAN SYLLABICS NATTILIK SHROO; Inuktitut" />
+    <char cp="11ABA" tag="sc:Cans" ref="23 604" comment="CANADIAN SYLLABICS NATTILIK SHRA; Inuktitut" />
+    <char cp="11ABB" tag="sc:Cans" ref="23 604" comment="CANADIAN SYLLABICS NATTILIK SHRAA; Inuktitut" />
+  </data>
+  <!--Rules section goes here-->
+  <rules>
+    <!--Character class definitions go here-->
+    <class name="Common-digits" from-tag="Common-digit" comment="Digits from the ASCII range &#x235F;" />
+    <class name="final-marks" from-tag="final-mark" comment="Any final mark" />
+    <!--Whole label evaluation and context rules go here-->
+    <rule name="hyphen-minus-disallowed" ref="5891" comment="RFC 5891 restrictions on placement of U+002D HYPHEN-MINUS &#x235F;">
+      <choice>
+        <rule>
+          <look-behind>
+            <start />
+          </look-behind>
+          <anchor />
+        </rule>
+        <rule>
+          <anchor />
+          <look-ahead>
+            <end />
+          </look-ahead>
+        </rule>
+        <rule>
+          <look-behind>
+            <start />
+            <any />
+            <any />
+            <char cp="002D" />
+          </look-behind>
+          <anchor />
+        </rule>
+      </choice>
+    </rule>
+    <rule name="leading-final-mark" ref="101" comment="Disallow labels with a leading or repeated final mark, or following a hyphen or digit">
+      <choice>
+        <rule>
+          <look-behind>
+            <start />
+          </look-behind>
+          <anchor />
+        </rule>
+        <rule>
+          <look-behind>
+            <class by-ref="final-marks" />
+          </look-behind>
+          <anchor />
+        </rule>
+        <rule>
+          <look-behind>
+            <class by-ref="Common-digits" />
+          </look-behind>
+          <anchor />
+        </rule>
+        <rule>
+          <look-behind>
+            <char cp="002D" />
+          </look-behind>
+          <anchor />
+        </rule>
+      </choice>
+    </rule>
+    <rule name="following-1550" ref="101" comment="Disallow the character following U+1550">
+      <look-behind>
+        <char cp="1550" />
+      </look-behind>
+      <anchor />
+    </rule>
+    <rule name="following-1595" ref="101" comment="Disallow the character following U+1595">
+      <look-behind>
+        <char cp="1595" />
+      </look-behind>
+      <anchor />
+    </rule>
+    <rule name="following-1595-or-1596" ref="101" comment="Disallow the character following U+1595 or U+1596">
+      <look-behind>
+        <class>1595-1596</class>
+      </look-behind>
+      <anchor />
+    </rule>
+    <rule name="followed-by-1483-1484-1553-or-155E" ref="101" comment="Restriction for code point U+1427">
+      <anchor />
+      <look-ahead>
+        <class>1483-1484 1553 155E</class>
+      </look-ahead>
+    </rule>
+    <rule name="restrictions-for-1505" ref="101" comment="Restrictions for code point U+1505">
+      <look-behind>
+        <choice>
+          <start />
+          <complement>
+            <union>
+              <class by-ref="final-marks" />
+              <class>1505</class>
+            </union>
+          </complement>
+          <class>1449 1466 1483 14D0 153E</class>
+        </choice>
+      </look-behind>
+      <anchor />
+      <look-ahead>
+        <choice>
+          <complement>
+            <class by-ref="final-marks" />
+          </complement>
+          <class>1466 1483-1484 14A1</class>
+          <end />
+        </choice>
+      </look-ahead>
+    </rule>
+    <!--Action elements go here - order defines precedence-->
+    <action disp="invalid" any-variant="out-of-repertoire-var" comment="any variant label with a code point out of repertoire is invalid &#x235F;" />
+    <action disp="blocked" any-variant="blocked" comment="any variant label containing blocked variants is blocked &#x235F;" />
+    <action disp="valid" comment="catch all (default action) &#x235F;" />
+  </rules>
+</lgr>

@@ -101,7 +101,7 @@ func eppResult(err error) string {
 	case errors.Is(err, v3.ErrUnknownTld), errors.Is(err, v3.ErrTldDisabled),
 		errors.Is(err, v3.ErrNotRegistrable),
 		errors.Is(err, v3.ErrCodepointNotInTable), errors.Is(err, v3.ErrLanguageRule),
-		errors.Is(err, v3.ErrNoIdnTable):
+		errors.Is(err, v3.ErrNoIdnTable), errors.Is(err, v3.ErrMixedScript):
 		return "2306" // Parameter value policy error
 	default:
 		return "2005" // Parameter value syntax error (struktur/IDNA2008)

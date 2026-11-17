@@ -2,6 +2,7 @@ package v4
 
 import (
 	"fmt"
+	"sort"
 	"strconv"
 	"strings"
 	"unicode"
@@ -24,20 +25,67 @@ func SupportedUnicodeVersion() string {
 	return v
 }
 
-// checkUnicodeVersion menolak LGR yang menuntut Unicode lebih baru daripada
-// SupportedUnicodeVersion: properti dan status PVALID code point yang baru
-// ditambahkan akan salah tanpa ketahuan. LGR tanpa <unicode-version> diterima.
-func checkUnicodeVersion(required string) error {
+// checkUnicodeVersion memeriksa <unicode-version> LGR. LGR yang divalidasi
+// ICANN dengan Unicode lebih baru (rilis 2025–2026 menyatakan 15.1/16.0)
+// tetap dimuat selama setiap code point di repertoire dan target variannya
+// sudah dikenal runtime. Code point yang belum dikenal tidak punya properti
+// (gc, jt, PVALID) yang bisa dievaluasi, jadi LGR seperti itu ditolak.
+// LGR tanpa <unicode-version> diterima.
+func (l *LGR) checkUnicodeVersion() error {
+	required := l.meta.UnicodeVersion
 	if required == "" {
 		return nil
 	}
 	if _, err := parseVersion(required); err != nil {
 		return fmt.Errorf("invalid <unicode-version> %q", required)
 	}
-	if supported := SupportedUnicodeVersion(); compareVersions(required, supported) > 0 {
-		return fmt.Errorf("LGR requires Unicode %s, but only %s is available; upgrade Go, golang.org/x/net and golang.org/x/text", required, supported)
+	supported := SupportedUnicodeVersion()
+	if compareVersions(required, supported) <= 0 {
+		return nil
 	}
-	return nil
+
+	unknown := make(map[rune]bool)
+	check := func(cps []rune) {
+		for _, r := range cps {
+			if !isAssigned(r) {
+				unknown[r] = true
+			}
+		}
+	}
+	for _, e := range l.elements {
+		check(e.cps)
+		for _, v := range e.vars {
+			check(v.cps)
+		}
+	}
+	if len(unknown) == 0 {
+		return nil
+	}
+	list := make([]rune, 0, len(unknown))
+	for r := range unknown {
+		list = append(list, r)
+	}
+	sort.Slice(list, func(i, j int) bool { return list[i] < list[j] })
+	return fmt.Errorf("LGR requires Unicode %s and uses code points unknown to Unicode %s (%s); upgrade Go, golang.org/x/net and golang.org/x/text",
+		required, supported, formatCodePoints(list[:min(len(list), 10)]))
+}
+
+// unassigned adalah General_Category Cn. Go memasukkannya ke
+// unicode.Categories (juga di dalam "C"), jadi "punya kategori" tidak sama
+// dengan "sudah ditetapkan".
+var unassigned = unicode.Categories["Cn"]
+
+// isAssigned melaporkan apakah r sudah ditetapkan di tabel Unicode Go.
+func isAssigned(r rune) bool {
+	if unassigned != nil {
+		return !unicode.Is(unassigned, r)
+	}
+	for name, table := range unicode.Categories {
+		if name != "C" && unicode.Is(table, r) {
+			return true
+		}
+	}
+	return false
 }
 
 // compareVersions membandingkan versi "a.b.c"; versi tak terbaca dianggap 0.

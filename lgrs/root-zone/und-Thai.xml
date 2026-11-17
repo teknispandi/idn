@@ -1,42 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <lgr xmlns="urn:ietf:params:xml:ns:lgr-1.0">
   <meta>
-    <version comment="Root Zone LGR for the Thai Script">5</version>
-    <date>2022-05-26</date>
+    <version comment="Root Zone LGR for the Thai Script">6</version>
+    <date>2025-09-23</date>
     <language>und-Thai</language>
     <scope type="domain">.</scope>
-    <unicode-version>11.0.0</unicode-version>
+    <unicode-version>16.0.0</unicode-version>
     <description type="text/html"><![CDATA[
 
      <h1>Root Zone Label Generation Rules for the Thai Script</h1>
-      
-      <h2>Overview</h2>
-      <p>This file contains Label Generation Rules (LGR) for the Thai script for the 
-      Root Zone. For more details on this LGR and additional background on the script, see “Proposal for the Thai Script Root Zone LGR” [Proposal-Thai].
-      This file is one of a set of LGR files that together form an integrated LGR for the DNS Root Zone [RZ-LGR-5]. 
-      The format of this file follows [RFC 7940]. </p>
 
-<h2>Repertoire</h2>
+      <h2>Overview</h2>
+      <p>This file contains a set of Label Generation Rules (LGR) for the Thai script for the Root Zone. 
+     For more details on this LGR and additional background on the script, see “Proposal for the Thai Script Root Zone LGR” [Proposal-Thai].
+      This file is one of a set of LGR files that together form an integrated LGR for the DNS Root Zone [RZ-LGR-6]. 
+    The format of this file follows [RFC 7940].</p>
+
+      <h2>Repertoire</h2>
       <p>In addition to the 68 single code points according to Section 5 “Repertoire” in [Proposal-Thai], three 
-      sequences have been defined. The sequence U+0E4D U+0E32 was defined to replace the 
+      sequences have been defined, for a total of 71 repertoire elements. 
+      The sequence U+0E4D U+0E32 was defined to replace the 
       disallowed U+0E33 (SARA AM) and to facilitate implementation of WLE rule 
-      <b>follows-consonant-tone</b> as a context rule. The other two sequences were   defined to 
+      <b>follows-consonant-tone</b> as a context rule. The other two sequences were defined to 
       restrict U+0E45 (LAKKHANGYAO) from appearing in any context  other than 
-      these sequences. Accordingly, while U+0E45 is not listed by itself it brings the total of   
+      these sequences. Accordingly, while U+0E45 is not listed as a repertoire element by itself it brings the total of   
       distinct code points to 69.</p>
       
-      <p>The repertoire only includes code points used by languages that are actively written in the Thai script. 
-       The repertoire is based on [MSR-5], which is a subset of [Unicode 11.0].</p>
+      <p>The repertoire only includes code points used by languages that are actively written in the Thai script.</p>
+      
+      <p>The repertoire is contained in [MSR-6], which is a subset of [Unicode 16.0.0].</p>
 
-      <p>As part of the Root Zone, this LGR includes neither decimal digits nor the HYPHEN-MINUS.</p>
+        <p>As part of the Root Zone, this LGR includes neither decimal digits nor the HYPHEN-MINUS.</p>
 
-      <p>Each code point is tagged with the script or scripts with which the code point is used, one or more other character categories,
-      and one or more   references documenting sufficient justification for inclusion in the repertoire; see “References” below.
-      Comments identify the language using the code point.</p>
+      <p><b>Repertoire Listing:</b> Each code point or range is tagged with the script or scripts with which the code point is used and one or more other character categories. For each repertoire element, 
+  one or more references document sufficient justification for inclusion in the repertoire; see the <a href="#ref_desc_sec_References">“References”</a> below.
+       For code points that are part of the repertoire, comments identify the language using the code point, as well as alternate names of some code points.</p>
 
       <h2>Variants</h2>
-      <p>According to Section 6, “Variants” in [Proposal-Thai], this LGR defines no variants.</p>
-      
+
+        <p>According to Section 6, “Variants” in [Proposal-Thai], this LGR defines no variants.</p>
+
       <h2>Character Classes</h2>
       <p>The Thai Script is an abugida in which consonant–vowel sequences are written as a unit: 
        each unit is based on a consonant letter, and vowel, tone mark or diacritic notation are secondary.  
@@ -55,12 +58,12 @@
       
       <p><b>Tones:</b> There are 5 phonemic tones: mid, low, falling, high, and rising. These 5 tones are represented 
       by 4 tone marks plus the absence of a mark. Code points from this subset have been given the tag “tone”.
-     See section 5.3, “Tone Marks” in [Proposal-Thai].</p>
+      See section 5.3, “Tone Marks” in [Proposal-Thai].</p>
       
       <p><b>Diacritical Marks:</b> There are 3 diacritic symbols above that have been included here and given the tag “ad”. They differ in 
       their frequency and purpose of usage. See also the discussion in Section 5.4, “Diacritics” in [Proposal-Thai].</p>
       <ul>
-      <li>U+0E47 (MAITAIKHU) and U+0E4C (THANTHAKHAT)       are commonly used for words in everyday communication</li>
+      <li>U+0E47 (MAITAIKHU) and U+0E4C (THANTHAKHAT) are commonly used for words in everyday communication</li>
       <li>U+0E4D (NIKHAHIT) is included because of its use to decompose U+0E33 ( ําา ) THAI CHARACTER SARA AM,  
        which is in common use. However, NIKHAHIT may also be used by itself.</li>
       </ul>
@@ -71,8 +74,12 @@
       Both look similar, are always placed at the same position in the word cell, and they are normally displayed in a small size.</p>
       
       <h2>Whole Label Evaluation (WLE) and Context Rules</h2>
-      <h3>Default Whole Label Evaluation Rules and Actions</h3>
-      <p>The LGR includes the set of required default WLE rules and actions applicable to the Root Zone and defined in [MSR-5].  They are marked with &#x235F;.</p> 
+
+        <h3>Default Whole Label Evaluation Rules and Actions</h3>
+    <p>The LGR includes the set of required default WLE rules and actions applicable to 
+    the Root Zone and defined in [MSR-6]. They are marked with &#x235F;.
+    The actions compute a label disposition based on WLE rules or variant mapping types.</p>
+
       <h3>Thai-specific Rules</h3>
       <p>The rules provided in this LGR as described in Section 7 of [Proposal-Thai] reasonably restrict labels so that they conform to Thai syllable structure. 
       These constraints are exclusively presented as context rules. </p>
@@ -88,41 +95,45 @@
         <li><b>A vowel SARA AA, or an above diacritic NIKHAHIT followed by a vowel SARA AA can follow a consonant or a tone</b> &mdash; See Sections 7.6 and 7.9 in [Proposal-Thai]</li>
         <li><b>A tone-mark, THANTHAKHAT, NIKHAHIT can only follow a consonant, above-vowel or below-vowel</b> &mdash; See section 7.7 and 7.8 in [Proposal-Thai]</li>
       </ul>
-      
+
       <h2>Methodology and Contributors</h2>
-       <p>The Root Zone LGR for the Thai script was developed by the Thai Generation Panel. For methodology and contributors, see Sections 4 and 8 in [Proposal-Thai], as well as [RZ-LGR-5-Overview].</p>
-       
-       <h2>References</h2> 
+
+      <p>The Root Zone LGR for the Thai Script was developed by the Thai Generation Panel. For details on methodology and 
+       contributors, see Sections 4 and 8 in [Proposal-Thai], as well as [RZ-LGR-6-Overview].</p>
+
+      <h2>References</h2> 
        <p>The following general references are cited in this document:</p>
        <dl class="references">
-        <dt>[MSR-5]</dt>
-        <dd>Integration Panel, “Maximal Starting Repertoire — MSR-5 Overview and Rationale”, 24 June 2021,
-        https://www.icann.org/en/system/files/files/msr-5-overview-24jun21-en.pdf         </dd>
+        <dt>[MSR-6]</dt>
+        <dd>Integration Panel, “Maximal Starting Repertoire — MSR-6 Overview and Rationale”, 23 September 2025,
+  https://www.icann.org/en/system/files/files/msr-6-overview-23sep25-en.pdf</dd>
         <dt>[Proposal-Thai]</dt>
         <dd>Thai Generation Panel, “Proposal for the Thai Script Root Zone LGR”, 25 May 2017,
               https://www.icann.org/en/system/files/files/proposal-thai-lgr-25may17-en.pdf</dd>
         <dt>[RFC 7940]</dt>
-        <dd>Davies, K. and A. Freytag, “Representing Label Generation Rulesets Using XML”, RFC 7940, August 2016, https://www.rfc-editor.org/info/rfc7940</dd>
-        <dt>[RZ-LGR-5-Overview]</dt>
-        <dd>Integration Panel, “Root Zone Label Generation Rules (RZ LGR-5): Overview and Summary”, 26 May 2022, https://www.icann.org/sites/default/files/lgr/rz-lgr-5-overview-26may22-en.pdf</dd>
+        <dd>Davies, K. and A. Freytag, “Representing Label Generation Rulesets Using XML”, 
+     RFC 7940, August 2016, https://www.rfc-editor.org/info/rfc7940</dd>
+        <dt>[RZ-LGR-6-Overview]</dt>
+        <dd>Integration Panel, “Root Zone Label Generation Rules (RZ LGR-6): Overview and Summary”, 23 September 2025, https://www.icann.org/sites/default/files/lgr/rz-lgr-6-overview-23sep25-en.pdf</dd>
 
-        <dt>[RZ-LGR-5]</dt>
-        <dd>Integration Panel, “Root Zone Label Generation Rules (RZ-LGR-5)”, 26 May 2022 (XML), https://www.icann.org/sites/default/files/lgr/rz-lgr-5-common-26may22-en.xml <br/>
-           <i>non-normative HTML presentation: https://www.icann.org/sites/default/files/lgr/rz-lgr-5-common-26may22-en.html</i></dd>
+        <dt>[RZ-LGR-6]</dt>
+        <dd>Integration Panel, “Root Zone Label Generation Rules (RZ-LGR-6)”, 23 September 2025 (XML), https://www.icann.org/sites/default/files/lgr/rz-lgr-6-common-23sep25-en.xml <br/>
+     <i>non-normative HTML presentation: https://www.icann.org/sites/default/files/lgr/rz-lgr-6-common-23sep25-en.html</i></dd>
 
-        <dt>[Unicode 11.0]</dt>
-        <dd>The Unicode Consortium. The Unicode Standard, Version 11.0.0, (Mountain View, CA: The Unicode Consortium, 2018. ISBN 978-1-936213-19-1) 
-          https://www.unicode.org/versions/Unicode11.0.0/</dd>
+        <dt>[Unicode 16.0.0]</dt>
+        <dd>
+     The Unicode Consortium. The Unicode Standard, Version 16.0.0, (South San Francisco: The Unicode Consortium, 2024. ISBN 978-1-936213-34-4)
+     https://www.unicode.org/versions/Unicode16.0.0/
+     </dd>
        </dl>
-       <p>For references consulted particularly in designing the repertoire for the Thai script for the Root Zone 
-        please see details in the <a href="#table_of_references">Table of References</a> below. 
-        Reference [0] refers to the Unicode Standard version        in which the 
+       <p>For references consulted, particularly in designing the repertoire for the Thai script for the Root Zone, 
+  please see details in the <a href="#table_of_references">Table of References</a> below.
+        Reference [0] refers to the Unicode Standard version in which the 
         corresponding code points were initially encoded. References [100] and [101] correspond to sources given in [Proposal-Thai] for justifying 
-        the inclusion of for the corresponding code points. Entries in the table may have
-        multiple source reference values.</p>
+        the inclusion of for the corresponding code points. Entries in the table may have multiple source reference values.</p>
 ]]></description>
     <references>
-      <reference id="0" comment="Any code point originally encoded in Unicode 1.1">The Unicode Standard 1.1</reference>
+      <reference id="0" comment="Any code point originally encoded in Unicode Version 1.1">The Unicode Standard, Version 1.1</reference>
       <reference id="100">Thai Industrial Standard (TIS) 1566-2541(1988) https://www.ratchakitcha.soc.go.th/DATA/PDF/2542/E/088/9.PDF</reference>
       <reference id="101">Computers and the Thai Language https://lexitron.nectec.or.th/KM_HL5001/file_HL5001/Paper/Inter%20Journal/krrn_52085.pdf</reference>
     </references>
@@ -263,7 +274,7 @@
       </look-behind>
       <anchor />
     </rule>
-    <rule name="follows-consonant-av-bv" comment="WLE 7.7, 7.8: A tone-mark, THANTHAKHAT, NIKAHIT can only follow a consonant, above-vowel or below-vowel">
+    <rule name="follows-consonant-av-bv" comment="WLE 7.7, 7.8: A tone-mark, THANTHAKHAT, NIKHAHIT can only follow a consonant, above-vowel or below-vowel">
       <look-behind>
         <class by-ref="c-av-bv" />
       </look-behind>

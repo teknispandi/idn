@@ -283,8 +283,8 @@ func TestIdnTableRanges(t *testing.T) {
 	}
 }
 
-// idn/Greek-IDN.txt memuat baris berisi dua entri; dulu entri kedua hilang,
-// termasuk U+03B1 α, sehingga kata Yunani biasa ditolak.
+// Salinan lama idn/Greek-IDN.txt memuat baris berisi dua entri; dulu entri
+// kedua hilang, termasuk U+03B1 α, sehingga kata Yunani biasa ditolak.
 func TestIdnTableMergedLines(t *testing.T) {
 	table, err := NewIdnTable("merged", []string{
 		"U+0390 ## ΐ GREEK SMALL LETTER IOTA WITH DIALYTIKA AND TONOS U+03AC ## ά GREEK SMALL LETTER ALPHA WITH TONOS",

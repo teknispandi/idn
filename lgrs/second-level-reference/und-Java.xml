@@ -1,0 +1,545 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<lgr xmlns="urn:ietf:params:xml:ns:lgr-1.0">
+  <meta>
+    <version comment="Second Level Reference LGR">1</version>
+    <date>2026-08-13</date>
+    <language>und-Java</language>
+    <unicode-version>16.0.0</unicode-version>
+    <description type="text/html"><![CDATA[
+    <div class="instructions">
+<h2>INSTRUCTIONS</h2>
+  <ul>
+    <li>These instructions cover how to adopt an LGR based on this reference LGR for a given
+    zone and how to prepare the file for deposit in the IANA Repository of IDN Practices.</li>
+    <li>As described in the IANA procedure (https://www.iana.org/help/idn-repository-procedure) an 
+    LGR MUST contain the following elements in its header:
+      <ul style="list-style-type:square;">
+        <li>Script or Language Designator (see below for guidance) </li>
+        <li>Version Number (this must increase with each amendment to the LGR, even if the updates 
+            are limited to the header itself) </li>
+        <li>Effective Date (the date at which the policy becomes applicable in operational use) </li>
+        <li>Registry Contact Details (contact name, email address, and/or phone number)</li>
+      </ul>
+    </li>
+    <li>The following information is optional:
+    <ul style="list-style-type:square;">
+    <li>Document creation date</li>
+    <li>Applicable Domain(s)</li>
+    <li>Changes made to the Reference LGR before adopting</li>
+    </ul>
+    </li>
+  </ul>
+  <p>Please add or modify the following items in the <b>XML source code for this file</b> before 
+  depositing the document in the IANA Repository. (https://www.iana.org/domains/idn-tables)</p>
+<h3>Meta Data</h3>
+<p>Note: version numbers start at 1. RFC 7940 recommends using simple integers. The version comment is optional, 
+   please replace or delete the default comment. Version comments may be used by some tools as part of the page header.</p>
+  <p><code>&lt;version comment=&quot;</code>[Please replace (or delete) the optional comment]<code>&quot;&gt;</code>[Please fill in version number, starting at 1]<code>&lt;/version&gt;</code></p>
+  <p><code>&lt;date&gt;</code>[Please fill in with publication date, in YYYY-MM-DD format]<code>&lt;/date&gt;</code></p>
+  <p><code>&lt;validity-start&gt;</code>[Please fill in effective date, in YYYY-MM-DD format]<code>&lt;/validity-start&gt;</code></p>
+  <p>Note: the scope element may be repeated, so that the same document can serve multiple domains.</p>
+  <p><code>&lt;scope type=&quot;domain&quot;&gt;</code>[Please provide, in &quot;.domain&quot; format]<code>&lt;/scope&gt;</code></p>
+<p><strong>Registry Contact Information:</strong></p>
+  <p>Please fill in the <a href="#registry_contact_details">Registry Contact Details</a>.</p>
+<p><strong>Change History</strong></p>
+  <p>If you made technical modifications to the LGR, please summarize them in the <a href="#change_history">Change History</a> (and also note the details in the appropriate section of the description).</p>
+<p>PLEASE DELETE THESE INSTRUCTIONS BEFORE DEPOSITING THE DOCUMENT.</p></div>
+<section id="registry_contact_details">
+<h2>Registry Contact Details</h2>
+<ul style="list-style:none;">
+<li><b>Contact Name:</b> [Please fill in Contact Name]</li>
+<li><b>Email address:</b> [Please fill in Email address]</li>
+<li><b>Phone Number:</b> [Please fill in optional Phone Number]</li>
+</ul>
+</section>
+<section id="sec_description">
+  <h1 id="reference_label_generation_rules_for_the_javanese_script">Reference Label Generation Rules for the Javanese Script</h1>
+  <section id="sec_desc_overview">
+    <h2 id="desc_overview">Overview</h2>
+    <p>This document specifies a set of Label Generation Rules (LGR) for the Javanese script
+    using a script-specific repertoire for the second level domain or domains identified above.
+    The format of this file follows [RFC 7940].
+    This LGR is adapted from the “Reference LGR for the Second Level for the Javanese Script” [Ref-LGR-und-Java]; for details, see <a href="#change_history">Change History</a> below.</p>
+    <p><b>Standalone LGR:</b> This LGR is designed to be used in a zone that does not cater to IDNs 
+    other than those valid under this LGR. 
+    This LGR lacks features that would allow its use in the context
+    of another LGR in the same zone, and it may contain other features incompatible with such use.</p>
+    <p>For details and additional background on the Javanese script, see "Javanese Script Reference Label Generation Rules for Second-Level Domain Names" [Proposal-Javanese].</p>
+    <p></p>
+  </section>
+  <section id="sec_desc_repertoire">
+    <h2 id="desc_repertoire">Repertoire</h2>
+    <p>The repertoire for the Javanese Script contains 52 characters as defined in Section 5.1, “Included Code Points” in [Proposal-Javanese].</p>
+    <p>The code point U+A9B3 JAVANESE SIGN CECAK TELU is defined implicitly as part of six <i>Aksara-Rekan</i> sequences defined in Section 7.3 of [Proposal-Javanese].
+      These sequences function like consonants.
+      In addition, there are 20 sequences defined as part of the <i>Aksara Murda</i> and <i>Aksara Wyanjana</i>, two of which also contain U+A9B3 JAVANESE SIGN CECAK TELU, for a total of 26 sequences.
+    </p>
+    <p>For the second level, the repertoire has been augmented with U+002D HYPHEN-MINUS, for a total of 78 repertoire elements.</p>
+    <p><b>Repertoire Listing:</b> Each code point or range is tagged with the script or scripts with which the code point is used and one or more other character categories. For each repertoire element,
+      one or more references document sufficient justification for inclusion in the repertoire; see the <a href="#ref_desc_sec_References">“References”</a> below.</p>
+    <section id="sec_desc_excluded_characters">
+      <h3 id="desc_excluded_characters">Excluded Characters</h3>
+      <p>The following 23 code points from the  Javanese block in [Unicode 16.0.0] have been excluded in the Reference LGR repertoire due to a variety of reasons; some are used only in Sanskrit or ancient manuscripts. The digits are excluded because many of them are homographs of letters.</p>
+      <ul><li>U+A980 JAVANESE SIGN  PANYANGGA</li>
+        <li>U+A985 JAVANESE LETTER I KAWI</li>
+        <li>U+A987 JAVANESE LETTER II</li>
+        <li>U+A98B JAVANESE LETTER NGA LELET RASWADI</li>
+        <li>U+A996 JAVANESE LETTER CA MURDA</li>
+        <li>U+A998 JAVANESE LETTER NYA MURDA</li>
+        <li>U+A999 JAVANESE LETTER JA MAHAPRANA</li>
+        <li>U+A99C JAVANESE LETTER TTA MAHAPRANA</li>
+        <li>U+A99E JAVANESE LETTER DDA MAHAPRANA</li>
+        <li>U+A9AC JAVANESE LETTER RA AGUNG</li>
+        <li>U+A9B5 JAVANESE VOWEL SIGN TOLONG</li>
+        <li>U+A9B7 JAVANESE VOWEL SIGN WULU MELIK</li>
+        <li>U+A9B9 JAVANESE VOWEL SIGN SUKU MENDUT</li>
+        <li>U+A9D0 JAVANESE DIGIT ZERO</li>
+        <li>U+A9D1 JAVANESE DIGIT ONE</li>
+        <li>U+A9D2 JAVANESE DIGIT TWO</li>
+        <li>U+A9D3 JAVANESE DIGIT THREE</li>
+        <li>U+A9D4 JAVANESE DIGIT FOUR</li>
+        <li>U+A9D5 JAVANESE DIGIT FIVE</li>
+        <li>U+A9D6 JAVANESE DIGIT SIX</li>
+        <li>U+A9D7 JAVANESE DIGIT SEVEN</li>
+        <li>U+A9D8 JAVANESE DIGIT EIGHT</li>
+        <li>U+A9D9 JAVANESE DIGIT NINE</li>
+      </ul>
+   
+      <p>See Section 5.2, “Excluded Code Point” in [Proposal-Javanese].</p>
+    </section>
+    <section id="sec_desc_variants">
+      <h2 id="desc_variants">Variants</h2>
+      <p>The LGR defines a number of in-script variants. The variants are based on linguistic and orthographic analysis of the Javanese script, as well as contemporary and historical usage patterns. There are two sets of consonants in the Javanese script, <i>Aksara Murda</i> and <i>Aksara Wyanjana</i>, which are used to represent the same set of sounds but differ in whether they are used in a formal or informal context. Each set also includes ten sequences. Corresponding members of these sets are otherwise interchangeable; if any label containing
+      one of these variants is selected first, all other equivalent variant labels must be blocked.</p>
+      <p><b>Digit Variants:</b> The Javanese reference LGR does not include native digits, so there are no semantic variants defined.</p>
+      <p>Should an extension be contemplated that adds native digits, these might require variant relations.
+     At the same time, however, any native digits would normally be semantic variants of the ASCII digits.
+     In any zone containing multiple scripts, these two types of variant relations for digits may lead to
+     complications once transitivity is applied.</p>
+      <p>This LGR does not define allocatable variants.</p>
+    
+      <p>The specification of variants in this LGR follows the guidelines in [RFC 8228].</p>
+    </section>
+    <section id="sec_desc_character_classes">
+      <h2 id="desc_character_classes">Character Classes</h2>
+      <p>The LGR defines the following character classes:</p>
+      <ul>
+        <li>
+          <b>Consonants</b> &mdash; The Javanese script is an abugida, a segmental writing system in which consonant–vowel sequences are written as units. Each consonant, like in other Brahmi scripts, constitutes a syllable with an inherent vowel /a/ that could be modified by following it with a Dependent Vowel Sign.</li>
+        <li>
+          <b>Medial Consonants</b> &mdash; A medial consonant functions to represent a semivowel sound that occurs within a single syllable.</li>
+         <li>
+          <b>Independent Vowels</b> &mdash; The independent vowels are mainly used for personal names and languages other than Javanese, for example, Indonesian, Sundanese, and English. In writing Javanese text, the independent vowel is usually replaced with the character U+A9B2 followed by the appropriate dependent vowel.</li>
+        <li>
+          <b>Dependent Vowels</b> &mdash; Dependent vowels are used to modify the inherent vowel of a consonant or independent vowel.</li>
+        <li>
+          <b>Signs</b> &mdash; This class collects various signs used in the Javanese script.</li>
+        <li>
+          <b>Common-digits</b> &mdash; the set of ASCII digits.</li>
+      </ul>
+      <p>Section 5.1 in [Proposal-Javanese] lists "Category" values for both single code points and sequences. While the category values for single code points can be expressed as "tag" attributes in the LGR's XML source file, the desire to treat the sequences like consonants has to be expressed explicitly in context or WLE rules.</p>
+    </section>
+    <section id="sec_desc_whole_label_evaluation_(wle)_and_context_rules">
+      <h2 id="desc_whole_label_evaluation_wle_and_context_rules">Whole Label Evaluation (WLE) and Context Rules</h2>
+      <section id="sec_desc_common_rules">
+        <h3 id="desc_common_rules">Common Rules</h3>
+        <div></div>
+        <p>By default, the LGR includes the rules and actions to implement the following restrictions mandated by the IDNA protocol. They are marked with &#x235F;.</p>
+       <ul>
+       <li><b>Hyphen Restrictions</b> &mdash; restrictions on the allowable placement of hyphens (no leading/ending hyphen
+             and no hyphen in positions 3 and 4). These restrictions are described in Section 4.2.3.1 of RFC 5891 [5891]. 
+             They are implemented here as a context rule on U+002D (-) HYPHEN-MINUS.</li>
+          <li><b>Leading Combining Marks</b>   &mdash;  restrictions on the allowable placement of combining marks
+             (no leading combining mark). This rule is described in Section 4.2.3.2 of RFC 5891 [5891].</li>
+       </ul>
+        <p>Script-specific rules in this LGR already prevent combining marks in leading position, making the “leading-combining-mark” rule technically redundant. It is retained here for consistency.</p>
+      </section>
+      
+      <section id="sec_desc_default_actions">
+        <h3 id="desc_default_actions">Default Actions</h3>
+        <p>This LGR includes the default actions for LGRs, as well as the action needed to
+        invalidate labels with misplaced combining marks. They are marked with &#x235F;.
+        For a description see [RFC 7940].</p>
+      </section>
+      <section id="sec_desc_script-specific_rules">
+        <h3 id="desc_script-specific_rules">Script-specific Context Rules</h3>
+        <p>The LGR defines the following script-specific context rules applicable to various classes of characters.</p>
+        <ul>
+        <li>
+          <b>follows-A9BA-or- A9BB</b> &mdash; U+A9B4 VOWEL SIGN TARUNG must follow either U+A9BA JAVANESE VOWEL SIGN TALING or U+A9BB JAVANESE VOWEL SIGN DIRGA MURE.</li>
+        <li>
+          <b>follows-cons-askara-rekan-med-vowel-dep</b> &mdash; Various signs (U+A981, U+A982, U+A983) must follow a consonant, an aksara rekan sequence, a medial consonant, an independent vowel, or a dependent vowel.</li>
+        <li>
+          <b>follows-cons-aksara-rekan-med-vowel</b> &mdash; A dependent vowel other than U+A9B4 must follow a consonant, an aksara rekan sequence, a medial consonant, or an independent vowel.</li>
+        <li>
+          <b>follows-cons-aksara-rekan-vowel</b> &mdash; U+A9C0 <i>pangkon</i> must follow a consonant, an aksara rekan sequence, or an independent vowel.</li>
+        <li>
+          <b>follows-cons-aksara-rekan</b> &mdash; Medial consonants must follow a consonant or an aksara rekan sequence.</li>
+        </ul>
+        <p>Any of the six sequences ending in U+A9B3, the so-called aksara rekan sequences, also act like consonants in the context rules. (This also applies in the two cases, where a longer sequence ends with an aksara-rekan subsequence.) See item 7 in Section 7.4, the [Proposal-Javanese]. However, as they cannot be represented by a class, they are represented by the rule:</p>
+        <ul><li>
+          <b>aksara-rekan</b> &mdash; a rule representing the six <i>Aksara Rekan</i> sequences defined in the repertoire and referenced by the other rules.
+        </li></ul>
+        <h3 id="desc_script-specific_whole_label_rules">Script-specific Whole Label Rules</h3>
+         <p>The LGR defines the following script-specific whole label rules:</p>
+         <ul><li>
+          <b>pangkon-disallowed</b> &mdash; According to Section 7.1 in [Proposal-Javanese], the pattern (consonant/independent vowel + U+A9C0 + consonant/independent vowel + U+A9C0 + consonant/independent vowel) is prohibited, as it would result in below-2-base stacking.</li></ul>
+
+        <p>This rule is implemented as a whole-label rule that triggers a corresponding action, invalidating any label containing the full pattern. As this pattern also occurs within any triple-stack pattern, triple stacking is invalidated at the same time. For a WLE rule, it is immaterial whether the code points are part of a sequence or not; therefore, the special handling of sequences in Section 7.4 of [Proposal-Javanese] is implicit.</p>
+      </section>
+      <section id="sec_desc_actions">
+    <h2>Actions</h2>
+
+    <h3>Default Actions</h3>
+
+      <p>This LGR includes the default actions for LGRs, as well as the action needed to
+        invalidate labels with misplaced combining marks. They are marked with &#x235F;.
+        For a description see [RFC 7940].</p>
+
+    <h3>Javanese-specific actions</h3>
+    <p>The pangkon restriction rule triggers a Javanese-specific action that invalidates any original or variant labels not satisfying the 
+    constraints. See Section 7, “Whole Label Evaluation (WLE) Rules” in [Proposal-Javanese].</p>
+    
+      </section>
+      <section id="sec_desc_methodology">
+        <h2 id="desc_methodology">Methodology</h2>
+        <p>This Second Level Reference LGR for the Javanese Script was developed based on the proposal from the Javanese Script Reference LGR Generation Panel and edited by Asmus Freytag based on community feedback and public review. See [Proposal-Javanese] for methodology and contributors.</p>
+      </section>
+      <section id="sec_desc_change_history">
+        <h3>Changes from Version Dated 13 August 2026</h3>
+        <p>This is a placeholder to document any changes applied by the registry operator when adopting the reference LGR. If no change has been noted, the LGR is the same as the Second Level Reference LGR for the Javanese Script [Ref-LGR-und-Java] without normative changes.
+    </p>
+      </section>
+      <section id="sec_desc_references">
+        <h2 id="desc_references">References</h2>
+        <p>This document cites the following general references.</p>
+        <dl class="references">
+          <dt>[EGIDS]</dt>
+          <dd>Lewis and Simons, “EGIDS: Expanded Graded Intergenerational Disruption Scale,”
+      documented in [SIL-Ethnologue] and summarized here:
+      https://en.wikipedia.org/wiki/Expanded_Graded_Intergenerational_Disruption_Scale_(EGIDS)</dd>
+          <dt>[Guidelines]</dt>
+          <dd>ICANN, “Guidelines for Developing Reference LGRs for the Second Level”, (Los Angeles, California: ICANN, 27 May 2020), https://www.icann.org/en/system/files/files/lgr-guidelines-second-level-27may20-en.pdf</dd>
+          <dt>[Level-2-Overview]</dt>
+          <dd>Internet Corporation for Assigned Names and Numbers, (ICANN),“Reference Label Generation Rules (LGR) for the Second Level: Overview and Summary” (PDF), 
+     (Los Angeles, California: ICANN, 13 August 2026), https://www.icann.org/en/system/files/files/level2-lgr-overview-summary-13aug26-en.pdf
+      </dd>
+          <dt>[Proposal-Javanese]</dt>
+          <dd>“Javanese Script Reference Label Generation Rules Reference for Second Level Domain Names”, 13 August 2026,  https://www.icann.org/sites/default/files/packages/lgr/proposal-javanese-second-level-13aug26-en.pdf</dd>
+          <dt>[Ref-LGR-und-Java]</dt>
+          <dd>ICANN, Second Level Reference Label Generation Rules for the Javanese Script (und-Java), 13 August 2026 (XML)
+      https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-javanese-script-13aug26-en.xml
+      non-normative HTML presentation: https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-javanese-script-13aug26-en.html</dd>
+          <dt>[RFC 7940]</dt>
+          <dd>Davies, K. and A. Freytag, “Representing Label Generation Rulesets Using XML”, 
+     RFC 7940, August 2016, https://www.rfc-editor.org/info/rfc7940</dd>
+          <dt>[RFC 8228]</dt>
+          <dd>A. Freytag, “Guidance on Designing Label Generation Rulesets (LGRs) Supporting Variant Labels”, RFC 8228, August 2017,
+    https://www.rfc-editor.org/info/rfc8228</dd>
+          <dt>[SIL-Ethnologue]</dt>
+          <dd>David M. Eberhard, Gary F. Simons &amp; Charles D. Fennig (eds.). 2021.
+     Ethnologue: Languages of the World, twenty-fourth edition. Dallas, Texas: SIL
+     International. Online version available as https://www.ethnologue.com</dd>
+          <dt>[Unicode 16.0.0]</dt>
+          <dd>The Unicode Consortium. The Unicode Standard, Version 16.0.0 (South San Francisco: The Unicode Consortium, 2024. ISBN 978-1-936213-34-4)
+https://www.unicode.org/versions/Unicode16.0.0/
+</dd>
+        </dl>
+        <p>References [0] to [10] refer to the Unicode Standard versions in which the corresponding code points were initially encoded. References [110] and above correspond to sources given in [Proposal-Javanese] justifying the inclusion of the corresponding code points. Entries in the table may have
+        multiple source reference values. 
+        In the listing of <a href="#whole_label_evaluation_and_context_rules">whole label evaluation and context rules</a>,
+        reference [5891] indicates the source for common rules.</p>
+      </section>
+    </section>
+  </section>
+</section>
+]]></description>
+    <references>
+      <reference id="0" comment="Code points cited were originally encoded in Unicode Version 1.1">The Unicode Standard, Version 1.1</reference>
+      <reference id="10" comment="Code points cited were originally encoded in Unicode Version 5.2">The Unicode Standard, Version 5.2</reference>
+      <reference id="101">Section 7.4, “Summary of the WLE rule” in “Javanese Script Reference Label Generation Rules for Second-Level Domain Names”, 13 August 2026, https://www.icann.org/en/system/files/files/proposal-javanese-second-level-13aug26-en.pdf</reference>
+      <reference id="110">Darusuprapta. (2002). Pedoman Penulisan Aksara Jawa. Yayasan Pustaka Nusatama</reference>
+      <reference id="111">Koemisi Kasusatran. (1926) Wawaton Panjeratipoen Temboeng Djawi Mawi Sastra Djawi Dalasan Angka. Landsdrukkerij</reference>
+      <reference id="112">W.J.S. Purwadarminta. (1931). Serat Mardikawi. De Bliksem</reference>
+      <reference id="113">Tim Kongres Aksara Jawa I. (2021). Tata Tulis Aksara Jawa. Dinas Kebudayaan (Kundha Kabudayan) Daerah Istimewa Yogyakarta</reference>
+      <reference id="5891">RFC 5891, Internationalized Domain Names in Applications(IDNA): Protocol https://tools.ietf.org/html/rfc5891</reference>
+    </references>
+  </meta>
+  <data>
+    <char cp="002D" not-when="hyphen-minus-disallowed" tag="Hyphen sc:Zyyy" ref="0 110 111 112 113" comment="HYPHEN-MINUS" />
+    <char cp="A981" when="follows-cons-aksara-rekan-med-vowel-dep" tag="sc:Java Sign" ref="10 110 111 112 113" comment="JAVANESE SIGN CECAK = anusvara" />
+    <char cp="A982" when="follows-cons-aksara-rekan-med-vowel-dep" tag="sc:Java Sign" ref="10 110 111 112 113" comment="JAVANESE SIGN LAYAR = final r" />
+    <char cp="A982 A99F" when="follows-cons-aksara-rekan-med-vowel-dep" ref="113" comment="JAVANESE SIGN LAYAR + JAVANESE LETTER NA MURDA">
+      <var cp="A982 A9A4" type="blocked" ref="101" comment="rna" />
+    </char>
+    <char cp="A982 A9A0" when="follows-cons-aksara-rekan-med-vowel-dep" ref="113" comment="JAVANESE SIGN LAYAR + JAVANESE LETTER TA">
+      <var cp="A982 A9A1" type="blocked" ref="101" comment="rta" />
+    </char>
+    <char cp="A982 A9A1" when="follows-cons-aksara-rekan-med-vowel-dep" ref="113" comment="JAVANESE SIGN LAYAR + JAVANESE LETTER TA MURDA">
+      <var cp="A982 A9A0" type="blocked" ref="101" comment="rta" />
+    </char>
+    <char cp="A982 A9A4" when="follows-cons-aksara-rekan-med-vowel-dep" ref="113" comment="JAVANESE SIGN LAYAR + JAVANESE LETTER NA">
+      <var cp="A982 A99F" type="blocked" ref="101" comment="rna" />
+    </char>
+    <char cp="A982 A9B0" when="follows-cons-aksara-rekan-med-vowel-dep" ref="113" comment="JAVANESE SIGN LAYAR + JAVANESE LETTER SA MAHAPRANA">
+      <var cp="A982 A9B1" type="blocked" ref="101" comment="rsa" />
+    </char>
+    <char cp="A982 A9B1" when="follows-cons-aksara-rekan-med-vowel-dep" ref="113" comment="JAVANESE SIGN LAYAR + JAVANESE LETTER SA">
+      <var cp="A982 A9B0" type="blocked" ref="101" comment="rsa" />
+    </char>
+    <char cp="A983" when="follows-cons-aksara-rekan-med-vowel-dep" tag="sc:Java Sign" ref="10 110 111 112 113" comment="JAVANESE SIGN WIGNYAN = visarga" />
+    <char cp="A984" tag="sc:Java Vowel" ref="10 110 111 112 113" comment="JAVANESE LETTER A" />
+    <char cp="A986" tag="sc:Java Vowel" ref="10 110 111 112 113" comment="JAVANESE LETTER I" />
+    <char cp="A988" tag="sc:Java Vowel" ref="10 110 111 112 113" comment="JAVANESE LETTER U" />
+    <char cp="A989" tag="sc:Java Vowel" ref="10 110 111 112 113" comment="JAVANESE LETTER PA CEREK = vocalic r; rě in Javanese" />
+    <char cp="A98A" tag="sc:Java Vowel" ref="10 110 111 112 113" comment="JAVANESE LETTER NGA LELET = vocalic l; lě in Javanese" />
+    <char cp="A98C" tag="sc:Java Vowel" ref="10 110 111 112 113" comment="JAVANESE LETTER E" />
+    <char cp="A98D" tag="sc:Java Vowel" ref="10 112 113" comment="JAVANESE LETTER AI" />
+    <char cp="A98E" tag="sc:Java Vowel" ref="10 110 111 112 113" comment="JAVANESE LETTER O" />
+    <char cp="A98F" tag="Consonant sc:Java" ref="10 110 111 112 113" comment="JAVANESE LETTER KA">
+      <var cp="A991" type="blocked" ref="101" />
+    </char>
+    <char cp="A98F A9B3" ref="110 111 113" comment="JAVANESE LETTER KA + JAVANESE SIGN CECAK TELU" />
+    <char cp="A990" tag="Consonant sc:Java" ref="10 113" comment="JAVANESE LETTER KA SASAK = qa" />
+    <char cp="A991" tag="Consonant sc:Java" ref="10 110 111 112 113" comment="JAVANESE LETTER KA MURDA = kha">
+      <var cp="A98F" type="blocked" ref="101" />
+    </char>
+    <char cp="A992" tag="Consonant sc:Java" ref="10 110 111 112 113" comment="JAVANESE LETTER GA">
+      <var cp="A993" type="blocked" ref="101" comment="Ga" />
+    </char>
+    <char cp="A992 A9B3" ref="110 111 113" comment="JAVANESE LETTER GA + JAVANESE SIGN CECAK TELU" />
+    <char cp="A993" tag="Consonant sc:Java" ref="10 110 111 112 113" comment="JAVANESE LETTER GA MURDA = gha">
+      <var cp="A992" type="blocked" ref="101" comment="Ga" />
+    </char>
+    <char cp="A994" tag="Consonant sc:Java" ref="10 110 111 112 113" comment="JAVANESE LETTER NGA" />
+    <char cp="A995" tag="Consonant sc:Java" ref="10 110 111 112 113" comment="JAVANESE LETTER CA" />
+    <char cp="A997" tag="Consonant sc:Java" ref="10 110 111 112 113" comment="JAVANESE LETTER JA" />
+    <char cp="A997 A9B3" ref="110 111 113" comment="JAVANESE LETTER JA + JAVANESE SIGN CECAK TELU" />
+    <char cp="A99A" tag="Consonant sc:Java" ref="10 110 111 112 113" comment="JAVANESE LETTER NYA" />
+    <char cp="A99A A9C0 A995" ref="113" comment="JAVANESE LETTER NYA + JAVANESE PANGKON + JAVANESE LETTER CA">
+      <var cp="A9A4 A9C0 A995" type="blocked" ref="101" comment="Nca" />
+    </char>
+    <char cp="A99A A9C0 A997" ref="113" comment="JAVANESE LETTER NYA + JAVANESE PANGKON + JAVANESE LETTER JA">
+      <var cp="A9A4 A9C0 A997" type="blocked" ref="101" comment="Nja" />
+    </char>
+    <char cp="A99A A9C0 A997 A9B3" ref="113" comment="JAVANESE LETTER NYA + JAVANESE PANGKON + JAVANESE LETTER JA + JAVANESE SIGN CECAK TELU; Sequence ending with Aksara Rekan">
+      <var cp="A9A4 A9C0 A997 A9B3" type="blocked" ref="101" comment="Nza" />
+    </char>
+    <char cp="A99B" tag="Consonant sc:Java" ref="10 110 111 112 113" comment="JAVANESE LETTER TTA" />
+    <char cp="A99D" tag="Consonant sc:Java" ref="10 112 113" comment="JAVANESE LETTER DDA">
+      <var cp="A9A3" type="blocked" ref="101" comment="Dha" />
+    </char>
+    <char cp="A99F" tag="Consonant sc:Java" ref="10 110 111 112 113" comment="JAVANESE LETTER NA MURDA = nna">
+      <var cp="A9A4" type="blocked" ref="101" comment="Na" />
+    </char>
+    <char cp="A99F A9C0 A99B" ref="113" comment="JAVANESE LETTER NA MURDA + JAVANESE PANGKON + JAVANESE LETTER TTA">
+      <var cp="A9A4 A9C0 A99B" type="blocked" ref="101" comment="ntha" />
+    </char>
+    <char cp="A99F A9C0 A99D" ref="113" comment="JAVANESE LETTER NA MURDA + JAVANESE PANGKON + JAVANESE LETTER DDA">
+      <var cp="A9A4 A9C0 A99D" type="blocked" ref="101" comment="ndha" />
+    </char>
+    <char cp="A9A0" tag="Consonant sc:Java" ref="10 110 111 112 113" comment="JAVANESE LETTER TA">
+      <var cp="A9A1" type="blocked" ref="101" comment="Ta" />
+    </char>
+    <char cp="A9A1" tag="Consonant sc:Java" ref="10 110 111 112 113" comment="JAVANESE LETTER TA MURDA = tha">
+      <var cp="A9A0" type="blocked" ref="101" comment="Ta" />
+    </char>
+    <char cp="A9A2" tag="Consonant sc:Java" ref="10 110 111 112 113" comment="JAVANESE LETTER DA" />
+    <char cp="A9A2 A9B3" ref="110 111 113" comment="JAVANESE LETTER DA + JAVANESE SIGN CECAK TELU" />
+    <char cp="A9A3" tag="Consonant sc:Java" ref="10 110 111 112 113" comment="JAVANESE LETTER DA MAHAPRANA = dha">
+      <var cp="A99D" type="blocked" ref="101" comment="Dha" />
+    </char>
+    <char cp="A9A4" tag="Consonant sc:Java" ref="10 110 111 112 113" comment="JAVANESE LETTER NA">
+      <var cp="A99F" type="blocked" ref="101" comment="Na" />
+    </char>
+    <char cp="A9A4 A9C0 A995" ref="113" comment="JAVANESE LETTER NA + JAVANESE PANGKON + JAVANESE LETTER CA">
+      <var cp="A99A A9C0 A995" type="blocked" ref="101" comment="Nca" />
+    </char>
+    <char cp="A9A4 A9C0 A997" ref="113" comment="JAVANESE LETTER NA + JAVANESE PANGKON + JAVANESE LETTER JA">
+      <var cp="A99A A9C0 A997" type="blocked" ref="101" comment="Nja" />
+    </char>
+    <char cp="A9A4 A9C0 A997 A9B3" ref="113" comment="JAVANESE LETTER NA + JAVANESE PANGKON + JAVANESE LETTER JA + JAVANESE SIGN CECAK TELU; Sequence ending with Aksara Rekan">
+      <var cp="A99A A9C0 A997 A9B3" type="blocked" ref="101" comment="Nza" />
+    </char>
+    <char cp="A9A4 A9C0 A99B" ref="113" comment="JAVANESE LETTER NA + JAVANESE PANGKON + JAVANESE LETTER TTA">
+      <var cp="A99F A9C0 A99B" type="blocked" ref="101" comment="ntha" />
+    </char>
+    <char cp="A9A4 A9C0 A99D" ref="113" comment="JAVANESE LETTER NA + JAVANESE PANGKON + JAVANESE LETTER DDA">
+      <var cp="A99F A9C0 A99D" type="blocked" ref="101" comment="ndha" />
+    </char>
+    <char cp="A9A5" tag="Consonant sc:Java" ref="10 110 111 112 113" comment="JAVANESE LETTER PA">
+      <var cp="A9A6" type="blocked" ref="101" comment="Pa" />
+    </char>
+    <char cp="A9A5 A9B3" ref="110 111 113" comment="JAVANESE LETTER PA + JAVANESE SIGN CECAK TELU" />
+    <char cp="A9A6" tag="Consonant sc:Java" ref="10 110 111 112 113" comment="JAVANESE LETTER PA MURDA = pha">
+      <var cp="A9A5" type="blocked" ref="101" comment="Pa" />
+    </char>
+    <char cp="A9A7" tag="Consonant sc:Java" ref="10 110 111 112 113" comment="JAVANESE LETTER BA">
+      <var cp="A9A8" type="blocked" ref="101" comment="Ba" />
+    </char>
+    <char cp="A9A8" tag="Consonant sc:Java" ref="10 110 111 112 113" comment="JAVANESE LETTER BA MURDA =bha">
+      <var cp="A9A7" type="blocked" ref="101" comment="Ba" />
+    </char>
+    <char cp="A9A9" tag="Consonant sc:Java" ref="10 110 111 112 113" comment="JAVANESE LETTER MA" />
+    <char cp="A9AA" tag="Consonant sc:Java" ref="10 110 111 112 113" comment="JAVANESE LETTER YA" />
+    <char cp="A9AB" tag="Consonant sc:Java" ref="10 110 111 112 113" comment="JAVANESE LETTER RA" />
+    <char cp="A9AD" tag="Consonant sc:Java" ref="10 110 111 112 113" comment="JAVANESE LETTER LA" />
+    <char cp="A9AE" tag="Consonant sc:Java" ref="10 110 111 112 113" comment="JAVANESE LETTER WA" />
+    <char cp="A9AE A9B3" ref="110 113" comment="JAVANESE LETTER WA + JAVANESE SIGN CECAK TELU" />
+    <char cp="A9AF" tag="Consonant sc:Java" ref="10 110 111 112 113" comment="JAVANESE LETTER SA MURDA = sha">
+      <var cp="A9B0" type="blocked" ref="101" comment="Sa" />
+      <var cp="A9B1" type="blocked" ref="101" comment="Sa" />
+    </char>
+    <char cp="A9B0" tag="Consonant sc:Java" ref="10 112 113" comment="JAVANESE LETTER SA MAHAPRANA">
+      <var cp="A9AF" type="blocked" ref="101" comment="Sa" />
+      <var cp="A9B1" type="blocked" ref="101" comment="Sa" />
+    </char>
+    <char cp="A9B0 A9C0 A99B" ref="113" comment="JAVANESE LETTER SA MAHAPRANA + JAVANESE PANGKON + JAVANESE LETTER TTA">
+      <var cp="A9B1 A9C0 A99B" type="blocked" ref="101" comment="stha" />
+    </char>
+    <char cp="A9B0 A9C0 A99D" ref="113" comment="JAVANESE LETTER SA MAHAPRANA + JAVANESE PANGKON + JAVANESE LETTER DDA">
+      <var cp="A9B1 A9C0 A99D" type="blocked" ref="101" comment="sdha" />
+    </char>
+    <char cp="A9B1" tag="Consonant sc:Java" ref="10 110 111 112 113" comment="JAVANESE LETTER SA">
+      <var cp="A9AF" type="blocked" ref="101" comment="Sa" />
+      <var cp="A9B0" type="blocked" ref="101" comment="Sa" />
+    </char>
+    <char cp="A9B1 A9C0 A99B" ref="113" comment="JAVANESE LETTER SA + JAVANESE PANGKON + JAVANESE LETTER TTA">
+      <var cp="A9B0 A9C0 A99B" type="blocked" ref="101" comment="stha" />
+    </char>
+    <char cp="A9B1 A9C0 A99D" ref="113" comment="JAVANESE LETTER SA + JAVANESE PANGKON + JAVANESE LETTER DDA">
+      <var cp="A9B0 A9C0 A99D" type="blocked" ref="101" comment="sdha" />
+    </char>
+    <char cp="A9B2" tag="Consonant sc:Java" ref="10 110 111 112 113" comment="JAVANESE LETTER HA" />
+    <char cp="A9B4" when="follows-A9BA-or-A9BB" tag="Dependent-Vowel sc:Java" ref="10 110 111 112 113" comment="JAVANESE VOWEL SIGN TARUNG" />
+    <char cp="A9B6" when="follows-cons-aksara-rekan-med-vowel" tag="Dependent-Vowel sc:Java" ref="10 110 111 112 113" comment="JAVANESE VOWEL SIGN WULU" />
+    <char cp="A9B8" when="follows-cons-aksara-rekan-med-vowel" tag="Dependent-Vowel sc:Java" ref="10 110 111 112" comment="JAVANESE VOWEL SIGN SUKU" />
+    <char cp="A9BA" when="follows-cons-aksara-rekan-med-vowel" tag="Dependent-Vowel sc:Java" ref="10 110 111 112" comment="JAVANESE VOWEL SIGN TALING" />
+    <char cp="A9BB" when="follows-cons-aksara-rekan-med-vowel" tag="Dependent-Vowel sc:Java" ref="10 112" comment="JAVANESE VOWEL SIGN DIRGA MURE" />
+    <char cp="A9BC" when="follows-cons-aksara-rekan-med-vowel" tag="Dependent-Vowel sc:Java" ref="10 110 111 112" comment="JAVANESE VOWEL SIGN PEPET" />
+    <char cp="A9BD" when="follows-cons-aksara-rekan" tag="Medial-Consonant sc:Java" ref="10 110 111 112" comment="JAVANESE CONSONANT SIGN KERET" />
+    <char cp="A9BE" when="follows-cons-aksara-rekan" tag="Medial-Consonant sc:Java" ref="10 110 111 112" comment="JAVANESE CONSONANT SIGN PENGKAL" />
+    <char cp="A9BF" when="follows-cons-aksara-rekan" tag="Medial-Consonant sc:Java" ref="10 110 111 112" comment="JAVANESE CONSONANT SIGN CAKRA" />
+    <char cp="A9C0" when="follows-cons-aksara-rekan-vowel" tag="sc:Java Virama" ref="10 110 111 112" comment="JAVANESE PANGKON" />
+  </data>
+  <!--Rules section goes here-->
+  <rules>
+    <!--Character class definitions go here-->
+    <class name="consonant" from-tag="Consonant" ref="101" comment="Any Javanese consonant" />
+    <class name="medial-cons" from-tag="Medial-Consonant" ref="101" comment="Any Javanese medial consonant" />
+    <class name="vowel" from-tag="Vowel" ref="101" comment="Any Javanese independent vowel" />
+    <class name="dep-vowel" from-tag="Dependent-Vowel" ref="101" comment="Any Javanese dependent vowel" />
+    <union name="sign" ref="101" comment="Any Javanese sign, plus Hyphen">
+      <class from-tag="Sign" />
+      <class from-tag="Hyphen" />
+    </union>
+    <class name="virama" from-tag="Virama" ref="101" comment="The Javanese virama (Pangkon)" />
+    <class name="aksara-rekan-base" comment="The base consonants in aksara rekan sequences">A98F A992 A997 A9A2 A9A5 A9AE</class>
+    <!--Whole label evaluation and context rules go here-->
+    <rule name="hyphen-minus-disallowed" ref="5891" comment="RFC 5891 restrictions on placement of U+002D HYPHEN-MINUS &#x235F;">
+      <choice>
+        <rule>
+          <look-behind>
+            <start />
+          </look-behind>
+          <anchor />
+        </rule>
+        <rule>
+          <anchor />
+          <look-ahead>
+            <end />
+          </look-ahead>
+        </rule>
+        <rule>
+          <look-behind>
+            <start />
+            <any />
+            <any />
+            <char cp="002D" />
+          </look-behind>
+          <anchor />
+        </rule>
+      </choice>
+    </rule>
+    <rule name="leading-combining-mark" ref="5891" comment="RFC 5891 restrictions on placement of combining marks &#x235F;">
+      <start />
+      <union>
+        <class property="gc:Mn" />
+        <class property="gc:Mc" />
+      </union>
+    </rule>
+    <rule name="pangkon-disallowed" ref="101" comment="To prevent below 2-Base stacking, a U+A9C0 PANGKON following a consonant or independent vowel must not occur twice in a row if then followed by a third consonant or independent vowel.">
+      <rule count="2">
+        <union>
+          <class by-ref="consonant" />
+          <class by-ref="vowel" />
+        </union>
+        <class by-ref="virama" />
+      </rule>
+      <union>
+        <class by-ref="consonant" />
+        <class by-ref="vowel" />
+      </union>
+    </rule>
+    <rule name="aksara-rekan" ref="101" comment="The Aksara Rekan sequences">
+      <rule>
+        <class by-ref="aksara-rekan-base" />
+        <char cp="A9B3" />
+      </rule>
+    </rule>
+    <rule name="follows-A9BA-or-A9BB" ref="101" comment="U+A9B4 must follow U+A9BA or U+A9BB.">
+      <look-behind>
+        <class>A9BA-A9BB</class>
+      </look-behind>
+      <anchor />
+    </rule>
+    <rule name="follows-cons-aksara-rekan-med-vowel-dep" ref="101" comment="Various signs (U+A981, U+A982, U+A983) must follow a consonant, an aksara rekan sequence, a medial consonant, an independent vowel, or a dependent vowel.">
+      <look-behind>
+        <choice>
+          <class by-ref="consonant" />
+          <rule by-ref="aksara-rekan" />
+          <class by-ref="medial-cons" />
+          <class by-ref="vowel" />
+          <class by-ref="dep-vowel" />
+        </choice>
+      </look-behind>
+      <anchor />
+    </rule>
+    <rule name="follows-cons-aksara-rekan-med-vowel" ref="101" comment="A dependent vowel other than U+A9B4 must follow a consonant. an aksara rekan sequence, a medial consonant, or an independent vowel.">
+      <look-behind>
+        <choice>
+          <class by-ref="consonant" />
+          <rule by-ref="aksara-rekan" />
+          <class by-ref="vowel" />
+          <class by-ref="medial-cons" />
+        </choice>
+      </look-behind>
+      <anchor />
+    </rule>
+    <rule name="follows-cons-aksara-rekan-vowel" ref="101" comment="A U+A9C0 PANGKON must follow a consonant, an aksara rekan sequence, or an independent vowel.">
+      <look-behind>
+        <choice>
+          <class by-ref="consonant" />
+          <rule by-ref="aksara-rekan" />
+          <class by-ref="vowel" />
+        </choice>
+      </look-behind>
+      <anchor />
+    </rule>
+    <rule name="follows-cons-aksara-rekan" ref="101" comment="Medial consonants must follow a consonant or an aksara rekan sequence.">
+      <look-behind>
+        <choice>
+          <class by-ref="consonant" />
+          <rule by-ref="aksara-rekan" />
+        </choice>
+      </look-behind>
+      <anchor />
+    </rule>
+    <!--Action elements go here - order defines precedence-->
+    <action disp="invalid" match="leading-combining-mark" ref="5891" comment="by default, labels with leading combining marks are invalid &#x235F;" />
+    <action disp="invalid" match="pangkon-disallowed" ref="101" comment="any label with disallowed pangkon placement is invalid" />
+    <action disp="invalid" any-variant="out-of-repertoire-var" comment="any variant label with a code point out of repertoire is invalid &#x235F;" />
+    <action disp="blocked" any-variant="blocked" comment="any variant label containing blocked variants is blocked &#x235F;" />
+    <action disp="valid" comment="catch all (default action) &#x235F;" />
+  </rules>
+</lgr>

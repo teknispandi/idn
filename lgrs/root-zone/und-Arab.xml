@@ -1,26 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <lgr xmlns="urn:ietf:params:xml:ns:lgr-1.0">
   <meta>
-    <version comment="Root Zone LGR for the Arabic Script">5</version>
-    <date>2022-05-26</date>
+    <version comment="Root Zone LGR for the Arabic Script">6</version>
+    <date>2025-09-23</date>
     <language>und-Arab</language>
     <scope type="domain">.</scope>
-    <unicode-version>11.0.0</unicode-version>
+    <unicode-version>16.0.0</unicode-version>
     <description type="text/html"><![CDATA[
       <h1>Root Zone Label Generation Rules for the Arabic Script</h1>
-       
-      <h2>Overview</h2>
-      <p>This file contains a set of Label Generation Rules (LGR) for Arabic for the Root Zone. 
-       For more details on this LGR and additional background on the script, see
-       TF-AIDN, “Proposal for Arabic Script Root Zone LGR”, Version 3.4, 18 November 2015 [Proposal-Arabic].
-       This file is one of a set of LGR files that together form an integrated LGR for the DNS Root Zone [RZ-LGR-5]. 
-       The format of this file follows [RFC 7940].</p>
 
-<h2>Repertoire</h2> 
+      <h2>Overview</h2>
+      <p>This file contains a set of Label Generation Rules (LGR) for the Arabic script for the Root Zone. 
+     For more details on this LGR and additional background on the script, see
+       TF-AIDN, “Proposal for Arabic Script Root Zone LGR”, Version 3.4, 18 November 2015 [Proposal-Arabic].
+       This file is one of a set of LGR files that together form an integrated LGR for the DNS Root Zone [RZ-LGR-6]. 
+    The format of this file follows [RFC 7940].</p>
+
+      <h2>Repertoire</h2> 
       <p>The repertoire is described in Section 3.2 of [Proposal-Arabic] and 
       only includes the 128 code points used by languages that are actively written in the Arabic script. It 
-      excludes code points for which TF-AIDN was unable to find sufficient evidence of use (see Appendix F in [Proposal-Arabic]). The repertoire is
-      based on [MSR-5], which is a subset of [Unicode 11.0].</p>
+      excludes code points for which TF-AIDN was unable to find sufficient evidence of use (see Appendix F in [Proposal-Arabic]).</p>
       
       <p>This LGR does not include combining marks or code point sequences. All combining marks have been 
       excluded for these reasons:</p>
@@ -32,13 +31,16 @@
       </ul>  
        
       <p>For further details, see Section 3.2, “Code point repertoire included”, in [Proposal-Arabic].</p>
-      
+
+      <p>The repertoire is contained in [MSR-6], which is a subset of [Unicode 16.0.0].</p>
+
       <p>As part of the Root Zone, this LGR includes neither decimal digits nor the HYPHEN-MINUS.</p>
-      
-      <p>Each code point is tagged with the script or scripts with which the code point is used, 
-      and one or more references documenting sufficient justification for inclusion in the repertoire; see “References” below.
-      Comments identify the principal languages or orthographies using the code point. Languages are given with their [EGIDS] level;
-      use of standard Arabic code points by other languages is not marked.</p>
+
+      <p><b>Repertoire Listing:</b> Each code point or range is tagged with the script or scripts with which the code point is used. For each repertoire element, 
+    one or more references document sufficient justification for inclusion in the repertoire; see the <a href="#ref_desc_sec_References">“References”</a> below. 
+      Comments identify the principal languages or orthographies using the code point. Languages are given with their [EGIDS] level.</p>
+
+      <p>Note: use of standard Arabic code points by other languages is not marked.</p>
 
       <h2>Variants</h2>
       <p>This LGR includes “blocked” and “allocatable” variants, assigned according to Section 4, 
@@ -46,14 +48,19 @@
       These recommendations balance the desire to minimize the number of possible allocatable variants with the need to keep the
       definition of variants simple. See also the comments given in the listing.</p> 
 
-       <p>The specification of variants in the Root Zone LGR follows the guidelines in [RFC 8228].</p>
+      <p>The specification of variants in the Root Zone LGR follows the guidelines in [RFC 8228].</p>
 
       <h2>Character Classes</h2>
+
       <p>This LGR does not define named character classes.</p>
 
       <h2>Whole Label Evaluation (WLE) and Context Rules</h2>
+
       <h3>Default Whole Label Evaluation Rules and Actions</h3>
-      <p>The LGR includes the set of required default WLE rules and actions applicable to the Root Zone and defined in [MSR-5]. They are marked with &#x235F;.</p> 
+    <p>The LGR includes the set of required default WLE rules and actions applicable to 
+    the Root Zone and defined in [MSR-6]. They are marked with &#x235F;.
+    The actions compute a label disposition based on WLE rules or variant mapping types.</p>
+
       <h3>Arabic-specific Rules and Actions</h3>
       <p>This LGR includes WLE rules and actions specific to the Arabic script. See Section 5, “Whole Label Evaluation (WLE) rules”, in [Proposal-Arabic]. 
       As specified, the rules and actions serve to prevent the mixing of two variants of the same code point within the same label. This reduces overproduction
@@ -76,59 +83,65 @@
         <li><b>no-mix-kaf-with-ring-keheh-with-three-dots-above</b> &mdash; WLE Rule 15: do not mix Arabic letters KAF WITH RING and KEHEH WITH THREE DOTS ABOVE</li>
         <li><b>no-mix-gaf-keheh-with-three-dots-above</b> &mdash; WLE Rule 16: do not mix Arabic letters GAF and KEHEH WITH THREE DOTS ABOVE in the same label</li>
       </ul>
-
+      
       <h2>Methodology and Contributors</h2>
       <p>The Root Zone LGR for the Arabic script was developed by the Task Force for Arabic Script IDNs [TF-AIDN].
-      For more information and for methodology and contributors, see [Proposal-Arabic], as well as [RZ-LGR-5-Overview].</p> 
+      For more information on methodology and contributors, see Section 2 and Appendix H in [Proposal-Arabic], as well as [RZ-LGR-6-Overview].</p> 
       
       <h2>References</h2> 
       <p>The following general references are cited in this document:</p>
       <dl class="references">
         <dt>[EGIDS]</dt>
         <dd>Lewis and Simons, “EGIDS: Expanded Graded Intergenerational Disruption Scale,”
-         documented in [SIL-Ethnologue] and summarized here:
-         https://en.wikipedia.org/wiki/Expanded_Graded_Intergenerational_Disruption_Scale_(EGIDS)</dd>
+      documented in [SIL-Ethnologue] and summarized here:
+      https://en.wikipedia.org/wiki/Expanded_Graded_Intergenerational_Disruption_Scale_(EGIDS)</dd>
         <dt>[IAB]</dt>
         <dd>Internet Architecture Board (IAB), “IAB Statement on Identifiers and Unicode 7.0.0”
          https://www.iab.org/documents/correspondence-reports-documents/2015-2/iab-statement-on-identifiers-and-unicode-7-0-0/</dd>
-        <dt>[MSR-5]</dt>
-        <dd>Integration Panel, “Maximal Starting Repertoire — MSR-5 Overview and Rationale”, 24 June 2021,
-        https://www.icann.org/en/system/files/files/msr-5-overview-24jun21-en.pdf         </dd>
+        <dt>[MSR-6]</dt>
+        <dd>Integration Panel, “Maximal Starting Repertoire — MSR-6 Overview and Rationale”, 23 September 2025,
+  https://www.icann.org/en/system/files/files/msr-6-overview-23sep25-en.pdf</dd>
         <dt>[Proposal-Arabic]</dt>
         <dd>TF-AIDN, “Proposal for Arabic Script Root Zone LGR”, Version 3.4, 18 November 2015 https://www.icann.org/en/system/files/files/arabic-lgr-proposal-18nov15-en.pdf</dd>  
         <dt>[RFC 6365]</dt> 
         <dd>Hoffman, P. and J. Klensin, “Terminology Used in Internationalization in the IETF”, BCP 166, RFC 6365, DOI 10.17487/RFC6365, September 2011, https://www.rfc-editor.org/info/rfc6365</dd>
         <dt>[RFC 7940]</dt>
-        <dd> Davies, K. and A. Freytag, “Representing Label Generation Rulesets Using XML”, RFC 7940, August 2016, https://www.rfc-editor.org/info/rfc7940</dd>
+        <dd> Davies, K. and A. Freytag, “Representing Label Generation Rulesets Using XML”, 
+     RFC 7940, August 2016, https://www.rfc-editor.org/info/rfc7940</dd>
         <dt>[RFC 8228]</dt>
         <dd>A. Freytag, “Guidance on Designing Label Generation Rulesets (LGRs) Supporting Variant Labels”, RFC 8228, August 2017,
-        https://www.rfc-editor.org/info/rfc8228</dd>
-        <dt>[RZ-LGR-5-Overview]</dt>
-        <dd>Integration Panel, “Root Zone Label Generation Rules (RZ LGR-5): Overview and Summary”, 26 May 2022, https://www.icann.org/sites/default/files/lgr/rz-lgr-5-overview-26may22-en.pdf</dd>
+    https://www.rfc-editor.org/info/rfc8228</dd>
+        <dt>[RZ-LGR-6-Overview]</dt>
+        <dd>Integration Panel, “Root Zone Label Generation Rules (RZ LGR-6): Overview and Summary”, 23 September 2025, https://www.icann.org/sites/default/files/lgr/rz-lgr-6-overview-23sep25-en.pdf</dd>
 
-        <dt>[RZ-LGR-5]</dt>
-        <dd>Integration Panel, “Root Zone Label Generation Rules (RZ-LGR-5)”, 26 May 2022 (XML), https://www.icann.org/sites/default/files/lgr/rz-lgr-5-common-26may22-en.xml <br/>
-         <i>non-normative HTML presentation: https://www.icann.org/sites/default/files/lgr/rz-lgr-5-common-26may22-en.html</i></dd>
-        <dt>[Unicode 11.0]</dt>
-        <dd>The Unicode Consortium. The Unicode Standard, Version 11.0.0, (Mountain View, CA: The Unicode Consortium, 2018. ISBN 978-1-936213-19-1) 
-         https://www.unicode.org/versions/Unicode11.0.0/</dd>
+        <dt>[RZ-LGR-6]</dt>
+        <dd>Integration Panel, “Root Zone Label Generation Rules (RZ-LGR-6)”, 23 September 2025 (XML), https://www.icann.org/sites/default/files/lgr/rz-lgr-6-common-23sep25-en.xml <br/>
+     <i>non-normative HTML presentation: https://www.icann.org/sites/default/files/lgr/rz-lgr-6-common-23sep25-en.html</i></dd>
+     <dt>[SIL-Ethnologue]</dt>
+     <dd>David M. Eberhard, Gary F. Simons &amp; Charles D. Fennig (eds.). 2021.
+     Ethnologue: Languages of the World, Twenty fourth edition. Dallas, Texas: SIL
+     International. Online version available as https://www.ethnologue.com</dd>
+     <dt>[Unicode 16.0.0]</dt>
+        <dd>
+     The Unicode Consortium. The Unicode Standard, Version 16.0.0, (South San Francisco: The Unicode Consortium, 2024. ISBN 978-1-936213-34-4)
+     https://www.unicode.org/versions/Unicode16.0.0/
+     </dd>
         <dt>[TF-AIDN]</dt>
         <dd>Blog, “Task Force for Arabic Script IDNs” https://www.icann.org/news/blog/what-is-the-task-force-on-arabic-script-idns-tf-aidn-up-to</dd>
       </dl>
-      <p>For references consulted particularly in designing the repertoire for the Arabic script for the Root Zone 
-        please see details in the <a href="#table_of_references">Table of References</a> below. 
+      <p>For references consulted, particularly in designing the repertoire for the Arabic script for the Root Zone, 
+  please see details in the <a href="#table_of_references">Table of References</a> below.
         References [0] to [12] refer to the Unicode Standard versions in which the
         corresponding code points were initially encoded. References [100] and above correspond to sources
-        given in [Proposal-Arabic] justifying the inclusion of the corresponding code points. Entries in the table may have
-        multiple source reference values.</p>
+        given in [Proposal-Arabic] justifying the inclusion of the corresponding code points. Entries in the table may have multiple source reference values.</p>
 ]]></description>
     <references>
-      <reference id="0" comment="Any code point originally encoded in Unicode 1.1">The Unicode Standard 1.1</reference>
-      <reference id="3" comment="Any code point originally encoded in Unicode 3.0">The Unicode Standard 3.0</reference>
-      <reference id="7" comment="Any code point originally encoded in Unicode 4.1">The Unicode Standard 4.1</reference>
-      <reference id="9" comment="Any code point originally encoded in Unicode 5.1">The Unicode Standard 5.1</reference>
-      <reference id="11" comment="Any code point originally encoded in Unicode 6.0">The Unicode Standard 6.0</reference>
-      <reference id="12" comment="Any code point originally encoded in Unicode 6.1">The Unicode Standard 6.1</reference>
+      <reference id="0" comment="Any code point originally encoded in Unicode Version 1.1">The Unicode Standard, Version 1.1</reference>
+      <reference id="3" comment="Any code point originally encoded in Unicode Version 3.0">The Unicode Standard, Version 3.0</reference>
+      <reference id="7" comment="Any code point originally encoded in Unicode Version 4.1">The Unicode Standard, Version 4.1</reference>
+      <reference id="9" comment="Any code point originally encoded in Unicode Version 5.1">The Unicode Standard, Version 5.1</reference>
+      <reference id="11" comment="Any code point originally encoded in Unicode Version 6.0">The Unicode Standard, Version 6.0</reference>
+      <reference id="12" comment="Any code point originally encoded in Unicode Version 6.1">The Unicode Standard, Version 6.1</reference>
       <reference id="100">El-Sherbiny, A., Farah, M., Oueichek, I., and A. Al-Zoman, 
       “Linguistic Guidelines for the Use of the Arabic Language in Internet Domains”, RFC 5564, February 2010 https://www.rfc-editor.org/info/rfc5564</reference>
       <reference id="101">Omniglot, “Hausa” https://omniglot.com/writing/hausa.htm</reference>
@@ -444,7 +457,7 @@
       <var cp="06BE" type="blocked" />
       <var cp="06C0" type="blocked" />
       <var cp="06C2" type="blocked" />
-      <var cp="06C3" type="blocked" comment="This is not allocatable in either direction because, unlike the allocatable relationship between U+0647 HEH and U+0629 TEH MARBUTA due to variation in the Arabic language, Urdu and other languages using U+06C1 HEH GOAL do not exhibit such variation with  U+06C3 TEH MARBUTA GOAL" />
+      <var cp="06C3" type="blocked" comment="This is not allocatable in either direction because, unlike the allocatable relationship between U+0647 HEH and U+0629 TEH MARBUTA due to variation in the Arabic language, Urdu, and other languages using U+06C1 HEH GOAL do not exhibit such variation with  U+06C3 TEH MARBUTA GOAL" />
       <var cp="06D5" type="blocked" />
     </char>
     <char cp="06C2" tag="sc:Arab" ref="0 125 135 141" comment="Urdu (1)">

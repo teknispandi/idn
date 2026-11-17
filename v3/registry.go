@@ -23,6 +23,11 @@ const (
 	// Pada tahun 2023 tabel ini tidak lagi sesuai dengan kebijakan IDN ICANN untuk peluncuran baru,
 	// sehingga dipertahankan semata-mata untuk kompatibilitas legacy dengan TLD yang sudah diluncurkan.
 	Japanese
+
+	// AugmentedLatin adalah Latin dari LGR ICANN 2025 dengan karakter yang
+	// membingungkan dihapus (google_latn_3.0, AUGMENTED_LATIN di Nomulus).
+	// Ditambahkan di akhir agar nilai numerik jenis yang sudah ada tidak berubah.
+	AugmentedLatin
 )
 
 // IdnTableRegistry mengelola registry dari semua tabel IDN yang tersedia
@@ -51,6 +56,7 @@ func (r *IdnTableRegistry) loadTables() {
 		ExtendedLatin:     {"extended_latin.txt", "extended_latin"},
 		UnconfusableLatin: {"unconfusable_latin.txt", "unconfusable_latin"},
 		Japanese:          {"japanese.txt", "ja"},
+		AugmentedLatin:    {"augmented_latin.txt", "augmented_latin"},
 	}
 
 	for tableType, config := range tableConfigs {
@@ -97,6 +103,8 @@ func (t IdnTableType) String() string {
 		return "unconfusable_latin"
 	case Japanese:
 		return "ja"
+	case AugmentedLatin:
+		return "augmented_latin"
 	default:
 		return "unknown"
 	}
@@ -111,6 +119,8 @@ func ParseIdnTableType(s string) (IdnTableType, error) {
 		return UnconfusableLatin, nil
 	case "ja", "japanese":
 		return Japanese, nil
+	case "augmented_latin":
+		return AugmentedLatin, nil
 	default:
 		return 0, fmt.Errorf("unknown IDN table type: %s", s)
 	}

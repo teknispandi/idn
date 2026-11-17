@@ -2,7 +2,7 @@
 <lgr xmlns="urn:ietf:params:xml:ns:lgr-1.0">
   <meta>
     <version comment="Second Level Reference LGR">2</version>
-    <date>2024-10-25</date>
+    <date>2026-08-13</date>
     <language>und-Orya</language>
     <unicode-version>11.0.0</unicode-version>
     <description type="text/html"><![CDATA[
@@ -11,7 +11,7 @@
   <ul>
     <li>These instructions cover how to adopt an LGR based on this reference LGR for a given
     zone and how to prepare the file for deposit in the IANA Repository of IDN Practices.</li>
-    <li>As described  the IANA procedure (https://www.iana.org/help/idn-repository-procedure) an 
+    <li>As described in the IANA procedure (https://www.iana.org/help/idn-repository-procedure) an 
     LGR MUST contain the following elements in its header:
       <ul style="list-style-type:square;">
         <li>Script or Language Designator (see below for guidance) </li>
@@ -37,13 +37,13 @@
   <p><code>&lt;version comment=&quot;</code>[Please replace (or delete) the optional comment]<code>&quot;&gt;</code>[Please fill in version number, starting at 1]<code>&lt;/version&gt;</code></p>
   <p><code>&lt;date&gt;</code>[Please fill in with publication date, in YYYY-MM-DD format]<code>&lt;/date&gt;</code></p>
   <p><code>&lt;validity-start&gt;</code>[Please fill in effective date, in YYYY-MM-DD format]<code>&lt;/validity-start&gt;</code></p>
-  <p>Note: the scope element may be repeated, so that the same document can serve for multiple domains.</p>
+  <p>Note: the scope element may be repeated, so that the same document can serve multiple domains.</p>
   <p><code>&lt;scope type=&quot;domain&quot;&gt;</code>[Please provide, in &quot;.domain&quot; format]<code>&lt;/scope&gt;</code></p>
 <p><strong>Registry Contact Information:</strong></p>
   <p>Please fill in the <a href="#registry_contact_details">Registry Contact Details</a>.</p>
 <p><strong>Change History</strong></p>
   <p>If you made technical modifications to the LGR, please summarize them in the <a href="#change_history">Change History</a> (and also note the details in the appropriate section of the description).</p>
-<p>PLEASE DELETE THESE INSTRUCTIONS BEFORE DEPOSITING THE DOCUMENT</p></div>
+<p>PLEASE DELETE THESE INSTRUCTIONS BEFORE DEPOSITING THE DOCUMENT.</p></div>
        
        <section id="registry_contact_details">
 <h2>Registry Contact Details</h2>
@@ -62,7 +62,7 @@
      domain or domains identified above. 
      The starting point for the development of this LGR can be found in the related Root Zone LGR [RZ-LGR-Orya]. 
      The format of this file follows [RFC 7940].
-     This LGR is adapted from the “Reference LGR for the Second Level for the Oriya Script” [Ref-LGR-und-Orya], for details, see <a href="#change_history">Change History</a> below.</p>
+     This LGR is adapted from the “Reference LGR for the Second Level for the Oriya Script” [Ref-LGR-und-Orya]; for details, see <a href="#change_history">Change History</a> below.</p>
      
     <p>For details and additional background on the Oriya script, see “Proposal for an Oriya Script Root Zone 
      Label Generation Ruleset (LGR)" [Proposal-Oriya].</p>
@@ -113,8 +113,8 @@
 
     <p>Should an extension be contemplated that adds native digits, these might require variant relations.
      At the same time, however, any native digits would normally be semantic variants of the ASCII digits.
-     In any zone containing multiple scripts, these two types of variant relation for digits may lead to
-     complication once transitivity is applied.</p>
+     In any zone containing multiple scripts, these two types of variant relations for digits may lead to
+     complications once transitivity is applied.</p>
 
     <p><b>Variant Disposition:</b> All variants are of type “blocked”, making labels that 
     differ only by these variants mutually exclusive: whichever label containing either of 
@@ -165,15 +165,15 @@
     <p>By default, the LGR includes the rules and actions to implement the following restrictions mandated by the IDNA protocol. They are marked with &#x235F;.</p>
        <ul>
        <li><b>Hyphen Restrictions</b> &mdash; restrictions on the allowable placement of hyphens (no leading/ending hyphen
-             and no hyphen in positions 3 and 4). These restrictions are described in Section 4.2.3.1 of RFC 5891 [150]. 
-             They are implemented here as context rule on U+002D (-) HYPHEN-MINUS.</li>
+             and no hyphen in positions 3 and 4). These restrictions are described in Section 4.2.3.1 of RFC 5891 [5891]. 
+             They are implemented here as a context rule on U+002D (-) HYPHEN-MINUS.</li>
           <li><b>Leading Combining Marks</b>   &mdash;  restrictions on the allowable placement of combining marks
-             (no leading combining mark). This rule is described in Section 4.2.3.2 of RFC 5891 [150].</li>
+             (no leading combining mark). This rule is described in Section 4.2.3.2 of RFC 5891 [5891].</li>
        </ul>
 
     <h3>Default Actions</h3>
 
-    <p>This LGR includes the default actions for LGRs as well as the action needed to
+    <p>This LGR includes the default actions for LGRs, as well as the action needed to
         invalidate labels with misplaced combining marks. They are marked with &#x235F;.
         For a description see [RFC 7940].</p>
 
@@ -213,8 +213,9 @@
     <section id="change_history">
     <h3>Changes from Version Dated 15 December 2020</h3> <p>Unicode Version has been updated.</p>
 
-        <h3>Changes from Version Dated 25 October 2024</h3>
-        <p>Adopted from the Second Level Reference LGR for the Oriya Script [Ref-LGR-und-Orya] without normative changes.</p>
+        <h3>Changes from Version Dated 13 August 2026</h3>
+        <p>This is a placeholder to document any changes applied by the registry operator when adopting the reference LGR. If no change has been noted, the LGR is the same as the Second Level Reference LGR for the Oriya Script [Ref-LGR-und-Orya] without normative changes.
+    </p>
         </section>
 
     <h2>References</h2> 
@@ -230,16 +231,16 @@
 
     <dt>[Level-2-Overview]</dt>
      <dd>Internet Corporation for Assigned Names and Numbers, (ICANN),“Reference Label Generation Rules (LGR) for the Second Level: Overview and Summary” (PDF), 
-     (Los Angeles, California: ICANN, 25 October 2024), https://www.icann.org/en/system/files/files/level2-lgr-overview-summary-25oct24-en.pdf
+     (Los Angeles, California: ICANN, 13 August 2026), https://www.icann.org/en/system/files/files/level2-lgr-overview-summary-13aug26-en.pdf
       </dd>    
 
     <dt>[Proposal-Oriya]</dt> 
      <dd>Neo-Brahmi Generation Panel, “Proposal for an Oriya Script Root Zone Label Generation Rule-set “, 6 March 2019, https://www.icann.org/en/system/files/files/proposal-oriya-lgr-06mar19-en.pdf</dd>
 
      <dt>[Ref-LGR-Myanmar-Full-Variant-Script]</dt>
-     <dd>ICANN, Second Level Reference Label Generation Rules for the Myanmar Script (und-Mymr), 25 October 2024 (XML)
-      https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-myanmar-full-variant-script-25oct24-en.xml
-      non-normative HTML presentation: https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-myanmar-full-variant-script-25oct24-en.html</dd>
+     <dd>ICANN, Second Level Reference Label Generation Rules for the Myanmar Script (und-Mymr), 13 August 2026 (XML)
+      https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-myanmar-full-variant-script-13aug26-en.xml
+      non-normative HTML presentation: https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-myanmar-full-variant-script-13aug26-en.html</dd>
 
      <dt>[RFC 7940]</dt>
      <dd>Davies, K. and A. Freytag, “Representing Label Generation Rulesets Using XML”, 
@@ -250,23 +251,28 @@
     https://www.rfc-editor.org/info/rfc8228</dd>
       
      <dt>[RZ-LGR-Overview]</dt>
-       <dd>Integration Panel, “Root Zone Label Generation Rules (RZ LGR-5): Overview and Summary”, 26 May 2022 (PDF), https://www.icann.org/sites/default/files/lgr/rz-lgr-5-overview-26may22-en.pdf</dd>
+       <dd>Integration Panel, “Root Zone Label Generation Rules (RZ LGR-6): Overview and Summary”, 23 September 2025 (PDF), https://www.icann.org/sites/default/files/packages/lgr/rz-lgr-6-overview-23sep25-en.pdf</dd>
 
      <dt>[RZ-LGR-Orya]</dt>
-     <dd>ICANN, Root Zone Label Generation Rules for the Oriya Script (und-Orya), 26 May 2022 (XML)
-      https://www.icann.org/sites/default/files/lgr/rz-lgr-5-oriya-script-26may22-en.xml</dd>
+     <dd>ICANN, Root Zone Label Generation Rules for the Oriya Script (und-Orya), 23 September 2025 (XML)
+      https://www.icann.org/sites/default/files/lgr/rz-lgr-6-oriya-script-23sep25-en.xml<br />
+      <i>
+        non-normative HTML presentation at:
+        https://www.icann.org/sites/default/files/lgr/rz-lgr-6-oriya-script-23sep25-en.html
+      </i>
+  </dd>
 
      <dt>[SIL-Ethnologue]</dt>
      <dd>David M. Eberhard, Gary F. Simons &amp; Charles D. Fennig (eds.). 2021.
-     Ethnologue: Languages of the World, Twenty fourth edition. Dallas, Texas: SIL
+     Ethnologue: Languages of the World, twenty-fourth edition. Dallas, Texas: SIL
      International. Online version available as https://www.ethnologue.com</dd>
 
           <dt>[Ref-LGR-und-Orya]</dt>
-              <dd>ICANN, Second Level Reference Label Generation Rules for the Oriya Script (und-Orya), 25 October 2024 (XML)
-      https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-oriya-script-25oct24-en.xml
-      non-normative HTML presentation: https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-oriya-script-25oct24-en.html</dd>
+              <dd>ICANN, Second Level Reference Label Generation Rules for the Oriya Script (und-Orya), 13 August 2026 (XML)
+      https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-oriya-script-13aug26-en.xml
+      non-normative HTML presentation: https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-oriya-script-13aug26-en.html</dd>
                 <dt>[Unicode 11.0.0]</dt>
-         <dd>The Unicode Consortium. The Unicode Standard, Version 11.0.0, (Mountain View, CA: The Unicode Consortium, 2018. ISBN 978-1-936213-19-1) 
+         <dd>The Unicode Consortium. The Unicode Standard, Version 11.0.0 (Mountain View, CA: The Unicode Consortium, 2018. ISBN 978-1-936213-19-1) 
      https://www.unicode.org/versions/Unicode11.0.0/</dd>
      </dl>
 
@@ -279,7 +285,7 @@
       Entries in the table may have
         multiple source reference values. 
         In the listing of <a href="#whole_label_evaluation_and_context_rules">whole label evaluation and context rules</a>,
-        reference [150] indicates the source for common rules.</p>
+        reference [5891] indicates the source for common rules.</p>
 
 ]]></description>
     <references>
@@ -290,11 +296,11 @@
       <reference id="103">Wikipedia. &quot;Odia language&quot; https://en.wikipedia.org/wiki/Odia_language</reference>
       <reference id="104">Wikipedia, &quot;Oriya (Unicode block)&quot; https://en.wikipedia.org/wiki/Oriya_(Unicode_block)</reference>
       <reference id="105">Odisha State Govt. Primary School Grade 1 e-book “HasaKhela”: by Odisha Primary Education Programme Authority https://opepa.odisha.gov.in/website/Download/e-Text-Book/CLass%20I/Hasa%20Khela%20Part%20II/Haso%20Khelo-II-Page-112.pdf</reference>
-      <reference id="150">RFC 5891, Internationalized Domain Names in Applications (IDNA): Protocol https://tools.ietf.org/html/rfc5891</reference>
+      <reference id="5891">RFC 5891, Internationalized Domain Names in Applications (IDNA): Protocol https://tools.ietf.org/html/rfc5891</reference>
     </references>
   </meta>
   <data>
-    <char cp="002D" not-when="hyphen-minus-disallowed" tag="sc:Zyyy" ref="0" comment="HYPHEN-MINUS; &#x235F;" />
+    <char cp="002D" not-when="hyphen-minus-disallowed" tag="Hyphen sc:Zyyy" ref="0" comment="HYPHEN-MINUS; &#x235F;" />
     <char cp="0030" tag="Common-digit sc:Zyyy" ref="0" comment="DIGIT ZERO; &#x235F;" />
     <char cp="0031" tag="Common-digit sc:Zyyy" ref="0" comment="DIGIT ONE; &#x235F;" />
     <char cp="0032" tag="Common-digit sc:Zyyy" ref="0" comment="DIGIT TWO; &#x235F;" />
@@ -377,14 +383,14 @@
     <class name="N" from-tag="Nukta" comment="The Oriya Nukta" />
     <class name="C1" from-tag="C1" comment="Specific consonants preceding Oriya Nukta" />
     <!--Whole label evaluation and context rules go here-->
-    <rule name="leading-combining-mark" ref="150" comment="RFC 5891 restrictions on placement of combining marks &#x235F;">
+    <rule name="leading-combining-mark" ref="5891" comment="RFC 5891 restrictions on placement of combining marks &#x235F;">
       <start />
       <union>
         <class property="gc:Mn" />
         <class property="gc:Mc" />
       </union>
     </rule>
-    <rule name="hyphen-minus-disallowed" ref="150" comment="RFC 5891 restrictions on placement of U+002D HYPHEN-MINUS &#x235F;">
+    <rule name="hyphen-minus-disallowed" ref="5891" comment="RFC 5891 restrictions on placement of U+002D HYPHEN-MINUS &#x235F;">
       <choice>
         <rule comment="no leading hyphen">
           <look-behind>
@@ -436,7 +442,7 @@
       <anchor />
     </rule>
     <!--Action elements go here - order defines precedence-->
-    <action disp="invalid" match="leading-combining-mark" ref="150" comment="labels with leading combining marks are invalid &#x235F;" />
+    <action disp="invalid" match="leading-combining-mark" ref="5891" comment="labels with leading combining marks are invalid &#x235F;" />
     <action disp="invalid" any-variant="out-of-repertoire-var" comment="any variant label with a code point out of repertoire is invalid &#x235F;" />
     <action disp="blocked" any-variant="blocked" comment="any variant label containing blocked variants is blocked &#x235F;" />
     <action disp="allocatable" all-variants="allocatable" comment="variant labels with all variants allocatable are allocatable &#x235F;" />

@@ -1,20 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <lgr xmlns="urn:ietf:params:xml:ns:lgr-1.0">
   <meta>
-    <version comment="Root Zone LGR for the Bengali (Bangla) Script">5</version>
-    <date>2022-05-26</date>
+    <version comment="Root Zone LGR for the Bengali (Bangla) Script">6</version>
+    <date>2025-09-23</date>
     <language>und-Beng</language>
     <scope type="domain">.</scope>
-    <unicode-version>11.0.0</unicode-version>
+    <unicode-version>16.0.0</unicode-version>
     <description type="text/html"><![CDATA[
     <h1>Root Zone Label Generation Rules for the Bengali (Bangla) Script</h1>
-    
+
     <h2>Overview</h2>
     <p>This file contains Label Generation Rules (LGR) for the Bengali (Bangla) script for the Root Zone. 
     This LGR covers Assamese, Bengali, Manipuri and a number of other languages written with the Bengali script. 
     For more details on this LGR and additional background on the script, see “Proposal for a Bengali Script Root 
     Zone Label Generation Ruleset (LGR)” [Proposal-Bengali].
-    This file is one of a set of LGR files that together form an integrated LGR for the DNS Root Zone [RZ-LGR-5]. 
+    This file is one of a set of LGR files that together form an integrated LGR for the DNS Root Zone [RZ-LGR-6]. 
     The format of this file follows [RFC 7940].</p>
 
     <h2>Repertoire</h2>
@@ -25,24 +25,29 @@
     listed by itself, it brings the total of distinct code points to 62.
     For more detail, see Section 5, “Repertoire” in [Proposal-Bengali].</p>
 
-    <p>The repertoire is based on [MSR-5], which is a subset of [Unicode 11.0].</p>
+    <p>Note that the code points U+09DC, 09DD and U+09DF are not in Normalization Form NFC and thus not
+    PVALID under IDNA2008. Before performing lookup, any user agent accepting these code points will normalize 
+    them into the equivalent sequences with an explicit U+09BC Nukta code point. Accordingly, this LGR 
+    does not reference these code points, but instead includes only the sequences.<p>
     
-    <p>As part of the Root Zone, this LGR includes neither decimal digits nor the HYPHEN-MINUS.</p>
-      
-   <p>Each code point is tagged with the script or scripts with which the code point is used, one or more other character categories, 
-    and one or more references documenting sufficient justification for inclusion in the repertoire; see “References” below. 
+      <p>The repertoire is contained in [MSR-6], which is a subset of [Unicode 16.0.0].</p>
+
+      <p>As part of the Root Zone, this LGR includes neither decimal digits nor the HYPHEN-MINUS.</p>
+
+      <p><b>Repertoire Listing:</b> Each code point or range is tagged with the script or scripts with which the code point is used and one or more other character categories. For each repertoire element, 
+  one or more references document sufficient justification for inclusion in the repertoire; see the <a href="#ref_desc_sec_References">“References”</a> below. 
     For code points that are part of the repertoire, comments identify the languages using the code point along with their [EGIDS] level.</p>
-    
-    <p>Code points outside the Bengali script that are listed in this file are targets
-    for out-of-script variants and are identified by a reflexive (identity)
-    variant of type “out-of-repertoire-var”. They do not form part of the
-    repertoire.</p>
-      
+
+    <p>Code points outside the Bengali script repertoire that are listed in this file are targets
+      for out-of-repertoire variants and are identified by a reflexive (identity)
+      variant of type “out-of-repertoire-var”. They do not form part of the
+      repertoire.</p>
+
     <h2>Variants</h2>
     <p>This LGR defines in-script variants and cross-script variants as described in Section 6, “Variants”, in [Proposal-Bengali].
-    There are three in-script variants; two sequence sets and one set for variation of RA. See Section 6.1 of [Proposal-Bengali].
-    There are four cross-script variants; two sets with Gurmukhi and the other two sets with Devanagari. 
-    See Section 6.2 of [Proposal-Bengali].
+    There are three in-script variants: two sequence sets and one set for variation of RA. See Section 6.1 of [Proposal-Bengali].
+    There are six cross-script variants: two sets with Gurmukhi and four sets with Devanagari. 
+    See also Section 6.2 of [Proposal-Bengali].
     </p>
 
     <p><b>Variant Disposition:</b> The in-script variant pair U+09B0 / U+09F0 is of type “allocatable”, thus allowing
@@ -50,7 +55,9 @@
     by these variants mutually exclusive:  whichever label containing either of these variants is chosen earlier, 
     the other one equivalent variant label should be blocked. There is no preference among these variants.</p>
 
-    <p>The specification of variants in the Root Zone LGR follows the guidelines in [RFC 8228].</p>
+  <p><b>Context Rules for Variants:</b> The Halant is only a variant at the end of a label, when it does not partake in forming a conjunct.</p>
+
+      <p>The specification of variants in the Root Zone LGR follows the guidelines in [RFC 8228].</p>
 
     <h2>Character Classes</h2>
     <p><b>Consonants:</b> All consonants contain an implicit vowel. More 
@@ -58,13 +65,13 @@
        [Proposal-Bengali].</p>
 
     <p><b>Hasanta:</b> A special sign is needed whenever the 
-       implicit vowel in the preceding consonant is stripped off. This symbol is also known as the Halant or “Virama”. More 
+       implicit vowel in the preceding consonant is stripped off. This symbol is also known as the Halant or “Virama”. The nominal rendering of the Hasanta is visible only at the end of the label. More 
        details in Section 3.3.2, “The Implicit Vowel Killer: Hasanta” of 
        [Proposal-Bengali].</p>
     
-    <p><b>Vowels and Kar (Matra):</b> Separate symbols exist for all “Swara” or Vowels in Bengali, which are pronounced independently 
-       either at the beginning of the word or after another vowel or consonant sound. To indicate a Vowel sound 
-       other than the implicit one, a Vowel sign  (Kar) is attached to the consonant, analogous to Matra in other Neo-Brahmi scripts.. More details in Section 
+    <p><b>Vowels and Kar (Matra):</b> Separate symbols exist for all “Swara” or vowels in Bengali, which are pronounced independently 
+       either at the beginning of the word or after another vowel or consonant sound. To indicate a vowel sound 
+       other than the implicit one, a vowel sign  (Kar) is attached to the consonant, analogous to Matra in other Neo-Brahmi scripts. More details in Section 
        3.3.3, “ Vowels” of 
        [Proposal-Bengali].</p>
 
@@ -99,12 +106,14 @@
         [Proposal-Bengali].</p>
 
     <h2>Whole Label Evaluation (WLE) and Context Rules</h2>
+
     <h3>Default Whole Label Evaluation Rules and Actions</h3>
     <p>The LGR includes the set of required default WLE rules and actions applicable to 
-        the Root Zone and defined in [MSR-5]. They are marked with &#x235F;. The 
-          default prohibition on leading combining marks is equivalent to ensuring that 
-          a label only starts with a consonant or vowel.</p>   
-        
+        the Root Zone and defined in [MSR-6]. They are marked with &#x235F;. 
+      The default prohibition on leading combining marks is equivalent to ensuring that 
+      a label only starts with a consonant or vowel. 
+      The actions compute a label disposition based on WLE rules or variant mapping types.</p>
+
     <h3>Bengali-specific Rules</h3>
     <p>These rules have been formulated as context rules suitable for adoption into an LGR specification.</p>
     <p>The following symbols are used in the WLE rules:</p>
@@ -136,16 +145,40 @@
      </ul>
     
      <p>More details in Section 7, “Whole Label Evaluation Rules (WLE)” of [Proposal-Bengali].</p>
+
+    <p>The following context rule is used for variants of Halant:</p>
+    <ul>
+        <li>Variant is not defined unless it is followed by end of label</li>
+    </ul>
     
     <h2>Methodology and Contributors</h2>
-    <p>The Root Zone LGR for the Bengali script was developed by the Neo-Brahmi Generation Panel (NBGP) the members 
+    
+      <p>The Root Zone LGR for the Bengali (Bangla) Script was developed by the Neo-Brahmi Generation Panel (NBGP), the members 
      of which have experience in linguistics and computational linguistics in a wide variety of languages
      written with Neo-Brahmi scripts. Under the Neo-Brahmi Generation Panel, there are 
-     nine scripts belonging to separate Unicode blocks. Each of these scripts has been assigned a 
-     separate LGR, with the Neo-Brahmi GP ensuring that the fundamental philosophy behind building 
-     each LGR is in sync with all other Brahmi-derived scripts. For further details on methodology and contributors, 
-     see Sections 4 and 8 in [Proposal-Bengali], as well as [RZ-LGR-5-Overview].</p>
-    
+    nine scripts belonging to separate Unicode blocks. Each of these scripts has been assigned a 
+    separate LGR, with the Neo-Brahmi GP ensuring that the fundamental philosophy behind building 
+    each LGR is in sync with all other Brahmi-derived scripts. For further details on methodology and contributors, 
+     see Sections 4 and 8 in [Proposal-Bengali], as well as [RZ-LGR-6-Overview].</p>
+
+      <section id="change_history">
+    <h3>Changes from RZ LGR-5</h3> 
+    <p>In RZ LGR-6 the following changes were made:</p>
+    <ul>
+      <li>
+        A clerical error has been fixed: the character class for U+0994 Letter AU has been
+        corrected to Vowel with a corresponding context rule. From RZ LGR-6, affected
+        labels are now reported as valid in accordance with [Proposal-Bengali].
+      </li>
+      <li>
+        Two missing cross-script variants were added for Candrabindu and Hasanta and their Devanagari counterparts. These code points
+        were mistakenly believed to not participate in the formation of possible
+        variant labels.
+      </li>
+    </ul>
+    <p>For the prior version see [RZ-LGR-5-Beng].</p>   
+    </section>
+
     <h2>References</h2> 
 
     <p>The following general references are cited in this document:</p>
@@ -156,50 +189,63 @@
       documented in [SIL-Ethnologue] and summarized here:
       https://en.wikipedia.org/wiki/Expanded_Graded_Intergenerational_Disruption_Scale_(EGIDS)</dd>
 
-    <dt>[MSR-5]</dt>
-     <dd>Integration Panel, “Maximal Starting Repertoire — MSR-5 Overview and Rationale”, 24 June 2021
-     https://www.icann.org/en/system/files/files/msr-5-overview-24jun21-en.pdf     </dd>
+    <dt>[MSR-6]</dt>
+     <dd>Integration Panel, “Maximal Starting Repertoire — MSR-6 Overview and Rationale”, 23 September 2025,
+  https://www.icann.org/en/system/files/files/msr-6-overview-23sep25-en.pdf</dd>
 
     <dt>[Proposal-Bengali]</dt> 
     <dd>Neo-Brahmi Generation Panel, “Proposal for a Bangla (Bengali) Script Root Zone Label 
-         Generation Rule-Set (LGR)”, 20 May 2020 (PDf), https://www.icann.org/en/system/files/files/proposal-bangla-lgr-20may20-en.pdf
+         Generation Rule-Set (LGR)”, 20 May 2020 (PDF), https://www.icann.org/en/system/files/files/proposal-bangla-lgr-20may20-en.pdf
     </dd>
 
     <dt>[RFC 7940]</dt>
-     <dd>Davies, K. and A. Freytag, “Representing Label Generation Rulesets Using XML”, RFC 7940, August 2016, https://www.rfc-editor.org/info/rfc7940. 
-     </dd> 
+     <dd>Davies, K. and A. Freytag, “Representing Label Generation Rulesets Using XML”, 
+     RFC 7940, August 2016, https://www.rfc-editor.org/info/rfc7940</dd> 
 
      <dt>[RFC 8228]</dt>
      <dd>A. Freytag, “Guidance on Designing Label Generation Rulesets (LGRs) Supporting Variant Labels”, RFC 8228, August 2017,
-       https://www.rfc-editor.org/info/rfc8228</dd>
-    
-     <dt>[RZ-LGR-5]</dt>
-     <dd>Integration Panel, “Root Zone Label Generation Rules (RZ-LGR-5)”, 26 May 2022 (XML), https://www.icann.org/sites/default/files/lgr/rz-lgr-5-common-26may22-en.xml <br/>
-     <i>non-normative HTML presentation: https://www.icann.org/sites/default/files/lgr/rz-lgr-5-common-26may22-en.html</i></dd>
-     
-     <dt>[RZ-LGR-5-Overview]</dt>
-     <dd>Integration Panel, “Root Zone Label Generation Rules (RZ LGR-5): Overview and Summary”, 26 May 2022, https://www.icann.org/sites/default/files/lgr/rz-lgr-5-overview-26may22-en.pdf</dd>
+    https://www.rfc-editor.org/info/rfc8228</dd>
 
-     <dt>[Unicode 11.0]</dt>
-     <dd>The Unicode Consortium. The Unicode Standard, Version 11.0.0, (Mountain View, CA: The Unicode Consortium, 2018. ISBN 978-1-936213-19-1) 
-     https://www.unicode.org/versions/Unicode11.0.0/</dd>
+     <dt>[RZ-LGR-5-Beng]</dt>
+    <dd>ICANN, Root Zone Label Generation Rules for the Bengali (Bangla) Script (und-Beng), Version 5, 26 May 2022 (XML)
+     https://www.icann.org/sites/default/files/lgr/rz-lgr-5-bengali-script-26may22-en.xml <br/>
+     <i>non-normative HTML presentation: https://www.icann.org/sites/default/files/lgr/rz-lgr-5-bengali-script-26may22-en.html</i></dd>
+    
+     <dt>[RZ-LGR-6]</dt>
+     <dd>Integration Panel, “Root Zone Label Generation Rules (RZ-LGR-6)”, 23 September 2025 (XML), https://www.icann.org/sites/default/files/lgr/rz-lgr-6-common-23sep25-en.xml <br/>
+     <i>non-normative HTML presentation: https://www.icann.org/sites/default/files/lgr/rz-lgr-6-common-23sep25-en.html</i></dd>
+     
+     <dt>[RZ-LGR-6-Overview]</dt>
+     <dd>Integration Panel, “Root Zone Label Generation Rules (RZ LGR-6): Overview and Summary”, 23 September 2025, https://www.icann.org/sites/default/files/lgr/rz-lgr-6-overview-23sep25-en.pdf</dd>
+     <dt>[SIL-Ethnologue]</dt>
+     <dd>David M. Eberhard, Gary F. Simons &amp; Charles D. Fennig (eds.). 2021.
+     Ethnologue: Languages of the World, Twenty fourth edition. Dallas, Texas: SIL
+     International. Online version available as https://www.ethnologue.com</dd>
+     <dt>[Unicode 16.0.0]</dt>
+     <dd>
+     The Unicode Consortium. The Unicode Standard, Version 16.0.0, (South San Francisco: The Unicode Consortium, 2024. ISBN 978-1-936213-34-4)
+     https://www.unicode.org/versions/Unicode16.0.0/
+     </dd>
      </dl>
-      <p>For references consulted particularly in designing the repertoire for the Bengali script for the Root Zone 
-      please see details in the <a href="#table_of_references">Table of References</a> below. 
+      <p>For references consulted, particularly in designing the repertoire for the Bengali script for the Root Zone, 
+  please see details in the <a href="#table_of_references">Table of References</a> below.
       References [0] and [7] refer to the Unicode Standard versions in which the
       corresponding code points were initially encoded. References [101] and above correspond to sources
-      given in [Proposal-Bengali] justifying the inclusion of the corresponding code points. Entries in the table may have
-      multiple source reference values.</p>
+      given in [Proposal-Bengali] justifying the inclusion of the corresponding code points. Entries in the table may have multiple source reference values.</p>
  ]]></description>
     <references>
-      <reference id="0" comment="Any code point originally encoded in Unicode 1.1">The Unicode Standard 1.1</reference>
-      <reference id="7" comment="Any code point originally encoded in Unicode 4.1">The Unicode Standard 4.1</reference>
+      <reference id="0" comment="Any code point originally encoded in Unicode Version 1.1">The Unicode Standard, Version 1.1</reference>
+      <reference id="7" comment="Any code point originally encoded in Unicode Version 4.1">The Unicode Standard, Version 4.1</reference>
       <reference id="101">Wikipedia, Bengali alphabet, accessed on 2017-11-25 https://en.wikipedia.org/wiki/Bengali_alphabet</reference>
       <reference id="102">Bengali alphabet for Manipuri, found in Omniglot, “Manipuri (Meeteilon/ Meithei)”, accessed on 20.10.2019 https://www.omniglot.com/writing/manipuri.htm</reference>
       <reference id="103">Omniglot, “Assamese (অসমীয়া)”, accessed on 2020-04-28 https://www.omniglot.com/writing/assamese.htm</reference>
     </references>
   </meta>
   <data>
+    <char cp="0901" tag="sc:Deva" ref="0" comment="Not part of repertoire">
+      <var cp="0901" type="out-of-repertoire-var" comment="Out-of-repertoire" />
+      <var cp="0981" type="blocked" comment="Cross-script homoglyph" />
+    </char>
     <char cp="092E" tag="sc:Deva" ref="0" comment="Not part of repertoire">
       <var cp="092E" type="out-of-repertoire-var" comment="Out-of-repertoire" />
       <var cp="09AE" type="blocked" comment="Cross-script homoglyph" />
@@ -210,7 +256,13 @@
       <var cp="09BF" type="blocked" comment="Cross-script homoglyph" />
       <var cp="0A3F" type="blocked" comment="Cross-script homoglyph" />
     </char>
-    <char cp="0981" when="follows-only-V-C-M" tag="Candrabindu sc:Beng" ref="0 101 102 103" comment="Bangla (1), Manipuri (2), Assamese (2)" />
+    <char cp="094D" tag="sc:Deva" ref="0" comment="Not part of repertoire">
+      <var cp="094D" type="out-of-repertoire-var" comment="Out-of-repertoire" />
+      <var cp="09CD" when="at-end-of-label" type="blocked" comment="Cross-script homoglyph" />
+    </char>
+    <char cp="0981" when="follows-only-V-C-M" tag="Candrabindu sc:Beng" ref="0 101 102 103" comment="Bangla (1), Manipuri (2), Assamese (2)">
+      <var cp="0901" type="blocked" comment="Cross-script homoglyph" />
+    </char>
     <char cp="0982" when="follows-only-V-C-M-D" tag="Anusvara sc:Beng" ref="0 101 102 103" comment="Bangla (1), Manipuri (2), Assamese (2)" />
     <char cp="0983" when="follows-only-V-C-M-D" tag="sc:Beng Visarga" ref="0 101 102 103" comment="Bangla (1), Manipuri (2), Assamese (2)" />
     <char cp="0985" not-when="follows-H" tag="sc:Beng Vowel" ref="0 101 102 103" comment="Bangla (1), Manipuri (2), Assamese (2)" />
@@ -225,7 +277,7 @@
     <char cp="098F 09CD 09AF 09BE" not-when="follows-H" comment="Ya-Phalaa (s2): Bangla (1)" />
     <char cp="0990" not-when="follows-H" tag="sc:Beng Vowel" ref="0 101 102 103" comment="Bangla (1), Manipuri (2), Assamese (2)" />
     <char cp="0993" not-when="follows-H" tag="sc:Beng Vowel" ref="0 101 102 103" comment="Bangla (1), Manipuri (2), Assamese (2)" />
-    <char cp="0994" tag="Consonant sc:Beng" ref="0 101 102 103" comment="Bangla (1), Manipuri (2), Assamese (2)" />
+    <char cp="0994" not-when="follows-H" tag="sc:Beng Vowel" ref="0 101 102 103" comment="Bangla (1), Manipuri (2), Assamese (2)" />
     <char cp="0995" tag="Consonant sc:Beng" ref="0 101 102 103" comment="Bangla (1), Manipuri (2), Assamese (2)" />
     <char cp="0996" tag="Consonant sc:Beng" ref="0 101 102 103" comment="Bangla (1), Manipuri (2), Assamese (2)" />
     <char cp="0997" tag="Consonant sc:Beng" ref="0 101 102 103" comment="Bangla (1), Manipuri (2), Assamese (2)" />
@@ -292,7 +344,9 @@
     <char cp="09C8" when="follows-only-C" tag="Matra sc:Beng" ref="0 101 102 103" comment="Bangla (1), Manipuri (2), Assamese (2)" />
     <char cp="09CB" when="follows-only-C" tag="Matra sc:Beng" ref="0 101 102 103" comment="Bangla (1), Manipuri (2), Assamese (2)" />
     <char cp="09CC" when="follows-only-C" tag="Matra sc:Beng" ref="0 101 102 103" comment="Bangla (1), Manipuri (2), Assamese (2)" />
-    <char cp="09CD" when="follows-only-C" tag="Halant sc:Beng" ref="0 101 102 103" comment="Bangla (1), Manipuri (2), Assamese (2)" />
+    <char cp="09CD" when="follows-only-C" tag="Halant sc:Beng" ref="0 101 102 103" comment="Bangla (1), Manipuri (2), Assamese (2)">
+      <var cp="094D" when="at-end-of-label" type="blocked" comment="Cross-script homoglyph" />
+    </char>
     <char cp="09CE" when="follows-only-V-C-M-D-B-X-P" tag="Consonant KhandaTa sc:Beng" ref="7 101 102 103" comment="Bangla (1), Manipuri (2), Assamese (2)" />
     <char cp="09F0" tag="C2 Consonant sc:Beng" ref="0 103" comment="Assamese (2)">
       <var cp="09B0" type="allocatable" comment="Bengali variant" />
@@ -409,6 +463,12 @@
           <char cp="09B0" />
         </rule>
       </choice>
+    </rule>
+    <rule name="at-end-of-label" comment="Matches code point or sequence at the end of the label &#x235F;">
+      <anchor />
+      <look-ahead>
+        <end />
+      </look-ahead>
     </rule>
     <!--Action elements go here - order defines precedence-->
     <action disp="invalid" match="leading-combining-mark" comment="labels with leading combining marks are invalid &#x235F;" />

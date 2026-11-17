@@ -1,16 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <lgr xmlns="urn:ietf:params:xml:ns:lgr-1.0">
   <meta>
-    <version comment="Second Level Reference LGR">1</version>
-    <date>2024-10-25</date>
+    <version comment="Second Level Reference LGR">2</version>
+    <date>2026-08-13</date>
     <language>iu-Cans</language>
     <unicode-version>14.0.0</unicode-version>
-    <description type="text/html"><![CDATA[<div class="instructions">
+    <description type="text/html"><![CDATA[
+<div class="instructions">
 <h2>INSTRUCTIONS</h2>
   <ul>
     <li>These instructions cover how to adopt an LGR based on this reference LGR for a given
     zone and how to prepare the file for deposit in the IANA Repository of IDN Practices.</li>
-    <li>As described  the IANA procedure (https://www.iana.org/help/idn-repository-procedure) an 
+    <li>As described in the IANA procedure (https://www.iana.org/help/idn-repository-procedure) an 
     LGR MUST contain the following elements in its header:
       <ul style="list-style-type:square;">
         <li>Script or Language Designator (see below for guidance) </li>
@@ -36,13 +37,13 @@
   <p><code>&lt;version comment=&quot;</code>[Please replace (or delete) the optional comment]<code>&quot;&gt;</code>[Please fill in version number, starting at 1]<code>&lt;/version&gt;</code></p>
   <p><code>&lt;date&gt;</code>[Please fill in with publication date, in YYYY-MM-DD format]<code>&lt;/date&gt;</code></p>
   <p><code>&lt;validity-start&gt;</code>[Please fill in effective date, in YYYY-MM-DD format]<code>&lt;/validity-start&gt;</code></p>
-  <p>Note: the scope element may be repeated, so that the same document can serve for multiple domains.</p>
+  <p>Note: the scope element may be repeated, so that the same document can serve multiple domains.</p>
   <p><code>&lt;scope type=&quot;domain&quot;&gt;</code>[Please provide, in &quot;.domain&quot; format]<code>&lt;/scope&gt;</code></p>
 <p><strong>Registry Contact Information:</strong></p>
   <p>Please fill in the <a href="#registry_contact_details">Registry Contact Details</a>.</p>
 <p><strong>Change History</strong></p>
   <p>If you made technical modifications to the LGR, please summarize them in the <a href="#change_history">Change History</a> (and also note the details in the appropriate section of the description).</p>
-<p>PLEASE DELETE THESE INSTRUCTIONS BEFORE DEPOSITING THE DOCUMENT</p></div>
+<p>PLEASE DELETE THESE INSTRUCTIONS BEFORE DEPOSITING THE DOCUMENT.</p></div>
 <section id="registry_contact_details">
 <h2>Registry Contact Details</h2>
 <ul style="list-style:none;">
@@ -62,7 +63,7 @@
   </section>
   <section id="sec_desc_repertoire">
     <h2 id="desc_repertoire">Repertoire</h2>
-    <p>The repertoire for the Inuktitut Syllabic script (Unified Canadian Unified Syllabics) contains 151 syllabics characters and combining diacritical marks as defined in Section 5.1 “Included Code Points” in [Proposal-Inuktitut].</p>
+    <p>The repertoire for the Inuktitut Syllabic script (Unified Canadian Unified Syllabics) contains 151 syllabics characters and combining diacritical marks as defined in Section 5.1, “Included Code Points” in [Proposal-Inuktitut].</p>
     <p>For the second level, the repertoire has been augmented with the ASCII digits, U+0030 to U+0039, plus U+002D HYPHEN-MINUS, for a total of 162 repertoire elements.</p>
     <p>Any code points outside the Inuktitut Language repertoire that are targets for
      out-of-repertoire variants would be included here only if the variant is listed 
@@ -74,43 +75,38 @@
     For code points that are part of the repertoire, comments identify the languages using the code point along with their [EGIDS] level.</p>
     <section id="sec_desc_excluded_characters">
       <h3 id="desc_excluded_characters">Excluded Characters</h3>
-      <p>The following code points associated to the Inuktitut Syllabics in the UNICODE UCAS table have been excluded in the actual Inuktitut LGR repertoire due to the fact that those code points have never been used, or have not been used in recent times.</p>
-      <p>U+1402 CANADIAN SYLLABICS AAI</p>
-      <p>U+1430 CANADIAN SYLLABICS PAAI </p>
-      <p>U+144D CANADIAN SYLLABICS TAAI</p>
-      <p>U+146C CANADIAN SYLLABICS KAAI</p>
-      <p>U+148A CANADIAN SYLLABICS CAAI</p>
-      <p>U+14A4 CANADIAN SYLLABICS MAAI</p>
-      <p>U+14C1 CANADIAN SYLLABICS NAAI </p>
-      <p>U+14D4 CANADIAN SYLLABICS LAAI</p>
-      <p>U+14EE CANADIAN SYLLABICS SAAI</p>
-      <p>U+1527 CANADIAN SYLLABICS YAAI</p>
-      <p>U+1545 CANADIAN SYLLABICS RAAI</p>
-      <p>U+1554 CANADIAN SYLLABICS FAAI</p>
-      <p>U+1574 CANADIAN SYLLABICS NUNAVIK HE</p>
-      <p>U+1575 CANADIAN SYLLABICS NUNAVIK HI</p>
-      <p>U+1576 CANADIAN SYLLABICS NUNAVIK HII</p>
-      <p>U+1577 CANADIAN SYLLABICS NUNAVIK HO</p>
-      <p>U+1578 CANADIAN SYLLABICS NUNAVIK HOO</p>
-      <p>U+1579 CANADIAN SYLLABICS NUNAVIK HA</p>
-      <p>U+157A CANADIAN SYLLABICS NUNAVIK HAA</p>
-      <p>U+157B CANADIAN SYLLABICS NUNAVIK H</p>
-      <p>U+157E CANADIAN SYLLABICS QAAI</p>
-      <p>U+158E CANADIAN SYLLABICS NGAAI</p>
-      <p>U+15AF CANADIAN SYLLABICS AIVILIK B</p>
-      <p>See Section 5.2 “Excluded Code Points” in [Proposal-Inuktitut].</p>
+      <p>The following code points associated to the Inuktitut Syllabics in the UCAS table in [Unicode 14.0.0] have been excluded in the actual Inuktitut LGR repertoire due to the fact that those code points have never been used, or have not been used in recent times.</p>
+      <ul class="cp-list">
+        <li>U+1402 CANADIAN SYLLABICS AAI</li>
+        <li>U+1430 CANADIAN SYLLABICS PAAI </li>
+        <li>U+144D CANADIAN SYLLABICS TAAI</li>
+        <li>U+146C CANADIAN SYLLABICS KAAI</li>
+        <li>U+148A CANADIAN SYLLABICS CAAI</li>
+        <li>U+14A4 CANADIAN SYLLABICS MAAI</li>
+        <li>U+14C1 CANADIAN SYLLABICS NAAI </li>
+        <li>U+14D4 CANADIAN SYLLABICS LAAI</li>
+        <li>U+14EE CANADIAN SYLLABICS SAAI</li>
+        <li>U+1527 CANADIAN SYLLABICS YAAI</li>
+        <li>U+1545 CANADIAN SYLLABICS RAAI</li>
+        <li>U+1554 CANADIAN SYLLABICS FAAI</li>
+        <li>U+1574 CANADIAN SYLLABICS NUNAVIK HE</li>
+        <li>U+1575 CANADIAN SYLLABICS NUNAVIK HI</li>
+        <li>U+1576 CANADIAN SYLLABICS NUNAVIK HII</li>
+        <li>U+1577 CANADIAN SYLLABICS NUNAVIK HO</li>
+        <li>U+1578 CANADIAN SYLLABICS NUNAVIK HOO</li>
+        <li>U+1579 CANADIAN SYLLABICS NUNAVIK HA</li>
+        <li>U+157A CANADIAN SYLLABICS NUNAVIK HAA</li>
+        <li>U+157B CANADIAN SYLLABICS NUNAVIK H</li>
+        <li>U+157E CANADIAN SYLLABICS QAAI</li>
+        <li>U+158E CANADIAN SYLLABICS NGAAI</li>
+        <li>U+15AF CANADIAN SYLLABICS AIVILIK B</li>
+      </ul>
+      <p>See Section 5.2, “Excluded Code Points” in [Proposal-Inuktitut].</p>
     </section>
     <section id="sec_desc_variants">
       <h2 id="desc_variants">Variants</h2>
       <p>A number of letters bear strong similarity to Latin letters, these have been given cross-script variant mappings.</p>
-      <p id="ref_Digit_Variants"><b>Digit Variants:</b> All Canadian Aboriginal digits are treated as semantic variants of the corresponding common (ASCII) digits.
-     By transitivity, they are also semantic variants of any native digits in scripts that also include the common digits.
-    Such variant relations are deemed to exist implicitly by transitivity but are not listed explicitly in each reference LGR. Instead, if needed, they are applied by using the Common LGR in label processing.</p>
-      <p>In particular, Canadian Aboriginal digit ZERO is a cross-script homoglyph or near homoglyph of digit ZERO in many other scripts; 
-    these are already implicit semantic variants by transitivity and therefore not listed here.</p>
-      <p>To keep digit variant sets manageable in zones where multiple scripts are present, no attempt has been made at identifying 
-    cross-script variants among digits of different numeric value or between a digit in one script and a letter in another, 
-    such as between digit zero and Latin letter ‘o’. Other mechanisms may be required to prevent homograph labels.</p>
+      <p><b>Digit Variants:</b> The Inuktitut reference LGR does not include native digits, so there are no semantic variants defined.</p>
       <div> <p>The specification of variants in this LGR follows the guidelines in [RFC 8228].</p></div>
     </section>
     <section id="sec_desc_character_classes">
@@ -125,28 +121,27 @@
     </section>
     <section id="sec_desc_whole_label_evaluation_(wle)_and_context_rules">
       <h2 id="desc_whole_label_evaluation_wle_and_context_rules">Whole Label Evaluation (WLE) and Context Rules</h2>
-      <p>The LGR provides script specific restrictions on the allowable placement of initial point code of a label, as well as restrictions on composition. These are implemented with the following rules:</p>
       <section id="sec_desc_common_rules">
         <h3 id="desc_common_rules">Common Rules</h3>
-        <p></p>
+        <div></div>
         <div> <p>The LGR includes the rules and actions to implement the following restrictions, some of which are mandated by the IDNA
          protocol. They are marked with &#x235F; and included here by default.</p>
          <ul>
        <li><b>Hyphen Restrictions</b> &mdash; restrictions on the allowable placement of hyphens (no leading/ending hyphen
-             and no hyphen in positions 3 and 4). These restrictions are described in Section 4.2.3.1 of RFC 5891 [150]. 
-             They are implemented here as context rule on U+002D (-) HYPHEN-MINUS.</li>
+             and no hyphen in positions 3 and 4). These restrictions are described in Section 4.2.3.1 of RFC 5891 [5891]. 
+             They are implemented here as a context rule on U+002D (-) HYPHEN-MINUS.</li>
           <li><b>Leading Combining Marks</b>   &mdash;  restrictions on the allowable placement of combining marks
-             (no leading combining mark). This rule is described in Section 4.2.3.2 of RFC 5891 [150].</li>
+             (no leading combining mark). This rule is described in Section 4.2.3.2 of RFC 5891 [5891].</li>
        <li><b>Digit-mixing</b> &mdash; no mixing between different digit sets (European and Canadian Aboriginal digits)
           is allowed; implemented here as a WLE rule with associated action.</li>
        </ul></div>
-        <p>Language-specific rules in this LGR already prevent combining marks in leading position making the "leading-combining-mark" rule technically redundant. It is retained here for consistency.</p>
+        <p>Language-specific rules in this LGR already prevent combining marks in leading position, making the “leading-combining-mark” rule technically redundant. It is retained here for consistency.</p>
       </section>
       
       <section id="sec_desc_default_actions">
         <h3 id="desc_default_actions">Default Actions</h3>
-        <p>This LGR includes the complete set default actions for LGRs as well as the action needed to invalidate labels with misplaced combining marks. They are marked with &#x235F;.
-        For a description see [RFC 7940] and [150].
+        <p>This LGR includes the complete set of default actions for LGRs, as well as the action needed to invalidate labels with misplaced combining marks. They are marked with &#x235F;.
+        For a description see [RFC 7940] and [5891].
         An additional action is triggered by mixed digit labels.
     </p>
       </section>
@@ -157,11 +152,11 @@
           <li>
             <b>leading-final-mark</b> — A context rule on final mark characters that prohibits labels with a leading or repeated final mark, or following a hyphen or digit</li>
           <li>
-            <b>following-1550</b> — A context rule that prohibits the character following U+1550</li>
+            <b>following-1550</b> — A context rule that prohibits the character following U+1550 CANADIAN SYLLABICS R</li>
           <li>
-            <b>following-1595</b> — A context rule that prohibits the character following U+1595</li>
+            <b>following-1595</b> — A context rule that prohibits the character following U+1595 CANADIAN SYLLABICS NG</li>
           <li>
-            <b>following-1595-or-1596</b> — A context rule that prohibits the character from following U+1595 or U+1596</li>
+            <b>following-1595-or-1596</b> — A context rule that prohibits the character from following U+1595 CANDIAN SYLLABLICS NG or U+1596 CANADIAN SYLLABICS NNG</li>
         </ul>
       </section>
       <section id="sec_desc_methodology">
@@ -169,8 +164,12 @@
         <p>This Second Level Reference LGR for the Inuktitut Language was developed by the Inuktitut community and edited by Asmus Freytag and Michel Suignard, based on community feedback and public review.</p>
       </section>
       <section id="sec_desc_change_history">
+        <div></div>
         <h3>Changes from Version Dated 25 October 2024</h3>
-        <p>Adopted from the Second Level Reference LGR for the Inuktitut Language [Ref-LGR-iu-Cans] without normative changes.</p>
+        <p>Added additional cross-script variant.</p>
+        <h3>Changes from Version Dated 13 August 2026</h3>
+        <p>This is a placeholder to document any changes applied by the registry operator when adopting the reference LGR. If no change has been noted, the LGR is the same as the Second Level Reference LGR for the Inuktitut Language [Ref-LGR-iu-Cans] without normative changes.
+    </p>
       </section>
       <section id="sec_desc_references">
         <h2 id="desc_references">References</h2>
@@ -184,14 +183,14 @@
           <dd>ICANN, “Guidelines for Developing Reference LGRs for the Second Level”, (Los Angeles, California: ICANN, 27 May 2020), https://www.icann.org/en/system/files/files/lgr-guidelines-second-level-27may20-en.pdf</dd>
           <dt>[Level-2-Overview]</dt>
           <dd>Internet Corporation for Assigned Names and Numbers, (ICANN),“Reference Label Generation Rules (LGR) for the Second Level: Overview and Summary” (PDF), 
-     (Los Angeles, California: ICANN, 25 October 2024), https://www.icann.org/en/system/files/files/level2-lgr-overview-summary-25oct24-en.pdf
+     (Los Angeles, California: ICANN, 13 August 2026), https://www.icann.org/en/system/files/files/level2-lgr-overview-summary-13aug26-en.pdf
       </dd>
           <dt>[Proposal-Inuktitut]</dt>
           <dd>"Inuktitut Language Reference Label Generation Rules for Second-Level Domain Names", 12 September 2024, https://www.icann.org/en/system/files/files/proposal-inuktitut-second-level-12Sep24-en.pdf</dd>
           <dt>[Ref-LGR-iu-Cans]</dt>
-          <dd>ICANN, Second Level Reference Label Generation Rules for the Inuktitut Language (iu-Cans), 25 October 2024 (XML)
-      https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-inuktitut-language-25oct24-en.xml
-      non-normative HTML presentation: https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-inuktitut-language-25oct24-en.html</dd>
+          <dd>ICANN, Second Level Reference Label Generation Rules for the Inuktitut Language (iu-Cans), 13 August 2026 (XML)
+      https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-inuktitut-language-13aug26-en.xml
+      non-normative HTML presentation: https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-inuktitut-language-13aug26-en.html</dd>
           <dt>[RFC 7940]</dt>
           <dd>Davies, K. and A. Freytag, “Representing Label Generation Rulesets Using XML”, 
      RFC 7940, August 2016, https://www.rfc-editor.org/info/rfc7940</dd>
@@ -200,25 +199,26 @@
     https://www.rfc-editor.org/info/rfc8228</dd>
           <dt>[SIL-Ethnologue]</dt>
           <dd>David M. Eberhard, Gary F. Simons &amp; Charles D. Fennig (eds.). 2021.
-     Ethnologue: Languages of the World, Twenty fourth edition. Dallas, Texas: SIL
+     Ethnologue: Languages of the World, twenty-fourth edition. Dallas, Texas: SIL
      International. Online version available as https://www.ethnologue.com</dd>
-          <dt>[UNICODE 14.0.0]</dt>
-          <dd>The Unicode Consortium. The Unicode Standard, Version 14.0.0, (Mountain View, CA: The Unicode Consortium, 2021. ISBN 978-1-936213-29-0) 
+          <dt>[Unicode 14.0.0]</dt>
+          <dd>The Unicode Consortium. The Unicode Standard, Version 14.0.0 (Mountain View, CA: The Unicode Consortium, 2021. ISBN 978-1-936213-29-0) 
      https://www.unicode.org/versions/Unicode14.0.0/</dd>
         </dl>
         <p>References [0] to [23] refer to the Unicode Standard versions in which the corresponding code points were initially encoded. References [400] and above correspond to sources given in [Proposal-Inuktitut] justifying the inclusion of the corresponding code points. Entries in the table may have
         multiple source reference values. 
         In the listing of <a href="#whole_label_evaluation_and_context_rules">whole label evaluation and context rules</a>,
-        reference [150] indicates the source for common rules.</p>
+        reference [5891] indicates the source for common rules.</p>
       </section>
     </section>
   </section>
-</section>]]></description>
+</section>
+]]></description>
     <references>
       <reference id="0" comment="Code points cited were originally encoded in Unicode Version 1.1">The Unicode Standard, Version 1.1</reference>
       <reference id="3" comment="Code points cited were originally encoded in Unicode Version 3.0">The Unicode Standard, Version 3.0</reference>
-      <reference id="23" comment="Code points cited were originally encoded in Unicode Version 14.0">The Unicode Standard, Version 11.0</reference>
-      <reference id="150">RFC 5891, Internationalized Domain Names in Applications(IDNA): Protocol https://tools.ietf.org/html/rfc5891</reference>
+      <reference id="10" comment="Code points cited were originally encoded in Unicode 5.2">The Unicode Standard, Version 5.2</reference>
+      <reference id="23" comment="Code points cited were originally encoded in Unicode Version 14.0">The Unicode Standard, Version 14.0</reference>
       <reference id="400">The Unicode Standard, Version 14.0, “Unified Canadian Aboriginal Syllabics. Range: 1400-167F”</reference>
       <reference id="401">The Unicode Standard, Version 14.0, “Unified Canadian Aboriginal Syllabics Extended. Range: 18B0-18FF”</reference>
       <reference id="402">The Unicode Standard, Version 14.0, “Unified Canadian Aboriginal Syllabic Extended-A. Range: 11AB0-11ABF”</reference>
@@ -227,22 +227,24 @@
       <reference id="603">Kativik Ilisarniliriniq, Inuttitut Syllabics, https://nunavik-ice.com/en/c/inuktitut-en/inuktitut-syllabics/# - Accessed 2024-02-24</reference>
       <reference id="604">North West Territories Government, Qaniujaaqpait Syllabics., https://www.ece.gov.nt.ca/en/inuktitut - Accessed 2024-02-24</reference>
       <reference id="605">Omniglot : Inuktitut numbers, https://www.omniglot.com/language/numbers/inuktitut.htm - Accessed 2024-02-24</reference>
-      <reference id="606">Typotheque, Kevin King, Typotheque North American Syllabics. Proposal to encode 16 additional characters to the Unified Canadian Aboriginal Syllabics, 2020-09-30</reference>
-      <reference id="701">PointQuébec, Section 8 “Permissible Characters” in General Registration Policies, https://registry.quebec/legal/ - Accessed 2024-02-24 and https://www.iana.org/domains/idn-tables/tables/quebec_fr_1.0.txt</reference>
+      <reference id="606">Typotheque, Kevin King, Typotheque North American Syllabics. Proposal to encode 16 additional characters to the Unified Canadian Aboriginal Syllabics, 2020-09-30,  https://www.unicode.org/L2/L2020/20255-ucas-adds.pdf - Accessed 2026-03-26</reference>
+      <reference id="607">Claude Ménard, ICANN UCAS - Latin LGR for Canadian's First Nations and Inuit languages WG, Change Request for Latin Script Reference LGR for the Second-Level, 13 August 2026, https://www.icann.org/sites/default/files/packages/lgr/change-request-latin-second-level-13aug26-en.pdf</reference>
+      <reference id="701">PointQuébec, Section 8, “Permissible Characters” in General Registration Policies, https://registry.quebec/legal/ - Accessed 2024-02-24 and https://www.iana.org/domains/idn-tables/tables/quebec_fr_1.0.txt</reference>
+      <reference id="5891">RFC 5891, Internationalized Domain Names in Applications(IDNA): Protocol https://tools.ietf.org/html/rfc5891</reference>
     </references>
   </meta>
   <data>
-    <char cp="002D" not-when="hyphen-minus-disallowed" tag="sc:Zyyy" ref="0 605 701" />
-    <char cp="0030" tag="Common-digit sc:Zyyy" ref="0 605 701" />
-    <char cp="0031" tag="Common-digit sc:Zyyy" ref="0 605 701" />
-    <char cp="0032" tag="Common-digit sc:Zyyy" ref="0 605 701" />
-    <char cp="0033" tag="Common-digit sc:Zyyy" ref="0 605 701" />
-    <char cp="0034" tag="Common-digit sc:Zyyy" ref="0 605 701" />
-    <char cp="0035" tag="Common-digit sc:Zyyy" ref="0 605 701" />
-    <char cp="0036" tag="Common-digit sc:Zyyy" ref="0 605 701" />
-    <char cp="0037" tag="Common-digit sc:Zyyy" ref="0 605 701" />
-    <char cp="0038" tag="Common-digit sc:Zyyy" ref="0 605 701" />
-    <char cp="0039" tag="Common-digit sc:Zyyy" ref="0 605 701" />
+    <char cp="002D" not-when="hyphen-minus-disallowed" tag="Hyphen sc:Zyyy" ref="0 605 701" />
+    <char cp="0030" tag="Common-digit sc:Zyyy" ref="0 605 701" comment="&#x235F;" />
+    <char cp="0031" tag="Common-digit sc:Zyyy" ref="0 605 701" comment="&#x235F;" />
+    <char cp="0032" tag="Common-digit sc:Zyyy" ref="0 605 701" comment="&#x235F;" />
+    <char cp="0033" tag="Common-digit sc:Zyyy" ref="0 605 701" comment="&#x235F;" />
+    <char cp="0034" tag="Common-digit sc:Zyyy" ref="0 605 701" comment="&#x235F;" />
+    <char cp="0035" tag="Common-digit sc:Zyyy" ref="0 605 701" comment="&#x235F;" />
+    <char cp="0036" tag="Common-digit sc:Zyyy" ref="0 605 701" comment="&#x235F;" />
+    <char cp="0037" tag="Common-digit sc:Zyyy" ref="0 605 701" comment="&#x235F;" />
+    <char cp="0038" tag="Common-digit sc:Zyyy" ref="0 605 701" comment="&#x235F;" />
+    <char cp="0039" tag="Common-digit sc:Zyyy" ref="0 605 701" comment="&#x235F;" />
     <char cp="0062" tag="sc:Latn" ref="0" comment="Not part of repertoire">
       <var cp="0062" type="out-of-repertoire-var" comment="Out-of-repertoire" />
       <var cp="1472" type="blocked" />
@@ -283,6 +285,10 @@
       <var cp="0076" type="out-of-repertoire-var" comment="Out-of-repertoire" />
       <var cp="142F" type="blocked" />
     </char>
+    <char cp="028C" tag="sc:Latn" ref="0" comment="Not part of repertoire">
+      <var cp="028C" type="out-of-repertoire-var" comment="Out-of-repertoire" />
+      <var cp="1431" type="blocked" />
+    </char>
     <char cp="1401" tag="sc:Cans" ref="3 400 601 602 603 604" />
     <char cp="1403" tag="sc:Cans" ref="3 400 601 602 603 604" />
     <char cp="1404" tag="sc:Cans" ref="3 400 601 602 603 604" />
@@ -293,7 +299,9 @@
     <char cp="142F" tag="sc:Cans" ref="3 400 601 602 603 604">
       <var cp="0076" type="blocked" />
     </char>
-    <char cp="1431" tag="sc:Cans" ref="3 400 601 602 603 604" />
+    <char cp="1431" tag="sc:Cans" ref="3 400 601 602 603 604">
+      <var cp="028C" type="blocked" />
+    </char>
     <char cp="1432" tag="sc:Cans" ref="3 400 601 602 603 604" />
     <char cp="1433" tag="sc:Cans" ref="3 400 601 602 603 604" />
     <char cp="1434" tag="sc:Cans" ref="3 400 601 602 603 604" />
@@ -535,6 +543,6 @@
     <!--Action elements go here - order defines precedence-->
     <action disp="invalid" any-variant="out-of-repertoire-var" comment="any variant label with a code point out of repertoire is invalid &#x235F;" />
     <action disp="blocked" any-variant="blocked" comment="any variant label containing blocked variants is blocked &#x235F;" />
-    <action disp="valid" comment="catch all; default action &#x235F;" />
+    <action disp="valid" comment="catch all (default action) &#x235F;" />
   </rules>
 </lgr>

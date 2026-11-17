@@ -2,7 +2,7 @@
 <lgr xmlns="urn:ietf:params:xml:ns:lgr-1.0">
   <meta>
     <version comment="Second Level Reference LGR">2</version>
-    <date>2024-10-25</date>
+    <date>2026-08-13</date>
     <language>und-Beng</language>
     <unicode-version>11.0.0</unicode-version>
     <description type="text/html"><![CDATA[
@@ -11,7 +11,7 @@
   <ul>
     <li>These instructions cover how to adopt an LGR based on this reference LGR for a given
     zone and how to prepare the file for deposit in the IANA Repository of IDN Practices.</li>
-    <li>As described  the IANA procedure (https://www.iana.org/help/idn-repository-procedure) an 
+    <li>As described in the IANA procedure (https://www.iana.org/help/idn-repository-procedure) an 
     LGR MUST contain the following elements in its header:
       <ul style="list-style-type:square;">
         <li>Script or Language Designator (see below for guidance) </li>
@@ -37,13 +37,13 @@
   <p><code>&lt;version comment=&quot;</code>[Please replace (or delete) the optional comment]<code>&quot;&gt;</code>[Please fill in version number, starting at 1]<code>&lt;/version&gt;</code></p>
   <p><code>&lt;date&gt;</code>[Please fill in with publication date, in YYYY-MM-DD format]<code>&lt;/date&gt;</code></p>
   <p><code>&lt;validity-start&gt;</code>[Please fill in effective date, in YYYY-MM-DD format]<code>&lt;/validity-start&gt;</code></p>
-  <p>Note: the scope element may be repeated, so that the same document can serve for multiple domains.</p>
+  <p>Note: the scope element may be repeated, so that the same document can serve multiple domains.</p>
   <p><code>&lt;scope type=&quot;domain&quot;&gt;</code>[Please provide, in &quot;.domain&quot; format]<code>&lt;/scope&gt;</code></p>
 <p><strong>Registry Contact Information:</strong></p>
   <p>Please fill in the <a href="#registry_contact_details">Registry Contact Details</a>.</p>
 <p><strong>Change History</strong></p>
   <p>If you made technical modifications to the LGR, please summarize them in the <a href="#change_history">Change History</a> (and also note the details in the appropriate section of the description).</p>
-<p>PLEASE DELETE THESE INSTRUCTIONS BEFORE DEPOSITING THE DOCUMENT</p></div>
+<p>PLEASE DELETE THESE INSTRUCTIONS BEFORE DEPOSITING THE DOCUMENT.</p></div>
        
        <section id="registry_contact_details">
 <h2>Registry Contact Details</h2>
@@ -62,7 +62,7 @@
     second level domain or domains identified above.
     The starting point for the development of this LGR can be found in the related Root Zone LGR [RZ-LGR-Beng]. 
     [Proposal-Bengali]. The format of this file follows [RFC 7940].
-    This LGR is adapted from the “Reference LGR for the Second Level for the Bengali Script” [Ref-LGR-und-Beng], for details, see <a href="#change_history">Change History</a> below.</p>
+    This LGR is adapted from the “Reference LGR for the Second Level for the Bengali Script” [Ref-LGR-und-Beng]; for details, see <a href="#change_history">Change History</a> below.</p>
     
     <p>This LGR covers Assamese, Bengali, Manipuri and a number of other languages written with the Bengali script.
     For details and additional background on the Bengali script, see “Proposal for a Bangla (or Bengali) Script Root Zone Label Generation Ruleset (LGR)” [Proposal-Bengali].</p>
@@ -184,18 +184,18 @@
          protocol. They are marked with &#x235F; and included here by default.</p>
          <ul>
        <li><b>Hyphen Restrictions</b> &mdash; restrictions on the allowable placement of hyphens (no leading/ending hyphen
-             and no hyphen in positions 3 and 4). These restrictions are described in Section 4.2.3.1 of RFC 5891 [150]. 
-             They are implemented here as context rule on U+002D (-) HYPHEN-MINUS.</li>
+             and no hyphen in positions 3 and 4). These restrictions are described in Section 4.2.3.1 of RFC 5891 [5891]. 
+             They are implemented here as a context rule on U+002D (-) HYPHEN-MINUS.</li>
           <li><b>Leading Combining Marks</b>   &mdash;  restrictions on the allowable placement of combining marks
-             (no leading combining mark). This rule is described in Section 4.2.3.2 of RFC 5891 [150].</li>
+             (no leading combining mark). This rule is described in Section 4.2.3.2 of RFC 5891 [5891].</li>
        <li><b>Digit-mixing</b> &mdash; no mixing between different digit sets (European and Bengali digits)
           is allowed; implemented here as a WLE rule with associated action.</li>
        </ul>
 
     <h3>Default Actions</h3>
 
-    <p>This LGR includes the complete set default actions for LGRs as well as the action needed to invalidate labels with misplaced combining marks. They are marked with &#x235F;.
-        For a description see [RFC 7940] and [150].
+    <p>This LGR includes the complete set of default actions for LGRs, as well as the action needed to invalidate labels with misplaced combining marks. They are marked with &#x235F;.
+        For a description see [RFC 7940] and [5891].
         An additional action is triggered by mixed digit labels.
     </p>
 
@@ -242,8 +242,9 @@
     <h3>Changes from Version Dated 15 December 2020</h3> <p>Unicode Version has been updated. U+0994 Letter AU has been
     corrected to be a vowel with corresponding context rule.</p>
 
-    <h3>Changes from Version Dated 25 October 2024</h3>
-        <p>Adopted from the Second Level Reference LGR for the Bengali (Bangla) Script [Ref-LGR-und-Beng] without normative changes.</p>
+    <h3>Changes from Version Dated 13 August 2026</h3>
+        <p>This is a placeholder to document any changes applied by the registry operator when adopting the reference LGR. If no change has been noted, the LGR is the same as the Second Level Reference LGR for the Bengali (Bangla) Script [Ref-LGR-und-Beng] without normative changes.
+    </p>
     </section>
     
     <h2>References</h2> 
@@ -261,7 +262,7 @@
 
     <dt>[Level-2-Overview]</dt>
     <dd>Internet Corporation for Assigned Names and Numbers, (ICANN),“Reference Label Generation Rules (LGR) for the Second Level: Overview and Summary” (PDF), 
-     (Los Angeles, California: ICANN, 25 October 2024), https://www.icann.org/en/system/files/files/level2-lgr-overview-summary-25oct24-en.pdf
+     (Los Angeles, California: ICANN, 13 August 2026), https://www.icann.org/en/system/files/files/level2-lgr-overview-summary-13aug26-en.pdf
       </dd>
 
     <dt>[Proposal-Bengali]</dt> 
@@ -278,29 +279,34 @@
     https://www.rfc-editor.org/info/rfc8228</dd>
 
     <dt>[Ref-LGR-und-Beng]</dt>
-    <dd>ICANN, Second Level Reference Label Generation Rules for the Bengali (Bangla) Script (und-Beng), 25 October 2024 (XML)
-      https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-bengali-script-25oct24-en.xml
-      non-normative HTML presentation: https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-bengali-script-25oct24-en.html</dd>
+    <dd>ICANN, Second Level Reference Label Generation Rules for the Bengali (Bangla) Script (und-Beng), 13 August 2026 (XML)
+      https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-bengali-script-13aug26-en.xml
+      non-normative HTML presentation: https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-bengali-script-13aug26-en.html</dd>
 
     <dt>[Ref-LGR-Devanagari-Full-Variant-Script]</dt>
-    <dd>ICANN, Second Level Reference Label Generation Rules for the Devanagari Script (und-Deva), 25 October 2024 (XML)
-      https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-devanagari-full-variant-script-25oct24-en.xml
-      non-normative HTML presentation: https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-devanagari-full-variant-script-25oct24-en.html</dd>   
+    <dd>ICANN, Second Level Reference Label Generation Rules for the Devanagari Script (und-Deva), 13 August 2026 (XML)
+      https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-devanagari-full-variant-script-13aug26-en.xml
+      non-normative HTML presentation: https://www.icann.org/sites/default/files/packages/lgr/lgr-second-level-devanagari-full-variant-script-13aug26-en.html</dd>   
 
     <dt>[RZ-LGR-Overview]</dt>
-    <dd>Integration Panel, “Root Zone Label Generation Rules (RZ LGR-5): Overview and Summary”, 26 May 2022 (PDF), https://www.icann.org/sites/default/files/lgr/rz-lgr-5-overview-26may22-en.pdf</dd>
+    <dd>Integration Panel, “Root Zone Label Generation Rules (RZ LGR-6): Overview and Summary”, 23 September 2025 (PDF), https://www.icann.org/sites/default/files/packages/lgr/rz-lgr-6-overview-23sep25-en.pdf</dd>
 
     <dt>[RZ-LGR-Beng]</dt>
-    <dd>ICANN, Root Zone Label Generation Rules for the Bengali Script (und-Beng), 26 May 2022 (XML)
-      https://www.icann.org/sites/default/files/lgr/rz-lgr-5-bengali-script-26may22-en.xml</dd>
+    <dd>ICANN, Root Zone Label Generation Rules for the Bengali Script (und-Beng), 23 September 2025 (XML)
+      https://www.icann.org/sites/default/files/lgr/rz-lgr-6-bengali-script-23sep25-en.xml<br />
+      <i>
+        non-normative HTML presentation at:
+        https://www.icann.org/sites/default/files/lgr/rz-lgr-6-bengali-script-23sep25-en.html
+      </i>
+  </dd>
 
     <dt>[SIL-Ethnologue]</dt>
     <dd>David M. Eberhard, Gary F. Simons &amp; Charles D. Fennig (eds.). 2021.
-     Ethnologue: Languages of the World, Twenty fourth edition. Dallas, Texas: SIL
+     Ethnologue: Languages of the World, twenty-fourth edition. Dallas, Texas: SIL
      International. Online version available as https://www.ethnologue.com</dd>
 
     <dt>[Unicode 11.0.0]</dt>
-    <dd>The Unicode Consortium. The Unicode Standard, Version 11.0.0, (Mountain View, CA: The Unicode Consortium, 2018. ISBN 978-1-936213-19-1) 
+    <dd>The Unicode Consortium. The Unicode Standard, Version 11.0.0 (Mountain View, CA: The Unicode Consortium, 2018. ISBN 978-1-936213-19-1) 
      https://www.unicode.org/versions/Unicode11.0.0/</dd>
     </dl>
 
@@ -313,7 +319,7 @@
     Entries in the table may have
         multiple source reference values. 
         In the listing of <a href="#whole_label_evaluation_and_context_rules">whole label evaluation and context rules</a>,
-        reference [150] indicates the source for common rules.</p>
+        reference [5891] indicates the source for common rules.</p>
 
 ]]></description>
     <references>
@@ -322,11 +328,11 @@
       <reference id="101">Wikipedia, Bengali alphabet, accessed on 2017-11-25 https://en.wikipedia.org/wiki/Bengali_alphabet</reference>
       <reference id="102">Bengali alphabet for Manipuri, found in Omniglot, Manipuri (Meeteilon/ Meithei), accessed on 20.10.2019 https://www.omniglot.com/writing/manipuri.htm</reference>
       <reference id="103">Omniglot, Assamese (অসমীয়া), accessed on 2020-04-28 https://www.omniglot.com/writing/assamese.htm</reference>
-      <reference id="150">RFC 5891, Internationalized Domain Names in Applications (IDNA): Protocol https://tools.ietf.org/html/rfc5891</reference>
+      <reference id="5891">RFC 5891, Internationalized Domain Names in Applications (IDNA): Protocol https://tools.ietf.org/html/rfc5891</reference>
     </references>
   </meta>
   <data>
-    <char cp="002D" not-when="hyphen-minus-disallowed" tag="sc:Zyyy" ref="0" comment="HYPHEN-MINUS; &#x235F;" />
+    <char cp="002D" not-when="hyphen-minus-disallowed" tag="Hyphen sc:Zyyy" ref="0" comment="HYPHEN-MINUS; &#x235F;" />
     <char cp="0030" tag="Common-digit sc:Zyyy" ref="0" comment="DIGIT ZERO; &#x235F;">
       <var cp="09E6" type="blocked" comment="Bengali digit variant" />
     </char>
@@ -501,14 +507,14 @@
         <rule by-ref="C-YYA" />
       </choice>
     </rule>
-    <rule name="leading-combining-mark" ref="150" comment="RFC 5891 restrictions on placement of combining marks &#x235F;">
+    <rule name="leading-combining-mark" ref="5891" comment="RFC 5891 restrictions on placement of combining marks &#x235F;">
       <start />
       <union>
         <class property="gc:Mn" />
         <class property="gc:Mc" />
       </union>
     </rule>
-    <rule name="hyphen-minus-disallowed" ref="150" comment="RFC 5891 restrictions on placement of U+002D HYPHEN-MINUS &#x235F;">
+    <rule name="hyphen-minus-disallowed" ref="5891" comment="RFC 5891 restrictions on placement of U+002D HYPHEN-MINUS &#x235F;">
       <choice>
         <rule comment="no leading hyphen">
           <look-behind>
@@ -613,12 +619,12 @@
       </choice>
     </rule>
     <!--Action elements go here - order defines precedence-->
-    <action disp="invalid" match="leading-combining-mark" ref="150" comment="labels with leading combining marks are invalid &#x235F;" />
+    <action disp="invalid" match="leading-combining-mark" ref="5891" comment="labels with leading combining marks are invalid &#x235F;" />
     <action disp="invalid" match="digit-mixing" comment="a label violating the restriction on digit mixing is invalid" />
     <action disp="invalid" match="no-mix-09B0-09F0" comment="WLE 10: U+09B0 and U+09F0 cannot be mixed." />
     <action disp="invalid" any-variant="out-of-repertoire-var" comment="any variant label with a code point out of repertoire is invalid &#x235F;" />
     <action disp="blocked" any-variant="blocked" comment="any variant label containing blocked variants is blocked &#x235F;" />
     <action disp="allocatable" all-variants="allocatable" comment="variant labels with all variants allocatable are allocatable &#x235F;" />
-    <action disp="valid" comment="catch all; default action &#x235F;" />
+    <action disp="valid" comment="catch all (default action) &#x235F;" />
   </rules>
 </lgr>

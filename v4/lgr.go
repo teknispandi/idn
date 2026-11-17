@@ -154,7 +154,6 @@ func Parse(r io.Reader) (*LGR, error) {
 		switch section.XMLName.Local {
 		case "meta":
 			l.parseMeta(&section)
-			err = checkUnicodeVersion(l.meta.UnicodeVersion)
 		case "data":
 			err = l.parseData(&section)
 		case "rules":
@@ -166,6 +165,9 @@ func Parse(r io.Reader) (*LGR, error) {
 	}
 	if len(l.elements) == 0 {
 		return nil, fmt.Errorf("LGR has no repertoire")
+	}
+	if err := l.checkUnicodeVersion(); err != nil {
+		return nil, err
 	}
 	if err := l.compile(); err != nil {
 		return nil, err

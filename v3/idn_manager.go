@@ -27,6 +27,13 @@ type TldIdnConfig struct {
 	// harus diterima tabel IDN. Matikan untuk zona khusus IDN (mis. .рф).
 	AllowASCII bool `json:"allow_ascii"`
 
+	// SingleScript: tolak label IDN yang mencampur script Unicode (ICANN
+	// Guideline 15), kecuali kombinasi CJK yang lazim. Default mati karena
+	// pengecualian Guideline 15 diatur oleh tabel: tabel Jepang, Chinese dan
+	// Korea sengaja memuat a–z, jadi "日本abc" sah menurut tabelnya. Nyalakan
+	// untuk zona yang ingin lebih ketat daripada tabelnya.
+	SingleScript bool `json:"single_script"`
+
 	// TableRefs: URL tabel di IANA Repository of IDN Practices dan URL
 	// kebijakannya untuk setiap tabel, untuk deposit RDE. Kunci adalah nama
 	// tabel. Jika kosong, header "# URL:"/"# Policy:" tabel dipakai — header
@@ -286,7 +293,7 @@ func (manager *IdnManager) ValidateLabel(tldName, label string) (bool, []string,
 	}
 
 	p, err := prepareLabel(label)
-	if err != nil {
+	if err != nil || checkScriptPolicy(config, p) != nil {
 		return false, nil, nil
 	}
 
@@ -303,7 +310,7 @@ func (manager *IdnManager) ValidateLabel(tldName, label string) (bool, []string,
 
 // ValidateLabelForLanguage memvalidasi label untuk bahasa tertentu dalam TLD
 func (manager *IdnManager) ValidateLabelForLanguage(tldName, language, label string) (bool, error) {
-	_, tables, err := manager.enabledTld(tldName)
+	config, tables, err := manager.enabledTld(tldName)
 	if err != nil {
 		return false, err
 	}
@@ -312,7 +319,7 @@ func (manager *IdnManager) ValidateLabelForLanguage(tldName, language, label str
 	for _, table := range tables {
 		if table.GetName() == language {
 			p, err := prepareLabel(label)
-			if err != nil {
+			if err != nil || checkScriptPolicy(config, p) != nil {
 				return false, nil
 			}
 			return table.CheckLabel(p.ulabel) == nil, nil
@@ -335,7 +342,24 @@ func (manager *IdnManager) CheckLabel(tldName, label string) (*LabelResult, erro
 	if err != nil {
 		return nil, err
 	}
+	if err := checkScriptPolicy(config, p); err != nil {
+		return nil, err
+	}
 	return matchTables(p, tables, config.AllowASCII, "")
+}
+
+// checkScriptPolicy menerapkan TldIdnConfig.SingleScript.
+func checkScriptPolicy(config TldIdnConfig, p preparedLabel) error {
+	if !config.SingleScript || !p.isIDN {
+		return nil
+	}
+	runes := []rune(p.ulabel)
+	if i := mixedScriptAt(runes); i >= 0 {
+		e := newRuneError(ErrMixedScript, p.ulabel, i, runes[i])
+		e.Rule = "ICANN IDN Guideline 15"
+		return e
+	}
+	return nil
 }
 
 // CheckDomain memvalidasi nama domain yang akan didaftarkan, mis.
@@ -397,6 +421,9 @@ func (manager *IdnManager) checkDomain(domain, only string) (*DomainResult, erro
 	zone := strings.Join(alabels[1:], ".")
 	config, tables, err := manager.enabledTld(zone)
 	if err != nil {
+		return nil, err
+	}
+	if err := checkScriptPolicy(config, labels[0]); err != nil {
 		return nil, err
 	}
 	res, err := matchTables(labels[0], tables, config.AllowASCII, only)
